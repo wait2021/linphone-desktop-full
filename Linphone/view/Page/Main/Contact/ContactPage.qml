@@ -213,7 +213,7 @@ AbstractMainPage {
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
 				KeyNavigation.up: createContactButton
-				KeyNavigation.down: favoriteList.contentHeight > 0 ? favoriteExpandButton : contactExpandButton
+				KeyNavigation.down: favouriteList.contentHeight > 0 ? favoriteExpandButton : contactExpandButton
 			}
 			
 			RowLayout {
@@ -231,7 +231,7 @@ AbstractMainPage {
 						width: parent.width
 						spacing: 15 * DefaultStyle.dp
 						Text {
-							visible: contactList.count === 0 && favoriteList.count === 0
+							visible: contactList.count === 0 && favouriteList.count === 0
 							Layout.alignment: Qt.AlignHCenter
 							Layout.topMargin: 137 * DefaultStyle.dp
 							text: qsTr("Aucun contact")
@@ -241,8 +241,8 @@ AbstractMainPage {
 							}
 						}
 						ColumnLayout {
-							visible: favoriteList.contentHeight > 0
-							onVisibleChanged: if (visible && !favoriteList.visible) favoriteList.visible = true
+							visible: favouriteList.contentHeight > 0
+							onVisibleChanged: if (visible && !favouriteList.visible) favouriteList.visible = true
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
 							spacing: 18 * DefaultStyle.dp
@@ -261,18 +261,18 @@ AbstractMainPage {
 								Button {
 									id: favoriteExpandButton
 									background: Item{}
-									icon.source: favoriteList.visible ? AppIcons.upArrow :						  AppIcons.downArrow
+									icon.source: favouriteList.visible ? AppIcons.upArrow :						  AppIcons.downArrow
 									Layout.preferredWidth: 24 * DefaultStyle.dp
 									Layout.preferredHeight: 24 * DefaultStyle.dp
 									icon.width: 24 * DefaultStyle.dp
 									icon.height: 24 * DefaultStyle.dp
-									onClicked: favoriteList.visible = !favoriteList.visible
+									onClicked: favouriteList.visible = !favouriteList.visible
 									KeyNavigation.up: searchBar
-									KeyNavigation.down: favoriteList
+									KeyNavigation.down: favouriteList
 								}
 							}
 							ContactListView{
-								id: favoriteList
+								id: favouriteList
 								hoverEnabled: mainItem.leftPanelEnabled
 								highlightFollowsCurrentItem: true
 								Layout.fillWidth: true
@@ -320,7 +320,7 @@ AbstractMainPage {
 									icon.width: 24 * DefaultStyle.dp
 									icon.height: 24 * DefaultStyle.dp
 									onClicked: contactList.visible = !contactList.visible
-									KeyNavigation.up: favoriteList.visible ? favoriteList : searchBar
+									KeyNavigation.up: favouriteList.visible ? favouriteList : searchBar
 									KeyNavigation.down: contactList
 								}
 							}
@@ -347,7 +347,7 @@ AbstractMainPage {
 								}
 								onSelectedContactChanged: {
 									if (selectedContact) {
-										favoriteList.currentIndex = -1
+										favouriteList.currentIndex = -1
 									}
 									mainItem.selectedContact = selectedContact
 								}

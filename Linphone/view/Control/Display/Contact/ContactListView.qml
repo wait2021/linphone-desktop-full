@@ -253,6 +253,7 @@ ListView {
 						icon.source: AppIcons.chatTeardropText
 						focus: visible && !callButton.visible
 						contentImageColor: DefaultStyle.main2_500main
+						visible: !SettingsCpp.disableChatFeature
 						background: Rectangle {
 							anchors.fill: parent
 							radius: 40 * DefaultStyle.dp

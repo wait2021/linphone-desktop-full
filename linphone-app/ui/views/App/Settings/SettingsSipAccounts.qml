@@ -4,8 +4,10 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import UtilsCpp 1.0
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 import App.Styles 1.0
+import Common.Styles 1.0
 
 import 'SettingsSipAccounts.js' as Logic
 
@@ -101,18 +103,42 @@ TabContainer {
 								isCustom: true
 								backgroundRadius: 4
 								colorSet: SettingsWindowStyle.buttons.editProxy
-								
+								enabled: !deleteButton.deleteInProgress
 								onClicked: Logic.editAccount(modelData)
 							}
 						}
 						
 						FormTableEntry {
 							ActionButton {
+								id: deleteButton
 								isCustom: true
 								backgroundRadius: 4
 								colorSet: SettingsWindowStyle.buttons.deleteProxy
-								
-								onClicked: Logic.deleteAccount(modelData)
+								property bool deleteInProgress: false
+								enabled: !deleteInProgress
+								onClicked: {
+									Logic.confirmDeleteAccount(modelData, function() {
+										deleteInProgress = true
+									})
+								}
+								Connections {
+									target: AccountSettingsModel
+									enabled: deleteButton.deleteInProgress
+									onUnregisterFailed: {
+										Logic.confirmDeleteAccountUnregisterFailed(modelData, function() {
+											deleteButton.deleteInProgress = false
+										})
+									}
+								}
+								BusyIndicator {
+									anchors {
+										horizontalCenter: parent.horizontalCenter
+										fill: parent
+									}
+									color: BusyIndicatorStyle.alternateColor.color
+									running: true
+									visible: deleteButton.deleteInProgress
+								}
 							}
 						}
 					}

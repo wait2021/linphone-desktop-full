@@ -298,7 +298,7 @@ void AccountSettingsModel::enableRegister (std::shared_ptr<linphone::Account> ac
 	account->setParams(params);
 }
 
-void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &account) {
+void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &account, bool unregisterFirst) {
 	
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::shared_ptr<linphone::Account> newAccount = nullptr;
@@ -312,6 +312,16 @@ void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &a
 		}
 		setDefaultAccount(newAccount);
 	}
+
+	if (!unregisterFirst || !account->getParams()->registerEnabled()) {
+		doRemoveAccount(account);
+		return;
+	}
+	if (account->getState() == linphone::RegistrationState::None) {
+		emit unregisterFailed();
+		return;
+	}
+	
 // "message-expires" is used to keep contact for messages. Setting to 0 will remove the contact for messages too.
 // Check if a "message-expires" exists and set it to 0
 	QStringList parameters = Utils::coreStringToAppString(account->getParams()->getContactParameters()).split(";", Qt::SkipEmptyParts);
@@ -321,16 +331,26 @@ void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &a
 			parameters[i] = Constants::DefaultContactParametersOnRemove;
 		}
 	}
+
 	auto accountParams = account->getParams()->clone();
-	accountParams->setContactParameters(Utils::appStringToCoreString(parameters.join(";")));	
+	accountParams->setContactParameters(Utils::appStringToCoreString(parameters.join(";")));
+	accountParams->setExpires(0);
 	bool isRegistered = account->getState() == linphone::RegistrationState::Ok;
 	if (account->setParams(accountParams) == -1) {
 		qWarning() << QStringLiteral("Unable to reset message-expiry property before removing account: `%1`.")
 				  .arg(QString::fromStdString(account->getParams()->getIdentityAddress()->asString()));
-	}else if(isRegistered && account->getParams()->registerEnabled()) { // Wait for update
+	}else if (isRegistered) { // Wait for unregistration
 		mRemovingAccounts.push_back(account);
+		QTimer::singleShot(10000, [account, this](){// In case of unregistration failure.
+				if (!mRemovedAccounts.contains(account)) {
+					mRemovingAccounts.removeAll(account);
+					qInfo() << QStringLiteral("failed unregistering from server within 10 seconds, deleting account %1.").arg(Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString()));
+					emit unregisterFailed();
+				} else
+					mRemovedAccounts.removeAll(account);
+		});
 	}else{// Registration is not enabled : Removing without wait.
-		CoreManager::getInstance()->getCore()->removeAccount(account);
+		doRemoveAccount(account);
 	}
 	
 	emit accountSettingsUpdated();
@@ -644,23 +664,27 @@ void AccountSettingsModel::handleRegistrationStateChanged (
 		const shared_ptr<linphone::Account> & account,
 		linphone::RegistrationState state
 		) {
-	Q_UNUSED(state)
 	auto coreManager = CoreManager::getInstance();
 	shared_ptr<linphone::Account> defaultAccount = coreManager->getCore()->getDefaultAccount();
-	if( state == linphone::RegistrationState::Cleared){
-		auto authInfo = account->findAuthInfo();
-		if(authInfo)
-			QTimer::singleShot(60000, [authInfo](){// 60s is just to be sure. account_update remove deleted account only after 32s
-				CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
-			});
-	}else if(mRemovingAccounts.contains(account)){
+	if(mRemovingAccounts.contains(account) && state == linphone::RegistrationState::Cleared) {
 		mRemovingAccounts.removeAll(account);
-		QTimer::singleShot(100, [account, this](){// removeAccount cannot be called from callback
-				CoreManager::getInstance()->getCore()->removeAccount(account);
-				emit accountsChanged();
-		});
+		doRemoveAccount(account);
 	}
 	if(defaultAccount == account)
 		emit defaultRegistrationChanged();
 	emit registrationStateChanged();
 }
+
+void AccountSettingsModel::doRemoveAccount (const shared_ptr<linphone::Account> &account) {
+	auto authInfo = account->findAuthInfo();
+	if(authInfo)
+		QTimer::singleShot(60000, [authInfo](){// 60s is just to be sure. account_update remove deleted account only after 32s
+			CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
+		});
+	QTimer::singleShot(100, [account, this](){// removeAccount cannot be called from callback
+			CoreManager::getInstance()->getCore()->removeAccount(account);
+			emit accountsChanged();
+	});
+}
+
+

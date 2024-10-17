@@ -3410,6 +3410,10 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>deleteAccountDescription</source>
         <translation>Are you sure you wish to delete this account?</translation>
     </message>
+	<message>
+	  <source>deleteAccountDescriptionUnregisterFailed</source>
+	  <translation>Unable to unregister this account from server. Do you wish delete it anyway?</translation>
+	</message>
     <message>
         <source>eraseAllPasswordsDescription</source>
         <translation>Are you sure you wish to remove all passwords?</translation>

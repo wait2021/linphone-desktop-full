@@ -33,13 +33,26 @@ function editAccount (account) {
   })
 }
 
-function deleteAccount (account) {
+function confirmDeleteAccount (account, confirmedLambda) {
   window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('deleteAccountDescription'),
   }, function (status) {
     if (status) {
-      Linphone.AccountSettingsModel.removeAccount(account.account)
+      confirmedLambda()
+      Linphone.AccountSettingsModel.removeAccount(account.account, true)
     }
+  })
+}
+
+function confirmDeleteAccountUnregisterFailed (account, cancelLambda) {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+	descriptionText: qsTr('deleteAccountDescriptionUnregisterFailed'),
+  }, function (status) {
+	if (status) {
+	  Linphone.AccountSettingsModel.removeAccount(account.account, false)
+	} else {
+		cancelLambda()
+	}
   })
 }
 

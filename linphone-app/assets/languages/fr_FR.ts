@@ -3385,6 +3385,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>deleteAccountDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer ce compte ?</translation>
     </message>
+	<message>
+		<source>deleteAccountDescriptionUnregisterFailed</source>
+		<translation>Le désenregistrement de ce compte auprès du serveur a échoué. Le supprimer quand même ?</translation>
+	</message>
     <message>
         <source>eraseAllPasswordsDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer tous vos mots de passe ?</translation>

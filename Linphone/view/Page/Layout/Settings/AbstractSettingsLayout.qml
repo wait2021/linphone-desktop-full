@@ -19,10 +19,10 @@ Rectangle {
 	Control.ScrollView {
 		id: scrollView
 		height: parent.height
-		width: parent.width - 2 * 45 * DefaultStyle.dp
+		width: parent.width - 2 * 45 * mainWindow.dp
 		anchors.centerIn: parent
-		contentHeight: content.height + 20 * DefaultStyle.dp
-		contentWidth: parent.width - 2 * 45 * DefaultStyle.dp
+		contentHeight: content.height + 20 * mainWindow.dp
+		contentWidth: parent.width - 2 * 45 * mainWindow.dp
 		Control.ScrollBar.vertical: ScrollBar {
 			active: scrollView.contentHeight > container.height
 			interactive: true
@@ -30,7 +30,7 @@ Rectangle {
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
-			anchors.rightMargin: -15 * DefaultStyle.dp
+			anchors.rightMargin: -15 * mainWindow.dp
 		}
 		Control.ScrollBar.horizontal: ScrollBar {
 			active: false
@@ -38,21 +38,21 @@ Rectangle {
 		ColumnLayout {
 			id: content
 			width: parent.width
-			spacing: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
 			RowLayout {
 				Layout.fillWidth: true
-				Layout.topMargin: 20 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 20 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				Button {
 					id: backButton
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * mainWindow.dp
+					Layout.preferredWidth: 24 * mainWindow.dp
 					icon.source: AppIcons.leftArrow
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
+					width: 24 * mainWindow.dp
+					height: 24 * mainWindow.dp
 					focus: true
 					visible: mainItem.container.depth > 1
-					Layout.rightMargin: 41 * DefaultStyle.dp
+					Layout.rightMargin: 41 * mainWindow.dp
 					onClicked: {
 						mainItem.container.pop()
 					}
@@ -71,13 +71,13 @@ Rectangle {
 				Loader {
 					Layout.alignment: Qt.AlignRight
 					sourceComponent: mainItem.topbarOptionalComponent
-					Layout.rightMargin: 34 * DefaultStyle.dp
+					Layout.rightMargin: 34 * mainWindow.dp
 				}
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				Layout.topMargin: 16 * DefaultStyle.dp
-				height: 1 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				height: 1 * mainWindow.dp
 				color: DefaultStyle.main2_500main
 			}
 			Loader {

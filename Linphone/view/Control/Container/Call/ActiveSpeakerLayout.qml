@@ -49,8 +49,8 @@ Item{
 
 	RowLayout{
 		anchors.fill: parent
-		anchors.rightMargin: 10 * DefaultStyle.dp
-		spacing: 16 * DefaultStyle.dp
+		anchors.rightMargin: 10 * mainWindow.dp
+		spacing: 16 * mainWindow.dp
 		
 		Control.StackView {
 			id: mainStackView
@@ -62,21 +62,21 @@ Item{
 			id: waitingForOthersComponent
 			Rectangle {
 				color: DefaultStyle.grey_600
-				radius: 15 * DefaultStyle.dp
+				radius: 15 * mainWindow.dp
 				ColumnLayout {
 					anchors.centerIn: parent
-					spacing: 22 * DefaultStyle.dp
+					spacing: 22 * mainWindow.dp
 					width: waitText.implicitWidth
 					Text {
 						id: waitText
 						text: qsTr("Waiting for other participants...")
-						Layout.preferredHeight: 67 * DefaultStyle.dp
+						Layout.preferredHeight: 67 * mainWindow.dp
 						Layout.alignment: Qt.AlignHCenter
 						horizontalAlignment: Text.AlignHCenter
 						color: DefaultStyle.grey_0
 						font {
-							pixelSize: 30 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
+							pixelSize: 30 * mainWindow.dp
+							weight: 300 * mainWindow.dp
 						}
 					}
 					Item {
@@ -87,10 +87,10 @@ Item{
 							icon.source: AppIcons.shareNetwork
 							contentImageColor: DefaultStyle.main2_400
 							text: qsTr("Share invitation")
-							topPadding: 11 * DefaultStyle.dp
-							bottomPadding: 11 * DefaultStyle.dp
-							leftPadding: 20 * DefaultStyle.dp
-							rightPadding: 20 * DefaultStyle.dp
+							topPadding: 11 * mainWindow.dp
+							bottomPadding: 11 * mainWindow.dp
+							leftPadding: 20 * mainWindow.dp
+							rightPadding: 20 * mainWindow.dp
 							anchors.centerIn: parent
 							textColor: DefaultStyle.main2_400
 							onClicked: {
@@ -129,23 +129,23 @@ Item{
 		ListView{
 			id: sideStickers
 			Layout.fillHeight: true
-			Layout.preferredWidth: 300 * DefaultStyle.dp
-			Layout.rightMargin: 10 * DefaultStyle.dp
-			Layout.bottomMargin: 10 * DefaultStyle.dp
+			Layout.preferredWidth: 300 * mainWindow.dp
+			Layout.rightMargin: 10 * mainWindow.dp
+			Layout.bottomMargin: 10 * mainWindow.dp
 			visible: allDevices.count > 2 || !!mainItem.conference?.core.isScreenSharingEnabled
-			//spacing: 15 * DefaultStyle.dp	// bugged? First item has twice margins
+			//spacing: 15 * mainWindow.dp	// bugged? First item has twice margins
 			model: allDevices
 			snapMode: ListView.SnapOneItem
 			clip: true
 			delegate: Item{	// Spacing workaround
 				visible: $modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 										&& ($modelData.core.address != activeSpeakerAddress || mainItem.conference?.core.isScreenSharingEnabled) || false
-				height: visible ? (180 + 15) * DefaultStyle.dp : 0
-				width: 300 * DefaultStyle.dp
+				height: visible ? (180 + 15) * mainWindow.dp : 0
+				width: 300 * mainWindow.dp
 				Sticker {
 					previewEnabled: index == 0	// before anchors for priority initialization
 					anchors.fill: parent
-					anchors.bottomMargin: 15 * DefaultStyle.dp// Spacing
+					anchors.bottomMargin: 15 * mainWindow.dp// Spacing
 					qmlName: 'S_'+index
 					visible: parent.visible
 					participantDevice: $modelData
@@ -162,12 +162,12 @@ Item{
 		previewEnabled: true
 		visible: !sideStickers.visible
 		onVisibleChanged: console.log(visible + " : " +allDevices.count)
-		height: 180 * DefaultStyle.dp
-		width: 300 * DefaultStyle.dp
+		height: 180 * mainWindow.dp
+		width: 300 * mainWindow.dp
 		anchors.right: mainItem.right
 		anchors.bottom: mainItem.bottom
-		anchors.rightMargin: 20 * DefaultStyle.dp
-		anchors.bottomMargin: 10 * DefaultStyle.dp
+		anchors.rightMargin: 20 * mainWindow.dp
+		anchors.bottomMargin: 10 * mainWindow.dp
 		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
 		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
 		property AccountProxy  accounts: AccountProxy {id: accountProxy
@@ -181,7 +181,7 @@ Item{
 			id: previewMouseArea
 			anchors.fill: parent
 			movableArea: mainItem
-			margin: 10 * DefaultStyle.dp
+			margin: 10 * mainWindow.dp
 			function resetPosition(){
 				preview.anchors.right = mainItem.right
 				preview.anchors.bottom = mainItem.bottom

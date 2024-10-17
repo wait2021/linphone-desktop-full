@@ -39,7 +39,7 @@ Item {
 		id: callTerminatedText
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.top: parent.top
-		anchors.topMargin: 25 * DefaultStyle.dp
+		anchors.topMargin: 25 * mainWindow.dp
 		z: 1
 		visible: callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.Released
 		text: callState === LinphoneEnums.CallState.End
@@ -53,8 +53,8 @@ Item {
 			: call && call.core.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
-			pixelSize: 22 * DefaultStyle.dp
-			weight: 300 * DefaultStyle.dp
+			pixelSize: 22 * mainWindow.dp
+			weight: 300 * mainWindow.dp
 		}
 	}
 	
@@ -90,8 +90,8 @@ Item {
 		// 		text: qsTr("Waiting for other participants...")
 		// 		color: DefaultStyle.frey_0
 		// 		font {
-		// 			pixelSize: 30 * DefaultStyle.dp
-		// 			weight: 300 * DefaultStyle.dp
+		// 			pixelSize: 30 * mainWindow.dp
+		// 			weight: 300 * mainWindow.dp
 		// 		}
 		// 	}
 		// 	Button {
@@ -99,8 +99,8 @@ Item {
 		// 		text: qsTr("Share invitation")
 		// 		icon.source: AppIcons.shareNetwork
 		// 		color: DefaultStyle.main2_400
-		// 		Layout.preferredWidth: 206 * DefaultStyle.dp
-		// 		Layout.preferredHeight: 47 * DefaultStyle.dp
+		// 		Layout.preferredWidth: 206 * mainWindow.dp
+		// 		Layout.preferredHeight: 47 * mainWindow.dp
 		// 	}
 		// }
 

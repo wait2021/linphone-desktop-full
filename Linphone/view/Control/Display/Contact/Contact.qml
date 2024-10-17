@@ -17,7 +17,7 @@ Rectangle{
 	signal backgroundClicked()
 	signal edit()
 	
-	height: 45 * DefaultStyle.dp
+	height: 45 * mainWindow.dp
 	MouseArea{
 		anchors.fill: parent
 		onClicked: mainItem.backgroundClicked()
@@ -26,11 +26,11 @@ Rectangle{
 		anchors.fill: parent
 		spacing: 0
 		RowLayout {
-			spacing: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
 			Avatar{
 				id: avatar
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
+				Layout.preferredWidth: 45 * mainWindow.dp
+				Layout.preferredHeight: 45 * mainWindow.dp
 				account: mainItem.account
 				MouseArea{
 					anchors.fill: parent
@@ -38,9 +38,9 @@ Rectangle{
 				}
 			}
 			Item {
-				Layout.preferredWidth: 200 * DefaultStyle.dp
+				Layout.preferredWidth: 200 * mainWindow.dp
 				Layout.fillHeight: true
-				Layout.rightMargin: 10 * DefaultStyle.dp
+				Layout.rightMargin: 10 * mainWindow.dp
 				ContactDescription{
 					id: description
 					anchors.fill: parent
@@ -50,18 +50,18 @@ Rectangle{
 		}
 		Control.Control {
 			id: registrationStatusItem
-			Layout.minimumWidth: 49 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
-			topPadding: 4 * DefaultStyle.dp
-			bottomPadding: 4 * DefaultStyle.dp
-			leftPadding: 8 * DefaultStyle.dp
-			rightPadding: 8 * DefaultStyle.dp
-			Layout.preferredWidth: text.implicitWidth + (2 * 8 * DefaultStyle.dp)
+			Layout.minimumWidth: 49 * mainWindow.dp
+			Layout.preferredHeight: 24 * mainWindow.dp
+			topPadding: 4 * mainWindow.dp
+			bottomPadding: 4 * mainWindow.dp
+			leftPadding: 8 * mainWindow.dp
+			rightPadding: 8 * mainWindow.dp
+			Layout.preferredWidth: text.implicitWidth + (2 * 8 * mainWindow.dp)
 			background: Rectangle{
 				id: registrationStatus
 				anchors.fill: parent
 				color: DefaultStyle.main2_200
-				radius: 90 * DefaultStyle.dp
+				radius: 90 * mainWindow.dp
 			}
 			contentItem: Text {
 				id: text
@@ -83,8 +83,8 @@ Rectangle{
 				// 	repeat: true
 				// 	onTriggered: text.mode = (++text.mode) % 4
 				// }
-				font.weight: 300 * DefaultStyle.dp
-				font.pixelSize: 12 * DefaultStyle.dp
+				font.weight: 300 * mainWindow.dp
+				font.pixelSize: 12 * mainWindow.dp
 				color: mode == 0 
 						? DefaultStyle.success_500main
 						: mode == 1
@@ -102,31 +102,31 @@ Rectangle{
 			}
 		}
 		Item{
-			Layout.preferredWidth: 26 * DefaultStyle.dp
-			Layout.preferredHeight: 26 * DefaultStyle.dp
+			Layout.preferredWidth: 26 * mainWindow.dp
+			Layout.preferredHeight: 26 * mainWindow.dp
 			Layout.fillHeight: true
-			Layout.leftMargin: 40 * DefaultStyle.dp
+			Layout.leftMargin: 40 * mainWindow.dp
 			visible: mainItem.account.core.unreadCallNotifications > 0
 			Rectangle{
 				id: unreadNotifications
 				anchors.verticalCenter: parent.verticalCenter
-				width: 26 * DefaultStyle.dp
-				height: 26 * DefaultStyle.dp
+				width: 26 * mainWindow.dp
+				height: 26 * mainWindow.dp
 				radius: width/2
 				color: DefaultStyle.danger_500main
 				border.color: DefaultStyle.grey_0
-				border.width: 2 * DefaultStyle.dp
+				border.width: 2 * mainWindow.dp
 				Text{
 					id: unreadCount
 					anchors.fill: parent
-					anchors.margins: 2 * DefaultStyle.dp
+					anchors.margins: 2 * mainWindow.dp
 					verticalAlignment: Text.AlignVCenter
 					horizontalAlignment: Text.AlignHCenter
 					color: DefaultStyle.grey_0
 					minimumPixelSize: 5
 					fontSizeMode: Text.Fit
-					font.pixelSize: 11 *  DefaultStyle.dp
-					font.weight: 700 *  DefaultStyle.dp
+					font.pixelSize: 11 *  mainWindow.dp
+					font.weight: 700 *  mainWindow.dp
 					text: mainItem.account.core.unreadCallNotifications >= 100 ? '99+' : mainItem.account.core.unreadCallNotifications
 				}
 			}
@@ -139,10 +139,10 @@ Rectangle{
 			}
 		}
 		Voicemail {
-			Layout.leftMargin: 18 * DefaultStyle.dp
-			Layout.rightMargin: 20 * DefaultStyle.dp
-			Layout.preferredWidth: 27 * DefaultStyle.dp
-			Layout.preferredHeight: 28 * DefaultStyle.dp
+			Layout.leftMargin: 18 * mainWindow.dp
+			Layout.rightMargin: 20 * mainWindow.dp
+			Layout.preferredWidth: 27 * mainWindow.dp
+			Layout.preferredHeight: 28 * mainWindow.dp
 			voicemailCount: mainItem.account.core.voicemailCount >= 100 ? '99+' : mainItem.account.core.voicemailCount
 			onClicked: {
 				if (mainItem.account.core.mwiServerAddress.length > 0)
@@ -155,11 +155,11 @@ Rectangle{
 		EffectImage {
 			id: manageAccount
 			imageSource: AppIcons.manageProfile
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
+			Layout.preferredWidth: 24 * mainWindow.dp
+			Layout.preferredHeight: 24 * mainWindow.dp
 			Layout.alignment: Qt.AlignHCenter
 			visible: !SettingsCpp.hideAccountSettings
-			width: 24 * DefaultStyle.dp
+			width: 24 * mainWindow.dp
 			fillMode: Image.PreserveAspectFit
 			colorizationColor: DefaultStyle.main2_500main
 			MouseArea{

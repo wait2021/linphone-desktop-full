@@ -17,9 +17,9 @@ Popup {
 	closePolicy: Popup.NoAutoClose
 	x : parent.x + parent.width - width
 	// y : parent.y + parent.height - height
-	rightMargin: 20 * DefaultStyle.dp
-	bottomMargin: 20 * DefaultStyle.dp
-	padding: 20 * DefaultStyle.dp
+	rightMargin: 20 * mainWindow.dp
+	bottomMargin: 20 * mainWindow.dp
+	padding: 20 * mainWindow.dp
 	underlineColor: mainItem.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
 	radius: 0
 	onHoveredChanged: {
@@ -34,22 +34,22 @@ Popup {
 		} 
 	}
 	contentItem: RowLayout {
-		spacing: 24 * DefaultStyle.dp
+		spacing: 24 * mainWindow.dp
 		EffectImage {
 			imageSource: mainItem.isSuccess ? AppIcons.smiley : AppIcons.smileySad
 			colorizationColor: mainItem.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
-			Layout.preferredWidth: 32 * DefaultStyle.dp
-			Layout.preferredHeight: 32 * DefaultStyle.dp
-			width: 32 * DefaultStyle.dp
-			height: 32 * DefaultStyle.dp
+			Layout.preferredWidth: 32 * mainWindow.dp
+			Layout.preferredHeight: 32 * mainWindow.dp
+			width: 32 * mainWindow.dp
+			height: 32 * mainWindow.dp
 		}
 		Rectangle {
-			Layout.preferredWidth: 1 * DefaultStyle.dp
+			Layout.preferredWidth: 1 * mainWindow.dp
 			Layout.preferredHeight: parent.height
 			color: DefaultStyle.main2_200
 		}
 		ColumnLayout {
-			spacing: 2 * DefaultStyle.dp
+			spacing: 2 * mainWindow.dp
 			RowLayout {
 				spacing: 0
 				Text {
@@ -57,15 +57,15 @@ Popup {
 					text: mainItem.title
 					color: mainItem.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 16 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 				}
 				Button {
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.preferredHeight: 20 * DefaultStyle.dp
-					icon.width: 20 * DefaultStyle.dp
-					icon.height: 20 * DefaultStyle.dp
+					Layout.preferredWidth: 20 * mainWindow.dp
+					Layout.preferredHeight: 20 * mainWindow.dp
+					icon.width: 20 * mainWindow.dp
+					icon.height: 20 * mainWindow.dp
 					Layout.alignment: Qt.AlignTop | Qt.AlignRight
 					visible: mainItem.hovered || hovered
 					background: Item{}
@@ -76,13 +76,13 @@ Popup {
 			Text {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
-				Layout.maximumWidth: 300 * DefaultStyle.dp
+				Layout.maximumWidth: 300 * mainWindow.dp
 				text: mainItem.description
 				wrapMode: Text.WordWrap
 				color: DefaultStyle.main2_500main
 				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+					pixelSize: 12 * mainWindow.dp
+					weight: 300 * mainWindow.dp
 				}
 			}
 		}

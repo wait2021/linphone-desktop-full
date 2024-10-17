@@ -6,7 +6,7 @@ import 'qrc:/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 ComboBox {
 	id: comboBox
-	Layout.preferredHeight: 49 * DefaultStyle.dp
+	Layout.preferredHeight: 49 * mainWindow.dp
 	property string propertyName
 	property var propertyOwner
 	property alias entries: comboBox.model

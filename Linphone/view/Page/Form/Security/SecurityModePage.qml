@@ -16,28 +16,28 @@ LoginLayout {
 			Text {
 				text: qsTr("Choisir votre mode")
 				font {
-					pixelSize: 36 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+					pixelSize: 36 * mainWindow.dp
+					weight: 800 * mainWindow.dp
 				}
 			}
 			Text {
 				text: qsTr("Vous pourrez changer de mode plus tard.")
 				font.bold: true
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+					pixelSize: 14 * mainWindow.dp
+					weight: 400 * mainWindow.dp
 				}
 			}
 		}
 	}
 
 	centerContent: ColumnLayout {
-		spacing: 80 * DefaultStyle.dp
+		spacing: 80 * mainWindow.dp
 		RowLayout {
 			id: radioButtonsLayout
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignHCenter
-			spacing: 70 * DefaultStyle.dp
+			spacing: 70 * mainWindow.dp
 			Repeater {
 				model: [
 					{checked: true, title: qsTr("Chiffrement de bout en bout"), text: qsTr("Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges."), imgUrl: AppIcons.chiffrement, color: DefaultStyle.info_500_main},
@@ -59,10 +59,10 @@ LoginLayout {
 			id: continueButton
 			property int selectedIndex: 0
 			Layout.alignment: Qt.AlignHCenter
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
-			leftPadding: 100 * DefaultStyle.dp
-			rightPadding: 100 * DefaultStyle.dp
+			topPadding: 11 * mainWindow.dp
+			bottomPadding: 11 * mainWindow.dp
+			leftPadding: 100 * mainWindow.dp
+			rightPadding: 100 * mainWindow.dp
 			text: qsTr("Continuer")
 			onClicked: mainItem.modeSelected(selectedIndex)
 		}

@@ -22,8 +22,8 @@ Text {
 		}
 	}
 	font {
-		pixelSize: 12 * DefaultStyle.dp
-		weight: 300 * DefaultStyle.dp
+		pixelSize: 12 * mainWindow.dp
+		weight: 300 * mainWindow.dp
 	}
 	Timer {
 		id: autoHideErrorMessage

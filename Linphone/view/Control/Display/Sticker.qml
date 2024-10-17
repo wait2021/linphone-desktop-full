@@ -24,7 +24,7 @@ Item {
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
-	property int radius: 15 * DefaultStyle.dp
+	property int radius: 15 * mainWindow.dp
 	property bool remoteIsPaused: participantDevice
 		? participantDevice.core.isPaused
 		: previewEnabled
@@ -69,7 +69,7 @@ Item {
 		radius: mainItem.radius
 		anchors.fill: parent
 		border.color: DefaultStyle.main2_200
-		border.width: mainItem.displayBorder ? 3 * DefaultStyle.dp : 0
+		border.width: mainItem.displayBorder ? 3 * mainWindow.dp : 0
 		property int minSize: Math.min(height, width)
 		Item {
 			id: noCameraLayout
@@ -77,7 +77,7 @@ Item {
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
 			ColumnLayout {
 				anchors.top: parent.top
-				anchors.topMargin: 81 * DefaultStyle.dp
+				anchors.topMargin: 81 * mainWindow.dp
 				anchors.horizontalCenter: parent.horizontalCenter
 				// Layout.alignment: Qt.AlignHCenter |Qt.AlignTop
 				spacing: 0
@@ -89,8 +89,8 @@ Item {
 				BusyIndicator {
 					indicatorColor: DefaultStyle.main2_100
 					Layout.alignment: Qt.AlignHCenter
-					indicatorHeight: 27 * DefaultStyle.dp
-					indicatorWidth: 27 * DefaultStyle.dp
+					indicatorHeight: 27 * mainWindow.dp
+					indicatorWidth: 27 * mainWindow.dp
 				}
 				Timer {
 					id: waitingTimer
@@ -107,10 +107,10 @@ Item {
 					color: DefaultStyle.grey_0
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
-					Layout.topMargin: 25 * DefaultStyle.dp
+					Layout.topMargin: 25 * mainWindow.dp
 					font {
-						pixelSize: 30 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+						pixelSize: 30 * mainWindow.dp
+						weight: 300 * mainWindow.dp
 					}
 					Component.onCompleted: {
 						waitingTimer.restart()
@@ -123,7 +123,7 @@ Item {
 				anchors.centerIn: parent
 				height: mainItem.conference 
 					? background.minSize * 142 / 372
-					: 120 * DefaultStyle.dp
+					: 120 * mainWindow.dp
 				width: height
 				Avatar{
 					id: avatar
@@ -139,29 +139,29 @@ Item {
 					spacing: 0
 					visible: mainItem.participantDevice && (mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Joining || mainItem.participantDevice.core.state == LinphoneEnums.ParticipantDeviceState.Alerting) || false
 					BusyIndicator {
-						Layout.preferredHeight: 42 * DefaultStyle.dp
+						Layout.preferredHeight: 42 * mainWindow.dp
 						indicatorColor: DefaultStyle.main2_100
 						Layout.alignment: Qt.AlignHCenter
-						indicatorHeight: 42 * DefaultStyle.dp
-						indicatorWidth: 42 * DefaultStyle.dp
+						indicatorHeight: 42 * mainWindow.dp
+						indicatorWidth: 42 * mainWindow.dp
 					}
 					Text {
-						Layout.preferredHeight: 27 * DefaultStyle.dp
-						Layout.topMargin: 15 * DefaultStyle.dp // (84-27)-42
+						Layout.preferredHeight: 27 * mainWindow.dp
+						Layout.topMargin: 15 * mainWindow.dp // (84-27)-42
 						text: qsTr('rejoint...')
 						color: DefaultStyle.grey_0
 						Layout.alignment: Qt.AlignHCenter
 						horizontalAlignment: Text.AlignHCenter
 						font {
-							pixelSize: 20 * DefaultStyle.dp
-							weight: 500 * DefaultStyle.dp
+							pixelSize: 20 * mainWindow.dp
+							weight: 500 * mainWindow.dp
 						}
 					}
 				}
 			}
 			ColumnLayout {
 				anchors.centerIn: parent
-				spacing: 12 * DefaultStyle.dp
+				spacing: 12 * mainWindow.dp
 				visible: mainItem.remoteIsPaused
 				EffectImage {
 					imageSource: AppIcons.pause
@@ -175,8 +175,8 @@ Item {
 					Layout.alignment: Qt.AlignHCenter
 					text: qsTr("En pause")
 					font {
-						pixelSize: 20 * DefaultStyle.dp
-						weight: 500 * DefaultStyle.dp
+						pixelSize: 20 * mainWindow.dp
+						weight: 500 * mainWindow.dp
 					}
 				}
 			}
@@ -185,15 +185,15 @@ Item {
 				visible: mainItem.displayAll && !mainItem.remoteIsPaused && !mainItem.conference
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.top: centerItem.bottom
-				anchors.topMargin: 21 * DefaultStyle.dp
+				anchors.topMargin: 21 * mainWindow.dp
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter
 					text: mainItem.displayName
 					color: DefaultStyle.grey_0
 					font {
-						pixelSize: 22 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+						pixelSize: 22 * mainWindow.dp
+						weight: 300 * mainWindow.dp
 						capitalization: Font.Capitalize
 					}
 				}
@@ -204,8 +204,8 @@ Item {
 					text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 					color: DefaultStyle.grey_0
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
+						pixelSize: 14 * mainWindow.dp
+						weight: 300 * mainWindow.dp
 					}
 				}
 			}
@@ -268,8 +268,8 @@ Item {
 		Text {
 			anchors.left: parent.left
 			anchors.bottom: parent.bottom
-			anchors.leftMargin: 10 * DefaultStyle.dp
-			anchors.bottomMargin: 10 * DefaultStyle.dp
+			anchors.leftMargin: 10 * mainWindow.dp
+			anchors.bottomMargin: 10 * mainWindow.dp
 			width: implicitWidth
 			property string _text: mainItem.displayName != ''
 				? mainItem.displayName
@@ -279,8 +279,8 @@ Item {
 			text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 			color: DefaultStyle.grey_0
 			font {
-				pixelSize: 14 * DefaultStyle.dp
-				weight: 500 * DefaultStyle.dp
+				pixelSize: 14 * mainWindow.dp
+				weight: 500 * mainWindow.dp
 			}
 		}
 	}
@@ -297,19 +297,19 @@ Item {
 	RowLayout{
 		anchors.right: parent.right
 		anchors.top: parent.top
-		anchors.rightMargin: 8 * DefaultStyle.dp
-		anchors.topMargin: 8 * DefaultStyle.dp
+		anchors.rightMargin: 8 * mainWindow.dp
+		anchors.topMargin: 8 * mainWindow.dp
 		
-		height: 18 * DefaultStyle.dp
+		height: 18 * mainWindow.dp
 		spacing: 0
 		CheckableButton {
 			id: muteIcon
 			icon.source: AppIcons.microphoneSlash
-			Layout.preferredWidth: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
-			Layout.preferredHeight: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+			Layout.preferredWidth: Math.min(mainItem.width / 16, 20 * mainWindow.dp)
+			Layout.preferredHeight: Math.min(mainItem.width / 16, 20 * mainWindow.dp)
 			visible: mainItem.mutedStatus
-			icon.width: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
-			icon.height: Math.min(mainItem.width / 16, 20 * DefaultStyle.dp)
+			icon.width: Math.min(mainItem.width / 16, 20 * mainWindow.dp)
+			icon.height: Math.min(mainItem.width / 16, 20 * mainWindow.dp)
 			enabled: false
 			contentImageColor: DefaultStyle.main2_500main
 			backgroundColor: DefaultStyle.grey_0

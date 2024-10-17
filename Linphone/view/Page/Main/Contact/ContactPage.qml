@@ -82,45 +82,45 @@ AbstractMainPage {
 		id: verifyDevicePopup
 		property string deviceName
 		property string deviceAddress
-		padding: 30 * DefaultStyle.dp
+		padding: 30 * mainWindow.dp
 		anchors.centerIn: parent
 		closePolicy: Control.Popup.CloseOnEscape
 		modal: true
 		onAboutToHide: neverDisplayAgainCheckbox.checked = false
 		contentItem: ColumnLayout {
-			spacing: 45 * DefaultStyle.dp
+			spacing: 45 * mainWindow.dp
 			ColumnLayout {
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 				Text {
 					text: qsTr("Augmenter la confiance")
 					font {
-						pixelSize: 22 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 22 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 				}
 				ColumnLayout {
-					spacing: 24 * DefaultStyle.dp
+					spacing: 24 * mainWindow.dp
 					Text {
-						Layout.preferredWidth: 529 * DefaultStyle.dp
+						Layout.preferredWidth: 529 * mainWindow.dp
 						text: qsTr("Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.")
-						font.pixelSize: 14 * DefaultStyle.dp
+						font.pixelSize: 14 * mainWindow.dp
 					}
 					Text {
-						Layout.preferredWidth: 529 * DefaultStyle.dp
+						Layout.preferredWidth: 529 * mainWindow.dp
 						text: qsTr("Vous êtes sur le point d’appeler “%1” voulez vous continuer ?").arg(verifyDevicePopup.deviceName)
-						font.pixelSize: 14 * DefaultStyle.dp
+						font.pixelSize: 14 * mainWindow.dp
 					}
 				}
 			}
 			RowLayout {
 				RowLayout {
-					spacing: 7 * DefaultStyle.dp
+					spacing: 7 * mainWindow.dp
 					CheckBox{
 						id: neverDisplayAgainCheckbox
 					}
 					Text {
 						text: qsTr("Ne plus afficher")
-						font.pixelSize: 14 * DefaultStyle.dp
+						font.pixelSize: 14 * mainWindow.dp
 						MouseArea {
 							anchors.fill: parent
 							onClicked: neverDisplayAgainCheckbox.toggle()
@@ -129,22 +129,22 @@ AbstractMainPage {
 				}
 				Item{Layout.fillWidth: true}
 				RowLayout {
-					spacing: 15 * DefaultStyle.dp
+					spacing: 15 * mainWindow.dp
 					Button {
 						inversedColors: true
 						text: qsTr("Annuler")
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
+						leftPadding: 20 * mainWindow.dp
+						rightPadding: 20 * mainWindow.dp
+						topPadding: 11 * mainWindow.dp
+						bottomPadding: 11 * mainWindow.dp
 						onClicked: verifyDevicePopup.close()
 					}
 					Button {
 						text: qsTr("Appeler")
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
+						leftPadding: 20 * mainWindow.dp
+						rightPadding: 20 * mainWindow.dp
+						topPadding: 11 * mainWindow.dp
+						bottomPadding: 11 * mainWindow.dp
 						onClicked: {
 							SettingsCpp.setDisplayDeviceCheckConfirmation(!neverDisplayAgainCheckbox.checked)
 							UtilsCpp.createCall(verifyDevicePopup.deviceAddress, {}, LinphoneEnums.MediaEncryption.Zrtp)
@@ -158,8 +158,8 @@ AbstractMainPage {
 
 	leftPanelContent: FocusScope {
 		id: leftPanel
-		property int leftMargin: 45 * DefaultStyle.dp
-		property int rightMargin: 39 * DefaultStyle.dp
+		property int leftMargin: 45 * mainWindow.dp
+		property int rightMargin: 39 * mainWindow.dp
 		Layout.fillHeight: true
 		Layout.fillWidth: true
 
@@ -175,8 +175,8 @@ AbstractMainPage {
 			Text {
 				text: qsTr("Contacts")
 				color: DefaultStyle.main2_700
-				font.pixelSize: 29 * DefaultStyle.dp
-				font.weight: 800 * DefaultStyle.dp
+				font.pixelSize: 29 * mainWindow.dp
+				font.weight: 800 * mainWindow.dp
 			}
 			Item {
 				Layout.fillWidth: true
@@ -186,10 +186,10 @@ AbstractMainPage {
 				background: Item {
 				}
 				icon.source: AppIcons.plusCircle
-				Layout.preferredWidth: 30 * DefaultStyle.dp
-				Layout.preferredHeight: 30 * DefaultStyle.dp
-				icon.width: 30 * DefaultStyle.dp
-				icon.height: 30 * DefaultStyle.dp
+				Layout.preferredWidth: 30 * mainWindow.dp
+				Layout.preferredHeight: 30 * mainWindow.dp
+				icon.width: 30 * mainWindow.dp
+				icon.height: 30 * mainWindow.dp
 				onClicked: {
 					mainItem.createContact("", "")
 				}
@@ -203,13 +203,13 @@ AbstractMainPage {
 			anchors.left: leftPanel.left
 			anchors.bottom: leftPanel.bottom
 			enabled: mainItem.leftPanelEnabled
-			spacing: 38 * DefaultStyle.dp
+			spacing: 38 * mainWindow.dp
 			SearchBar {
 				id: searchBar
 				visible: contactList.model.sourceModel.count != 0
 				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
-				Layout.topMargin: 18 * DefaultStyle.dp
+				Layout.topMargin: 18 * mainWindow.dp
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
 				KeyNavigation.up: createContactButton
@@ -229,15 +229,15 @@ AbstractMainPage {
 					ColumnLayout {
 						id: content
 						width: parent.width
-						spacing: 15 * DefaultStyle.dp
+						spacing: 15 * mainWindow.dp
 						Text {
 							visible: contactList.count === 0 && favoriteList.count === 0
 							Layout.alignment: Qt.AlignHCenter
-							Layout.topMargin: 137 * DefaultStyle.dp
+							Layout.topMargin: 137 * mainWindow.dp
 							text: qsTr("Aucun contact")
 							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 16 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 						}
 						ColumnLayout {
@@ -245,14 +245,14 @@ AbstractMainPage {
 							onVisibleChanged: if (visible && !favoriteList.visible) favoriteList.visible = true
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 18 * DefaultStyle.dp
+							spacing: 18 * mainWindow.dp
 							RowLayout {
 								spacing: 0
 								Text {
 									text: qsTr("Favoris")
 									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
+										pixelSize: 16 * mainWindow.dp
+										weight: 800 * mainWindow.dp
 									}
 								}
 								Item {
@@ -262,10 +262,10 @@ AbstractMainPage {
 									id: favoriteExpandButton
 									background: Item{}
 									icon.source: favoriteList.visible ? AppIcons.upArrow :						  AppIcons.downArrow
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
+									Layout.preferredWidth: 24 * mainWindow.dp
+									Layout.preferredHeight: 24 * mainWindow.dp
+									icon.width: 24 * mainWindow.dp
+									icon.height: 24 * mainWindow.dp
 									onClicked: favoriteList.visible = !favoriteList.visible
 									KeyNavigation.up: searchBar
 									KeyNavigation.down: favoriteList
@@ -298,14 +298,14 @@ AbstractMainPage {
 							onVisibleChanged: if (visible && !contactList.visible) contactList.visible = true
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 16 * DefaultStyle.dp
+							spacing: 16 * mainWindow.dp
 							RowLayout {
 								spacing: 0
 								Text {
 									text: qsTr("Contacts")
 									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
+										pixelSize: 16 * mainWindow.dp
+										weight: 800 * mainWindow.dp
 									}
 								}
 								Item {
@@ -315,10 +315,10 @@ AbstractMainPage {
 									id: contactExpandButton
 									background: Item{}
 									icon.source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
+									Layout.preferredWidth: 24 * mainWindow.dp
+									Layout.preferredHeight: 24 * mainWindow.dp
+									icon.width: 24 * mainWindow.dp
+									icon.height: 24 * mainWindow.dp
 									onClicked: contactList.visible = !contactList.visible
 									KeyNavigation.up: favoriteList.visible ? favoriteList : searchBar
 									KeyNavigation.down: contactList
@@ -361,7 +361,7 @@ AbstractMainPage {
 				ScrollBar {
 					id: contactsScrollbar
 					Layout.fillHeight: true
-					Layout.rightMargin: 8 * DefaultStyle.dp
+					Layout.rightMargin: 8 * mainWindow.dp
 					height: listLayout.height
 					active: true
 					interactive: true
@@ -382,19 +382,19 @@ AbstractMainPage {
 			RowLayout {
 				visible: mainItem.selectedContact != undefined
 				anchors.fill: parent
-				anchors.topMargin: 45 * DefaultStyle.dp
-				anchors.bottomMargin: 23 * DefaultStyle.dp
+				anchors.topMargin: 45 * mainWindow.dp
+				anchors.bottomMargin: 23 * mainWindow.dp
 				ContactLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 					contact: mainItem.selectedContact
-					Layout.preferredWidth: 360 * DefaultStyle.dp
+					Layout.preferredWidth: 360 * mainWindow.dp
 					buttonContent: Button {
-						width: 24 * DefaultStyle.dp
-						height: 24 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+						width: 24 * mainWindow.dp
+						height: 24 * mainWindow.dp
+						icon.width: 24 * mainWindow.dp
+						icon.height: 24 * mainWindow.dp
 						background: Item{}
 						onClicked: mainItem.editContact(mainItem.selectedContact)
 						icon.source: AppIcons.pencil
@@ -402,57 +402,57 @@ AbstractMainPage {
 					}
 					detailContent: ColumnLayout {
 						Layout.fillWidth: false
-						Layout.preferredWidth: 360 * DefaultStyle.dp
-						spacing: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 360 * mainWindow.dp
+						spacing: 32 * mainWindow.dp
 						ColumnLayout {
-							spacing: 9 * DefaultStyle.dp
+							spacing: 9 * mainWindow.dp
 							Text {
-								Layout.leftMargin: 10 * DefaultStyle.dp
+								Layout.leftMargin: 10 * mainWindow.dp
 								text: qsTr("Informations")
 								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+									pixelSize: 16 * mainWindow.dp
+									weight: 800 * mainWindow.dp
 								}
 							}
 							
 							RoundedPane {
-								Layout.preferredHeight: Math.min(226 * DefaultStyle.dp, addrList.contentHeight + topPadding + bottomPadding)
-								height: Math.min(226 * DefaultStyle.dp, addrList.contentHeight)
+								Layout.preferredHeight: Math.min(226 * mainWindow.dp, addrList.contentHeight + topPadding + bottomPadding)
+								height: Math.min(226 * mainWindow.dp, addrList.contentHeight)
 								Layout.fillWidth: true
-								topPadding: 12 * DefaultStyle.dp
-								bottomPadding: 12 * DefaultStyle.dp
-								leftPadding: 20 * DefaultStyle.dp
-								rightPadding: 20 * DefaultStyle.dp
+								topPadding: 12 * mainWindow.dp
+								bottomPadding: 12 * mainWindow.dp
+								leftPadding: 20 * mainWindow.dp
+								rightPadding: 20 * mainWindow.dp
 								contentItem: ListView {
 									id: addrList
-									width: 360 * DefaultStyle.dp
+									width: 360 * mainWindow.dp
 									height: contentHeight
 									clip: true
-									spacing: 9 * DefaultStyle.dp
+									spacing: 9 * mainWindow.dp
 									model: VariantList {
 										model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAddresses : []
 									}
 									delegate: Item {
 										width: addrList.width
-										height: 46 * DefaultStyle.dp
+										height: 46 * mainWindow.dp
 
 										ColumnLayout {
 											anchors.fill: parent
-											// anchors.topMargin: 5 * DefaultStyle.dp
+											// anchors.topMargin: 5 * mainWindow.dp
 											RowLayout {
 												Layout.fillWidth: true
 												// Layout.fillHeight: true
 												// Layout.alignment: Qt.AlignVCenter
-												// Layout.topMargin: 10 * DefaultStyle.dp
-												// Layout.bottomMargin: 10 * DefaultStyle.dp
+												// Layout.topMargin: 10 * mainWindow.dp
+												// Layout.bottomMargin: 10 * mainWindow.dp
 												ColumnLayout {
 													Layout.fillWidth: true
 													Text {
 														Layout.fillWidth: true
 														text: modelData.label
 														font {
-															pixelSize: 13 * DefaultStyle.dp
-															weight: 700 * DefaultStyle.dp
+															pixelSize: 13 * mainWindow.dp
+															weight: 700 * mainWindow.dp
 														}
 													}
 													Text {
@@ -460,8 +460,8 @@ AbstractMainPage {
 														property string _text: modelData.address
 														text: SettingsCpp.onlyDisplaySipUriUsername ? UtilsCpp.getUsername(_text) : _text
 														font {
-															pixelSize: 14 * DefaultStyle.dp
-															weight: 400 * DefaultStyle.dp
+															pixelSize: 14 * mainWindow.dp
+															weight: 400 * mainWindow.dp
 														}
 													}
 												}
@@ -470,13 +470,13 @@ AbstractMainPage {
 												}
 												Button {
 													background: Item{}
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
+													Layout.preferredWidth: 24 * mainWindow.dp
+													Layout.preferredHeight: 24 * mainWindow.dp
 													icon.source: AppIcons.phone
-													width: 24 * DefaultStyle.dp
-													height: 24 * DefaultStyle.dp
-													icon.width: 24 * DefaultStyle.dp
-													icon.height: 24 * DefaultStyle.dp
+													width: 24 * mainWindow.dp
+													height: 24 * mainWindow.dp
+													icon.width: 24 * mainWindow.dp
+													icon.height: 24 * mainWindow.dp
 													onClicked: {
 														UtilsCpp.createCall(modelData.address)
 													}
@@ -486,9 +486,9 @@ AbstractMainPage {
 											Rectangle {
 												visible: index != addrList.model.count - 1
 												Layout.fillWidth: true
-												Layout.preferredHeight: 1 * DefaultStyle.dp
-												Layout.rightMargin: 3 * DefaultStyle.dp
-												Layout.leftMargin: 3 * DefaultStyle.dp
+												Layout.preferredHeight: 1 * mainWindow.dp
+												Layout.rightMargin: 3 * mainWindow.dp
+												Layout.leftMargin: 3 * mainWindow.dp
 												color: DefaultStyle.main2_200
 												clip: true
 											}
@@ -500,47 +500,47 @@ AbstractMainPage {
 						RoundedPane {
 							visible: companyText.text.length != 0 || jobText.text.length != 0
 							Layout.fillWidth: true
-							topPadding: 17 * DefaultStyle.dp
-							bottomPadding: 17 * DefaultStyle.dp
-							leftPadding: 20 * DefaultStyle.dp
-							rightPadding: 20 * DefaultStyle.dp
+							topPadding: 17 * mainWindow.dp
+							bottomPadding: 17 * mainWindow.dp
+							leftPadding: 20 * mainWindow.dp
+							rightPadding: 20 * mainWindow.dp
 							// Layout.fillHeight: true
 
 							contentItem: ColumnLayout {
-								// height: 100 * DefaultStyle.dp
+								// height: 100 * mainWindow.dp
 								RowLayout {
-									height: 50 * DefaultStyle.dp
+									height: 50 * mainWindow.dp
 									Text {
 										text: qsTr("Company :")
 										font {
-											pixelSize: 13 * DefaultStyle.dp
-											weight: 700 * DefaultStyle.dp
+											pixelSize: 13 * mainWindow.dp
+											weight: 700 * mainWindow.dp
 										}
 									}
 									Text {
 										id: companyText
 										text: mainItem.selectedContact && mainItem.selectedContact.core.organization
 										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
+											pixelSize: 14 * mainWindow.dp
+											weight: 400 * mainWindow.dp
 										}
 									}
 								}
 								RowLayout {
-									height: 50 * DefaultStyle.dp
+									height: 50 * mainWindow.dp
 									Text {
 										text: qsTr("Job :")
 										font {
-											pixelSize: 13 * DefaultStyle.dp
-											weight: 700 * DefaultStyle.dp
+											pixelSize: 13 * mainWindow.dp
+											weight: 700 * mainWindow.dp
 										}
 									}
 									Text {
 										id: jobText
 										text: mainItem.selectedContact && mainItem.selectedContact.core.job
 										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 400 * DefaultStyle.dp
+											pixelSize: 14 * mainWindow.dp
+											weight: 400 * mainWindow.dp
 										}
 									}
 								}
@@ -550,27 +550,27 @@ AbstractMainPage {
 								Text {
 									text: qsTr("Medias")
 									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
+										pixelSize: 16 * mainWindow.dp
+										weight: 800 * mainWindow.dp
 									}
 								}
 								Button {
 									Rectangle {
 										anchors.fill: parent
 										color: DefaultStyle.grey_0
-										radius: 15 * DefaultStyle.dp
+										radius: 15 * mainWindow.dp
 									}
 									contentItem: RowLayout {
 										Image {
-											Layout.preferredWidth: 24 * DefaultStyle.dp
-											Layout.preferredHeight: 24 * DefaultStyle.dp
+											Layout.preferredWidth: 24 * mainWindow.dp
+											Layout.preferredHeight: 24 * mainWindow.dp
 											source: AppIcons.shareNetwork
 										}
 										Text {
 											text: qsTr("Show media shared")
 											font {
-												pixelSize: 14 * DefaultStyle.dp
-												weight: 400 * DefaultStyle.dp
+												pixelSize: 14 * mainWindow.dp
+												weight: 400 * mainWindow.dp
 											}
 										}
 									}
@@ -581,28 +581,28 @@ AbstractMainPage {
 					}
 				}
 				ColumnLayout {
-					spacing: 10 * DefaultStyle.dp
-					Layout.rightMargin: 90 * DefaultStyle.dp
+					spacing: 10 * mainWindow.dp
+					Layout.rightMargin: 90 * mainWindow.dp
 					ColumnLayout {
 						RowLayout {
 							Text {
 								text: qsTr("Confiance")
-								Layout.leftMargin: 10 * DefaultStyle.dp
+								Layout.leftMargin: 10 * mainWindow.dp
 								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+									pixelSize: 16 * mainWindow.dp
+									weight: 800 * mainWindow.dp
 								}
 							}
 						}
 						RoundedPane {
-							Layout.preferredWidth: 360 * DefaultStyle.dp
+							Layout.preferredWidth: 360 * mainWindow.dp
 							contentItem: ColumnLayout {
-								spacing: 13 * DefaultStyle.dp
+								spacing: 13 * mainWindow.dp
 								Text {
 									text: qsTr("Niveau de confiance - Appareils vérifiés")
 									font {
-										pixelSize: 13 * DefaultStyle.dp
-										weight: 700 * DefaultStyle.dp
+										pixelSize: 13 * mainWindow.dp
+										weight: 700 * mainWindow.dp
 									}
 								}
 								Text {
@@ -611,34 +611,34 @@ AbstractMainPage {
 								}
 								ProgressBar {
 									visible: deviceList.count > 0
-									Layout.preferredWidth: 320 * DefaultStyle.dp
-									Layout.preferredHeight: 28 * DefaultStyle.dp
+									Layout.preferredWidth: 320 * mainWindow.dp
+									Layout.preferredHeight: 28 * mainWindow.dp
 									value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0
 								}
 								ListView {
 									id: deviceList
 									Layout.fillWidth: true
-									Layout.preferredHeight: Math.min(200 * DefaultStyle.dp, contentHeight)
+									Layout.preferredHeight: Math.min(200 * mainWindow.dp, contentHeight)
 									clip: true
 									model: mainItem.selectedContact ? mainItem.selectedContact.core.devices : []
-									spacing: 16 * DefaultStyle.dp
+									spacing: 16 * mainWindow.dp
 									delegate: RowLayout {
 										id: deviceDelegate
 										width: deviceList.width
-										height: 30 * DefaultStyle.dp
+										height: 30 * mainWindow.dp
 										property var callObj
 										property CallGui deviceCall: callObj ? callObj.value : null
 										property string deviceName: modelData.name.length != 0 ? modelData.name : qsTr("Appareil sans nom")
 										Text {
 											text: deviceDelegate.deviceName
-											font.pixelSize: 14 * DefaultStyle.dp
+											font.pixelSize: 14 * mainWindow.dp
 										}
 										Item{Layout.fillWidth: true}
 										Image{
 											visible: modelData.securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 											source: AppIcons.trusted
-											width: 22 * DefaultStyle.dp
-											height: 22 * DefaultStyle.dp
+											width: 22 * mainWindow.dp
+											height: 22 * mainWindow.dp
 										}
 										
 										Button {
@@ -647,12 +647,12 @@ AbstractMainPage {
 											icon.source: AppIcons.warningCircle
 											contentImageColor: DefaultStyle.main1_500_main
 											textColor: DefaultStyle.main1_500_main
-											textSize: 13 * DefaultStyle.dp
+											textSize: 13 * mainWindow.dp
 											text: qsTr("Vérifier")
-											leftPadding: 12 * DefaultStyle.dp
-											rightPadding: 12 * DefaultStyle.dp
-											topPadding: 6 * DefaultStyle.dp
-											bottomPadding: 6 * DefaultStyle.dp
+											leftPadding: 12 * mainWindow.dp
+											rightPadding: 12 * mainWindow.dp
+											topPadding: 6 * mainWindow.dp
+											bottomPadding: 6 * mainWindow.dp
 											onClicked: {
 												if (SettingsCpp.getDisplayDeviceCheckConfirmation()) {
 													verifyDevicePopup.deviceName = deviceDelegate.deviceName
@@ -671,27 +671,27 @@ AbstractMainPage {
 						}
 					}
 					ColumnLayout {
-						spacing: 9 * DefaultStyle.dp
+						spacing: 9 * mainWindow.dp
 						Text {
-							Layout.preferredHeight: 22 * DefaultStyle.dp
-							Layout.leftMargin: 10 * DefaultStyle.dp
+							Layout.preferredHeight: 22 * mainWindow.dp
+							Layout.leftMargin: 10 * mainWindow.dp
 							text: qsTr("Other actions")
 							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 16 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 						}
 						RoundedPane {
-							Layout.preferredWidth: 360 * DefaultStyle.dp
+							Layout.preferredWidth: 360 * mainWindow.dp
 							contentItem: ColumnLayout {
 								width: parent.width
 								
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 50 * mainWindow.dp
+									iconSize: 24 * mainWindow.dp
 									iconSource: AppIcons.pencil
 									text: qsTr("Edit")
 									onClicked: mainItem.editContact(mainItem.selectedContact)
@@ -699,34 +699,34 @@ AbstractMainPage {
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 1 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 1 * mainWindow.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 50 * mainWindow.dp
+									iconSize: 24 * mainWindow.dp
 									iconSource: mainItem.selectedContact && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
 									text: mainItem.selectedContact && mainItem.selectedContact.core.starred ? qsTr("Remove from favorites") : qsTr("Add to favorites")
 									onClicked: if (mainItem.selectedContact) mainItem.selectedContact.core.lSetStarred(!mainItem.selectedContact.core.starred)
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 1 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 1 * mainWindow.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 50 * mainWindow.dp
+									iconSize: 24 * mainWindow.dp
 									iconSource: AppIcons.shareNetwork
 									text: qsTr("Partager")
 									onClicked: {
@@ -742,51 +742,51 @@ AbstractMainPage {
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 1 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 1 * mainWindow.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 50 * mainWindow.dp
+									iconSize: 24 * mainWindow.dp
 									iconSource: AppIcons.bellSlash
 									text: qsTr("Mute")
 									onClicked: console.log("TODO : mute contact")
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 1 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 1 * mainWindow.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 50 * mainWindow.dp
+									iconSize: 24 * mainWindow.dp
 									iconSource: AppIcons.empty
 									text: qsTr("Block")
 									onClicked: console.log("TODO : block contact")
 								}
 								Rectangle {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 1 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 1 * mainWindow.dp
 									color: DefaultStyle.main2_200
 								}
 								IconLabelButton {
 									Layout.fillWidth: true
-									Layout.leftMargin: 15 * DefaultStyle.dp
-									Layout.rightMargin: 15 * DefaultStyle.dp
-									Layout.preferredHeight: 50 * DefaultStyle.dp
-									iconSize: 24 * DefaultStyle.dp
+									Layout.leftMargin: 15 * mainWindow.dp
+									Layout.rightMargin: 15 * mainWindow.dp
+									Layout.preferredHeight: 50 * mainWindow.dp
+									iconSize: 24 * mainWindow.dp
 									iconSource: AppIcons.trashCan
 									color: DefaultStyle.danger_500main
 									text: qsTr("Delete this contact")

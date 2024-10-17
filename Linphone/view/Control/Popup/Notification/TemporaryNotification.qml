@@ -4,13 +4,13 @@ import Linphone
 
 Control.Control {
 	id: mainItem
-	// width: 269 * DefaultStyle.dp
+	// width: 269 * mainWindow.dp
 	y: -height
 	z: 1
-	topPadding: 8 * DefaultStyle.dp
-	bottomPadding: 8 * DefaultStyle.dp
-	leftPadding: 37 * DefaultStyle.dp
-	rightPadding: 37 * DefaultStyle.dp
+	topPadding: 8 * mainWindow.dp
+	bottomPadding: 8 * mainWindow.dp
+	leftPadding: 37 * mainWindow.dp
+	rightPadding: 37 * mainWindow.dp
 	anchors.horizontalCenter: parent.horizontalCenter
 	clip: true
 
@@ -41,15 +41,15 @@ Control.Control {
 		anchors.fill: parent
 		color: DefaultStyle.grey_0
 		border.color: mainItem.contentColor
-		border.width:  1 * DefaultStyle.dp
-		radius: 50 * DefaultStyle.dp
+		border.width:  1 * mainWindow.dp
+		radius: 50 * mainWindow.dp
 	}
 	contentItem: RowLayout {
 		Image {
 			visible: mainItem.imageSource != undefined
 			source: mainItem.imageSource
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
+			Layout.preferredWidth: 24 * mainWindow.dp
+			Layout.preferredHeight: 24 * mainWindow.dp
 			fillMode: Image.PreserveAspectFit
 			Layout.fillWidth: true
 		}
@@ -58,7 +58,7 @@ Control.Control {
 			text: mainItem.text
 			Layout.fillWidth: true
 			font {
-				pixelSize: 14 * DefaultStyle.dp
+				pixelSize: 14 * mainWindow.dp
 			}
 		}
 	}

@@ -33,31 +33,31 @@ MainRightPanel {
 			mainItem.contact.core.undo()
 			mainItem.closeEdition()
 		}
-		width: 278 * DefaultStyle.dp
+		width: 278 * mainWindow.dp
 		text: qsTr("Les changements seront annulés. Souhaitez-vous continuer ?")
 	}
 
 	headerContent: [
 			Text {
 				anchors.left: parent.left
-				anchors.leftMargin: 31 * DefaultStyle.dp
+				anchors.leftMargin: 31 * mainWindow.dp
 				anchors.verticalCenter: parent.verticalCenter
 				text: mainItem.title
 				font {
-					pixelSize: 20 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+					pixelSize: 20 * mainWindow.dp
+					weight: 800 * mainWindow.dp
 				}
 			},
 			Button {
 				background: Item{}
 				anchors.right: parent.right
-				anchors.rightMargin: 41 * DefaultStyle.dp
+				anchors.rightMargin: 41 * mainWindow.dp
 				anchors.verticalCenter: parent.verticalCenter
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
+				width: 24 * mainWindow.dp
+				height: 24 * mainWindow.dp
 				icon.source: AppIcons.closeX
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+				icon.width: 24 * mainWindow.dp
+				icon.height: 24 * mainWindow.dp
 				onClicked: {
 					confirmDialog.open()
 				}
@@ -68,22 +68,22 @@ MainRightPanel {
 		anchors.fill: parent
 		spacing : 0
 		ColumnLayout {
-			spacing: 8 * DefaultStyle.dp
+			spacing: 8 * mainWindow.dp
 			Layout.alignment: Qt.AlignHCenter
-			Layout.topMargin: 69 * DefaultStyle.dp
+			Layout.topMargin: 69 * mainWindow.dp
 			Avatar {
 				contact: mainItem.contact
-				Layout.preferredWidth: 72 * DefaultStyle.dp
-				Layout.preferredHeight: 72 * DefaultStyle.dp
+				Layout.preferredWidth: 72 * mainWindow.dp
+				Layout.preferredHeight: 72 * mainWindow.dp
 				Layout.alignment: Qt.AlignHCenter
 			}
 			IconLabelButton {
 				id: addPictureButton
 				visible: !mainItem.contact || mainItem.contact.core.pictureUri.length === 0
 				Layout.preferredWidth: width
-				Layout.preferredHeight: 17 * DefaultStyle.dp
+				Layout.preferredHeight: 17 * mainWindow.dp
 				iconSource: AppIcons.camera
-				iconSize: 17 * DefaultStyle.dp
+				iconSize: 17 * mainWindow.dp
 				backgroundColor: "transparent"
 				text: qsTr("Ajouter une image")
 				KeyNavigation.down: editButton.visible ? editButton : givenNameEdit
@@ -95,9 +95,9 @@ MainRightPanel {
 				IconLabelButton {
 					id: editButton
 					Layout.preferredWidth: width
-					Layout.preferredHeight: 17 * DefaultStyle.dp
+					Layout.preferredHeight: 17 * mainWindow.dp
 					iconSource: AppIcons.pencil
-					iconSize: 17 * DefaultStyle.dp
+					iconSize: 17 * mainWindow.dp
 					backgroundColor: "transparent"
 					text: qsTr("Modifier")
 					KeyNavigation.down: givenNameEdit
@@ -116,9 +116,9 @@ MainRightPanel {
 				}
 				IconLabelButton {
 					id: removeButton
-					Layout.preferredHeight: 17 * DefaultStyle.dp
+					Layout.preferredHeight: 17 * mainWindow.dp
 					Layout.preferredWidth: width
-					iconSize: 17 * DefaultStyle.dp
+					iconSize: 17 * mainWindow.dp
 					iconSource: AppIcons.trashCan
 					backgroundColor: "transparent"
 					text: qsTr("Supprimer")
@@ -131,19 +131,19 @@ MainRightPanel {
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignHCenter
-			Layout.topMargin: 63 * DefaultStyle.dp
-			Layout.bottomMargin: 78 * DefaultStyle.dp
-			spacing: 100 * DefaultStyle.dp
+			Layout.topMargin: 63 * mainWindow.dp
+			Layout.bottomMargin: 78 * mainWindow.dp
+			spacing: 100 * mainWindow.dp
 			Flickable {
 				Layout.preferredWidth: contentWidth
 				Layout.fillHeight: true
-				Layout.leftMargin: 100 * DefaultStyle.dp
+				Layout.leftMargin: 100 * mainWindow.dp
 				contentWidth: content.implicitWidth
 				contentHeight: content.height
 				clip: true
 
 				ColumnLayout {
-					spacing: 20 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
 					anchors.fill: parent
 					FormItemLayout {
 						id: givenName
@@ -207,7 +207,7 @@ MainRightPanel {
 				id: addressesFlickable
 				Layout.preferredWidth: contentWidth
 				Layout.fillHeight: true
-				Layout.rightMargin: 76 * DefaultStyle.dp
+				Layout.rightMargin: 76 * mainWindow.dp
 				contentWidth: content.implicitWidth
 				contentHeight: content.implicitHeight
 				clip: true
@@ -229,7 +229,7 @@ MainRightPanel {
 					anchors.top: parent.top
 					anchors.bottom: parent.bottom
 					anchors.right: parent.right
-					anchors.leftMargin: 15 * DefaultStyle.dp
+					anchors.leftMargin: 15 * mainWindow.dp
 				}
 				Control.ScrollBar.horizontal: Control.ScrollBar{
 					visible: false
@@ -237,7 +237,7 @@ MainRightPanel {
 				ColumnLayout {
 					id: content
 					anchors.fill: parent
-					spacing: 20 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
 					Repeater {
 						id: addressesList
 						model: VariantList {
@@ -247,7 +247,7 @@ MainRightPanel {
 							label: modelData.label
 							contentItem: RowLayout {
 								id: addressLayout
-								spacing: 10 * DefaultStyle.dp
+								spacing: 10 * mainWindow.dp
 								function updateFocus(event){
 									if(event.key == Qt.Key_Up){
 										if(index - 1 >=0 )
@@ -279,15 +279,15 @@ MainRightPanel {
 								}
 								Button {
 									id: removeAddressButton
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
+									Layout.preferredWidth: 24 * mainWindow.dp
+									Layout.preferredHeight: 24 * mainWindow.dp
 									Layout.alignment: Qt.AlignVCenter
 									background: Item{}
 									icon.source: AppIcons.closeX
-									width: 24 * DefaultStyle.dp
-									height: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
+									width: 24 * mainWindow.dp
+									height: 24 * mainWindow.dp
+									icon.width: 24 * mainWindow.dp
+									icon.height: 24 * mainWindow.dp
 									KeyNavigation.left: addressTextField
 									Keys.onPressed: (event) => addressLayout.updateFocus(event)
 									onClicked: mainItem.contact.core.removeAddress(index)
@@ -297,7 +297,7 @@ MainRightPanel {
 					}
 					RowLayout {
 						onYChanged: addressesFlickable.ensureVisible(this)
-						spacing: 10 * DefaultStyle.dp
+						spacing: 10 * mainWindow.dp
 						FormItemLayout {
 							label: qsTr("Adresse SIP")
 							contentItem: TextField {
@@ -325,8 +325,8 @@ MainRightPanel {
 							}
 						}
 						Item {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 						}
 					}
 					Repeater {
@@ -339,7 +339,7 @@ MainRightPanel {
 							label: modelData.label
 							contentItem: RowLayout {
 								id: phoneNumberLayout
-								spacing: 10 * DefaultStyle.dp
+								spacing: 10 * mainWindow.dp
 								function updateFocus(event){
 									if(event.key == Qt.Key_Up){
 										if(index - 1 >=0 )
@@ -370,15 +370,15 @@ MainRightPanel {
 								}
 								Button {
 									id: removePhoneButton
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
+									Layout.preferredWidth: 24 * mainWindow.dp
+									Layout.preferredHeight: 24 * mainWindow.dp
 									Layout.alignment: Qt.AlignVCenter
 									background: Item{}
 									icon.source: AppIcons.closeX
-									width: 24 * DefaultStyle.dp
-									height: 24 * DefaultStyle.dp
-									icon.width: 24 * DefaultStyle.dp
-									icon.height: 24 * DefaultStyle.dp
+									width: 24 * mainWindow.dp
+									height: 24 * mainWindow.dp
+									icon.width: 24 * mainWindow.dp
+									icon.height: 24 * mainWindow.dp
 									KeyNavigation.left: phoneTextField
 									Keys.onPressed: (event) => phoneNumberLayout.updateFocus(event)
 									onClicked: mainItem.contact.core.removePhoneNumber(index)
@@ -388,7 +388,7 @@ MainRightPanel {
 					}
 					RowLayout {
 						onYChanged: addressesFlickable.ensureVisible(this)
-						spacing: 10 * DefaultStyle.dp
+						spacing: 10 * mainWindow.dp
 						FormItemLayout {
 							id: phoneNumberInput
 							label: qsTr("Phone")
@@ -417,8 +417,8 @@ MainRightPanel {
 							}
 						}
 						Item {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 						}
 					}
 					TemporaryText {
@@ -434,15 +434,15 @@ MainRightPanel {
 
 		Button {
 			id: saveButton
-			Layout.bottomMargin: 100 * DefaultStyle.dp
-			Layout.preferredWidth: 165 * DefaultStyle.dp
+			Layout.bottomMargin: 100 * mainWindow.dp
+			Layout.preferredWidth: 165 * mainWindow.dp
 			Layout.alignment: Qt.AlignHCenter
 			enabled: mainItem.contact && mainItem.contact.core.allAddresses.length > 0
 			text: mainItem.saveButtonText
-			leftPadding: 20 * DefaultStyle.dp
-			rightPadding: 20 * DefaultStyle.dp
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
+			leftPadding: 20 * mainWindow.dp
+			rightPadding: 20 * mainWindow.dp
+			topPadding: 11 * mainWindow.dp
+			bottomPadding: 11 * mainWindow.dp
 			KeyNavigation.up: phoneNumberInputTextField
 			KeyNavigation.down: givenNameEdit
 			onClicked: {

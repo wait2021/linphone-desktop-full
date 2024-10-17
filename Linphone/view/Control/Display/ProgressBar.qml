@@ -5,7 +5,7 @@ import Linphone
 ProgressBar {
 	id: mainItem
 
-	padding: 3 * DefaultStyle.dp
+	padding: 3 * mainWindow.dp
 	
 	property color backgroundColor: DefaultStyle.main2_100
 	property color innerColor: DefaultStyle.info_500_main
@@ -15,7 +15,7 @@ ProgressBar {
 
 	background: Rectangle {
 		color: mainItem.backgroundColor
-		radius: 50 * DefaultStyle.dp
+		radius: 50 * mainWindow.dp
 		anchors.fill: mainItem
 		width: mainItem.width
 		height: mainItem.height
@@ -23,7 +23,7 @@ ProgressBar {
 	contentItem: Item {
 		Rectangle {
 			color: mainItem.innerColor
-			radius: 50 * DefaultStyle.dp
+			radius: 50 * mainWindow.dp
 			width: mainItem.visualPosition * mainItem.width
 			height: parent.height
 			Text {
@@ -32,8 +32,8 @@ ProgressBar {
 				anchors.centerIn: parent
 				color: mainItem.innerTextColor
 				font {
-					pixelSize: 10 * DefaultStyle.dp
-					weight: 700 * DefaultStyle.dp
+					pixelSize: 10 * mainWindow.dp
+					weight: 700 * mainWindow.dp
 				}
 			}
 		}

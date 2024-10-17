@@ -25,20 +25,20 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		property int sideMargin: 45 * DefaultStyle.dp
-		spacing: 5 * DefaultStyle.dp
+		property int sideMargin: 45 * mainWindow.dp
+		spacing: 5 * mainWindow.dp
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			Button {
 				id: backButton
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				Layout.preferredWidth: 24 * DefaultStyle.dp
+				Layout.preferredHeight: 24 * mainWindow.dp
+				Layout.preferredWidth: 24 * mainWindow.dp
 				icon.source: AppIcons.leftArrow
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
+				width: 24 * mainWindow.dp
+				height: 24 * mainWindow.dp
 				focus: true
 				onClicked: {
 					mainItem.goBack()
@@ -62,7 +62,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			model: mainItem.families
-			Layout.topMargin: 41 * DefaultStyle.dp
+			Layout.topMargin: 41 * mainWindow.dp
 			Layout.leftMargin: leftPanel.sideMargin
 			property int selectedIndex: 0
 			activeFocusOnTab: true

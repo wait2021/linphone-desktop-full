@@ -16,24 +16,24 @@ Dialog {
 	onRejected: close()
 	modal: true
 	closePolicy: Popup.NoAutoClose
-	topPadding: 20 * DefaultStyle.dp
-	bottomPadding: 20 * DefaultStyle.dp
-	leftPadding: 20 * DefaultStyle.dp
-	rightPadding: 20 * DefaultStyle.dp
+	topPadding: 20 * mainWindow.dp
+	bottomPadding: 20 * mainWindow.dp
+	leftPadding: 20 * mainWindow.dp
+	rightPadding: 20 * mainWindow.dp
 	content: ColumnLayout {
-		spacing: 20 * DefaultStyle.dp
+		spacing: 20 * mainWindow.dp
 		id: contentLayout
 		Text {
 			Layout.fillWidth: true
-			Layout.preferredWidth: 250 * DefaultStyle.dp
+			Layout.preferredWidth: 250 * mainWindow.dp
 			Layout.alignment: Qt.AlignHCenter
 			horizontalAlignment: Text.AlignHCenter
 			wrapMode: Text.Wrap
 			text: qsTr("Impossible de vous authentifier. Merci de vérifier votre mot de passe.")
-			font.pixelSize: 16 * DefaultStyle.dp
+			font.pixelSize: 16 * mainWindow.dp
 		}
 		ColumnLayout {
-			spacing: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
 			FormItemLayout {
 				Layout.fillWidth: true
 				label: qsTr("Identité")
@@ -79,7 +79,7 @@ Dialog {
 	buttons: [
 		Button {
 			id: cancelButton
-			Layout.topMargin: 10 * DefaultStyle.dp
+			Layout.topMargin: 10 * mainWindow.dp
 			text: qsTr("Annuler")
 			inversedColors: true
 			onClicked: mainItem.rejected()
@@ -88,7 +88,7 @@ Dialog {
 		},
 		Button {
 			id: connectButton
-			Layout.topMargin: 10 * DefaultStyle.dp
+			Layout.topMargin: 10 * mainWindow.dp
 			text: qsTr("Se connecter")
 			KeyNavigation.up: passwordEdit
 			KeyNavigation.right: cancelButton

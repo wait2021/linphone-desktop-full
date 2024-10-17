@@ -11,14 +11,14 @@ Control.Slider {
     background: Item{
 		x: mainItem.leftPadding
 		y: mainItem.topPadding + mainItem.availableHeight / 2 - height / 2
-		implicitWidth: 200 * DefaultStyle.dp
-		implicitHeight: 4 * DefaultStyle.dp
+		implicitWidth: 200 * mainWindow.dp
+		implicitHeight: 4 * mainWindow.dp
 		width: mainItem.availableWidth
 		height: implicitHeight
 		Rectangle {
 			id: sliderBackground
 			anchors.fill: parent
-			radius: 30 * DefaultStyle.dp
+			radius: 30 * mainWindow.dp
 			// TODO : change the colors when mockup indicates their names
 			color: DefaultStyle.grey_850
 	
@@ -30,7 +30,7 @@ Control.Slider {
 					GradientStop { position: 0.0; color: "#FF9E79" }
 					GradientStop { position: 1.0; color: "#FE5E00" }
 				}
-				radius: 40 * DefaultStyle.dp
+				radius: 40 * mainWindow.dp
 			}
 		}
 		MultiEffect {
@@ -49,12 +49,12 @@ Control.Slider {
     handle: Item {
 		x: mainItem.leftPadding + mainItem.visualPosition * (mainItem.availableWidth - width)
 		y: mainItem.topPadding + mainItem.availableHeight / 2 - height / 2
-		implicitWidth: 16 * DefaultStyle.dp
-		implicitHeight: 16 * DefaultStyle.dp
+		implicitWidth: 16 * mainWindow.dp
+		implicitHeight: 16 * mainWindow.dp
 		Rectangle {
 			id: handleRect
 			anchors.fill: parent
-			radius: 30 * DefaultStyle.dp
+			radius: 30 * mainWindow.dp
 			color: DefaultStyle.grey_0
 		}
 		MultiEffect {

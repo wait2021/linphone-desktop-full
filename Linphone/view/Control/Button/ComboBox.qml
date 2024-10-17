@@ -13,9 +13,9 @@ Control.ComboBox {
 	// Layout.preferredHeight: mainItem.height
 	property alias listView: listView
 	property string constantImageSource
-	property int pixelSize: 14 * DefaultStyle.dp
-	property int weight: 400 * DefaultStyle.dp
-	property int leftMargin: 10 * DefaultStyle.dp
+	property int pixelSize: 14 * mainWindow.dp
+	property int weight: 400 * mainWindow.dp
+	property int leftMargin: 10 * mainWindow.dp
 	property bool oneLine: false
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 
@@ -46,7 +46,7 @@ Control.ComboBox {
 		Rectangle {
 			id: buttonBackground
 			anchors.fill: parent
-			radius: 63 * DefaultStyle.dp
+			radius: 63 * mainWindow.dp
 			color: mainItem.enabled ? DefaultStyle.grey_100 : DefaultStyle.grey_200
 			border.color: mainItem.enabled
 				? mainItem.activeFocus
@@ -68,14 +68,14 @@ Control.ComboBox {
 	}
 	contentItem: Item {
 		anchors.fill: parent
-		anchors.leftMargin: 10 * DefaultStyle.dp
-		anchors.rightMargin: indicImage.width + 10 * DefaultStyle.dp
+		anchors.leftMargin: 10 * mainWindow.dp
+		anchors.rightMargin: indicImage.width + 10 * mainWindow.dp
 		Image {
 			id: selectedItemImg
 			source: mainItem.constantImageSource ? mainItem.constantImageSource : ""
 			visible: source != ""
-			sourceSize.width: 24 * DefaultStyle.dp
-			width: visible ? 24 * DefaultStyle.dp : 0
+			sourceSize.width: 24 * mainWindow.dp
+			width: visible ? 24 * mainWindow.dp : 0
 			fillMode: Image.PreserveAspectFit
 			anchors.verticalCenter: parent.verticalCenter
 			anchors.left: parent.left
@@ -93,9 +93,9 @@ Control.ComboBox {
 				weight: mainItem.weight
 			}
 			anchors.left: selectedItemImg.right
-			anchors.leftMargin: selectedItemImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
+			anchors.leftMargin: selectedItemImg.visible ? 5 * mainWindow.dp : 10 * mainWindow.dp
 			anchors.right: parent.right
-			anchors.rightMargin: 20 * DefaultStyle.dp
+			anchors.rightMargin: 20 * mainWindow.dp
 			anchors.verticalCenter: parent.verticalCenter
 		}
 
@@ -118,10 +118,10 @@ Control.ComboBox {
 		id: indicImage
 		z: 1
 		anchors.right: parent.right
-		anchors.rightMargin: 10 * DefaultStyle.dp
+		anchors.rightMargin: 10 * mainWindow.dp
 		anchors.verticalCenter: parent.verticalCenter
 		source: AppIcons.downArrow
-		width: 14 * DefaultStyle.dp
+		width: 14 * mainWindow.dp
 		fillMode: Image.PreserveAspectFit
 	}
 
@@ -130,7 +130,7 @@ Control.ComboBox {
 		y: mainItem.height - 1
 		width: mainItem.width
 		implicitHeight: contentItem.implicitHeight
-		padding: 1 * DefaultStyle.dp
+		padding: 1 * mainWindow.dp
 		//height: Math.min(implicitHeight, 300)
 
 		onOpened: {
@@ -150,7 +150,7 @@ Control.ComboBox {
 			highlight: Rectangle {
 				width: listView.width
 				color: DefaultStyle.main2_200
-				radius: 15 * DefaultStyle.dp
+				radius: 15 * mainWindow.dp
 				y: listView.currentItem? listView.currentItem.y : 0
 			}
 			
@@ -171,12 +171,12 @@ Control.ComboBox {
 				Image {
 					id: delegateImg
 					visible: source != ""
-					width: visible ? 20 * DefaultStyle.dp : 0
-					sourceSize.width: 20 * DefaultStyle.dp
+					width: visible ? 20 * mainWindow.dp : 0
+					sourceSize.width: 20 * mainWindow.dp
 					source: typeof(modelData) != "undefined" && modelData.img ? modelData.img : ""
 					fillMode: Image.PreserveAspectFit
 					anchors.left: parent.left
-					anchors.leftMargin: visible ? 10 * DefaultStyle.dp : 0
+					anchors.leftMargin: visible ? 10 * mainWindow.dp : 0
 					anchors.verticalCenter: parent.verticalCenter
 				}
 
@@ -192,14 +192,14 @@ Control.ComboBox {
 					maximumLineCount: 1
 					wrapMode: Text.WrapAnywhere
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
+						pixelSize: 14 * mainWindow.dp
+						weight: 400 * mainWindow.dp
 					}
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: delegateImg.right
-					anchors.leftMargin: delegateImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
+					anchors.leftMargin: delegateImg.visible ? 5 * mainWindow.dp : 10 * mainWindow.dp
 					anchors.right: parent.right
-					anchors.rightMargin: 20 * DefaultStyle.dp
+					anchors.rightMargin: 20 * mainWindow.dp
 				}
 
 				MouseArea {
@@ -209,7 +209,7 @@ Control.ComboBox {
 					Rectangle {
 						anchors.fill: parent
 						opacity: 0.1
-						radius: 15 * DefaultStyle.dp
+						radius: 15 * mainWindow.dp
 						color: DefaultStyle.main2_500main
 						visible: parent.containsMouse
 					}
@@ -227,11 +227,11 @@ Control.ComboBox {
 
 		background: Item {
 			implicitWidth: mainItem.width
-			implicitHeight: 30 * DefaultStyle.dp
+			implicitHeight: 30 * mainWindow.dp
 			Rectangle {
 				id: cboxBg
 				anchors.fill: parent
-				radius: 15 * DefaultStyle.dp
+				radius: 15 * mainWindow.dp
 			}
 			MultiEffect {
 				anchors.fill: cboxBg

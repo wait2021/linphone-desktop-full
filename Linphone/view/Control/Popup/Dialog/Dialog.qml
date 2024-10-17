@@ -9,12 +9,12 @@ Popup {
 	modal: true
 	anchors.centerIn: parent
 	closePolicy: Control.Popup.NoAutoClose
-	rightPadding: 10 * DefaultStyle.dp
-	leftPadding: 10 * DefaultStyle.dp
-	topPadding: 10 * DefaultStyle.dp
-	bottomPadding: 10 * DefaultStyle.dp
+	rightPadding: 10 * mainWindow.dp
+	leftPadding: 10 * mainWindow.dp
+	topPadding: 10 * mainWindow.dp
+	bottomPadding: 10 * mainWindow.dp
 	underlineColor: DefaultStyle.main1_500_main
-	property int radius: 16 * DefaultStyle.dp
+	property int radius: 16 * mainWindow.dp
 	property string title
 	property string text
 	property string details
@@ -43,7 +43,7 @@ Popup {
 		ColumnLayout {
 			id: child
 			anchors.fill: parent
-			spacing: 15 * DefaultStyle.dp
+			spacing: 15 * mainWindow.dp
 			
 			Text{
 				id: titleText
@@ -51,8 +51,8 @@ Popup {
 				visible: text.length != 0
 				text: mainItem.title
 				font {
-					pixelSize: 16 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+					pixelSize: 16 * mainWindow.dp
+					weight: 800 * mainWindow.dp
 				}
 				wrapMode: Text.Wrap
 				horizontalAlignment: Text.AlignLeft
@@ -71,8 +71,8 @@ Popup {
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.text
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+					pixelSize: 14 * mainWindow.dp
+					weight: 400 * mainWindow.dp
 				}
 				wrapMode: Text.Wrap
 				horizontalAlignment: titleText.visible ?  Text.AlignLeft : Text.AlignHCenter
@@ -81,12 +81,12 @@ Popup {
 				id: detailsText
 				visible: text.length != 0
 				Layout.fillWidth: true
-				//Layout.preferredWidth: 278 * DefaultStyle.dp
+				//Layout.preferredWidth: 278 * mainWindow.dp
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.details
 				font {
-					pixelSize: 13 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+					pixelSize: 13 * mainWindow.dp
+					weight: 400 * mainWindow.dp
 					italic: true
 				}
 				wrapMode: Text.Wrap
@@ -102,7 +102,7 @@ Popup {
 			RowLayout {
 				id: buttonsLayout
 				Layout.alignment: Qt.AlignBottom | ( titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 	
 				// Default buttons only visible if no other children
 				// have been set
@@ -110,10 +110,10 @@ Popup {
 					id:firstButtonId
 					visible: mainItem.buttons.length === 2
 					text: qsTr("Oui")
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					leftPadding: 20 * mainWindow.dp
+					rightPadding: 20 * mainWindow.dp
+					topPadding: 11 * mainWindow.dp
+					bottomPadding: 11 * mainWindow.dp
 					focus: !firstButtonAccept
 					onClicked: {
 						if(firstButtonAccept)
@@ -129,10 +129,10 @@ Popup {
 					id: secondButtonId
 					visible: mainItem.buttons.length === 2
 					text: qsTr("Non")
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					leftPadding: 20 * mainWindow.dp
+					rightPadding: 20 * mainWindow.dp
+					topPadding: 11 * mainWindow.dp
+					bottomPadding: 11 * mainWindow.dp
 					focus: !secondButtonAccept
 					onClicked: {
 						if(secondButtonAccept)

@@ -5,11 +5,12 @@ import UtilsCpp
 // =============================================================================
 
 Notification {
-	id: mainItem
-	radius: 20 * DefaultStyle.dp
-	overriddenWidth: content.implicitWidth//101 * DefaultStyle.dp
-	overriddenHeight: content.implicitHeight//422 * DefaultStyle.dp
-	
+	id: mainWindow
+	radius: 20 * mainWindow.dp
+	//overriddenWidth: content.implicitWidth//101 * mainWindow.dp
+	//overriddenHeight: content.implicitHeight//422 * mainWindow.dp
+	width: content.implicitWidth
+	height: content.implicitHeight
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
 	property var status: call.core.status
@@ -24,28 +25,25 @@ Notification {
 	
 	Popup {
 		id: content
-		visible: mainItem.visible
-		leftPadding: 19 * DefaultStyle.dp
-		rightPadding: 19 * DefaultStyle.dp
-		topPadding: 15 * DefaultStyle.dp
-		bottomPadding: 15 * DefaultStyle.dp
+		visible: mainWindow.visible
+		leftPadding: 19 * mainWindow.dp
+		rightPadding: 19 * mainWindow.dp
+		topPadding: 15 * mainWindow.dp
+		bottomPadding: 15 * mainWindow.dp
+		
 		background: Item{}
 		contentItem: RowLayout {
 			id: notifContent
-			
-			spacing: 30 * DefaultStyle.dp
-			height: childrenRect.height
-			width: childrenRect.width
+			spacing: 30 * mainWindow.dp
 			RowLayout {
 				Layout.fillWidth: true
+				Layout.fillHeight: true
 				Layout.alignment: Qt.AlignLeft
-				spacing: 13 * DefaultStyle.dp
-				Layout.preferredHeight: childrenRect.height
-				Layout.preferredWidth: childrenRect.width
+				spacing: 13 * mainWindow.dp
 				Avatar {
-					Layout.preferredWidth: 45 * DefaultStyle.dp
-					Layout.preferredHeight: 45 * DefaultStyle.dp
-					call: mainItem.call
+					Layout.preferredWidth: 45 * mainWindow.dp
+					Layout.preferredHeight: 45 * mainWindow.dp
+					call: mainWindow.call
 				}
 				ColumnLayout {
 					Text {
@@ -53,8 +51,8 @@ Notification {
 						text: remoteAddress ? remoteAddress.value : ""
 						color: DefaultStyle.grey_600
 						font {
-							pixelSize: 20 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+							pixelSize: 20 * mainWindow.dp
+							weight: 800 * mainWindow.dp
 							capitalization: Font.Capitalize
 						}
 					}
@@ -62,8 +60,8 @@ Notification {
 						EffectImage {
 							imageSource: AppIcons.arrowDownLeft
 							colorizationColor: DefaultStyle.success_500main
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 						}
 						Text {
 							Layout.fillWidth: true
@@ -71,8 +69,8 @@ Notification {
 							text: qsTr("Appel entrant")//.arg(localAddress ? qsTr(" pour %1").arg(localAddress.value) : "") //call.core.remoteAddress
 							color: DefaultStyle.grey_600
 							font {
-								pixelSize: 13 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
+								pixelSize: 13 * mainWindow.dp
+								weight: 400 * mainWindow.dp
 							}
 						}
 					}
@@ -82,38 +80,38 @@ Notification {
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
-				spacing: 26 * DefaultStyle.dp
+				spacing: 26 * mainWindow.dp
 				Button {
 					color: DefaultStyle.success_500main
-					Layout.preferredWidth: 75 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
+					Layout.preferredWidth: 75 * mainWindow.dp
+					Layout.preferredHeight: 55 * mainWindow.dp
 					asynchronous: false
 					contentItem: EffectImage {
 						colorizationColor: DefaultStyle.grey_0
 						imageSource: AppIcons.phone
-						imageWidth: 32 * DefaultStyle.dp
-						imageHeight: 32 * DefaultStyle.dp
+						imageWidth: 32 * mainWindow.dp
+						imageHeight: 32 * mainWindow.dp
 					}
 					onClicked: {
 						console.debug("[NotificationReceivedCall] Accept click")
-						UtilsCpp.openCallsWindow(mainItem.call)
-						mainItem.call.core.lAccept(false)
+						UtilsCpp.openCallsWindow(mainWindow.call)
+						mainWindow.call.core.lAccept(false)
 					}
 				}
 				Button {
 					color: DefaultStyle.danger_500main
-					Layout.preferredWidth: 75 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
+					Layout.preferredWidth: 75 * mainWindow.dp
+					Layout.preferredHeight: 55 * mainWindow.dp
 					asynchronous: false
 					contentItem: EffectImage {
 						colorizationColor: DefaultStyle.grey_0
 						imageSource: AppIcons.endCall
-						imageWidth: 32 * DefaultStyle.dp
-						imageHeight: 32 * DefaultStyle.dp
+						imageWidth: 32 * mainWindow.dp
+						imageHeight: 32 * mainWindow.dp
 					}
 					onClicked: {
 						console.debug("[NotificationReceivedCall] Decline click")
-						mainItem.call.core.lDecline()
+						mainWindow.call.core.lDecline()
 					}
 				}
 			}

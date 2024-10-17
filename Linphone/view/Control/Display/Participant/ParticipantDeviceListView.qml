@@ -10,8 +10,8 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
-	rightMargin: 5 * DefaultStyle.dp
-	spacing: 5 * DefaultStyle.dp
+	rightMargin: 5 * mainWindow.dp
+	spacing: 5 * mainWindow.dp
 
 	property string searchBarText
 
@@ -31,26 +31,26 @@ ListView {
 	}
 
 	delegate: Item {
-		height: 56 * DefaultStyle.dp
+		height: 56 * mainWindow.dp
 		width: mainItem.width
 		
 		RowLayout {
 			id: participantDelegate
 			anchors.left: parent.left
-			anchors.leftMargin: 10 * DefaultStyle.dp
+			anchors.leftMargin: 10 * mainWindow.dp
 			anchors.right: parent.right
-			anchors.rightMargin: 10 * DefaultStyle.dp
+			anchors.rightMargin: 10 * mainWindow.dp
 			anchors.verticalCenter: parent.verticalCenter
-			spacing: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
 			z: 1
 			Avatar {
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
+				Layout.preferredWidth: 45 * mainWindow.dp
+				Layout.preferredHeight: 45 * mainWindow.dp
 				_address: modelData.core.address
 			}
 			Text {
 				text: modelData.core.displayName
-				font.pixelSize: 14 * DefaultStyle.dp
+				font.pixelSize: 14 * mainWindow.dp
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true

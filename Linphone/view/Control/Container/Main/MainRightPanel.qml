@@ -15,7 +15,7 @@ ColumnLayout {
 	Rectangle {
 		id: rightPanelHeader
 		color: DefaultStyle.grey_0
-		Layout.preferredHeight: 57 * DefaultStyle.dp
+		Layout.preferredHeight: 57 * mainWindow.dp
 		Layout.fillWidth: true
 		z: 1
 	}

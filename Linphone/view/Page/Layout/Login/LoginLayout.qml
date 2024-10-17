@@ -14,7 +14,7 @@ Rectangle {
 	property alias centerContent : centerLayout.children
 	color: DefaultStyle.grey_0
 	ColumnLayout {
-		// anchors.leftMargin: 119 * DefaultStyle.dp
+		// anchors.leftMargin: 119 * mainWindow.dp
 		id: contentLayout
 		// anchors.top: parent.top
 		// anchors.left: parent.left
@@ -24,8 +24,8 @@ Rectangle {
 		spacing: 0
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.preferredHeight: 102 * DefaultStyle.dp
-			Layout.rightMargin: 42 * DefaultStyle.dp
+			Layout.preferredHeight: 102 * mainWindow.dp
+			Layout.rightMargin: 42 * mainWindow.dp
 			spacing: 0
 			Item {
 				Layout.fillWidth: true
@@ -33,12 +33,12 @@ Rectangle {
 			Button {
 				id: aboutButton
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+				icon.width: 24 * mainWindow.dp
+				icon.height: 24 * mainWindow.dp
 				icon.source: AppIcons.info
 				text: qsTr("À propos")
-				textSize: 14 * DefaultStyle.dp
-				textWeight: 400 * DefaultStyle.dp
+				textSize: 14 * mainWindow.dp
+				textWeight: 400 * mainWindow.dp
 				textColor: DefaultStyle.main2_500main
 				onClicked: console.debug("[LoginLayout]User: open about popup")
 				
@@ -48,7 +48,7 @@ Rectangle {
 
 		RowLayout {
 			id: titleLayout
-			Layout.preferredHeight: 131 * DefaultStyle.dp
+			Layout.preferredHeight: 131 * mainWindow.dp
 			Layout.fillWidth: true
 			spacing: 0
 		}
@@ -63,7 +63,7 @@ Rectangle {
 			source: AppIcons.belledonne
 			fillMode: Image.Stretch
 			Layout.fillWidth: true
-			Layout.preferredHeight: 108 * DefaultStyle.dp
+			Layout.preferredHeight: 108 * mainWindow.dp
 		}
 	}
 

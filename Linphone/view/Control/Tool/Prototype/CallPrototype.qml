@@ -131,7 +131,7 @@ Window {
 				TextField {
 					id: usernameToCall
 					label: "Username to call"
-					Layout.preferredWidth: 250 * DefaultStyle.dp
+					Layout.preferredWidth: 250 * mainWindow.dp
 				}
 				Button{
 					text: 'Call'

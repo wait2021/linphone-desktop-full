@@ -55,6 +55,11 @@ char *Utils::rstrstr(const char *a, const char *b) {
 	return nullptr;
 }
 
+double Utils::getPixelDensity(int x, int y) { // Get the pixel density on the screen at (x,y)
+	auto screen = QGuiApplication::screenAt(QPoint(x, y));
+	return screen ? screen->devicePixelRatio() : 1.0;
+}
+
 VariantObject *Utils::getDisplayName(const QString &address) {
 	QStringList splitted = address.split(":");
 	if (splitted.size() > 0 && splitted[0] == "sip") splitted.removeFirst();

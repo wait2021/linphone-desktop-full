@@ -47,7 +47,7 @@ AbstractMainPage {
 		else rightPanelStackView.replace(emptySelection, Control.StackView.Immediate)
 	}
 	rightPanelStackView.initialItem: emptySelection
-	rightPanelStackView.width: 360 * DefaultStyle.dp
+	rightPanelStackView.width: 360 * mainWindow.dp
 
 	onNoItemButtonPressed: goToNewCall()
 
@@ -62,12 +62,12 @@ AbstractMainPage {
 
 	Dialog {
 		id: deleteHistoryPopup
-		width: 278 * DefaultStyle.dp
+		width: 278 * mainWindow.dp
 		text: qsTr("L'historique d'appel sera supprimé. Souhaitez-vous continuer ?")
 	}
 	Dialog {
 		id: deleteForUserPopup
-		width: 278 * DefaultStyle.dp
+		width: 278 * mainWindow.dp
 		text: qsTr("L'historique d'appel de l'utilisateur sera supprimé. Souhaitez-vous continuer ?")
 	}
 
@@ -90,9 +90,9 @@ AbstractMainPage {
 		Control.StackView {
 			id: listStackView
 			anchors.top: titleLoader.bottom
-			anchors.topMargin: 18 * DefaultStyle.dp
+			anchors.topMargin: 18 * mainWindow.dp
 			anchors.left: parent.left
-			anchors.leftMargin: 45 * DefaultStyle.dp
+			anchors.leftMargin: 45 * mainWindow.dp
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
 			clip: true
@@ -107,7 +107,7 @@ AbstractMainPage {
 			anchors.bottom: parent.bottom
 			anchors.left: parent.left
 			anchors.right: parent.right
-			height: 402 * DefaultStyle.dp
+			height: 402 * mainWindow.dp
 			NumericPadPopup {
 				id: numericPadPopup
 				width: parent.width
@@ -129,32 +129,32 @@ AbstractMainPage {
 			RowLayout {
 				id: titleCallLayout
 				anchors.fill: parent
-				spacing: 16 * DefaultStyle.dp
+				spacing: 16 * mainWindow.dp
 				Text {
 					text: qsTr("Appels")
-					Layout.leftMargin: 45 * DefaultStyle.dp
+					Layout.leftMargin: 45 * mainWindow.dp
 					color: DefaultStyle.main2_700
-					font.pixelSize: 29 * DefaultStyle.dp
-					font.weight: 800 * DefaultStyle.dp
+					font.pixelSize: 29 * mainWindow.dp
+					font.weight: 800 * mainWindow.dp
 				}
 				Item {
 					Layout.fillWidth: true
 				}
 				PopupButton {
 					id: removeHistory
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
+					width: 24 * mainWindow.dp
+					height: 24 * mainWindow.dp
 					focus: true
 					popup.x: 0
-					popup.padding: 20 * DefaultStyle.dp
+					popup.padding: 20 * mainWindow.dp
 					KeyNavigation.right: newCallButton
 					KeyNavigation.down: listStackView
 					popup.contentItem: ColumnLayout {
 						IconLabelButton {
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 							Layout.fillWidth: true
 							focus: visible
-							iconSize: 24 * DefaultStyle.dp
+							iconSize: 24 * mainWindow.dp
 							text: qsTr("Supprimer l'historique")
 							iconSource: AppIcons.trashCan
 							color: DefaultStyle.danger_500main
@@ -175,11 +175,11 @@ AbstractMainPage {
 					id: newCallButton
 					background: Item {}
 					icon.source: AppIcons.newCall
-					Layout.preferredWidth: 28 * DefaultStyle.dp
-					Layout.preferredHeight: 28 * DefaultStyle.dp
-					Layout.rightMargin: 39 * DefaultStyle.dp
-					icon.width: 28 * DefaultStyle.dp
-					icon.height: 28 * DefaultStyle.dp
+					Layout.preferredWidth: 28 * mainWindow.dp
+					Layout.preferredHeight: 28 * mainWindow.dp
+					Layout.rightMargin: 39 * mainWindow.dp
+					icon.width: 28 * mainWindow.dp
+					icon.height: 28 * mainWindow.dp
 					KeyNavigation.left: removeHistory
 					KeyNavigation.down: listStackView
 					onClicked: {
@@ -200,20 +200,20 @@ AbstractMainPage {
 				SearchBar {
 					id: searchBar
 					Layout.fillWidth: true
-					Layout.rightMargin: 39 * DefaultStyle.dp
+					Layout.rightMargin: 39 * mainWindow.dp
 					placeholderText: qsTr("Rechercher un appel")
 					focus: true
 					KeyNavigation.up: titleLoader
 					KeyNavigation.down: historyListView
 				}
 				Item {
-					Layout.topMargin: 38 * DefaultStyle.dp
+					Layout.topMargin: 38 * mainWindow.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Control.Control {
 						id: listLayout
 						anchors.fill: parent
-						anchors.rightMargin: 39 * DefaultStyle.dp
+						anchors.rightMargin: 39 * mainWindow.dp
 	
 						background: Item{}
 						ColumnLayout {
@@ -224,8 +224,8 @@ AbstractMainPage {
 									Layout.alignment: Qt.AlignHCenter
 									text: qsTr("Aucun appel")
 									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
+										pixelSize: 16 * mainWindow.dp
+										weight: 800 * mainWindow.dp
 									}
 									Binding on text {
 										when: searchBar.text.length !== 0
@@ -241,14 +241,14 @@ AbstractMainPage {
 										id: callHistoryProxy
 										filterText: searchBar.text
 										onFilterTextChanged: maxDisplayItems = initialDisplayItems
-										initialDisplayItems: historyListView.height / (56 * DefaultStyle.dp) + 5
+										initialDisplayItems: historyListView.height / (56 * mainWindow.dp) + 5
 										displayItemsStep: initialDisplayItems / 2
 										onCountChanged: console.log("callHistoryProxy : " +count)
 									}
 									Component.onCompleted: console.log("historyListView completed")
 									cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
 									flickDeceleration: 10000
-									spacing: 10 * DefaultStyle.dp
+									spacing: 10 * mainWindow.dp
 									highlightFollowsCurrentItem: true
 									preferredHighlightBegin: height/2 - 10
 									preferredHighlightEnd: height/2 + 10
@@ -271,40 +271,40 @@ AbstractMainPage {
 									onAtYEndChanged: if(atYEnd) callHistoryProxy.displayMore()
 									delegate: FocusScope {
 											width:historyListView.width
-											height: 56 * DefaultStyle.dp
-											anchors.topMargin: 5 * DefaultStyle.dp
-											anchors.bottomMargin: 5 * DefaultStyle.dp
+											height: 56 * mainWindow.dp
+											anchors.topMargin: 5 * mainWindow.dp
+											anchors.bottomMargin: 5 * mainWindow.dp
 											visible: !!modelData
 											Component.onCompleted: console.log(index + " => Completed "+visible)
 											RowLayout {
 												z: 1
 												anchors.fill: parent
-												spacing: 10 * DefaultStyle.dp
+												spacing: 10 * mainWindow.dp
 												Avatar {
 													id: historyAvatar
 													property var contactObj: UtilsCpp.findFriendByAddress(modelData.core.remoteAddress)
 													contact: contactObj && contactObj.value || null
 													_address: modelData.core.remoteAddress
-													width: 45 * DefaultStyle.dp
-													height: 45 * DefaultStyle.dp
+													width: 45 * mainWindow.dp
+													height: 45 * mainWindow.dp
 												}
 												ColumnLayout {
 													Layout.fillHeight: true
 													Layout.fillWidth: true
-													spacing: 5 * DefaultStyle.dp
+													spacing: 5 * mainWindow.dp
 													Text {
 														id: friendAddress
 														Layout.fillWidth: true
 														maximumLineCount: 1
 														text: modelData.core.displayName
 														font {
-															pixelSize: 14 * DefaultStyle.dp
-															weight: 400 * DefaultStyle.dp
+															pixelSize: 14 * mainWindow.dp
+															weight: 400 * mainWindow.dp
 															capitalization: Font.Capitalize
 														}
 													}
 													RowLayout {
-														spacing: 6 * DefaultStyle.dp
+														spacing: 6 * mainWindow.dp
 														EffectImage {
 															id: statusIcon
 															imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
@@ -324,8 +324,8 @@ AbstractMainPage {
 																: modelData.core.isOutgoing
 																	? DefaultStyle.info_500_main
 																	: DefaultStyle.success_500main
-															Layout.preferredWidth: 12 * DefaultStyle.dp
-															Layout.preferredHeight: 12 * DefaultStyle.dp
+															Layout.preferredWidth: 12 * mainWindow.dp
+															Layout.preferredHeight: 12 * mainWindow.dp
 															transform: Rotation {
 																angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
 																	|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
@@ -341,23 +341,23 @@ AbstractMainPage {
 															// text: modelData.core.date
 															text: UtilsCpp.formatDate(modelData.core.date)
 															font {
-																pixelSize: 12 * DefaultStyle.dp
-																weight: 300 * DefaultStyle.dp
+																pixelSize: 12 * mainWindow.dp
+																weight: 300 * mainWindow.dp
 															}
 														}
 													}
 												}
 												Button {
-													Layout.rightMargin: 5 * DefaultStyle.dp
+													Layout.rightMargin: 5 * mainWindow.dp
 													padding: 0
 													background: Item {
 														visible: false
 													}
 													icon.source: AppIcons.phone
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
-													icon.width: 24 * DefaultStyle.dp
-													icon.height: 24 * DefaultStyle.dp
+													Layout.preferredWidth: 24 * mainWindow.dp
+													Layout.preferredHeight: 24 * mainWindow.dp
+													icon.width: 24 * mainWindow.dp
+													icon.height: 24 * mainWindow.dp
 													focus: true
 													activeFocusOnTab: false
 													onClicked: {
@@ -415,7 +415,7 @@ AbstractMainPage {
 						anchors.top: parent.top
 						anchors.bottom: parent.bottom
 						anchors.right: parent.right
-						anchors.rightMargin: 8 * DefaultStyle.dp
+						anchors.rightMargin: 8 * mainWindow.dp
 						active: true
 						policy: Control.ScrollBar.AsNeeded
 					}
@@ -432,14 +432,14 @@ AbstractMainPage {
 			RowLayout {
 				anchors.fill: parent
 				Button {
-					Layout.leftMargin: 45 * DefaultStyle.dp
+					Layout.leftMargin: 45 * mainWindow.dp
 					background: Item {
 					}
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
+					Layout.preferredWidth: 24 * mainWindow.dp
+					Layout.preferredHeight: 24 * mainWindow.dp
 					icon.source: AppIcons.leftArrow
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+					icon.width: 24 * mainWindow.dp
+					icon.height: 24 * mainWindow.dp
 					focus: true
 					KeyNavigation.down: listStackView
 					onClicked: {
@@ -451,8 +451,8 @@ AbstractMainPage {
 				Text {
 					text: qsTr("Nouvel appel")
 					color: DefaultStyle.main2_700
-					font.pixelSize: 29 * DefaultStyle.dp
-					font.weight: 800 * DefaultStyle.dp
+					font.pixelSize: 29 * mainWindow.dp
+					font.weight: 800 * mainWindow.dp
 				}
 				Item {
 					Layout.fillWidth: true
@@ -510,18 +510,18 @@ AbstractMainPage {
 			height: parent.height
 			RowLayout {
 				anchors.fill: parent
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 				visible: !SettingsCpp.disableMeetingsFeature
 				Button {
 					id: backGroupCallButton
 					background: Item{}
 					icon.source: AppIcons.leftArrow
 					contentImageColor: DefaultStyle.main1_500_main
-					Layout.leftMargin: 21 * DefaultStyle.dp
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+					Layout.leftMargin: 21 * mainWindow.dp
+					Layout.preferredWidth: 24 * mainWindow.dp
+					Layout.preferredHeight: 24 * mainWindow.dp
+					icon.width: 24 * mainWindow.dp
+					icon.height: 24 * mainWindow.dp
 					KeyNavigation.down: listStackView
 					KeyNavigation.right: groupCallButton
 					KeyNavigation.left: groupCallButton
@@ -531,14 +531,14 @@ AbstractMainPage {
 					}
 				}
 				ColumnLayout {
-					spacing: 3 * DefaultStyle.dp
+					spacing: 3 * mainWindow.dp
 					Text {
 						text: qsTr("Appel de groupe")
 						color: DefaultStyle.main1_500_main
 						maximumLineCount: 1
 						font {
-							pixelSize: 18 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+							pixelSize: 18 * mainWindow.dp
+							weight: 800 * mainWindow.dp
 						}
 						Layout.fillWidth: true
 					}
@@ -547,8 +547,8 @@ AbstractMainPage {
 						color: DefaultStyle.main2_500main
 						maximumLineCount: 1
 						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
+							pixelSize: 12 * mainWindow.dp
+							weight: 300 * mainWindow.dp
 						}
 						Layout.fillWidth: true
 					}
@@ -556,13 +556,13 @@ AbstractMainPage {
 				Button {
 					id: groupCallButton
 					enabled: mainItem.selectedParticipantsCount.length != 0
-					Layout.rightMargin: 21 * DefaultStyle.dp
-					topPadding: 6 * DefaultStyle.dp
-					bottomPadding: 6 * DefaultStyle.dp
-					leftPadding: 12 * DefaultStyle.dp
-					rightPadding: 12 * DefaultStyle.dp
+					Layout.rightMargin: 21 * mainWindow.dp
+					topPadding: 6 * mainWindow.dp
+					bottomPadding: 6 * mainWindow.dp
+					leftPadding: 12 * mainWindow.dp
+					rightPadding: 12 * mainWindow.dp
 					text: qsTr("Lancer")
-					textSize: 13 * DefaultStyle.dp
+					textSize: 13 * mainWindow.dp
 					KeyNavigation.down: listStackView
 					KeyNavigation.left: backGroupCallButton
 					KeyNavigation.right: backGroupCallButton
@@ -582,28 +582,28 @@ AbstractMainPage {
 				addParticipantsLayout.forceActiveFocus()
 			}
 			ColumnLayout {
-				spacing: 5 * DefaultStyle.dp
+				spacing: 5 * mainWindow.dp
 				anchors.fill: parent
 				RowLayout {
 					spacing: 0
-					Layout.rightMargin: 38 * DefaultStyle.dp
+					Layout.rightMargin: 38 * mainWindow.dp
 					Text {
-						font.pixelSize: 13 * DefaultStyle.dp
-						font.weight: 700 * DefaultStyle.dp
+						font.pixelSize: 13 * mainWindow.dp
+						font.weight: 700 * mainWindow.dp
 						text: qsTr("Nom du groupe")
 					}
 					Item{Layout.fillWidth: true}
 					Text {
-						font.pixelSize: 12 * DefaultStyle.dp
-						font.weight: 300 * DefaultStyle.dp
+						font.pixelSize: 12 * mainWindow.dp
+						font.weight: 300 * mainWindow.dp
 						text: qsTr("Requis")
 					}
 				}
 				TextField {
 					id: groupCallName
 					Layout.fillWidth: true
-					Layout.rightMargin: 38 * DefaultStyle.dp
-					Layout.preferredHeight: 49 * DefaultStyle.dp
+					Layout.rightMargin: 38 * mainWindow.dp
+					Layout.preferredHeight: 49 * mainWindow.dp
 					focus: true
 					KeyNavigation.down: addParticipantsLayout//participantList.count > 0 ? participantList : searchbar
 				}
@@ -648,8 +648,8 @@ AbstractMainPage {
 			ContactLayout {
 				id: contactDetail
 				anchors.fill: parent
-				anchors.topMargin: 45 * DefaultStyle.dp
-				anchors.bottomMargin: 45 * DefaultStyle.dp
+				anchors.topMargin: 45 * mainWindow.dp
+				anchors.bottomMargin: 45 * mainWindow.dp
 				visible: mainItem.selectedRowHistoryGui != undefined
 				property var contactObj: UtilsCpp.findFriendByAddress(contactAddress)
 				contact: contactObj && contactObj.value || null
@@ -659,7 +659,7 @@ AbstractMainPage {
 				buttonContent: PopupButton {
 					id: detailOptions
 					anchors.right: parent.right
-					anchors.rightMargin: 30 * DefaultStyle.dp
+					anchors.rightMargin: 30 * mainWindow.dp
 					anchors.verticalCenter: parent.verticalCenter
 					popup.x: width
 					property var friendGuiObj: UtilsCpp.findFriendByAddress(contactDetail.contactAddress)
@@ -679,11 +679,11 @@ AbstractMainPage {
 							Button {
 								text: detailOptions.friendGui ? qsTr("Voir le contact") : qsTr("Ajouter aux contacts")
 								icon.source: AppIcons.plusCircle
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
+								icon.width: 24 * mainWindow.dp
+								icon.height: 24 * mainWindow.dp
+								spacing: 10 * mainWindow.dp
+								textSize: 14 * mainWindow.dp
+								textWeight: 400 * mainWindow.dp
 								textColor: DefaultStyle.main2_500main
 								contentImageColor: DefaultStyle.main2_600
 								background: Item {}
@@ -696,11 +696,11 @@ AbstractMainPage {
 							Button {
 								text: qsTr("Copier l'adresse SIP")
 								icon.source: AppIcons.copy
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
+								icon.width: 24 * mainWindow.dp
+								icon.height: 24 * mainWindow.dp
+								spacing: 10 * mainWindow.dp
+								textSize: 14 * mainWindow.dp
+								textWeight: 400 * mainWindow.dp
 								textColor: DefaultStyle.main2_500main
 								contentImageColor: DefaultStyle.main2_600
 								background: Item {}
@@ -723,18 +723,18 @@ AbstractMainPage {
 							// }
 							Rectangle {
 								Layout.fillWidth: true
-								Layout.preferredHeight: 2 * DefaultStyle.dp
+								Layout.preferredHeight: 2 * mainWindow.dp
 								color: DefaultStyle.main2_400
 							}
 							
 							Button {
 								text: qsTr("Supprimer l'historique")
 								icon.source: AppIcons.trashCan
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
+								icon.width: 24 * mainWindow.dp
+								icon.height: 24 * mainWindow.dp
+								spacing: 10 * mainWindow.dp
+								textSize: 14 * mainWindow.dp
+								textWeight: 400 * mainWindow.dp
 								textColor: DefaultStyle.danger_500main
 								contentImageColor: DefaultStyle.danger_500main
 								background: Item {}
@@ -756,15 +756,15 @@ AbstractMainPage {
 				}
 				detailContent: RoundedPane {
 					id: detailControl
-					Layout.preferredWidth: 360 * DefaultStyle.dp
-					implicitHeight: 430 * DefaultStyle.dp + topPadding + bottomPadding
+					Layout.preferredWidth: 360 * mainWindow.dp
+					implicitHeight: 430 * mainWindow.dp + topPadding + bottomPadding
 	
 					background: Rectangle {
 						id: detailListBackground
 						width: parent.width
 						height: detailListView.height
 						color: DefaultStyle.grey_0
-						radius: 15 * DefaultStyle.dp
+						radius: 15 * mainWindow.dp
 					}
 	
 					ListView {
@@ -772,24 +772,24 @@ AbstractMainPage {
 						width: parent.width
 						height: Math.min(detailControl.implicitHeight, contentHeight)
 	
-						spacing: 20 * DefaultStyle.dp
+						spacing: 20 * mainWindow.dp
 						clip: true
 	
 						model: CallHistoryProxy {
 							id: detailsHistoryProxy
 							filterText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
 							onFilterTextChanged: maxDisplayItems = initialDisplayItems
-							initialDisplayItems: detailListView.height / (56 * DefaultStyle.dp) + 5
+							initialDisplayItems: detailListView.height / (56 * mainWindow.dp) + 5
 							displayItemsStep: initialDisplayItems / 2
 						}
 						onAtYEndChanged: if(atYEnd) detailsHistoryProxy.displayMore()
 						delegate: Item {
 							width:detailListView.width
-							height: 56 * DefaultStyle.dp
+							height: 56 * mainWindow.dp
 							RowLayout {
 								anchors.fill: parent
-								anchors.leftMargin: 20 * DefaultStyle.dp
-								anchors.rightMargin: 20 * DefaultStyle.dp
+								anchors.leftMargin: 20 * mainWindow.dp
+								anchors.rightMargin: 20 * mainWindow.dp
 								anchors.verticalCenter: parent.verticalCenter
 								ColumnLayout {
 									Layout.alignment: Qt.AlignVCenter
@@ -813,8 +813,8 @@ AbstractMainPage {
 												: modelData.core.isOutgoing
 													? DefaultStyle.info_500_main
 													: DefaultStyle.success_500main
-											Layout.preferredWidth: 16 * DefaultStyle.dp
-											Layout.preferredHeight: 16 * DefaultStyle.dp
+											Layout.preferredWidth: 16 * mainWindow.dp
+											Layout.preferredHeight: 16 * mainWindow.dp
 											transform: Rotation {
 												angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
 													|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
@@ -833,8 +833,8 @@ AbstractMainPage {
 													? qsTr("Appel sortant")
 													: qsTr("Appel entrant")
 											font {
-												pixelSize: 14 * DefaultStyle.dp
-												weight: 400 * DefaultStyle.dp
+												pixelSize: 14 * mainWindow.dp
+												weight: 400 * mainWindow.dp
 											}
 										}
 									}
@@ -842,8 +842,8 @@ AbstractMainPage {
 										text: UtilsCpp.formatDate(modelData.core.date)
 										color: modelData.core.status === LinphoneEnums.CallStatus.Missed? DefaultStyle.danger_500main : DefaultStyle.main2_500main
 										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 300 * DefaultStyle.dp
+											pixelSize: 12 * mainWindow.dp
+											weight: 300 * mainWindow.dp
 										}
 									}
 								}
@@ -854,8 +854,8 @@ AbstractMainPage {
 								Text {
 									text: UtilsCpp.formatElapsedTime(modelData.core.duration, false)
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 300 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 300 * mainWindow.dp
 									}
 								}
 							}
@@ -876,8 +876,8 @@ AbstractMainPage {
 		property color colorizationColor: DefaultStyle.main2_500main
 		EffectImage {
 			imageSource: iconLabel.iconSource
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
+			Layout.preferredWidth: 24 * mainWindow.dp
+			Layout.preferredHeight: 24 * mainWindow.dp
 			fillMode: Image.PreserveAspectFit
 			colorizationColor: iconLabel.colorizationColor
 		}
@@ -885,8 +885,8 @@ AbstractMainPage {
 			text: iconLabel.text
 			color: iconLabel.colorizationColor
 			font {
-				pixelSize: 14 * DefaultStyle.dp
-				weight: 400 * DefaultStyle.dp
+				pixelSize: 14 * mainWindow.dp
+				weight: 400 * mainWindow.dp
 			}
 		}
 	}

@@ -10,9 +10,9 @@ Control.TabBar {
 	readonly property int originX: count > 0 
 							? itemAt(0).x 
 							: 0
-	spacing: 40 * DefaultStyle.dp
-	property int pixelSize: 22 * DefaultStyle.dp
-	property int textWeight: 800 * DefaultStyle.dp
+	spacing: 40 * mainWindow.dp
+	property int pixelSize: 22 * mainWindow.dp
+	property int textWeight: 800 * mainWindow.dp
 	wheelEnabled: true
 	background: Item {
 		id: tabBarBackground
@@ -20,7 +20,7 @@ Control.TabBar {
 
 		Rectangle {
 			id: barBG
-			height: 4 * DefaultStyle.dp
+			height: 4 * mainWindow.dp
 			color: DefaultStyle.grey_200
 			anchors.bottom: parent.bottom
 			width: parent.width
@@ -64,7 +64,7 @@ Control.TabBar {
 				Rectangle {
 					id: tabBackground
 					visible: mainItem.currentIndex === index
-					height: 5 * DefaultStyle.dp
+					height: 5 * mainWindow.dp
 					color: DefaultStyle.main1_500_main
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
@@ -93,7 +93,7 @@ Control.TabBar {
 				elide: Text.ElideRight
 				maximumLineCount: 1
 				text: modelData
-				bottomPadding: 5 * DefaultStyle.dp
+				bottomPadding: 5 * mainWindow.dp
 			}
 		}
 	}

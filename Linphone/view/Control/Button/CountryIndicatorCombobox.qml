@@ -17,8 +17,8 @@ ColumnLayout {
 		text: mainItem.label
 		color: combobox.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		font {
-			pixelSize: 13 * DefaultStyle.dp
-			weight: 700 * DefaultStyle.dp
+			pixelSize: 13 * mainWindow.dp
+			weight: 700 * mainWindow.dp
 			bold: true
 		}
 	}
@@ -34,7 +34,7 @@ ColumnLayout {
 		background: Rectangle {
 			implicitWidth: mainItem.implicitWidth
 			implicitHeight: mainItem.implicitHeight
-			radius: 63 * DefaultStyle.dp
+			radius: 63 * mainWindow.dp
 			color: mainItem.enableBackgroundColor ? DefaultStyle.grey_100 : "transparent"
 			border.color: mainItem.enableBackgroundColors 
 						? (mainItem.errorMessage.length > 0 
@@ -47,14 +47,14 @@ ColumnLayout {
 		contentItem: Item {
 			anchors.fill: parent
 			readonly property var currentItem: combobox.model.getAt(combobox.currentIndex)
-			anchors.leftMargin: 15 * DefaultStyle.dp
+			anchors.leftMargin: 15 * mainWindow.dp
 			Text {
 				id: selectedItemFlag
 				visible: text.length > 0
-				font.pixelSize: 21 * DefaultStyle.dp
+				font.pixelSize: 21 * mainWindow.dp
 				text: parent.currentItem ? parent.currentItem.flag : ""
 				font.family: DefaultStyle.emojiFont
-				anchors.rightMargin: 5 * DefaultStyle.dp
+				anchors.rightMargin: 5 * mainWindow.dp
 				anchors.verticalCenter: parent.verticalCenter
 			}
 			// Rectangle{
@@ -62,7 +62,7 @@ ColumnLayout {
 			// 	visible: false
 			// 	layer.enabled: true
 			// 	anchors.centerIn: selectedItemFlag
-			// 	radius: 600 * DefaultStyle.dp
+			// 	radius: 600 * mainWindow.dp
 			// 	width: selectedItemFlag.width/2
 			// 	height: selectedItemFlag.height/2
 			// }
@@ -77,7 +77,7 @@ ColumnLayout {
 			// 	maskSource: mask
 			// }
 			Text {
-				leftPadding: 5 * DefaultStyle.dp
+				leftPadding: 5 * mainWindow.dp
 				text: parent.currentItem ? "+" + parent.currentItem.countryCallingCode : ""
 				color: DefaultStyle.main2_600
 				anchors.right: parent.right
@@ -85,8 +85,8 @@ ColumnLayout {
 				anchors.verticalCenter: parent.verticalCenter 
 				elide: Text.ElideRight
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+					pixelSize: 14 * mainWindow.dp
+					weight: 400 * mainWindow.dp
 				}
 			}
 		}
@@ -100,8 +100,8 @@ ColumnLayout {
 		popup: Control.Popup {
 			id: listPopup
 			y: combobox.height - 1
-			width: 311 * DefaultStyle.dp
-			height: 250 * DefaultStyle.dp
+			width: 311 * mainWindow.dp
+			height: 250 * mainWindow.dp
 
 			contentItem: ListView {
 				id: listView
@@ -112,14 +112,14 @@ ColumnLayout {
 				keyNavigationEnabled: true
 				keyNavigationWraps: true
 				maximumFlickVelocity: 1500
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 				highlight: Rectangle {
 					anchors.left: parent.left
 					anchors.right: parent.right
 					width: listView.width
 					height: listView.height
 					color: DefaultStyle.main2_300
-					// radius: 15 * DefaultStyle.dp
+					// radius: 15 * mainWindow.dp
 					y: listView.currentItem? listView.currentItem.y : 0
 				}
 
@@ -128,13 +128,13 @@ ColumnLayout {
 					height: combobox.height
 					RowLayout {
 						anchors.fill: parent
-						anchors.leftMargin: 20 * DefaultStyle.dp
+						anchors.leftMargin: 20 * mainWindow.dp
 						Text {
 							id: delegateImg
 							visible: text.length > 0
 							text: $modelData.flag
 							font {
-								pixelSize: 28 * DefaultStyle.dp
+								pixelSize: 28 * mainWindow.dp
 								family: DefaultStyle.emojiFont
 							}
 						}
@@ -145,14 +145,14 @@ ColumnLayout {
 							elide: Text.ElideRight
 							color: DefaultStyle.main2_500main
 							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
+								pixelSize: 14 * mainWindow.dp
+								weight: 400 * mainWindow.dp
 							}
 						}
 
 						Rectangle {
 							id: separator
-							width: 1 * DefaultStyle.dp
+							width: 1 * mainWindow.dp
 							height: combobox.height / 2
 							color: DefaultStyle.main2_500main
 						}
@@ -162,8 +162,8 @@ ColumnLayout {
 							elide: Text.ElideRight
 							color: DefaultStyle.main2_500main
 							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
+								pixelSize: 14 * mainWindow.dp
+								weight: 400 * mainWindow.dp
 							}
 						}
 						Item {
@@ -176,7 +176,7 @@ ColumnLayout {
 						Rectangle {
 							anchors.fill: parent
 							opacity: 0.1
-							radius: 15 * DefaultStyle.dp
+							radius: 15 * mainWindow.dp
 							color: DefaultStyle.main2_500main
 							visible: parent.containsMouse
 						}
@@ -198,7 +198,7 @@ ColumnLayout {
 				Rectangle {
 					id: popupBg
 					anchors.fill: parent
-					radius: 15 * DefaultStyle.dp
+					radius: 15 * mainWindow.dp
 					color: DefaultStyle.grey_100
 				}
 				MultiEffect {

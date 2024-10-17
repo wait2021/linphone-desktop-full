@@ -39,15 +39,15 @@ ListView {
 		ColumnLayout {
 			anchors.fill: parent
 			property int currentMonth: model.month
-			spacing: 18 * DefaultStyle.dp
+			spacing: 18 * mainWindow.dp
 			RowLayout {
 				Layout.fillWidth: true
-				spacing: 38 * DefaultStyle.dp
+				spacing: 38 * mainWindow.dp
 				Text {
 					text: UtilsCpp.toDateMonthAndYearString(new Date(model.year, model.month, 15))// 15 because of timezones that can change the date for localeString
 					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 700 * DefaultStyle.dp
+						pixelSize: 14 * mainWindow.dp
+						weight: 700 * mainWindow.dp
 						capitalization: Font.Capitalize
 					}
 				}
@@ -56,8 +56,8 @@ ListView {
 				}
 				Button {
 					id: previousButton
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.preferredHeight: 20 * DefaultStyle.dp
+					Layout.preferredWidth: 20 * mainWindow.dp
+					Layout.preferredHeight: 20 * mainWindow.dp
 					icon.width: width
 					icon.height: height
 					background: Item{}
@@ -66,8 +66,8 @@ ListView {
 				}
 				Button {
 					id: nextButton
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.preferredHeight: 20 * DefaultStyle.dp
+					Layout.preferredWidth: 20 * mainWindow.dp
+					Layout.preferredHeight: 20 * mainWindow.dp
 					icon.width: width
 					icon.height: height
 					background: Item{}
@@ -77,7 +77,7 @@ ListView {
 			}
 	
 			ColumnLayout {
-				spacing: 12 * DefaultStyle.dp
+				spacing: 12 * mainWindow.dp
 				Control.DayOfWeekRow {
 					locale: monthGrid.locale
 					Layout.column: 1
@@ -88,8 +88,8 @@ ListView {
 						horizontalAlignment: Text.AlignHCenter
 						verticalAlignment: Text.AlignVCenter
 						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
+							pixelSize: 12 * mainWindow.dp
+							weight: 300 * mainWindow.dp
 						}
 					}
 				}
@@ -145,9 +145,9 @@ ListView {
 						
 						Rectangle {
 							anchors.centerIn: parent
-							width: 30 * DefaultStyle.dp
-							height: 30 * DefaultStyle.dp
-							radius: 50 * DefaultStyle.dp
+							width: 30 * mainWindow.dp
+							height: 30 * mainWindow.dp
+							radius: 50 * mainWindow.dp
 							color: isSelectedDay ? DefaultStyle.main1_500_main : "transparent"
 							border.width: focusDay.activeFocus || hoveringArea.containsMouse ? 1 : 0
 							
@@ -163,8 +163,8 @@ ListView {
 										? DefaultStyle.main2_700
 										: DefaultStyle.main2_400
 							font {
-								pixelSize: 12 * DefaultStyle.dp
-								weight: 300 * DefaultStyle.dp
+								pixelSize: 12 * mainWindow.dp
+								weight: 300 * mainWindow.dp
 							}
 						}
 					}

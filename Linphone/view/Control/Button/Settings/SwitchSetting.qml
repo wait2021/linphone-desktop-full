@@ -10,8 +10,8 @@ RowLayout {
 	property string propertyName
 	property var propertyOwner
 	property bool enabled: true
-	spacing : 20 * DefaultStyle.dp
-	Layout.minimumHeight: 32 * DefaultStyle.dp
+	spacing : 20 * mainWindow.dp
+	Layout.minimumHeight: 32 * mainWindow.dp
 	ColumnLayout {
 		Text {
 			text: titleText

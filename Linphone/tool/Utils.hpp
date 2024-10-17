@@ -53,7 +53,7 @@ class Utils : public QObject {
 public:
 	Utils(QObject *parent = nullptr) : QObject(parent) {
 	}
-
+	Q_INVOKABLE static double getPixelDensity(int x, int y); // Get the pixel density on the screen at (x,y)
 	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
 	Q_INVOKABLE static QString getUsername(const QString &address);
 	Q_INVOKABLE static QString getGivenNameFromFullName(const QString &fullName);

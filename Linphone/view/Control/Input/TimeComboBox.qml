@@ -21,10 +21,10 @@ ComboBox {
 	property alias contentText: input
 	property var minTime
 	property var maxTime
-	popup.width: 73 * DefaultStyle.dp
+	popup.width: 73 * mainWindow.dp
 	listView.model: 48
-	listView.height: Math.min(204 * DefaultStyle.dp, listView.contentHeight)
-	popup.height: Math.min(204 * DefaultStyle.dp, listView.contentHeight)
+	listView.height: Math.min(204 * mainWindow.dp, listView.contentHeight)
+	popup.height: Math.min(204 * mainWindow.dp, listView.contentHeight)
 	editable: true
 	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
 	onCurrentTextChanged: input.text = currentText
@@ -52,8 +52,8 @@ ComboBox {
 			}
 		}
 		font {
-			pixelSize: 14 * DefaultStyle.dp
-			weight: 700 * DefaultStyle.dp
+			pixelSize: 14 * mainWindow.dp
+			weight: 700 * mainWindow.dp
 		}
 		text: mainItem.selectedTimeString
 		Keys.onPressed: (event) => {
@@ -74,12 +74,12 @@ ComboBox {
 		text: Qt.formatDateTime(currentDateTime, "hh:mm")
 		width: mainItem.width
 		visible: mainItem.minTime == undefined || UtilsCpp.timeOffset(mainItem.minTime, currentDateTime) > 0
-		height: visible ? 25 * DefaultStyle.dp : 0
+		height: visible ? 25 * mainWindow.dp : 0
 		verticalAlignment: TextInput.AlignVCenter
 		horizontalAlignment: TextInput.AlignHCenter
 		font {
-			pixelSize: 14 * DefaultStyle.dp
-			weight: 400 * DefaultStyle.dp
+			pixelSize: 14 * mainWindow.dp
+			weight: 400 * mainWindow.dp
 		}
 		MouseArea {
 			anchors.fill: parent

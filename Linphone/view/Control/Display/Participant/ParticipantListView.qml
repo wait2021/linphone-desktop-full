@@ -10,8 +10,8 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
-	rightMargin: 5 * DefaultStyle.dp
-	spacing: 5 * DefaultStyle.dp
+	rightMargin: 5 * mainWindow.dp
+	spacing: 5 * mainWindow.dp
 
 	property string searchBarText
 
@@ -35,26 +35,26 @@ ListView {
 	}
 
 	delegate: Item {
-		height: 56 * DefaultStyle.dp
+		height: 56 * mainWindow.dp
 		width: mainItem.width
 		
 		RowLayout {
 			id: participantDelegate
 			anchors.left: parent.left
-			anchors.leftMargin: 10 * DefaultStyle.dp
+			anchors.leftMargin: 10 * mainWindow.dp
 			anchors.right: parent.right
-			anchors.rightMargin: 10 * DefaultStyle.dp
+			anchors.rightMargin: 10 * mainWindow.dp
 			anchors.verticalCenter: parent.verticalCenter
-			spacing: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
 			z: 1
 			Avatar {
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
+				Layout.preferredWidth: 45 * mainWindow.dp
+				Layout.preferredHeight: 45 * mainWindow.dp
 				_address: modelData.core.sipAddress
 			}
 			Text {
 				text: modelData.core.displayName
-				font.pixelSize: 14 * DefaultStyle.dp
+				font.pixelSize: 14 * mainWindow.dp
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true
@@ -65,8 +65,8 @@ ListView {
 				text: qsTr("Admin")
 				color: DefaultStyle.main2_400
 				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+					pixelSize: 12 * mainWindow.dp
+					weight: 300 * mainWindow.dp
 				}
 			}
 			RowLayout {
@@ -75,19 +75,19 @@ ListView {
 				onIsMeChanged: if (isMe) mainItem.me = modelData
 				enabled: mainItem.isMeAdmin && !modelData.core.isMe
 				opacity: enabled ? 1.0 : 0
-				spacing: 26 * DefaultStyle.dp
+				spacing: 26 * mainWindow.dp
 				Switch {
 					Component.onCompleted: if (modelData.core.isAdmin) toggle()
 					//TODO : Utilser checked et onToggled (pas compris)
 					onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
 				}
 				Button {
-					Layout.preferredWidth: 20 * DefaultStyle.dp
-					Layout.preferredHeight: 20 * DefaultStyle.dp
+					Layout.preferredWidth: 20 * mainWindow.dp
+					Layout.preferredHeight: 20 * mainWindow.dp
 					color: DefaultStyle.main2_100
 					icon.source: AppIcons.closeX
-					icon.width: 14 * DefaultStyle.dp
-					icon.height: 14 * DefaultStyle.dp
+					icon.width: 14 * mainWindow.dp
+					icon.height: 14 * mainWindow.dp
 					onClicked: participantModel.removeParticipant(modelData.core)
 				}
 			}
@@ -97,24 +97,24 @@ ListView {
 	footer: Rectangle {
 		color: DefaultStyle.grey_100
 		visible: mainItem.isMeAdmin
-		height: 74 * DefaultStyle.dp
+		height: 74 * mainWindow.dp
 		width: mainItem.width
 		Button {
 			anchors.centerIn: parent
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
-			height: 40 * DefaultStyle.dp
+			leftPadding: 16 * mainWindow.dp
+			rightPadding: 16 * mainWindow.dp
+			topPadding: 10 * mainWindow.dp
+			bottomPadding: 10 * mainWindow.dp
+			height: 40 * mainWindow.dp
 			icon.source: AppIcons.plusCircle
-			icon.width: 16 * DefaultStyle.dp
-			icon.height: 16 * DefaultStyle.dp
+			icon.width: 16 * mainWindow.dp
+			icon.height: 16 * mainWindow.dp
 			contentImageColor: DefaultStyle.main1_500_main
 			color: DefaultStyle.main1_100
 			text: qsTr("Ajouter des participants")
 			textColor: DefaultStyle.main1_500_main
-			textSize: 15 * DefaultStyle.dp
-			textWeight: 600 * DefaultStyle.dp
+			textSize: 15 * mainWindow.dp
+			textWeight: 600 * mainWindow.dp
 			onClicked: mainItem.addParticipantRequested()
 		}
 	}

@@ -20,14 +20,14 @@ RowLayout {
 	property bool supportsEnableDisable
 	property bool showAddButton
 
-	spacing: 5 * DefaultStyle.dp
+	spacing: 5 * mainWindow.dp
 	ColumnLayout {
 		Layout.fillWidth: true
-		spacing: 5 * DefaultStyle.dp
+		spacing: 5 * mainWindow.dp
 		ColumnLayout {
-			Layout.preferredWidth: 341 * DefaultStyle.dp
-			Layout.maximumWidth: 341 * DefaultStyle.dp
-			spacing: 5 * DefaultStyle.dp
+			Layout.preferredWidth: 341 * mainWindow.dp
+			Layout.maximumWidth: 341 * mainWindow.dp
+			spacing: 5 * mainWindow.dp
 			Text {
 				text: mainItem.title
 				font: Typography.h4
@@ -48,25 +48,25 @@ RowLayout {
 		}
 	}
 	ColumnLayout {
-		Layout.rightMargin: 25 * DefaultStyle.dp
+		Layout.rightMargin: 25 * mainWindow.dp
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		spacing: 27 * DefaultStyle.dp
-		Layout.leftMargin: 76 * DefaultStyle.dp
-		Layout.topMargin: 16 * DefaultStyle.dp
+		spacing: 27 * mainWindow.dp
+		Layout.leftMargin: 76 * mainWindow.dp
+		Layout.topMargin: 16 * mainWindow.dp
 		Repeater {
 			model: mainItem.proxyModel
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignLeft|Qt.AlignHCenter
-				spacing: 5 * DefaultStyle.dp
+				spacing: 5 * mainWindow.dp
 				Text {
 					text: modelData.core[titleProperty]
 					font: Typography.p2l
 					wrapMode: Text.WordWrap
 					color: DefaultStyle.main2_600
 					Layout.fillWidth: true
-					Layout.leftMargin: 17 * DefaultStyle.dp
+					Layout.leftMargin: 17 * mainWindow.dp
 				}
 				Item {
 					Layout.fillWidth: true
@@ -74,8 +74,8 @@ RowLayout {
 				Button {
 					background: Item{}
 					icon.source: AppIcons.pencil
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+					icon.width: 24 * mainWindow.dp
+					icon.height: 24 * mainWindow.dp
 					contentImageColor: DefaultStyle.main2_600
 					onClicked: {
 						mainItem.owner.container.push(mainItem.settingsLayout, {
@@ -88,7 +88,7 @@ RowLayout {
 				Switch {
 					id: switchButton
 					Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-					Layout.rightMargin: 17 * DefaultStyle.dp
+					Layout.rightMargin: 17 * mainWindow.dp
 					checked: supportsEnableDisable && modelData.core["enabled"]
 					visible: supportsEnableDisable
 					onToggled: {
@@ -113,12 +113,12 @@ RowLayout {
 		}
 		RowLayout {
 			Layout.fillWidth: true
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			Item {
 				Layout.fillWidth: true
 			}
 			Button {
-				Layout.preferredHeight: 47 * DefaultStyle.dp
+				Layout.preferredHeight: 47 * mainWindow.dp
 				Layout.alignment: Qt.AlignRight | Qt.AlignHCenter
 				text: qsTr("Ajouter")
 				visible: mainItem.showAddButton

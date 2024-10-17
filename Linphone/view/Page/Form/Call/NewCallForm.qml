@@ -29,12 +29,12 @@ FocusScope {
 		}
 		contentItem: ColumnLayout {
 			anchors.fill: parent
-			spacing: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
 			SearchBar {
 				id: searchBar
 				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: true
-				Layout.rightMargin: 39 * DefaultStyle.dp
+				Layout.rightMargin: 39 * mainWindow.dp
 				Layout.maximumWidth: mainItem.width
 				focus: true
 				color: mainItem.searchBarColor
@@ -46,7 +46,7 @@ FocusScope {
 			Flickable {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Layout.topMargin: 25 * DefaultStyle.dp
+				Layout.topMargin: 25 * mainWindow.dp
 				contentWidth: width
 				contentHeight: content.height
 				clip: true
@@ -57,20 +57,20 @@ FocusScope {
 					anchors.top: parent.top
 					anchors.bottom: parent.bottom
 					anchors.right: parent.right
-					anchors.rightMargin: 8 * DefaultStyle.dp
+					anchors.rightMargin: 8 * mainWindow.dp
 				}
 
 				ColumnLayout {
 					id: content
-					spacing: 32 * DefaultStyle.dp
+					spacing: 32 * mainWindow.dp
 					anchors.left: parent.left
 					anchors.right: parent.right
-					anchors.rightMargin: 39 * DefaultStyle.dp
+					anchors.rightMargin: 39 * mainWindow.dp
 					Button {
 						id: grouCallButton
 						visible: mainItem.groupCallVisible && !SettingsCpp.disableMeetingsFeature
-						Layout.preferredWidth: 320 * DefaultStyle.dp
-						Layout.preferredHeight: 44 * DefaultStyle.dp
+						Layout.preferredWidth: 320 * mainWindow.dp
+						Layout.preferredHeight: 44 * mainWindow.dp
 						padding: 0
 						KeyNavigation.up: searchBar
 						KeyNavigation.down: contactList.count >0 ? contactList : searchList
@@ -82,22 +82,22 @@ FocusScope {
 								GradientStop { position: 1.0; color: DefaultStyle.grey_0}
 							}
 							anchors.fill: parent
-							radius: 50 * DefaultStyle.dp
+							radius: 50 * mainWindow.dp
 						}
 						contentItem: RowLayout {
-							spacing: 16 * DefaultStyle.dp
+							spacing: 16 * mainWindow.dp
 							Image {
 								source: AppIcons.groupCall
-								Layout.preferredWidth: 44 * DefaultStyle.dp
-								sourceSize.width: 44 * DefaultStyle.dp
+								Layout.preferredWidth: 44 * mainWindow.dp
+								sourceSize.width: 44 * mainWindow.dp
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: "Appel de groupe"
 								color: DefaultStyle.grey_1000
 								font {
-									pixelSize: 16 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+									pixelSize: 16 * mainWindow.dp
+									weight: 800 * mainWindow.dp
 									underline: grouCallButton.shadowEnabled
 								}
 							}
@@ -106,8 +106,8 @@ FocusScope {
 							}
 							Image {
 								source: AppIcons.rightArrow
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * mainWindow.dp
+								Layout.preferredHeight: 24 * mainWindow.dp
 							}
 						}
 					}
@@ -116,8 +116,8 @@ FocusScope {
 						Text {
 							text: qsTr("Contacts")
 							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 16 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 						}
 						ContactListView{
@@ -132,12 +132,12 @@ FocusScope {
 						}
 					}
 					ColumnLayout {
-						spacing: 18 * DefaultStyle.dp
+						spacing: 18 * mainWindow.dp
 						Text {
 							text: qsTr("Suggestions")
 							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 16 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 						}
 						ContactListView{

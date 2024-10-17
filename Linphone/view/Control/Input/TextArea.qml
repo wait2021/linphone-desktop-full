@@ -7,14 +7,14 @@ TextEdit {
 	id: mainItem
 	
 	property string placeholderText
-	property int placeholderPixelSize: 14 * DefaultStyle.dp
-	property int placeholderWeight: 400 * DefaultStyle.dp
+	property int placeholderPixelSize: 14 * mainWindow.dp
+	property int placeholderWeight: 400 * mainWindow.dp
 	property color placeholderTextColor: color
 	property alias background: background.data
 	property bool hoverEnabled: false
 	property bool hovered: mouseArea.hoverEnabled && mouseArea.containsMouse
-	topPadding: 5 * DefaultStyle.dp
-	bottomPadding: 5 * DefaultStyle.dp
+	topPadding: 5 * mainWindow.dp
+	bottomPadding: 5 * mainWindow.dp
 	activeFocusOnTab: true
 
 	MouseArea {

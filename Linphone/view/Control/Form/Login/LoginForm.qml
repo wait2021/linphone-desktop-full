@@ -6,7 +6,7 @@ import ConstantsCpp 1.0
 
 ColumnLayout {
 	id: mainItem
-	spacing: 25 * DefaultStyle.dp
+	spacing: 25 * mainWindow.dp
 	signal connectionSucceed()
 
 	FormItemLayout {
@@ -17,8 +17,8 @@ ColumnLayout {
 		contentItem: TextField {
 			id: usernameEdit
 			isError: username.errorTextVisible || errorText.visible
-			Layout.preferredWidth: 360 * DefaultStyle.dp
-			Layout.preferredHeight: 49 * DefaultStyle.dp
+			Layout.preferredWidth: 360 * mainWindow.dp
+			Layout.preferredHeight: 49 * mainWindow.dp
 		}
 	}
 	Item {
@@ -31,8 +31,8 @@ ColumnLayout {
 			contentItem: TextField {
 				id: passwordEdit
 				isError: password.errorTextVisible || errorText.visible
-				Layout.preferredWidth: 360 * DefaultStyle.dp
-				Layout.preferredHeight: 49 * DefaultStyle.dp
+				Layout.preferredWidth: 360 * mainWindow.dp
+				Layout.preferredHeight: 49 * mainWindow.dp
 				hidden: true
 			}
 		}
@@ -55,14 +55,14 @@ ColumnLayout {
 	}
 
 	RowLayout {
-		Layout.topMargin: 7 * DefaultStyle.dp
-		spacing: 29 * DefaultStyle.dp
+		Layout.topMargin: 7 * mainWindow.dp
+		spacing: 29 * mainWindow.dp
 		Button {
 			id: connectionButton
-			leftPadding: 20 * DefaultStyle.dp
-			rightPadding: 20 * DefaultStyle.dp
-			topPadding: 11 * DefaultStyle.dp
-			bottomPadding: 11 * DefaultStyle.dp
+			leftPadding: 20 * mainWindow.dp
+			rightPadding: 20 * mainWindow.dp
+			topPadding: 11 * mainWindow.dp
+			bottomPadding: 11 * mainWindow.dp
 			contentItem: StackLayout {
 				id: connectionButtonContent
 				currentIndex: 0
@@ -72,8 +72,8 @@ ColumnLayout {
 					verticalAlignment: Text.AlignVCenter
 
 					font {
-						pixelSize: 18 * DefaultStyle.dp
-						weight: 600 * DefaultStyle.dp
+						pixelSize: 18 * mainWindow.dp
+						weight: 600 * mainWindow.dp
 					}
 					color: DefaultStyle.grey_0
 				}
@@ -131,8 +131,8 @@ ColumnLayout {
 				text: qsTr("Mot de passe oublié ?")
 				font{
 					underline: true
-					pixelSize: 13 * DefaultStyle.dp
-					weight: 600 * DefaultStyle.dp
+					pixelSize: 13 * mainWindow.dp
+					weight: 600 * mainWindow.dp
 				}
 			}
 			onClicked: Qt.openUrlExternally(ConstantsCpp.PasswordRecoveryUrl)

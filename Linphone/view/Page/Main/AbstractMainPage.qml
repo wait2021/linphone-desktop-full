@@ -24,16 +24,16 @@ FocusScope {
 	// Control.SplitView {
 	// 	id: splitView
 	// 	anchors.fill: parent
-	// 	anchors.topMargin: 10 * DefaultStyle.dp
+	// 	anchors.topMargin: 10 * mainWindow.dp
 
 	// 	handle: Rectangle {
-	// 		implicitWidth: 8 * DefaultStyle.dp
+	// 		implicitWidth: 8 * mainWindow.dp
 	// 		color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
 	// 	}
 	// 	ColumnLayout {
 	// 		id: leftPanel
-	// 		Control.SplitView.preferredWidth: 350 * DefaultStyle.dp
-	// 		Control.SplitView.minimumWidth: 350 * DefaultStyle.dp
+	// 		Control.SplitView.preferredWidth: 350 * mainWindow.dp
+	// 		Control.SplitView.minimumWidth: 350 * mainWindow.dp
 	// 	}
 	// 	Rectangle {
 	// 		id: rightPanel
@@ -55,23 +55,23 @@ FocusScope {
 	// 						Layout.fillWidth: true
 	// 					}
 	// 					ColumnLayout {
-	// 						spacing: 30 * DefaultStyle.dp
+	// 						spacing: 30 * mainWindow.dp
 	// 						Item {
 	// 							Layout.fillHeight: true
 	// 						}
 	// 						Image {
 	// 							Layout.alignment: Qt.AlignHCenter
 	// 							source: AppIcons.noItemImage
-	// 							Layout.preferredWidth: 359 * DefaultStyle.dp
-	// 							Layout.preferredHeight: 314 * DefaultStyle.dp
+	// 							Layout.preferredWidth: 359 * mainWindow.dp
+	// 							Layout.preferredHeight: 314 * mainWindow.dp
 	// 							fillMode: Image.PreserveAspectFit
 	// 						}
 	// 						Text {
 	// 							text: mainItem.emptyListText
 	// 							Layout.alignment: Qt.AlignHCenter
 	// 							font {
-	// 								pixelSize: 22 * DefaultStyle.dp
-	// 								weight: 800 * DefaultStyle.dp
+	// 								pixelSize: 22 * mainWindow.dp
+	// 								weight: 800 * mainWindow.dp
 	// 							}
 	// 						}
 	// 						Button {
@@ -81,8 +81,8 @@ FocusScope {
 	// 								EffectImage {
 	// 									colorizationColor: DefaultStyle.grey_0
 	// 									source: mainItem.newItemIconSource
-	// 									width: 24 * DefaultStyle.dp
-	// 									height: 24 * DefaultStyle.dp
+	// 									width: 24 * mainWindow.dp
+	// 									height: 24 * mainWindow.dp
 	// 									fillMode: Image.PreserveAspectFit
 	// 								}
 	// 								Text {
@@ -90,8 +90,8 @@ FocusScope {
 	// 									wrapMode: Text.WordWrap
 	// 									color: DefaultStyle.grey_0
 	// 									font {
-	// 										weight: 600 * DefaultStyle.dp
-	// 										pixelSize: 18 * DefaultStyle.dp
+	// 										weight: 600 * mainWindow.dp
+	// 										pixelSize: 18 * mainWindow.dp
 	// 										family: DefaultStyle.defaultFont
 	// 									}
 	// 								}
@@ -122,13 +122,13 @@ FocusScope {
 		spacing: 0
 		ColumnLayout {
 			id: leftPanel
-			Layout.preferredWidth: 404 * DefaultStyle.dp
+			Layout.preferredWidth: 404 * mainWindow.dp
 			Layout.fillWidth:false
 			spacing:0
 		}
 		Rectangle {
 			Layout.fillHeight: true
-			Layout.preferredWidth: 1 * DefaultStyle.dp
+			Layout.preferredWidth: 1 * mainWindow.dp
 			color: DefaultStyle.main2_200
 		}
 		Rectangle {
@@ -150,38 +150,38 @@ FocusScope {
 							Layout.fillWidth: true
 						}
 						ColumnLayout {
-							spacing: 30 * DefaultStyle.dp
+							spacing: 30 * mainWindow.dp
 							Item {
 								Layout.fillHeight: true
 							}
 							Image {
 								Layout.alignment: Qt.AlignHCenter
 								source: AppIcons.noItemImage
-								Layout.preferredWidth: 359 * DefaultStyle.dp
-								Layout.preferredHeight: 314 * DefaultStyle.dp
+								Layout.preferredWidth: 359 * mainWindow.dp
+								Layout.preferredHeight: 314 * mainWindow.dp
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: mainItem.emptyListText
 								Layout.alignment: Qt.AlignHCenter
 								font {
-									pixelSize: 22 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+									pixelSize: 22 * mainWindow.dp
+									weight: 800 * mainWindow.dp
 								}
 							}
 							Button {
 								Layout.alignment: Qt.AlignHCenter
-								topPadding: 11 * DefaultStyle.dp
-								bottomPadding: 11 * DefaultStyle.dp
-								leftPadding: 20 * DefaultStyle.dp
-								rightPadding: 20 * DefaultStyle.dp
+								topPadding: 11 * mainWindow.dp
+								bottomPadding: 11 * mainWindow.dp
+								leftPadding: 20 * mainWindow.dp
+								rightPadding: 20 * mainWindow.dp
 								contentItem: RowLayout {
 									Layout.alignment: Qt.AlignVCenter
 									EffectImage {
 										colorizationColor: DefaultStyle.grey_0
 										imageSource: mainItem.newItemIconSource
-										width: 24 * DefaultStyle.dp
-										height: 24 * DefaultStyle.dp
+										width: 24 * mainWindow.dp
+										height: 24 * mainWindow.dp
 										fillMode: Image.PreserveAspectFit
 									}
 									Text {
@@ -189,8 +189,8 @@ FocusScope {
 										wrapMode: Text.WordWrap
 										color: DefaultStyle.grey_0
 										font {
-											weight: 600 * DefaultStyle.dp
-											pixelSize: 18 * DefaultStyle.dp
+											weight: 600 * mainWindow.dp
+											pixelSize: 18 * mainWindow.dp
 											family: DefaultStyle.defaultFont
 										}
 									}

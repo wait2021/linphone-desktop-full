@@ -13,18 +13,18 @@ AbstractSettingsLayout {
 		id: content
 		ColumnLayout {
 			width: parent.width
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			RowLayout {
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						Layout.minimumWidth: 341 * DefaultStyle.dp
-						spacing: 5 * DefaultStyle.dp
+						Layout.preferredWidth: 341 * mainWindow.dp
+						Layout.maximumWidth: 341 * mainWindow.dp
+						Layout.minimumWidth: 341 * mainWindow.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Configuration distante")
@@ -39,10 +39,10 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 20 * DefaultStyle.dp
-					Layout.rightMargin: 44 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
+					Layout.rightMargin: 44 * mainWindow.dp
+					Layout.topMargin: 20 * mainWindow.dp
+					Layout.leftMargin: 64 * mainWindow.dp
 					DecoratedTextField {
 						Layout.fillWidth: true
 						id: configUri
@@ -64,22 +64,22 @@ AbstractSettingsLayout {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				Layout.topMargin: 35 * DefaultStyle.dp
-				Layout.bottomMargin: 9 * DefaultStyle.dp
-				height: 1 * DefaultStyle.dp
+				Layout.topMargin: 35 * mainWindow.dp
+				Layout.bottomMargin: 9 * mainWindow.dp
+				height: 1 * mainWindow.dp
 				color: DefaultStyle.main2_500main
 			}
 			RowLayout {
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						Layout.minimumWidth: 341 * DefaultStyle.dp
-						spacing: 5 * DefaultStyle.dp
+						Layout.preferredWidth: 341 * mainWindow.dp
+						Layout.maximumWidth: 341 * mainWindow.dp
+						Layout.minimumWidth: 341 * mainWindow.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Codecs Audio")
@@ -94,10 +94,10 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 20 * DefaultStyle.dp
-					Layout.rightMargin: 44 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
+					Layout.rightMargin: 44 * mainWindow.dp
+					Layout.topMargin: 20 * mainWindow.dp
+					Layout.leftMargin: 64 * mainWindow.dp
 					Repeater {
 						model: PayloadTypeProxy {
 							family: PayloadTypeCore.Audio
@@ -114,22 +114,22 @@ AbstractSettingsLayout {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				Layout.topMargin: 35 * DefaultStyle.dp
-				Layout.bottomMargin: 9 * DefaultStyle.dp
-				height: 1 * DefaultStyle.dp
+				Layout.topMargin: 35 * mainWindow.dp
+				Layout.bottomMargin: 9 * mainWindow.dp
+				height: 1 * mainWindow.dp
 				color: DefaultStyle.main2_500main
 			}
 			RowLayout {
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						Layout.minimumWidth: 341 * DefaultStyle.dp
-						spacing: 5 * DefaultStyle.dp
+						Layout.preferredWidth: 341 * mainWindow.dp
+						Layout.maximumWidth: 341 * mainWindow.dp
+						Layout.minimumWidth: 341 * mainWindow.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Codecs Vidéo")
@@ -144,10 +144,10 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 20 * DefaultStyle.dp
-					Layout.rightMargin: 44 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
+					Layout.rightMargin: 44 * mainWindow.dp
+					Layout.topMargin: 20 * mainWindow.dp
+					Layout.leftMargin: 64 * mainWindow.dp
 					Repeater {
 						model: PayloadTypeProxy {
 							family: PayloadTypeCore.Video
@@ -164,19 +164,19 @@ AbstractSettingsLayout {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				Layout.topMargin: 35 * DefaultStyle.dp
-				Layout.bottomMargin: 9 * DefaultStyle.dp
-				height: 1 * DefaultStyle.dp
+				Layout.topMargin: 35 * mainWindow.dp
+				Layout.bottomMargin: 9 * mainWindow.dp
+				height: 1 * mainWindow.dp
 				color: DefaultStyle.main2_500main
 			}
 			RowLayout {
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				Item {
-					Layout.preferredWidth: 341 * DefaultStyle.dp
+					Layout.preferredWidth: 341 * mainWindow.dp
 				}
 				SwitchSetting {
-					Layout.rightMargin: 44 * DefaultStyle.dp
+					Layout.rightMargin: 44 * mainWindow.dp
 					titleText:qsTr("Cacher les FPS")
 					propertyName: "hideFps"
 					propertyOwner: SettingsCpp

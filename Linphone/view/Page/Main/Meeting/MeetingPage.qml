@@ -56,16 +56,16 @@ AbstractMainPage {
 		id: cancelAndDeleteConfDialog
 		property bool cancel: false
 		signal cancelRequested()
-		// width: 278 * DefaultStyle.dp
+		// width: 278 * mainWindow.dp
 		text: cancel ? qsTr("Souhaitez-vous annuler et supprimer cette réunion ?") : qsTr("Souhaitez-vous supprimer cette réunion ?")
 		buttons: [
 			Button {
 				visible: cancelAndDeleteConfDialog.cancel
 				text: qsTr("Annuler et supprimer")
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+				leftPadding: 20 * mainWindow.dp
+				rightPadding: 20 * mainWindow.dp
+				topPadding: 11 * mainWindow.dp
+				bottomPadding: 11 * mainWindow.dp
 				onClicked: {
 					cancelAndDeleteConfDialog.cancelRequested()
 					cancelAndDeleteConfDialog.accepted()
@@ -74,10 +74,10 @@ AbstractMainPage {
 			},
 			Button {
 				text: cancelAndDeleteConfDialog.cancel ? qsTr("Supprimer seulement") : qsTr("Supprimer")
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+				leftPadding: 20 * mainWindow.dp
+				rightPadding: 20 * mainWindow.dp
+				topPadding: 11 * mainWindow.dp
+				bottomPadding: 11 * mainWindow.dp
 				onClicked: {
 					cancelAndDeleteConfDialog.accepted()
 					cancelAndDeleteConfDialog.close()
@@ -86,10 +86,10 @@ AbstractMainPage {
 			Button {
 				text: qsTr("Retour")
 				inversedColors: true
-				leftPadding: 20 * DefaultStyle.dp
-				rightPadding: 20 * DefaultStyle.dp
-				topPadding: 11 * DefaultStyle.dp
-				bottomPadding: 11 * DefaultStyle.dp
+				leftPadding: 20 * mainWindow.dp
+				rightPadding: 20 * mainWindow.dp
+				topPadding: 11 * mainWindow.dp
+				bottomPadding: 11 * mainWindow.dp
 				onClicked: {
 					cancelAndDeleteConfDialog.rejected()
 					cancelAndDeleteConfDialog.close()
@@ -102,7 +102,7 @@ AbstractMainPage {
 		id: leftPanelStackView
 		Layout.fillHeight: true
 		Layout.fillWidth: true
-		Layout.leftMargin: 45 * DefaultStyle.dp
+		Layout.leftMargin: 45 * mainWindow.dp
 		initialItem: listLayout
 	}
 
@@ -110,7 +110,7 @@ AbstractMainPage {
 		id: overridenRightPanel
 		Control.StackView {
 			id: overridenRightPanelStackView
-			width: 393 * DefaultStyle.dp
+			width: 393 * mainWindow.dp
 			height: parent.height
 			anchors.top: parent.top
 			anchors.centerIn: parent
@@ -134,24 +134,24 @@ AbstractMainPage {
 				spacing: 0
 				RowLayout {
 					enabled: mainItem.leftPanelEnabled
-					Layout.rightMargin: 38 * DefaultStyle.dp
+					Layout.rightMargin: 38 * mainWindow.dp
 					spacing: 0					
 					Text {
 						Layout.fillWidth: true
 						text: qsTr("Réunions")
 						color: DefaultStyle.main2_700
-						font.pixelSize: 29 * DefaultStyle.dp
-						font.weight: 800 * DefaultStyle.dp
+						font.pixelSize: 29 * mainWindow.dp
+						font.weight: 800 * mainWindow.dp
 					}
 					Item{Layout.fillWidth: true}
 					Button {
 						background: Item {
 						}
 						icon.source: AppIcons.plusCircle
-						Layout.preferredWidth: 28 * DefaultStyle.dp
-						Layout.preferredHeight: 28 * DefaultStyle.dp
-						icon.width: 28 * DefaultStyle.dp
-						icon.height: 28 * DefaultStyle.dp
+						Layout.preferredWidth: 28 * mainWindow.dp
+						Layout.preferredHeight: 28 * mainWindow.dp
+						icon.width: 28 * mainWindow.dp
+						icon.height: 28 * mainWindow.dp
 						onClicked: {
 							mainItem.editConference()
 						}
@@ -160,20 +160,20 @@ AbstractMainPage {
 				SearchBar {
 					id: searchBar
 					Layout.fillWidth: true
-					Layout.topMargin: 18 * DefaultStyle.dp
-					Layout.rightMargin: 38 * DefaultStyle.dp
+					Layout.topMargin: 18 * mainWindow.dp
+					Layout.rightMargin: 38 * mainWindow.dp
 					placeholderText: qsTr("Rechercher une réunion")
 					KeyNavigation.up: conferenceList
 					KeyNavigation.down: conferenceList
 				}
 				Text {
-					Layout.topMargin: 38 * DefaultStyle.dp
+					Layout.topMargin: 38 * mainWindow.dp
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
 					text: mainItem.emptyListText
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 16 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 					visible: mainItem.showDefaultItem
 					Binding on text {
@@ -185,7 +185,7 @@ AbstractMainPage {
 				MeetingListView {
 					id: conferenceList
 					// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
-					Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
+					Layout.topMargin: 38 * mainWindow.dp - 24 * mainWindow.dp
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					hoverEnabled: mainItem.leftPanelEnabled
@@ -210,7 +210,7 @@ AbstractMainPage {
 					Control.ScrollBar.vertical: ScrollBar {
 						id: meetingsScrollbar
 						anchors.right: parent.right
-						anchors.rightMargin: 8 * DefaultStyle.dp
+						anchors.rightMargin: 8 * mainWindow.dp
 						active: true
 						interactive: true
 						policy: Control.ScrollBar.AsNeeded
@@ -228,21 +228,21 @@ AbstractMainPage {
 			property ConferenceInfoGui conferenceInfoGui
 			property bool isCreation
 			ColumnLayout {
-				spacing: 33 * DefaultStyle.dp
+				spacing: 33 * mainWindow.dp
 				anchors.fill: parent
 				RowLayout {
-					Layout.rightMargin: 35 * DefaultStyle.dp
-					spacing: 5 * DefaultStyle.dp
+					Layout.rightMargin: 35 * mainWindow.dp
+					spacing: 5 * mainWindow.dp
 					Button {
 						id: backButton
 						background: Item{}
 						icon.source: AppIcons.leftArrow
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
-						topPadding: 6 * DefaultStyle.dp
-						bottomPadding: 6 * DefaultStyle.dp
+						Layout.preferredWidth: 24 * mainWindow.dp
+						Layout.preferredHeight: 24 * mainWindow.dp
+						icon.width: 24 * mainWindow.dp
+						icon.height: 24 * mainWindow.dp
+						topPadding: 6 * mainWindow.dp
+						bottomPadding: 6 * mainWindow.dp
 						focus: true
 						KeyNavigation.right: createButton
 						KeyNavigation.down: meetingSetup
@@ -255,17 +255,17 @@ AbstractMainPage {
 						text: qsTr("Nouvelle réunion")
 						color: DefaultStyle.main2_700
 						font {
-							pixelSize: 22 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+							pixelSize: 22 * mainWindow.dp
+							weight: 800 * mainWindow.dp
 						}
 						Layout.fillWidth: true
 					}
 					Item {Layout.fillWidth: true}
 					Button {
 						id: createButton
-						Layout.preferredWidth: 57 * DefaultStyle.dp
-						topPadding: 6 * DefaultStyle.dp
-						bottomPadding: 6 * DefaultStyle.dp
+						Layout.preferredWidth: 57 * mainWindow.dp
+						topPadding: 6 * mainWindow.dp
+						bottomPadding: 6 * mainWindow.dp
 						KeyNavigation.left: backButton
 						KeyNavigation.down: meetingSetup
 						contentItem: Text {
@@ -274,8 +274,8 @@ AbstractMainPage {
 							verticalAlignment: Text.AlignVCenter
 	
 							font {
-								pixelSize: 13 * DefaultStyle.dp
-								weight: 600 * DefaultStyle.dp
+								pixelSize: 13 * mainWindow.dp
+								weight: 600 * mainWindow.dp
 							}
 							color: DefaultStyle.grey_0
 						}
@@ -299,7 +299,7 @@ AbstractMainPage {
 					isCreation: createConfLayout.isCreation
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					Layout.rightMargin: 35 * DefaultStyle.dp
+					Layout.rightMargin: 35 * mainWindow.dp
 					Connections {
 						target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
 						function onConferenceSchedulerStateChanged() {
@@ -353,15 +353,15 @@ AbstractMainPage {
 				anchors.fill: parent
 				spacing: 0
 				Section {
-					Layout.topMargin: 58 * DefaultStyle.dp
+					Layout.topMargin: 58 * mainWindow.dp
 					content: RowLayout {
-						spacing: 10 * DefaultStyle.dp
+						spacing: 10 * mainWindow.dp
 						Button {
 							id: backButton
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
+							icon.width: 24 * mainWindow.dp
+							icon.height: 24 * mainWindow.dp
 							icon.source: AppIcons.leftArrow
 							KeyNavigation.left: saveButton
 							KeyNavigation.right: titleText
@@ -379,8 +379,8 @@ AbstractMainPage {
 							Layout.fillWidth: true
 							color: DefaultStyle.main2_600
 							font {
-								pixelSize: 20 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 20 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 							KeyNavigation.left: backButton
 							KeyNavigation.right: saveButton
@@ -393,13 +393,13 @@ AbstractMainPage {
 						}
 						Button {
 							id: saveButton
-							topPadding: 6 * DefaultStyle.dp
-							bottomPadding: 6 * DefaultStyle.dp
-							leftPadding: 12 * DefaultStyle.dp
-							rightPadding: 12 * DefaultStyle.dp
+							topPadding: 6 * mainWindow.dp
+							bottomPadding: 6 * mainWindow.dp
+							leftPadding: 12 * mainWindow.dp
+							rightPadding: 12 * mainWindow.dp
 							focus: true
 							text: qsTr("Save")
-							textSize: 13 * DefaultStyle.dp
+							textSize: 13 * mainWindow.dp
 							KeyNavigation.left: titleText
 							KeyNavigation.right: backButton
 							KeyNavigation.down: conferenceEdit
@@ -461,29 +461,29 @@ AbstractMainPage {
 				Layout.preferredHeight: addParticipantsButtons.implicitHeight
 				RowLayout {
 					id: addParticipantsButtons
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					Button {
 						id: removeButton
 						background: Item{}
 						icon.source: AppIcons.leftArrow
 						contentImageColor: DefaultStyle.main1_500_main
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+						Layout.preferredWidth: 24 * mainWindow.dp
+						Layout.preferredHeight: 24 * mainWindow.dp
+						icon.width: 24 * mainWindow.dp
+						icon.height: 24 * mainWindow.dp
 						KeyNavigation.right: addButton
 						KeyNavigation.down: addParticipantLayout
 						onClicked: container.pop()
 					}
 					ColumnLayout {
-						spacing: 3 * DefaultStyle.dp
+						spacing: 3 * mainWindow.dp
 						Text {
 							text: qsTr("Ajouter des participants")
 							color: DefaultStyle.main1_500_main
 							maximumLineCount: 1
 							font {
-								pixelSize: 18 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 18 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 							Layout.fillWidth: true
 						}
@@ -492,8 +492,8 @@ AbstractMainPage {
 							color: DefaultStyle.main2_500main
 							maximumLineCount: 1
 							font {
-								pixelSize: 12 * DefaultStyle.dp
-								weight: 300 * DefaultStyle.dp
+								pixelSize: 12 * mainWindow.dp
+								weight: 300 * mainWindow.dp
 							}
 							Layout.fillWidth: true
 						}
@@ -501,14 +501,14 @@ AbstractMainPage {
 					Button {
 						id: addButton
 						enabled: addParticipantLayout.selectedParticipantsCount.length != 0
-						Layout.rightMargin: 21 * DefaultStyle.dp
-						topPadding: 6 * DefaultStyle.dp
-						bottomPadding: 6 * DefaultStyle.dp
-						leftPadding: 12 * DefaultStyle.dp
-						rightPadding: 12 * DefaultStyle.dp
+						Layout.rightMargin: 21 * mainWindow.dp
+						topPadding: 6 * mainWindow.dp
+						bottomPadding: 6 * mainWindow.dp
+						leftPadding: 12 * mainWindow.dp
+						rightPadding: 12 * mainWindow.dp
 						focus: enabled
 						text: qsTr("Ajouter")
-						textSize: 13 * DefaultStyle.dp
+						textSize: 13 * mainWindow.dp
 						KeyNavigation.left: removeButton
 						KeyNavigation.down: addParticipantLayout
 						onClicked: {
@@ -535,22 +535,22 @@ AbstractMainPage {
 				id: meetingDetailsLayout
 				anchors.fill: parent
 				visible: mainItem.selectedConference
-				spacing: 25 * DefaultStyle.dp
+				spacing: 25 * mainWindow.dp
 				Section {
-					Layout.topMargin: 58 * DefaultStyle.dp
+					Layout.topMargin: 58 * mainWindow.dp
 					visible: mainItem.selectedConference
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+						spacing: 8 * mainWindow.dp
 						Image {
 							source: AppIcons.usersThree
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 						}
 						Text {
 							text: mainItem.selectedConference ? mainItem.selectedConference.core.subject : ""
 							font {
-								pixelSize: 20 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
+								pixelSize: 20 * mainWindow.dp
+								weight: 800 * mainWindow.dp
 							}
 						}
 						Item {
@@ -560,10 +560,10 @@ AbstractMainPage {
 							id: editButton
 							property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
 							visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
+							icon.width: 24 * mainWindow.dp
+							icon.height: 24 * mainWindow.dp
 							icon.source: AppIcons.pencil
 							contentImageColor: DefaultStyle.main1_500_main
 							KeyNavigation.left: leftPanelStackView.currentItem
@@ -575,8 +575,8 @@ AbstractMainPage {
 						}
 						PopupButton {
 							id: deletePopup
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 							contentImageColor: DefaultStyle.main1_500_main
 							KeyNavigation.left: editButton.visible ? editButton : leftPanelStackView.currentItem
 							KeyNavigation.right: leftPanelStackView.currentItem
@@ -591,11 +591,11 @@ AbstractMainPage {
 								inversedColors: true
 								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
 								icon.source: AppIcons.trashCan
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
-								spacing: 10 * DefaultStyle.dp
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
+								icon.width: 24 * mainWindow.dp
+								icon.height: 24 * mainWindow.dp
+								spacing: 10 * mainWindow.dp
+								textSize: 14 * mainWindow.dp
+								textWeight: 400 * mainWindow.dp
 								text: qsTr("Delete this meeting")
 								
 								onClicked: {
@@ -622,14 +622,14 @@ AbstractMainPage {
 				}
 				Section {
 					content: ColumnLayout {
-						spacing: 15 * DefaultStyle.dp
+						spacing: 15 * mainWindow.dp
 						width: parent.width
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+							spacing: 8 * mainWindow.dp
 							Layout.fillWidth: true
 							Image {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * mainWindow.dp
+								Layout.preferredHeight: 24 * mainWindow.dp
 								source: AppIcons.videoCamera
 							}
 							Button {
@@ -637,8 +637,8 @@ AbstractMainPage {
 								Layout.fillWidth: true
 								font.bold: shadowEnabled
 								text: mainItem.selectedConference ? mainItem.selectedConference.core.uri : ""
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
+								textSize: 14 * mainWindow.dp
+								textWeight: 400 * mainWindow.dp
 								underline: true
 								inversedColors: true
 								color: DefaultStyle.main2_600
@@ -660,10 +660,10 @@ AbstractMainPage {
 							}
 							Button {
 								id: shareNetworkButton
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								icon.width: 24 * DefaultStyle.dp
-								icon.height: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * mainWindow.dp
+								Layout.preferredHeight: 24 * mainWindow.dp
+								icon.width: 24 * mainWindow.dp
+								icon.height: 24 * mainWindow.dp
 								background: Item{}
 								icon.source: AppIcons.shareNetwork
 								KeyNavigation.left: linkButton
@@ -677,10 +677,10 @@ AbstractMainPage {
 							}
 						}
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+							spacing: 8 * mainWindow.dp
 							Image {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * mainWindow.dp
+								Layout.preferredHeight: 24 * mainWindow.dp
 								source: AppIcons.clock
 							}
 							Text {
@@ -691,22 +691,22 @@ AbstractMainPage {
 										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
 										: ''
 								font {
-									pixelSize: 14 * DefaultStyle.dp
+									pixelSize: 14 * mainWindow.dp
 									capitalization: Font.Capitalize
 								}
 							}
 						}
 						RowLayout {
-							spacing: 8 * DefaultStyle.dp
+							spacing: 8 * mainWindow.dp
 							Image {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * mainWindow.dp
+								Layout.preferredHeight: 24 * mainWindow.dp
 								source: AppIcons.globe
 							}
 							Text {
 								text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
-									pixelSize: 14 * DefaultStyle.dp
+									pixelSize: 14 * mainWindow.dp
 									capitalization: Font.Capitalize
 								}
 							}
@@ -716,10 +716,10 @@ AbstractMainPage {
 				Section {
 					visible: mainItem.selectedConference && mainItem.selectedConference.core.description.length != 0
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+						spacing: 8 * mainWindow.dp
 						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 							imageSource: AppIcons.note
 							colorizationColor: DefaultStyle.main2_600
 						}
@@ -727,7 +727,7 @@ AbstractMainPage {
 							text: mainItem.selectedConference ? mainItem.selectedConference.core.description : ""
 							Layout.fillWidth: true
 							font {
-								pixelSize: 14 * DefaultStyle.dp
+								pixelSize: 14 * mainWindow.dp
 								capitalization: Font.Capitalize
 							}
 						}
@@ -735,22 +735,22 @@ AbstractMainPage {
 				}
 				Section {
 					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
+						spacing: 8 * mainWindow.dp
 						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 							imageSource: AppIcons.userRectangle
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Avatar {
-							Layout.preferredWidth: 45 * DefaultStyle.dp
-							Layout.preferredHeight: 45 * DefaultStyle.dp
+							Layout.preferredWidth: 45 * mainWindow.dp
+							Layout.preferredHeight: 45 * mainWindow.dp
 							_address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
 						}
 						Text {
 							text: mainItem.selectedConference ? mainItem.selectedConference.core.organizerName : ""
 							font {
-								pixelSize: 14 * DefaultStyle.dp
+								pixelSize: 14 * mainWindow.dp
 								capitalization: Font.Capitalize
 							}
 						}
@@ -759,34 +759,34 @@ AbstractMainPage {
 				Section {
 					content: RowLayout {
 						Layout.preferredHeight: participantList.height
-						width: 393 * DefaultStyle.dp
-						spacing: 8 * DefaultStyle.dp
+						width: 393 * mainWindow.dp
+						spacing: 8 * mainWindow.dp
 						Image {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 							Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-							Layout.topMargin: 20 * DefaultStyle.dp
+							Layout.topMargin: 20 * mainWindow.dp
 							source: AppIcons.usersTwo
 						}
 						ListView {
 							id: participantList
-							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
+							Layout.preferredHeight: Math.min(184 * mainWindow.dp, contentHeight)
 							Layout.fillWidth: true
 							model: mainItem.selectedConference ? mainItem.selectedConference.core.participants : []
 							clip: true
 							delegate: RowLayout {
-								height: 56 * DefaultStyle.dp
+								height: 56 * mainWindow.dp
 								width: participantList.width
 								Avatar {
-									Layout.preferredWidth: 45 * DefaultStyle.dp
-									Layout.preferredHeight: 45 * DefaultStyle.dp
+									Layout.preferredWidth: 45 * mainWindow.dp
+									Layout.preferredHeight: 45 * mainWindow.dp
 									_address: modelData.address
 								}
 								Text {
 									text: modelData.displayName
 									Layout.fillWidth: true
 									font {
-										pixelSize: 14 * DefaultStyle.dp
+										pixelSize: 14 * mainWindow.dp
 										capitalization: Font.Capitalize
 									}
 								}
@@ -795,8 +795,8 @@ AbstractMainPage {
 									visible: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress === modelData.address
 									color: DefaultStyle.main2_400
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 300 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 300 * mainWindow.dp
 									}
 								}
 							}
@@ -807,8 +807,8 @@ AbstractMainPage {
 					id: joinButton
 					Layout.fillWidth: true
 					text: qsTr("Rejoindre la réunion")
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					topPadding: 11 * mainWindow.dp
+					bottomPadding: 11 * mainWindow.dp
 					focus: true
 					KeyNavigation.up: shareNetworkButton
 					KeyNavigation.down: deletePopup

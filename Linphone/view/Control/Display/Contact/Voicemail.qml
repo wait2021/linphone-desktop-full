@@ -10,15 +10,15 @@ Rectangle{
 	id: mainItem
 	property int voicemailCount: 0
 	visible: voicemailCount > 0
-	width: 27 * DefaultStyle.dp
-	height: 28 * DefaultStyle.dp
+	width: 27 * mainWindow.dp
+	height: 28 * mainWindow.dp
 	signal clicked()
 	Button {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		icon.source: AppIcons.voicemail
-		width: 24 * DefaultStyle.dp
-		height: 24 * DefaultStyle.dp
+		width: 24 * mainWindow.dp
+		height: 24 * mainWindow.dp
 		background: Item {
 			anchors.fill: parent
 		}
@@ -29,8 +29,8 @@ Rectangle{
 	Text {
 		anchors.top: parent.top
 		anchors.right: parent.right
-		font.weight: 700 * DefaultStyle.dp
-		font.pixelSize: 10 * DefaultStyle.dp
+		font.weight: 700 * mainWindow.dp
+		font.pixelSize: 10 * mainWindow.dp
 		color: DefaultStyle.danger_500main
 		text: voicemailCount
 		maximumLineCount: 1

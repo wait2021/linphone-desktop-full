@@ -23,7 +23,7 @@ FocusScope{
 
 	ColumnLayout {
 		anchors.fill: parent
-		spacing: 15 * DefaultStyle.dp
+		spacing: 15 * mainWindow.dp
 		ListView {
 			id: participantList
 			Layout.fillWidth: true
@@ -39,32 +39,32 @@ FocusScope{
 				}
 			}
 			delegate: FocusScope {
-				height: 56 * DefaultStyle.dp
-				width: participantList.width - scrollbar.implicitWidth - 12 * DefaultStyle.dp
+				height: 56 * mainWindow.dp
+				width: participantList.width - scrollbar.implicitWidth - 12 * mainWindow.dp
 				RowLayout {
 					anchors.fill: parent
-					spacing: 10 * DefaultStyle.dp
+					spacing: 10 * mainWindow.dp
 					Avatar {
-						Layout.preferredWidth: 45 * DefaultStyle.dp
-						Layout.preferredHeight: 45 * DefaultStyle.dp
+						Layout.preferredWidth: 45 * mainWindow.dp
+						Layout.preferredHeight: 45 * mainWindow.dp
 						_address: modelData
 					}
 					Text {
 						property var nameObj: UtilsCpp.getDisplayName(modelData)
 						text: nameObj ? nameObj.value : ""
-						font.pixelSize: 14 * DefaultStyle.dp
+						font.pixelSize: 14 * mainWindow.dp
 						font.capitalization: Font.Capitalize
 					}
 					Item {
 						Layout.fillWidth: true
 					}
 					Button {
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
+						Layout.preferredWidth: 24 * mainWindow.dp
+						Layout.preferredHeight: 24 * mainWindow.dp
 						background: Item{}
 						icon.source: AppIcons.closeX
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+						icon.width: 24 * mainWindow.dp
+						icon.height: 24 * mainWindow.dp
 						focus: true
 						contentImageColor: DefaultStyle.main1_500_main
 						onClicked: suggestionList.removeSelectedContactByAddress(modelData)
@@ -79,15 +79,15 @@ FocusScope{
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				anchors.right: parent.right
-				anchors.rightMargin: 8 * DefaultStyle.dp
+				anchors.rightMargin: 8 * mainWindow.dp
 			}
 		}
 		SearchBar {
 			id: searchbar
 			Layout.fillWidth: true
-			Layout.topMargin: 6 * DefaultStyle.dp
-			Layout.rightMargin: 28 * DefaultStyle.dp
-			Layout.preferredHeight: 45 * DefaultStyle.dp
+			Layout.topMargin: 6 * mainWindow.dp
+			Layout.rightMargin: 28 * mainWindow.dp
+			Layout.preferredHeight: 45 * mainWindow.dp
 			placeholderText: mainItem.placeHolderText
 			focus: participantList.count == 0
 			color: mainItem.searchBarColor
@@ -111,19 +111,19 @@ FocusScope{
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				anchors.right: parent.right
-				anchors.rightMargin: 8 * DefaultStyle.dp
+				anchors.rightMargin: 8 * mainWindow.dp
 			}
 			ColumnLayout {
 				id: content
 				anchors.left: parent.left
 				anchors.right: parent.right
-				anchors.rightMargin: contactsScrollBar.implicitWidth + 12 * DefaultStyle.dp
+				anchors.rightMargin: contactsScrollBar.implicitWidth + 12 * mainWindow.dp
 				Text {
-					Layout.topMargin: 6 * DefaultStyle.dp
+					Layout.topMargin: 6 * mainWindow.dp
 					text: qsTr("Contacts")
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 16 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 				}
 				ContactListView {
@@ -131,7 +131,7 @@ FocusScope{
 					visible: contentHeight > 0 || searchbar.text.length > 0
 					Layout.fillWidth: true
 					// Layout.fillHeight: true
-					Layout.topMargin: 8 * DefaultStyle.dp
+					Layout.topMargin: 8 * mainWindow.dp
 					Layout.preferredHeight: contentHeight
 					multiSelectionEnabled: true
 					contactMenuVisible: false
@@ -144,11 +144,11 @@ FocusScope{
 					Control.ScrollBar.vertical.visible: false
 				}
 				Text {
-					Layout.topMargin: 6 * DefaultStyle.dp
+					Layout.topMargin: 6 * mainWindow.dp
 					text: qsTr("Suggestions")
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 16 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 				}
 				ContactListView {

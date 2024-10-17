@@ -17,7 +17,7 @@ AbstractSettingsLayout {
 	Component {
 		id: content
 		ColumnLayout {
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			ContactsSettingsProviderLayout {
 				title: qsTr("Annuaires LDAP")
 				addText: qsTr("Ajouter un annuaire LDAP")
@@ -33,9 +33,9 @@ AbstractSettingsLayout {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				Layout.topMargin: 35 * DefaultStyle.dp
-				Layout.bottomMargin: 9 * DefaultStyle.dp
-				height: 1 * DefaultStyle.dp
+				Layout.topMargin: 35 * mainWindow.dp
+				Layout.bottomMargin: 9 * mainWindow.dp
+				height: 1 * mainWindow.dp
 				color: DefaultStyle.main2_500main
 			}
 			ContactsSettingsProviderLayout {

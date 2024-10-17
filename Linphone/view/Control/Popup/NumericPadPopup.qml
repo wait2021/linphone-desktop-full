@@ -9,10 +9,10 @@ import LinphoneCallsCpp
 Control.Popup {
 	id: mainItem
 	closePolicy: Control.Popup.CloseOnEscape
-	leftPadding: 72 * DefaultStyle.dp
-	rightPadding: 72 * DefaultStyle.dp
-	topPadding: 41 * DefaultStyle.dp
-	bottomPadding: 18 * DefaultStyle.dp
+	leftPadding: 72 * mainWindow.dp
+	rightPadding: 72 * mainWindow.dp
+	topPadding: 41 * mainWindow.dp
+	bottomPadding: 18 * mainWindow.dp
 	property bool closeButtonVisible: true
 	property bool roundedBottom: false
 	property bool lastRowVisible: true
@@ -29,7 +29,7 @@ Control.Popup {
 			width: parent.width
 			height: parent.height
 			color: DefaultStyle.grey_100
-			radius: 20 * DefaultStyle.dp
+			radius: 20 * mainWindow.dp
 		}
 		MultiEffect {
 			id: effect
@@ -57,17 +57,17 @@ Control.Popup {
 			visible: mainItem.closeButtonVisible
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.topMargin: 10 * DefaultStyle.dp
-			anchors.rightMargin: 10 * DefaultStyle.dp
+			anchors.topMargin: 10 * mainWindow.dp
+			anchors.rightMargin: 10 * mainWindow.dp
 			background: Item {
 				anchors.fill: parent
 				visible: false
 			}
 			icon.source: AppIcons.closeX
-			width: 24 * DefaultStyle.dp
-			height: 24 * DefaultStyle.dp
-			icon.width: 24 * DefaultStyle.dp
-			icon.height: 24 * DefaultStyle.dp
+			width: 24 * mainWindow.dp
+			height: 24 * mainWindow.dp
+			icon.width: 24 * mainWindow.dp
+			icon.height: 24 * mainWindow.dp
 			onClicked: mainItem.close()
 		}
 	}

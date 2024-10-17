@@ -12,10 +12,10 @@ Control.Button {
 	property color borderColor: DefaultStyle.grey_0
 	readonly property color pressedColor: Qt.darker(color, 1.1)
 	property bool inversedColors: false
-	property int textSize: 18 * DefaultStyle.dp
-	property int textWeight: 600 * DefaultStyle.dp
+	property int textSize: 18 * mainWindow.dp
+	property int textWeight: 600 * mainWindow.dp
 	property var textHAlignment: Text.AlignHCenter
-	property int radius: 48 * DefaultStyle.dp
+	property int radius: 48 * mainWindow.dp
 	property color textColor: DefaultStyle.grey_0
 	property bool underline: activeFocus || containsMouse
 	property bool shadowEnabled: enabled && (activeFocus  || containsMouse)
@@ -24,10 +24,10 @@ Control.Button {
 	property bool asynchronous: true
 	hoverEnabled: true
 	activeFocusOnTab: true
-	// leftPadding: 20 * DefaultStyle.dp
-	// rightPadding: 20 * DefaultStyle.dp
-	// topPadding: 11 * DefaultStyle.dp
-	// bottomPadding: 11 * DefaultStyle.dp
+	// leftPadding: 20 * mainWindow.dp
+	// rightPadding: 20 * mainWindow.dp
+	// topPadding: 11 * mainWindow.dp
+	// bottomPadding: 11 * mainWindow.dp
 	implicitHeight: contentItem.implicitHeight + bottomPadding + topPadding
 	implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
 	MouseArea {

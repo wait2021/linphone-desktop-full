@@ -8,7 +8,7 @@ MouseArea {
 	property string iconSource
 	property string title
 	property string subTitle
-	property int iconSize: 32 * DefaultStyle.dp
+	property int iconSize: 32 * mainWindow.dp
 	property bool shadowEnabled: containsMouse || activeFocus
 	hoverEnabled: true
 	width: content.implicitWidth
@@ -36,7 +36,7 @@ MouseArea {
 		ColumnLayout {
 			width: implicitWidth
 			height: implicitHeight
-			Layout.leftMargin: 16 * DefaultStyle.dp
+			Layout.leftMargin: 16 * mainWindow.dp
 			Text {
 				Layout.fillWidth: true
 				text: mainItem.title

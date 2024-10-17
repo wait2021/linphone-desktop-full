@@ -8,7 +8,7 @@ import SettingsCpp
 
 ColumnLayout {
 	id: mainItem
-	spacing: 30 * DefaultStyle.dp
+	spacing: 30 * mainWindow.dp
 
 	property FriendGui contact
 	property ConferenceInfoGui conferenceInfo
@@ -34,20 +34,20 @@ ColumnLayout {
 		// property alias image: buttonImg
 		property alias button: button
 		property string label
-		spacing: 8 * DefaultStyle.dp
+		spacing: 8 * mainWindow.dp
 		Button {
 			id: button
 			Layout.alignment: Qt.AlignHCenter
-			Layout.preferredWidth: 56 * DefaultStyle.dp
-			Layout.preferredHeight: 56 * DefaultStyle.dp
-			topPadding: 16 * DefaultStyle.dp
-			bottomPadding: 16 * DefaultStyle.dp
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
+			Layout.preferredWidth: 56 * mainWindow.dp
+			Layout.preferredHeight: 56 * mainWindow.dp
+			topPadding: 16 * mainWindow.dp
+			bottomPadding: 16 * mainWindow.dp
+			leftPadding: 16 * mainWindow.dp
+			rightPadding: 16 * mainWindow.dp
 			contentImageColor: DefaultStyle.main2_600
 			background: Rectangle {
 				anchors.fill: parent
-				radius: 40 * DefaultStyle.dp
+				radius: 40 * mainWindow.dp
 				color: DefaultStyle.main2_200
 			}
 		}
@@ -55,23 +55,23 @@ ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
 			text: labelButton.label
 			font {
-				pixelSize: 14 * DefaultStyle.dp
-				weight: 400 * DefaultStyle.dp
+				pixelSize: 14 * mainWindow.dp
+				weight: 400 * mainWindow.dp
 			}
 		}
 	}
 
 	ColumnLayout {
-		spacing: 13 * DefaultStyle.dp
+		spacing: 13 * mainWindow.dp
 		Item {
-			Layout.preferredWidth: 360 * DefaultStyle.dp
+			Layout.preferredWidth: 360 * mainWindow.dp
 			Layout.preferredHeight: detailAvatar.height
 			Layout.alignment: Qt.AlignHCenter
 			Avatar {
 				id: detailAvatar
 				anchors.horizontalCenter: parent.horizontalCenter
-				width: 100 * DefaultStyle.dp
-				height: 100 * DefaultStyle.dp
+				width: 100 * mainWindow.dp
+				height: 100 * mainWindow.dp
 				contact: mainItem.contact || null
 				_address: mainItem.conferenceInfo
 					? mainItem.conferenceInfo.core.subject
@@ -81,15 +81,15 @@ ColumnLayout {
 				id: rightButton
 				anchors.right: parent.right
 				anchors.verticalCenter: detailAvatar.verticalCenter
-				anchors.rightMargin: 20 * DefaultStyle.dp
-				width: 30 * DefaultStyle.dp
-				height: 30 * DefaultStyle.dp
+				anchors.rightMargin: 20 * mainWindow.dp
+				width: 30 * mainWindow.dp
+				height: 30 * mainWindow.dp
 			}
 		}
 		ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
-			Layout.preferredWidth: 360 * DefaultStyle.dp
-			spacing: 2 * DefaultStyle.dp
+			Layout.preferredWidth: 360 * mainWindow.dp
+			spacing: 2 * mainWindow.dp
 
 			Text {
 				Layout.preferredWidth: implicitWidth
@@ -99,8 +99,8 @@ ColumnLayout {
 				text: mainItem.contactName
 				maximumLineCount: 1
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+					pixelSize: 14 * mainWindow.dp
+					weight: 400 * mainWindow.dp
 					capitalization: Font.Capitalize
 				}
 			}
@@ -113,8 +113,8 @@ ColumnLayout {
 				elide: Text.ElideMiddle
 				maximumLineCount: 1
 				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+					pixelSize: 12 * mainWindow.dp
+					weight: 300 * mainWindow.dp
 				}
 			}
 			Text {
@@ -138,15 +138,15 @@ ColumnLayout {
 							? DefaultStyle.danger_500main
 							: DefaultStyle.main2_500main
 				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
+					pixelSize: 12 * mainWindow.dp
+					weight: 300 * mainWindow.dp
 				}
 			}
 		}
 	}
 	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
-		spacing: 72 * DefaultStyle.dp
+		spacing: 72 * mainWindow.dp
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		Button {
@@ -165,10 +165,10 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference
-			width: 56 * DefaultStyle.dp
-			height: 56 * DefaultStyle.dp
-			button.icon.width: 24 * DefaultStyle.dp
-			button.icon.height: 24 * DefaultStyle.dp
+			width: 56 * mainWindow.dp
+			height: 56 * mainWindow.dp
+			button.icon.width: 24 * mainWindow.dp
+			button.icon.height: 24 * mainWindow.dp
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			button.onClicked: {
@@ -178,20 +178,20 @@ ColumnLayout {
 		}
 		LabelButton {
 			visible: !mainItem.isConference && !SettingsCpp.disableChatFeature
-			width: 56 * DefaultStyle.dp
-			height: 56 * DefaultStyle.dp
-			button.icon.width: 24 * DefaultStyle.dp
-			button.icon.height: 24 * DefaultStyle.dp
+			width: 56 * mainWindow.dp
+			height: 56 * mainWindow.dp
+			button.icon.width: 24 * mainWindow.dp
+			button.icon.height: 24 * mainWindow.dp
 			button.icon.source: AppIcons.chatTeardropText
 			label: qsTr("Message")
 			button.onClicked: console.debug("[ContactLayout.qml] TODO : open conversation")
 		}
 		LabelButton {
 			visible: !mainItem.isConference
-			width: 56 * DefaultStyle.dp
-			height: 56 * DefaultStyle.dp
-			button.icon.width: 24 * DefaultStyle.dp
-			button.icon.height: 24 * DefaultStyle.dp
+			width: 56 * mainWindow.dp
+			height: 56 * mainWindow.dp
+			button.icon.width: 24 * mainWindow.dp
+			button.icon.height: 24 * mainWindow.dp
 			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
 			button.onClicked: {
@@ -206,6 +206,6 @@ ColumnLayout {
 		Layout.fillHeight: true
 
 		Layout.alignment: Qt.AlignHCenter
-		Layout.topMargin: 30 * DefaultStyle.dp
+		Layout.topMargin: 30 * mainWindow.dp
 	}
 }

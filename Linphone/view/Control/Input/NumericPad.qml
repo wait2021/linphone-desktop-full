@@ -89,8 +89,8 @@ FocusScope{
 		id: numPadGrid
 		anchors.fill: parent
 		columns: 3
-		columnSpacing: 40 * DefaultStyle.dp
-		rowSpacing: 10 * DefaultStyle.dp
+		columnSpacing: 40 * mainWindow.dp
+		rowSpacing: 10 * mainWindow.dp
 		function getButtonAt(index){
 			index = (index+15) % 15
 			if(index >= 0){
@@ -112,8 +112,8 @@ FocusScope{
 				id: numPadButton
 				Layout.Layout.alignment: Qt.AlignHCenter
 				required property int index
-				implicitWidth: 60 * DefaultStyle.dp
-				implicitHeight: 60 * DefaultStyle.dp
+				implicitWidth: 60 * mainWindow.dp
+				implicitHeight: 60 * mainWindow.dp
 				onClicked: {
 					mainItem.buttonPressed(innerText.text)
 				}
@@ -124,7 +124,7 @@ FocusScope{
 				background: Rectangle {
 					anchors.fill: parent
 					color: numPadButton.down  || numPadButton.shadowEnabled? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
-					radius: 71 * DefaultStyle.dp
+					radius: 71 * mainWindow.dp
 				}
 				contentItem: Text {
 					id: innerText
@@ -133,8 +133,8 @@ FocusScope{
 					anchors.centerIn: parent
 					text: index + 1
 					font {
-						pixelSize: 32 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
+						pixelSize: 32 * mainWindow.dp
+						weight: 400 * mainWindow.dp
 					}
 				}
 			}
@@ -149,8 +149,8 @@ FocusScope{
 			Button {
 				id: digitButton
 				Layout.Layout.alignment: Qt.AlignHCenter
-				implicitWidth: 60 * DefaultStyle.dp
-				implicitHeight: 60 * DefaultStyle.dp
+				implicitWidth: 60 * mainWindow.dp
+				implicitHeight: 60 * mainWindow.dp
 				
 				onClicked: mainItem.buttonPressed(pressText.text)
 				onPressAndHold: mainItem.buttonPressed(longPressText.text)
@@ -163,7 +163,7 @@ FocusScope{
 				background: Rectangle {
 					anchors.fill: parent
 					color: digitButton.down || digitButton.shadowEnabled? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
-					radius: 71 * DefaultStyle.dp
+					radius: 71 * mainWindow.dp
 				}
 				contentItem: Item {
 					anchors.fill: parent
@@ -175,7 +175,7 @@ FocusScope{
 						horizontalAlignment: Text.AlignHCenter
 						Component.onCompleted: {if (modelData.longPressText === undefined) anchors.centerIn= parent}
 						text: modelData.pressText
-						font.pixelSize: 32 * DefaultStyle.dp
+						font.pixelSize: 32 * mainWindow.dp
 					}
 					Text {
 						id: longPressText
@@ -186,7 +186,7 @@ FocusScope{
 						horizontalAlignment: Text.AlignHCenter
 						visible: modelData.longPressText ? modelData.longPressText.length > 0 : false
 						text: modelData.longPressText ? modelData.longPressText : ""
-						font.pixelSize: 22 * DefaultStyle.dp
+						font.pixelSize: 22 * mainWindow.dp
 					}
 				}
 			}
@@ -198,12 +198,12 @@ FocusScope{
 		Button {
 			id: launchCallButton
 			visible: !mainItem.lastRowVisible
-			implicitWidth: 75 * DefaultStyle.dp
-			implicitHeight: 55 * DefaultStyle.dp
+			implicitWidth: 75 * mainWindow.dp
+			implicitHeight: 55 * mainWindow.dp
 			Layout.Layout.alignment: Qt.AlignHCenter
 			icon.source: AppIcons.phone
-			icon.width: 32 * DefaultStyle.dp
-			icon.height: 32 * DefaultStyle.dp
+			icon.width: 32 * mainWindow.dp
+			icon.height: 32 * mainWindow.dp
 			contentImageColor: DefaultStyle.grey_0
 			
 			onClicked: mainItem.launchCall()
@@ -216,20 +216,20 @@ FocusScope{
 			background: Rectangle {
 				anchors.fill: parent
 				color: DefaultStyle.success_500main
-				radius: 71 * DefaultStyle.dp
+				radius: 71 * mainWindow.dp
 			}
 		}
 		Button {
 			id: eraseButton
 			visible: !mainItem.lastRowVisible
-			leftPadding: 5 * DefaultStyle.dp
-			rightPadding: 5 * DefaultStyle.dp
-			topPadding: 5 * DefaultStyle.dp
-			bottomPadding: 5 * DefaultStyle.dp
+			leftPadding: 5 * mainWindow.dp
+			rightPadding: 5 * mainWindow.dp
+			topPadding: 5 * mainWindow.dp
+			bottomPadding: 5 * mainWindow.dp
 			Layout.Layout.alignment: Qt.AlignHCenter
 			icon.source: AppIcons.backspaceFill
-			icon.width: 38 * DefaultStyle.dp
-			icon.height: 38 * DefaultStyle.dp
+			icon.width: 38 * mainWindow.dp
+			icon.height: 38 * mainWindow.dp
 			
 			onClicked: mainItem.wipe()
 			

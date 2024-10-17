@@ -17,19 +17,19 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		property int sideMargin: 45 * DefaultStyle.dp
-		spacing: 5 * DefaultStyle.dp
+		property int sideMargin: 45 * mainWindow.dp
+		spacing: 5 * mainWindow.dp
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			Button {
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				Layout.preferredWidth: 24 * DefaultStyle.dp
+				Layout.preferredHeight: 24 * mainWindow.dp
+				Layout.preferredWidth: 24 * mainWindow.dp
 				icon.source: AppIcons.leftArrow
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
+				width: 24 * mainWindow.dp
+				height: 24 * mainWindow.dp
 				background: Item {
 					anchors.fill: parent
 				}
@@ -49,7 +49,7 @@ AbstractMainPage {
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 41 * DefaultStyle.dp
+			Layout.topMargin: 41 * mainWindow.dp
 			Layout.fillWidth: true
 			text: qsTr("À propos de Linphone")
 			color: DefaultStyle.main2_600
@@ -59,8 +59,8 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 24 * DefaultStyle.dp
-			spacing: 32 * DefaultStyle.dp
+			Layout.topMargin: 24 * mainWindow.dp
+			spacing: 32 * mainWindow.dp
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.detective
@@ -101,7 +101,7 @@ AbstractMainPage {
 		Text {
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 32 * DefaultStyle.dp
+			Layout.topMargin: 32 * mainWindow.dp
 			Layout.fillWidth: true
 			text: qsTr("À propos de Linphone")
 			color: DefaultStyle.main2_600
@@ -112,7 +112,7 @@ AbstractMainPage {
 			Layout.fillWidth: true
 			Layout.leftMargin: leftPanel.sideMargin
 			Layout.rightMargin: leftPanel.sideMargin
-			Layout.topMargin: 24 * DefaultStyle.dp
+			Layout.topMargin: 24 * mainWindow.dp
 			iconSource: AppIcons.debug
 			title: qsTr("Dépannage")
 			onClicked: {

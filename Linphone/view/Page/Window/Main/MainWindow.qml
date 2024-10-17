@@ -9,7 +9,7 @@ import LinphoneAccountsCpp
 
 AbstractWindow {
 	id: mainWindow
-    // height: 982 * DefaultStyle.dp
+    // height: 982 * mainWindow.dp
 	title: qsTr("Linphone")
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
@@ -22,7 +22,7 @@ AbstractWindow {
 	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
 	// menuBar: Rectangle {
 	// 	width: parent.width
-	// 	height: 40 * DefaultStyle.dp
+	// 	height: 40 * mainWindow.dp
 	// 	color: DefaultStyle.grey_100
 	// }
 

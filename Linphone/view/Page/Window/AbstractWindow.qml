@@ -9,9 +9,12 @@ ApplicationWindow {
 	id: mainWindow
 	x: 0
 	y: 0
-    width: Math.min(1512 * DefaultStyle.dp, Screen.desktopAvailableWidth)
-    height: Math.min(982 * DefaultStyle.dp, Screen.desktopAvailableHeight)
+    width: Math.min(1512, Screen.desktopAvailableWidth)* mainWindow.dp
+    height: Math.min(982, Screen.desktopAvailableHeight)* mainWindow.dp
 
+	property real dp: 1/UtilsCpp.getPixelDensity(x,y)
+	onDpChanged: console.log("[ApplicationWindow] new DP: "+dp)
+	
 	MouseArea {
 		anchors.fill: parent
 		onClicked: forceActiveFocus()
@@ -35,7 +38,7 @@ ApplicationWindow {
 			// For C++, requestDialog need to be call directly
 			onAccepted: requestDialog ? requestDialog.result(1) : callback(1)
 			onRejected: requestDialog ? requestDialog.result(0) : callback(0)
-			width: 278 * DefaultStyle.dp
+			width: 278 * mainWindow.dp
 		}
 	}
 
@@ -50,34 +53,34 @@ ApplicationWindow {
 		}
 		underlineColor: DefaultStyle.main1_500_main
 		anchors.centerIn: parent
-		width: 370 * DefaultStyle.dp
+		width: 370 * mainWindow.dp
 		modal: true
-		leftPadding: 15 * DefaultStyle.dp
-		rightPadding: 15 * DefaultStyle.dp
-		topPadding: 20 * DefaultStyle.dp
-		bottomPadding: 25 * DefaultStyle.dp
+		leftPadding: 15 * mainWindow.dp
+		rightPadding: 15 * mainWindow.dp
+		topPadding: 20 * mainWindow.dp
+		bottomPadding: 25 * mainWindow.dp
 		contentItem: ColumnLayout {
-			spacing: 16 * DefaultStyle.dp
+			spacing: 16 * mainWindow.dp
 			RowLayout {
 				spacing: 0
 				Text {
 					text: qsTr("Which channel do you choose?")
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 16 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 				}
 				Item{Layout.fillWidth: true}
 				Button {
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
+					Layout.preferredWidth: 24 * mainWindow.dp
+					Layout.preferredHeight: 24 * mainWindow.dp
 					Layout.alignment: Qt.AlignVCenter
 					background: Item{}
 					icon.source:AppIcons.closeX
-					width: 24 * DefaultStyle.dp
-					height: 24 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+					width: 24 * mainWindow.dp
+					height: 24 * mainWindow.dp
+					icon.width: 24 * mainWindow.dp
+					icon.height: 24 * mainWindow.dp
 					contentItem: Image {
 						anchors.fill: parent
 						source: AppIcons.closeX
@@ -92,37 +95,37 @@ ApplicationWindow {
 				}
 				Layout.fillWidth: true
 				Layout.preferredHeight: contentHeight
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 				delegate: Item {
 					width: popuplist.width
-					height: 56 * DefaultStyle.dp
+					height: 56 * mainWindow.dp
 					ColumnLayout {
 						width: popuplist.width
 						anchors.verticalCenter: parent.verticalCenter
-						spacing: 10 * DefaultStyle.dp
+						spacing: 10 * mainWindow.dp
 						ColumnLayout {
-							spacing: 7 * DefaultStyle.dp
+							spacing: 7 * mainWindow.dp
 							Text {
-								Layout.leftMargin: 5 * DefaultStyle.dp
+								Layout.leftMargin: 5 * mainWindow.dp
 								text: modelData.label + " :"
 								font {
-									pixelSize: 13 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
+									pixelSize: 13 * mainWindow.dp
+									weight: 700 * mainWindow.dp
 								}
 							}
 							Text {
-								Layout.leftMargin: 5 * DefaultStyle.dp
+								Layout.leftMargin: 5 * mainWindow.dp
 								text: modelData.address
 								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+									pixelSize: 14 * mainWindow.dp
+									weight: 400 * mainWindow.dp
 								}
 							}
 						}
 						Rectangle {
 							visible: index != popuplist.model.count - 1
 							Layout.fillWidth: true
-							Layout.preferredHeight: 1 * DefaultStyle.dp
+							Layout.preferredHeight: 1 * mainWindow.dp
 							color: DefaultStyle.main2_200
 						}
 					}
@@ -229,7 +232,7 @@ ApplicationWindow {
 		property int nextY: mainWindow.height
 		property list<InformationPopup> popupList
 		property int popupCount: popupList.length
-		spacing: 15 * DefaultStyle.dp
+		spacing: 15 * mainWindow.dp
 		onPopupCountChanged: {
 			nextY = mainWindow.height
 			for(var i = 0; i < popupCount; ++i) {
@@ -245,9 +248,9 @@ ApplicationWindow {
 		modal: true
 		closePolicy: Popup.NoAutoClose
 		anchors.centerIn: parent
-		padding: 20 * DefaultStyle.dp
+		padding: 20 * mainWindow.dp
 		underlineColor: DefaultStyle.main1_500_main
-		radius: 15 * DefaultStyle.dp
+		radius: 15 * mainWindow.dp
 	}
 	FPSCounter{
 		anchors.top: parent.top
@@ -260,7 +263,7 @@ ApplicationWindow {
 			id: fpsText
 			font.bold: true
 			font.italic: true
-			font.pixelSize: 14 * DefaultStyle.dp
+			font.pixelSize: 14 * mainWindow.dp
 			text: parent.fps + " FPS"
 			color: parent.fps < 30 ? DefaultStyle.danger_500main : DefaultStyle.main2_900
 		}

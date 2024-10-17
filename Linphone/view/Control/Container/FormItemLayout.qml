@@ -22,7 +22,7 @@ FocusScope{
 	}
 	ColumnLayout {
 		id: layout
-		spacing: 5 * DefaultStyle.dp
+		spacing: 5 * mainWindow.dp
 	
 		Text {
 			visible: label.length > 0
@@ -35,8 +35,8 @@ FocusScope{
 			textFormat: Text.RichText
 	
 			font {
-				pixelSize: 13 * DefaultStyle.dp
-				weight: 700 * DefaultStyle.dp
+				pixelSize: 13 * mainWindow.dp
+				weight: 700 * mainWindow.dp
 			}
 		}
 	

@@ -9,8 +9,8 @@ Control.ScrollBar {
 	padding: 0
 	background: Item{}
 	contentItem: Rectangle {
-		implicitWidth: 6 * DefaultStyle.dp
-		radius: 32 * DefaultStyle.dp
+		implicitWidth: 6 * mainWindow.dp
+		radius: 32 * mainWindow.dp
 		// TODO : ask for color names
 		color: "#D9D9D9"
 	}

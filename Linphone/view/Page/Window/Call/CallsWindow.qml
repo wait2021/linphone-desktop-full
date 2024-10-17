@@ -149,7 +149,7 @@ AbstractWindow {
 	Dialog {
 		id: terminateAllCallsDialog
 		onAccepted: call.core.lTerminateAllCalls()
-		width: 278 * DefaultStyle.dp
+		width: 278 * mainWindow.dp
 		text: qsTr("La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours. Souhaitez vous continuer ?")
 	}
 
@@ -186,11 +186,11 @@ AbstractWindow {
 							? DefaultStyle.main2_400
 							: DefaultStyle.grey_500
 					: DefaultStyle.grey_600
-			radius: 71 * DefaultStyle.dp
+			radius: 71 * mainWindow.dp
 		}
 		icon.source: disabledIcon && bottomButton.checked ? disabledIcon : enabledIcon
-		icon.width: 32 * DefaultStyle.dp
-		icon.height: 32 * DefaultStyle.dp
+		icon.width: 32 * mainWindow.dp
+		icon.height: 32 * mainWindow.dp
 		contentImageColor: DefaultStyle.grey_0
 	}
 	ZrtpAuthenticationDialog {
@@ -203,11 +203,11 @@ AbstractWindow {
 		modal: true
 		closePolicy: Control.Popup.NoAutoClose
 		anchors.centerIn: parent
-		padding: 20 * DefaultStyle.dp
+		padding: 20 * mainWindow.dp
 		underlineColor: DefaultStyle.main1_500_main
-		radius: 15 * DefaultStyle.dp
-		width: 278 * DefaultStyle.dp
-		height: 115 * DefaultStyle.dp
+		radius: 15 * mainWindow.dp
+		width: 278 * mainWindow.dp
+		height: 115 * mainWindow.dp
 		Connections {
 			target: mainWindow
 			function onTransferStateChanged() {
@@ -222,16 +222,16 @@ AbstractWindow {
 		contentItem: ColumnLayout {
 			spacing: 0
 			BusyIndicator{
-				Layout.preferredWidth: 33 * DefaultStyle.dp
-				Layout.preferredHeight: 33 * DefaultStyle.dp
+				Layout.preferredWidth: 33 * mainWindow.dp
+				Layout.preferredHeight: 33 * mainWindow.dp
 				Layout.alignment: Qt.AlignHCenter
 			}
 			Text {
 				Layout.alignment: Qt.AlignHCenter
 				text: qsTr("Transfert en cours, veuillez patienter")
 				font {
-					pixelSize: 14 * DefaultStyle.dp
-					weight: 400 * DefaultStyle.dp
+					pixelSize: 14 * mainWindow.dp
+					weight: 400 * mainWindow.dp
 				}
 			}
 		}
@@ -245,13 +245,13 @@ AbstractWindow {
 	}
 	Control.Control {
 		id: zrtpValidationToast
-		// width: 269 * DefaultStyle.dp
+		// width: 269 * mainWindow.dp
 		y: -height*2
 		z: 1
-		topPadding: 8 * DefaultStyle.dp
-		bottomPadding: 8 * DefaultStyle.dp
-		leftPadding: 50 * DefaultStyle.dp
-		rightPadding: 50 * DefaultStyle.dp
+		topPadding: 8 * mainWindow.dp
+		bottomPadding: 8 * mainWindow.dp
+		leftPadding: 50 * mainWindow.dp
+		rightPadding: 50 * mainWindow.dp
 		anchors.horizontalCenter: parent.horizontalCenter
 		clip: true
 		function open() {
@@ -263,15 +263,15 @@ AbstractWindow {
 			anchors.fill: parent
 			color: DefaultStyle.grey_0
 			border.color: DefaultStyle.info_500_main
-			border.width:  1 * DefaultStyle.dp
-			radius: 50 * DefaultStyle.dp
+			border.width:  1 * mainWindow.dp
+			radius: 50 * mainWindow.dp
 		}
 		contentItem: RowLayout {
 			// anchors.centerIn: parent
 			Image {
 				source: AppIcons.trusted
-				Layout.preferredWidth: 24 * DefaultStyle.dp
-				Layout.preferredHeight: 24 * DefaultStyle.dp
+				Layout.preferredWidth: 24 * mainWindow.dp
+				Layout.preferredHeight: 24 * mainWindow.dp
 				fillMode: Image.PreserveAspectFit
 				Layout.fillWidth: true
 			}
@@ -280,7 +280,7 @@ AbstractWindow {
 				text: qsTr("Appareil vérifié")
 				Layout.fillWidth: true
 				font {
-					pixelSize: 14 * DefaultStyle.dp
+					pixelSize: 14 * mainWindow.dp
 				}
 			}
 		}
@@ -293,27 +293,27 @@ AbstractWindow {
 		color: DefaultStyle.grey_900
 		ColumnLayout {
 			anchors.fill: parent
-			spacing: 10 * DefaultStyle.dp
-			anchors.bottomMargin: 10 * DefaultStyle.dp
-			anchors.topMargin: 10 * DefaultStyle.dp
+			spacing: 10 * mainWindow.dp
+			anchors.bottomMargin: 10 * mainWindow.dp
+			anchors.topMargin: 10 * mainWindow.dp
 			Item {
 				id: headerItem
-				Layout.margins: 10 * DefaultStyle.dp
-				Layout.leftMargin: 20 * DefaultStyle.dp
+				Layout.margins: 10 * mainWindow.dp
+				Layout.leftMargin: 20 * mainWindow.dp
 				Layout.fillWidth: true
-				Layout.minimumHeight: 25 * DefaultStyle.dp
+				Layout.minimumHeight: 25 * mainWindow.dp
 				RowLayout {
 					anchors.left: parent.left
 					anchors.right: parent.right
 					anchors.verticalCenter: parent.verticalCenter
-					spacing: 10 * DefaultStyle.dp
+					spacing: 10 * mainWindow.dp
 					ColumnLayout {
 						RowLayout {
-							spacing: 10 * DefaultStyle.dp
+							spacing: 10 * mainWindow.dp
 							EffectImage {
 								id: callStatusIcon
-								Layout.preferredWidth: 30 * DefaultStyle.dp
-								Layout.preferredHeight: 30 * DefaultStyle.dp
+								Layout.preferredWidth: 30 * mainWindow.dp
+								Layout.preferredHeight: 30 * mainWindow.dp
 								// TODO : change with broadcast or meeting icon when available
 								imageSource: !mainWindow.call
 									? AppIcons.meeting
@@ -356,51 +356,51 @@ AbstractWindow {
 											: remoteName
 								color: DefaultStyle.grey_0
 								font {
-									pixelSize: 22 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+									pixelSize: 22 * mainWindow.dp
+									weight: 800 * mainWindow.dp
 								}
 							}
 							Rectangle {
 								visible: mainWindow.call && (mainWindow.callState === LinphoneEnums.CallState.Connected
 										|| mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
 								Layout.preferredHeight: parent.height
-								Layout.preferredWidth: 2 * DefaultStyle.dp
+								Layout.preferredWidth: 2 * mainWindow.dp
 								color: DefaultStyle.grey_0
 							}
 							Text {
 								text: mainWindow.call ? UtilsCpp.formatElapsedTime(mainWindow.call.core.duration) : ""
 								color: DefaultStyle.grey_0
 								font {
-									pixelSize: 22 * DefaultStyle.dp
-									weight: 800 * DefaultStyle.dp
+									pixelSize: 22 * mainWindow.dp
+									weight: 800 * mainWindow.dp
 								}
 								visible: mainWindow.callState === LinphoneEnums.CallState.Connected
 										|| mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
 							}
 							Text {
-								Layout.leftMargin: 14 * DefaultStyle.dp
+								Layout.leftMargin: 14 * mainWindow.dp
 								id: conferenceDate
 								text: mainWindow.conferenceInfo ? mainWindow.conferenceInfo.core.getStartEndDateString() : ""
 								color: DefaultStyle.grey_0
 								font {
-									pixelSize: 14 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+									pixelSize: 14 * mainWindow.dp
+									weight: 400 * mainWindow.dp
 									capitalization: Font.Capitalize
 								}
 							}
 						}
 						RowLayout {
-							spacing: 5 * DefaultStyle.dp
+							spacing: 5 * mainWindow.dp
 							visible: mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning
 							BusyIndicator  {
 								visible: mainWindow.call && mainWindow.callState != LinphoneEnums.CallState.Connected && mainWindow.callState != LinphoneEnums.CallState.StreamsRunning
-								Layout.preferredWidth: 15 * DefaultStyle.dp
-								Layout.preferredHeight: 15 * DefaultStyle.dp
+								Layout.preferredWidth: 15 * mainWindow.dp
+								Layout.preferredHeight: 15 * mainWindow.dp
 								indicatorColor: DefaultStyle.grey_0
 							}
 							EffectImage {
-								Layout.preferredWidth: 15 * DefaultStyle.dp
-								Layout.preferredHeight: 15 * DefaultStyle.dp
+								Layout.preferredWidth: 15 * mainWindow.dp
+								Layout.preferredHeight: 15 * mainWindow.dp
 								colorizationColor: mainWindow.call 
 									? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
 										? DefaultStyle.info_500_main
@@ -442,8 +442,8 @@ AbstractWindow {
 										: DefaultStyle.grey_0
 								: DefaultStyle.grey_0
 								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 400 * DefaultStyle.dp
+									pixelSize: 12 * mainWindow.dp
+									weight: 400 * mainWindow.dp
 								}
 								MouseArea {
 									anchors.fill: parent
@@ -464,9 +464,9 @@ AbstractWindow {
 						Layout.fillWidth: true
 					}
 					EffectImage {
-						Layout.preferredWidth: 32 * DefaultStyle.dp
-						Layout.preferredHeight: 32 * DefaultStyle.dp
-						Layout.rightMargin: 30 * DefaultStyle.dp
+						Layout.preferredWidth: 32 * mainWindow.dp
+						Layout.preferredHeight: 32 * mainWindow.dp
+						Layout.rightMargin: 30 * mainWindow.dp
 						property int quality: mainWindow.call ? mainWindow.call.core.quality : 0
 						imageSource: quality >= 4
 							? AppIcons.cellSignalFull
@@ -498,28 +498,28 @@ AbstractWindow {
 						: (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording)
 					: false
 					anchors.centerIn: parent
-					leftPadding: 14 * DefaultStyle.dp
-					rightPadding: 14 * DefaultStyle.dp
-					topPadding: 6 * DefaultStyle.dp
-					bottomPadding: 6 * DefaultStyle.dp
+					leftPadding: 14 * mainWindow.dp
+					rightPadding: 14 * mainWindow.dp
+					topPadding: 6 * mainWindow.dp
+					bottomPadding: 6 * mainWindow.dp
 					background: Rectangle {
 						anchors.fill: parent
 						color: DefaultStyle.grey_500
-						radius: 10 * DefaultStyle.dp
+						radius: 10 * mainWindow.dp
 					}
 					contentItem: RowLayout {
-						spacing: 85 * DefaultStyle.dp
+						spacing: 85 * mainWindow.dp
 						RowLayout {
-							spacing: 15 * DefaultStyle.dp
+							spacing: 15 * mainWindow.dp
 							EffectImage {
 								imageSource: AppIcons.recordFill
 								colorizationColor: DefaultStyle.danger_500main
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * mainWindow.dp
+								Layout.preferredHeight: 24 * mainWindow.dp
 							}
 							Text {
 								color: DefaultStyle.danger_500main
-								font.pixelSize: 14 * DefaultStyle.dp
+								font.pixelSize: 14 * mainWindow.dp
 								text: mainWindow.call
 									? mainWindow.call.core.recording 
 										? mainWindow.conference ? qsTr("Vous enregistrez la réunion") : qsTr("Vous enregistrez l'appel") 
@@ -540,7 +540,7 @@ AbstractWindow {
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				spacing: 23 * DefaultStyle.dp
+				spacing: 23 * mainWindow.dp
 				Control.StackView {
 					id: middleItemStackView
 					initialItem: inCallItem
@@ -550,9 +550,9 @@ AbstractWindow {
 				CallSettingsPanel {
 					id: rightPanel
 					Layout.fillHeight: true
-					Layout.rightMargin: 20 * DefaultStyle.dp
-					Layout.preferredWidth: 393 * DefaultStyle.dp
-					Layout.topMargin: 10 * DefaultStyle.dp
+					Layout.rightMargin: 20 * mainWindow.dp
+					Layout.preferredWidth: 393 * mainWindow.dp
+					Layout.topMargin: 10 * mainWindow.dp
 					property int currentIndex: 0
 					visible: false
 					function replace(id) {
@@ -579,9 +579,9 @@ AbstractWindow {
 					NewCallForm {
 						id: newCallForm
 						anchors.fill: parent
-						anchors.topMargin: 21 * DefaultStyle.dp
-						anchors.leftMargin: 16 * DefaultStyle.dp
-						anchors.rightMargin: 16 * DefaultStyle.dp
+						anchors.topMargin: 21 * mainWindow.dp
+						anchors.leftMargin: 16 * mainWindow.dp
+						anchors.rightMargin: 16 * mainWindow.dp
 						groupCallVisible: false
 						searchBarColor: DefaultStyle.grey_0
 						searchBarBorderColor: DefaultStyle.grey_200
@@ -601,16 +601,16 @@ AbstractWindow {
 							anchors.bottom: parent.bottom
 							anchors.left: parent.left
 							anchors.right: parent.right
-							height: 402 * DefaultStyle.dp
+							height: 402 * mainWindow.dp
 							NumericPadPopup {
 								id: numPadPopup
 								width: parent.width
 								roundedBottom: true
 								visible: false
-								leftPadding: 40 * DefaultStyle.dp
-								rightPadding: 40 * DefaultStyle.dp
-								topPadding: 41 * DefaultStyle.dp
-								bottomPadding: 18 * DefaultStyle.dp
+								leftPadding: 40 * mainWindow.dp
+								rightPadding: 40 * mainWindow.dp
+								topPadding: 41 * mainWindow.dp
+								bottomPadding: 18 * mainWindow.dp
 								onLaunchCall: {
 									UtilsCpp.createCall(dialerTextInput.text)
 								}
@@ -637,8 +637,8 @@ AbstractWindow {
 					SearchBar {
 						id: dialerTextInput
 						Layout.fillWidth: true
-						Layout.leftMargin: 10 * DefaultStyle.dp
-						Layout.rightMargin: 10 * DefaultStyle.dp
+						Layout.leftMargin: 10 * mainWindow.dp
+						Layout.rightMargin: 10 * mainWindow.dp
 						magnifierVisible: false
 						color: DefaultStyle.grey_0
 						borderColor: DefaultStyle.grey_200
@@ -650,7 +650,7 @@ AbstractWindow {
 					Item {
 						Layout.preferredWidth: parent.width
 						Layout.preferredHeight: numPadPopup.height
-						Layout.topMargin: 10 * DefaultStyle.dp
+						Layout.topMargin: 10 * mainWindow.dp
 						NumericPadPopup {
 							id: numPadPopup
 							width: parent.width
@@ -659,10 +659,10 @@ AbstractWindow {
 							visible: parent.visible
 							currentCall: callsModel.currentCall
 							lastRowVisible: false
-							leftPadding: 40 * DefaultStyle.dp
-							rightPadding: 40 * DefaultStyle.dp
-							topPadding: 41 * DefaultStyle.dp
-							bottomPadding: 18 * DefaultStyle.dp
+							leftPadding: 40 * mainWindow.dp
+							rightPadding: 40 * mainWindow.dp
+							topPadding: 41 * mainWindow.dp
+							bottomPadding: 18 * mainWindow.dp
 							onLaunchCall: {
 								UtilsCpp.createCall(dialerTextInput.text)
 							}
@@ -682,15 +682,15 @@ AbstractWindow {
 					}
 					ColumnLayout {
 						anchors.fill: parent
-						anchors.topMargin: 16 * DefaultStyle.dp
-						anchors.bottomMargin: 16 * DefaultStyle.dp
-						anchors.leftMargin: 17 * DefaultStyle.dp
-						anchors.rightMargin: 17 * DefaultStyle.dp
-						spacing: 12 * DefaultStyle.dp
+						anchors.topMargin: 16 * mainWindow.dp
+						anchors.bottomMargin: 16 * mainWindow.dp
+						anchors.leftMargin: 17 * mainWindow.dp
+						anchors.rightMargin: 17 * mainWindow.dp
+						spacing: 12 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
-							font.pixelSize: 14 * DefaultStyle.dp
+							font.pixelSize: 14 * mainWindow.dp
 							color: DefaultStyle.main2_500main
 						}
 						RoundedPane {
@@ -707,9 +707,9 @@ AbstractWindow {
 										id: radiobutton
 										checkOnClick: false
 										color: DefaultStyle.main1_500_main
-										indicatorSize: 20 * DefaultStyle.dp
+										indicatorSize: 20 * mainWindow.dp
 										leftPadding: indicator.width + spacing
-										spacing: 8 * DefaultStyle.dp
+										spacing: 8 * mainWindow.dp
 										checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
 										checked: index == 0
 													? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
@@ -719,11 +719,11 @@ AbstractWindow {
 										onClicked: mainWindow.changeLayout(index)
 
 										contentItem: RowLayout {
-											spacing: 5 * DefaultStyle.dp
+											spacing: 5 * mainWindow.dp
 											EffectImage {
 												id: radioButtonImg
-												Layout.preferredWidth: 32 * DefaultStyle.dp
-												Layout.preferredHeight: 32 * DefaultStyle.dp
+												Layout.preferredWidth: 32 * mainWindow.dp
+												Layout.preferredHeight: 32 * mainWindow.dp
 												imageSource: modelData.imgUrl
 												colorizationColor: DefaultStyle.main2_500main
 											}
@@ -731,7 +731,7 @@ AbstractWindow {
 												text: modelData.text
 												color: DefaultStyle.main2_500main
 												verticalAlignment: Text.AlignVCenter
-												font.pixelSize: 14 * DefaultStyle.dp
+												font.pixelSize: 14 * mainWindow.dp
 												Layout.fillWidth: true
 											}
 										}
@@ -765,16 +765,16 @@ AbstractWindow {
 							popup.contentItem: Button {
 								background: Item{}
 								contentItem: RowLayout {
-									spacing: 5 * DefaultStyle.dp
+									spacing: 5 * mainWindow.dp
 									EffectImage {
 										colorizationColor: DefaultStyle.main2_600
 										imageSource: AppIcons.arrowsMerge
-										Layout.preferredWidth: 32 * DefaultStyle.dp
-										Layout.preferredHeight: 32 * DefaultStyle.dp
+										Layout.preferredWidth: 32 * mainWindow.dp
+										Layout.preferredHeight: 32 * mainWindow.dp
 									}
 									Text {
 										text: qsTr("Merger tous les appels")
-										font.pixelSize: 14 * DefaultStyle.dp
+										font.pixelSize: 14 * mainWindow.dp
 									}
 								}
 								onClicked: {
@@ -788,15 +788,15 @@ AbstractWindow {
 						Layout.fillWidth: true
 						Layout.maximumHeight: rightPanel.height
 						visible: callList.contentHeight > 0
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 6 * DefaultStyle.dp
-						topPadding: 15 * DefaultStyle.dp
-						bottomPadding: 16 * DefaultStyle.dp
+						leftPadding: 16 * mainWindow.dp
+						rightPadding: 6 * mainWindow.dp
+						topPadding: 15 * mainWindow.dp
+						bottomPadding: 16 * mainWindow.dp
 
-						Layout.topMargin: 15 * DefaultStyle.dp
-						Layout.bottomMargin: 16 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
+						Layout.topMargin: 15 * mainWindow.dp
+						Layout.bottomMargin: 16 * mainWindow.dp
+						Layout.leftMargin: 16 * mainWindow.dp
+						Layout.rightMargin: 16 * mainWindow.dp
 						
 						contentItem: ListView {
 							id: callList
@@ -804,14 +804,14 @@ AbstractWindow {
 								id: callProxy
 							}
 							implicitHeight: contentHeight// Math.min(contentHeight, rightPanel.height)
-							spacing: 15 * DefaultStyle.dp
+							spacing: 15 * mainWindow.dp
 							clip: true
 							onCountChanged: forceLayout()
 
 							delegate: Item {
 								id: callDelegate
 								width: callList.width
-								height: 45 * DefaultStyle.dp
+								height: 45 * mainWindow.dp
 
 								RowLayout {
 									id: delegateContent
@@ -820,8 +820,8 @@ AbstractWindow {
 									Avatar {
 										id: delegateAvatar
 										_address: modelData.core.remoteAddress
-										Layout.preferredWidth: 45 * DefaultStyle.dp
-										Layout.preferredHeight: 45 * DefaultStyle.dp
+										Layout.preferredWidth: 45 * mainWindow.dp
+										Layout.preferredHeight: 45 * mainWindow.dp
 									}
 									Text {
 										id: delegateName
@@ -829,7 +829,7 @@ AbstractWindow {
 										text: modelData.core.isConference 
 											? modelData.core.conference.core.subject
 											: remoteAddress ? remoteAddress.value : ""
-										Layout.leftMargin: 8 * DefaultStyle.dp
+										Layout.leftMargin: 8 * mainWindow.dp
 									}
 									Item {
 										Layout.fillHeight: true
@@ -837,7 +837,7 @@ AbstractWindow {
 									}
 									Text {
 										id: callStateText
-										Layout.rightMargin: 2 * DefaultStyle.dp
+										Layout.rightMargin: 2 * mainWindow.dp
 										property string type: modelData.core.isConference ? qsTr('Réunion') : qsTr('Appel')
 										text: modelData.core.state === LinphoneEnums.CallState.Paused
 										|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
@@ -846,9 +846,9 @@ AbstractWindow {
 									}
 									PopupButton {
 										id: listCallOptionsButton
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										Layout.rightMargin: 10 * DefaultStyle.dp
+										Layout.preferredWidth: 24 * mainWindow.dp
+										Layout.preferredHeight: 24 * mainWindow.dp
+										Layout.rightMargin: 10 * mainWindow.dp
 
 										popup.contentItem: ColumnLayout {
 											spacing: 0
@@ -859,15 +859,15 @@ AbstractWindow {
 												KeyNavigation.down: endCallButton
 												background: Item {}
 												contentItem: RowLayout {
-													spacing: 5 * DefaultStyle.dp
+													spacing: 5 * mainWindow.dp
 													Image {
 														source: modelData.core.state === LinphoneEnums.CallState.Paused 
 														|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
 														? AppIcons.phone : AppIcons.pause
-														sourceSize.width: 32 * DefaultStyle.dp
-														sourceSize.height: 32 * DefaultStyle.dp
-														Layout.preferredWidth: 32 * DefaultStyle.dp
-														Layout.preferredHeight: 32 * DefaultStyle.dp
+														sourceSize.width: 32 * mainWindow.dp
+														sourceSize.height: 32 * mainWindow.dp
+														Layout.preferredWidth: 32 * mainWindow.dp
+														Layout.preferredHeight: 32 * mainWindow.dp
 														fillMode: Image.PreserveAspectFit
 													}
 													Text {
@@ -889,12 +889,12 @@ AbstractWindow {
 												KeyNavigation.down: pausingButton
 												background: Item {}
 												contentItem: RowLayout {
-													spacing: 5 * DefaultStyle.dp
+													spacing: 5 * mainWindow.dp
 													EffectImage {
 														imageSource: AppIcons.endCall
 														colorizationColor: DefaultStyle.danger_500main
-														width: 32 * DefaultStyle.dp
-														height: 32 * DefaultStyle.dp
+														width: 32 * mainWindow.dp
+														height: 32 * mainWindow.dp
 													}
 													Text {
 														color: DefaultStyle.danger_500main
@@ -933,10 +933,10 @@ AbstractWindow {
 						id: inSettingsPanel
 						call: mainWindow.call
 						anchors.fill: parent
-						anchors.topMargin: 16 * DefaultStyle.dp
-						anchors.bottomMargin: 16 * DefaultStyle.dp
-						anchors.leftMargin: 17 * DefaultStyle.dp
-						anchors.rightMargin: 17 * DefaultStyle.dp
+						anchors.topMargin: 16 * mainWindow.dp
+						anchors.bottomMargin: 16 * mainWindow.dp
+						anchors.leftMargin: 17 * mainWindow.dp
+						anchors.rightMargin: 17 * mainWindow.dp
 					}
 				}
 			}
@@ -952,10 +952,10 @@ AbstractWindow {
 					}
 					ScreencastSettings {
 						anchors.fill: parent
-						anchors.topMargin: 16 * DefaultStyle.dp
-						anchors.bottomMargin: 16 * DefaultStyle.dp
-						anchors.leftMargin: 17 * DefaultStyle.dp
-						anchors.rightMargin: 17 * DefaultStyle.dp
+						anchors.topMargin: 16 * mainWindow.dp
+						anchors.bottomMargin: 16 * mainWindow.dp
+						anchors.leftMargin: 17 * mainWindow.dp
+						anchors.rightMargin: 17 * mainWindow.dp
 						call: mainWindow.call
 					}
 				}
@@ -973,9 +973,9 @@ AbstractWindow {
 					Control.StackView {
 						id: participantsStack
 						anchors.fill: parent
-						anchors.bottomMargin: 16 * DefaultStyle.dp
-						anchors.leftMargin: 17 * DefaultStyle.dp
-						anchors.rightMargin: 17 * DefaultStyle.dp
+						anchors.bottomMargin: 16 * mainWindow.dp
+						anchors.leftMargin: 17 * mainWindow.dp
+						anchors.rightMargin: 17 * mainWindow.dp
 						initialItem: participantListComp
 						onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
 						property list<string> selectedParticipants
@@ -1000,12 +1000,12 @@ AbstractWindow {
 												EffectImage {
 													colorizationColor: DefaultStyle.main2_600
 													imageSource: AppIcons.shareNetwork
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
+													Layout.preferredWidth: 24 * mainWindow.dp
+													Layout.preferredHeight: 24 * mainWindow.dp
 												}
 												Text {
 													text: qsTr("Partager le lien de la réunion")
-													font.pixelSize: 14 * DefaultStyle.dp
+													font.pixelSize: 14 * mainWindow.dp
 												}
 											}
 											onClicked: {
@@ -1072,35 +1072,35 @@ AbstractWindow {
 					}
 					RoundedPane {
 						Layout.fillWidth: true
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						topPadding: 13 * DefaultStyle.dp
-						bottomPadding: 13 * DefaultStyle.dp
+						leftPadding: 16 * mainWindow.dp
+						rightPadding: 16 * mainWindow.dp
+						topPadding: 13 * mainWindow.dp
+						bottomPadding: 13 * mainWindow.dp
 
-						Layout.topMargin: 13 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
+						Layout.topMargin: 13 * mainWindow.dp
+						Layout.leftMargin: 16 * mainWindow.dp
+						Layout.rightMargin: 16 * mainWindow.dp
 						
 						contentItem: ColumnLayout {
-							spacing: 12 * DefaultStyle.dp
+							spacing: 12 * mainWindow.dp
 							Text {
 								text: qsTr("Chiffrement :")
 								Layout.alignment: Qt.AlignHCenter
 								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
+									pixelSize: 12 * mainWindow.dp
+									weight: 700 * mainWindow.dp
 								}
 							}
 							ColumnLayout {
 								Layout.alignment: Qt.AlignHCenter
-								spacing: 7 * DefaultStyle.dp
+								spacing: 7 * mainWindow.dp
 								Text {
 									property bool isPostQuantum: mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainWindow.call.core.zrtpStats.isPostQuantum
 									text: qsTr("Chiffrement du média : %1%2").arg(isPostQuantum ? "post Quantum " : "").arg(mainWindow.call.core.encryptionString)
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								ColumnLayout {
@@ -1109,40 +1109,40 @@ AbstractWindow {
 										text: qsTr("Cipher algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.cipherAlgo)
 										Layout.alignment: Qt.AlignHCenter
 										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
+											pixelSize: 12 * mainWindow.dp
+											weight: 500 * mainWindow.dp
 										}
 									}
 									Text {
 										text: qsTr("Key agreement algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.keyAgreementAlgo)
 										Layout.alignment: Qt.AlignHCenter
 										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
+											pixelSize: 12 * mainWindow.dp
+											weight: 500 * mainWindow.dp
 										}
 									}
 									Text {
 										text: qsTr("Hash algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.hashAlgo)
 										Layout.alignment: Qt.AlignHCenter
 										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
+											pixelSize: 12 * mainWindow.dp
+											weight: 500 * mainWindow.dp
 										}
 									}
 									Text {
 										text: qsTr("Authentication algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.authenticationAlgo)
 										Layout.alignment: Qt.AlignHCenter
 										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
+											pixelSize: 12 * mainWindow.dp
+											weight: 500 * mainWindow.dp
 										}
 									}
 									Text {
 										text: qsTr("SAS algorithm : %1").arg(mainWindow.call && mainWindow.call.core.zrtpStats.sasAlgo)
 										Layout.alignment: Qt.AlignHCenter
 										font {
-											pixelSize: 12 * DefaultStyle.dp
-											weight: 500 * DefaultStyle.dp
+											pixelSize: 12 * mainWindow.dp
+											weight: 500 * mainWindow.dp
 										}
 									}
 								}
@@ -1155,13 +1155,13 @@ AbstractWindow {
 						Layout.fillWidth: true
 						text: qsTr("Validation chiffrement")
 						onClicked: zrtpValidation.open()
-						Layout.bottomMargin: 13 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
-						leftPadding: 20 * DefaultStyle.dp
-						rightPadding: 20 * DefaultStyle.dp
-						topPadding: 11 * DefaultStyle.dp
-						bottomPadding: 11 * DefaultStyle.dp
+						Layout.bottomMargin: 13 * mainWindow.dp
+						Layout.leftMargin: 16 * mainWindow.dp
+						Layout.rightMargin: 16 * mainWindow.dp
+						leftPadding: 20 * mainWindow.dp
+						rightPadding: 20 * mainWindow.dp
+						topPadding: 11 * mainWindow.dp
+						bottomPadding: 11 * mainWindow.dp
 					}
 				}
 			}
@@ -1169,65 +1169,65 @@ AbstractWindow {
 				id: statsPanel
 				ColumnLayout {
 					property string objectName: "statsPanel"
-					spacing: 20 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
 					Control.StackView.onActivated: {
 						rightPanel.headerTitleText = qsTr("Statistiques")
 					}
 					RoundedPane {
 						Layout.fillWidth: true
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						topPadding: 13 * DefaultStyle.dp
-						bottomPadding: 13 * DefaultStyle.dp
+						leftPadding: 16 * mainWindow.dp
+						rightPadding: 16 * mainWindow.dp
+						topPadding: 13 * mainWindow.dp
+						bottomPadding: 13 * mainWindow.dp
 
-						Layout.topMargin: 13 * DefaultStyle.dp
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
+						Layout.topMargin: 13 * mainWindow.dp
+						Layout.leftMargin: 16 * mainWindow.dp
+						Layout.rightMargin: 16 * mainWindow.dp
 						
 						contentItem: ColumnLayout {
-							spacing: 12 * DefaultStyle.dp
+							spacing: 12 * mainWindow.dp
 							Layout.alignment: Qt.AlignHCenter
 							Text {
 								text: qsTr("Audio")
 								Layout.alignment: Qt.AlignHCenter
 								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
+									pixelSize: 12 * mainWindow.dp
+									weight: 700 * mainWindow.dp
 								}
 							}
 							ColumnLayout {
-								spacing: 8 * DefaultStyle.dp
+								spacing: 8 * mainWindow.dp
 								Layout.alignment: Qt.AlignHCenter
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.audioStats.codec : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.audioStats.bandwidth : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.audioStats.lossRate : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.audioStats.jitterBufferSize : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 							}
@@ -1235,68 +1235,68 @@ AbstractWindow {
 					}
 					RoundedPane {
 						Layout.fillWidth: true
-						leftPadding: 16 * DefaultStyle.dp
-						rightPadding: 16 * DefaultStyle.dp
-						topPadding: 13 * DefaultStyle.dp
-						bottomPadding: 13 * DefaultStyle.dp
+						leftPadding: 16 * mainWindow.dp
+						rightPadding: 16 * mainWindow.dp
+						topPadding: 13 * mainWindow.dp
+						bottomPadding: 13 * mainWindow.dp
 
-						Layout.leftMargin: 16 * DefaultStyle.dp
-						Layout.rightMargin: 16 * DefaultStyle.dp
+						Layout.leftMargin: 16 * mainWindow.dp
+						Layout.rightMargin: 16 * mainWindow.dp
 
 						visible: mainWindow.localVideoEnabled || mainWindow.remoteVideoEnabled
 
 						contentItem: ColumnLayout {
-							spacing: 12 * DefaultStyle.dp
+							spacing: 12 * mainWindow.dp
 							Layout.alignment: Qt.AlignHCenter
 							Text {
 								text: qsTr("Vidéo")
 								Layout.alignment: Qt.AlignHCenter
 								font {
-									pixelSize: 12 * DefaultStyle.dp
-									weight: 700 * DefaultStyle.dp
+									pixelSize: 12 * mainWindow.dp
+									weight: 700 * mainWindow.dp
 								}
 							}
 							ColumnLayout {
-								spacing: 8 * DefaultStyle.dp
+								spacing: 8 * mainWindow.dp
 								Layout.alignment: Qt.AlignHCenter
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.codec : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.bandwidth : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.lossRate : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.resolution : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 								Text {
 									text: mainWindow.call ? mainWindow.call.core.videoStats.fps : ""
 									Layout.alignment: Qt.AlignHCenter
 									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
+										pixelSize: 12 * mainWindow.dp
+										weight: 500 * mainWindow.dp
 									}
 								}
 							}
@@ -1363,9 +1363,9 @@ AbstractWindow {
 						property string objectName: "inCallItem"
 						CallLayout{
 							anchors.fill: parent
-							anchors.leftMargin: 20 * DefaultStyle.dp
-							anchors.rightMargin: (rightPanel.visible ? 0 : 10) * DefaultStyle.dp	// Grid and AS have 10 in right margin (so apply -10 here)
-							anchors.topMargin: 10 * DefaultStyle.dp
+							anchors.leftMargin: 20 * mainWindow.dp
+							anchors.rightMargin: (rightPanel.visible ? 0 : 10) * mainWindow.dp	// Grid and AS have 10 in right margin (so apply -10 here)
+							anchors.topMargin: 10 * mainWindow.dp
 							call: mainWindow.call
 							callTerminatedByUser: mainWindow.callTerminatedByUser
 						}
@@ -1378,7 +1378,7 @@ AbstractWindow {
 			RowLayout {
 				id: bottomButtonsLayout
 				Layout.alignment: Qt.AlignHCenter
-				spacing: 58 * DefaultStyle.dp
+				spacing: 58 * mainWindow.dp
 				visible: middleItemStackView.currentItem.objectName == "inCallItem"
 
 				function refreshLayout() {
@@ -1407,10 +1407,10 @@ AbstractWindow {
 				Button {
 					Layout.row: 0
 					icon.source: AppIcons.endCall
-					icon.width: 32 * DefaultStyle.dp
-					icon.height: 32 * DefaultStyle.dp
-					Layout.preferredWidth: 75 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
+					icon.width: 32 * mainWindow.dp
+					icon.height: 32 * mainWindow.dp
+					Layout.preferredWidth: 75 * mainWindow.dp
+					Layout.preferredHeight: 55 * mainWindow.dp
 					contentImageColor: DefaultStyle.grey_0
 					checkable: false
 					Layout.column: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
@@ -1422,7 +1422,7 @@ AbstractWindow {
 					background: Rectangle {
 						anchors.fill: parent
 						color: DefaultStyle.danger_500main
-						radius: 71 * DefaultStyle.dp
+						radius: 71 * mainWindow.dp
 					}
 					onClicked: {
 						mainWindow.endCall(mainWindow.call)
@@ -1434,16 +1434,16 @@ AbstractWindow {
 					visible: false
 					Layout.row: 0
 					Layout.column: 1
-					spacing: 10 * DefaultStyle.dp
+					spacing: 10 * mainWindow.dp
 					CheckableButton {
 						id: pauseButton
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						background: Rectangle {
 							anchors.fill: parent
-							radius: 71 * DefaultStyle.dp
+							radius: 71 * mainWindow.dp
 							color: parent.enabled
 								? parent.checked
 									? DefaultStyle.success_500main
@@ -1463,10 +1463,10 @@ AbstractWindow {
 						id: transferCallButton
 						visible: !mainWindow.conference
 						icon.source: AppIcons.transferCall
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						contentImageColor: enabled ? DefaultStyle.grey_0 : DefaultStyle.grey_500
 						onCheckedChanged: {
 							if (checked) {
@@ -1485,10 +1485,10 @@ AbstractWindow {
 						id: newCallButton
 						checkable: false
 						icon.source: AppIcons.newCall
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						onClicked: {
 							var mainWin = UtilsCpp.getMainWindow()
 							UtilsCpp.smartShowWindow(mainWin)
@@ -1504,37 +1504,37 @@ AbstractWindow {
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingEarlyMedia
 										|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
 										? bottomButtonsLayout.columns - 1 : 0
-					spacing: 10 * DefaultStyle.dp
+					spacing: 10 * mainWindow.dp
 					CheckableButton {
 						id: videoCameraButton
 						enabled: mainWindow.conferenceInfo || (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
 						iconUrl: AppIcons.videoCamera
 						checkedIconUrl: AppIcons.videoCameraSlash
 						checked: !mainWindow.localVideoEnabled
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						onClicked: mainWindow.call.core.lSetLocalVideoEnabled(!mainWindow.call.core.localVideoEnabled)
 					}
 					CheckableButton {
 						iconUrl: AppIcons.microphone
 						checkedIconUrl: AppIcons.microphoneSlash
 						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						onClicked: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
 					}
 					CheckableButton {
 						iconUrl: AppIcons.screencast
                         visible: !!mainWindow.conference
 						checkedColor: DefaultStyle.main2_400
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
@@ -1549,29 +1549,29 @@ AbstractWindow {
 						checkable: false
 						checkedColor: DefaultStyle.main2_400
 						iconUrl: AppIcons.handWaving
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 					}
 					CheckableButton {
 						visible: false
 						iconUrl: AppIcons.smiley
 						checkedColor: DefaultStyle.main2_400
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 					}
 					CheckableButton {
 						id: participantListButton
 						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
 						checkedColor: DefaultStyle.main2_400
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						icon.width: 32 * DefaultStyle.dp
-						icon.height: 32 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
+						icon.width: 32 * mainWindow.dp
+						icon.height: 32 * mainWindow.dp
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
@@ -1587,8 +1587,8 @@ AbstractWindow {
 					}
 					PopupButton {
 						id: moreOptionsButton
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
+						Layout.preferredWidth: 55 * mainWindow.dp
+						Layout.preferredHeight: 55 * mainWindow.dp
 						contentImageColor: enabled && !checked ? DefaultStyle.grey_0 : DefaultStyle.grey_500
 						icon.source: AppIcons.more
 						background: Rectangle {
@@ -1598,7 +1598,7 @@ AbstractWindow {
 									? DefaultStyle.main2_400
 									: DefaultStyle.grey_500
 								: DefaultStyle.grey_600
-							radius: 40 * DefaultStyle.dp
+							radius: 40 * mainWindow.dp
 						}
 						popup.x: width/2
 						Connections {
@@ -1609,25 +1609,25 @@ AbstractWindow {
 						}
 						component MenuButton: Button {
 							background: Item{}
-							icon.width: 32 * DefaultStyle.dp
-							icon.height: 32 * DefaultStyle.dp
+							icon.width: 32 * mainWindow.dp
+							icon.height: 32 * mainWindow.dp
 							textColor: down || checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
 							contentImageColor: down || checked ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
+							textSize: 14 * mainWindow.dp
+							textWeight: 400 * mainWindow.dp
 							textHAlignment: Text.AlignLeft
-							spacing: 5 * DefaultStyle.dp
+							spacing: 5 * mainWindow.dp
 						}
 						popup.contentItem: ColumnLayout {
 							id: optionsList
-							spacing: 5 * DefaultStyle.dp
+							spacing: 5 * mainWindow.dp
 
 							MenuButton {
 								visible: mainWindow.conference
 								Layout.fillWidth: true
 								icon.source: AppIcons.squaresFour
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
+								icon.width: 32 * mainWindow.dp
+								icon.height: 32 * mainWindow.dp
 								text: qsTr("Modifier la disposition")
 								onClicked: {
 									rightPanel.visible = true
@@ -1639,8 +1639,8 @@ AbstractWindow {
 								visible: mainWindow.conference
 								Layout.fillWidth: true
 								icon.source: AppIcons.fullscreen
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
+								icon.width: 32 * mainWindow.dp
+								icon.height: 32 * mainWindow.dp
 								text: qsTr("Mode Plein écran")
 								checkable: true
 								onToggled: {
@@ -1678,8 +1678,8 @@ AbstractWindow {
 								visible: mainWindow.call && !mainWindow.conference && !SettingsCpp.disableCallRecordings
 								enabled: mainWindow.call && mainWindow.call.core.recordable
 								icon.source: AppIcons.recordFill
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
+								icon.width: 32 * mainWindow.dp
+								icon.height: 32 * mainWindow.dp
 								checked: mainWindow.call && mainWindow.call.core.recording
 								contentImageColor: down 
 									? DefaultStyle.main1_500_main
@@ -1702,8 +1702,8 @@ AbstractWindow {
 							MenuButton {
 								checkable: true
 								icon.source: !mainWindow.call || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
-								icon.width: 32 * DefaultStyle.dp
-								icon.height: 32 * DefaultStyle.dp
+								icon.width: 32 * mainWindow.dp
+								icon.height: 32 * mainWindow.dp
 								contentImageColor: down 
 									? DefaultStyle.main1_500_main
 								 	: mainWindow.call && mainWindow.call.core.speakerMuted 

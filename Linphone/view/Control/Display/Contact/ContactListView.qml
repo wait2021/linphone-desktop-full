@@ -13,7 +13,7 @@ ListView {
 	visible: contentHeight > 0
 	clip: true
 	//keyNavigationWraps: true
-	// rightMargin: 5 * DefaultStyle.dp
+	// rightMargin: 5 * mainWindow.dp
 
 
 	property bool selectionEnabled: true
@@ -138,7 +138,7 @@ ListView {
 	}
 	delegate: FocusScope {
 		id: itemDelegate
-		height: 56 * DefaultStyle.dp
+		height: 56 * mainWindow.dp
 		width: mainItem.width
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
@@ -154,15 +154,15 @@ ListView {
 			anchors.left: parent.left
 			visible: mainItem.initialHeadersVisible && mainItem.model.sourceFlags != LinphoneEnums.MagicSearchSource.All
 			anchors.verticalCenter: parent.verticalCenter
-			anchors.rightMargin: 15 * DefaultStyle.dp
+			anchors.rightMargin: 15 * mainWindow.dp
 			verticalAlignment: Text.AlignVCenter
-			width: 20 * DefaultStyle.dp
+			width: 20 * mainWindow.dp
 			opacity: (!previousItem || !previousDisplayName.toLocaleLowerCase(ConstantsCpp.DefaultLocale).startsWith(displayName[0].toLocaleLowerCase(ConstantsCpp.DefaultLocale))) ? 1 : 0
 			text: displayName[0]
 			color: DefaultStyle.main2_400
 			font {
-				pixelSize: 20 * DefaultStyle.dp
-				weight: 500 * DefaultStyle.dp
+				pixelSize: 20 * mainWindow.dp
+				weight: 500 * mainWindow.dp
 				capitalization: Font.AllUppercase
 			}
 		}
@@ -170,13 +170,13 @@ ListView {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.right: parent.right
-			anchors.rightMargin: 5 * DefaultStyle.dp
+			anchors.rightMargin: 5 * mainWindow.dp
 			anchors.verticalCenter: parent.verticalCenter
-			spacing: 16 * DefaultStyle.dp
+			spacing: 16 * mainWindow.dp
 			z: 1
 			Avatar {
-				Layout.preferredWidth: 45 * DefaultStyle.dp
-				Layout.preferredHeight: 45 * DefaultStyle.dp
+				Layout.preferredWidth: 45 * mainWindow.dp
+				Layout.preferredHeight: 45 * mainWindow.dp
 				contact: modelData
 			}
 			ColumnLayout {
@@ -184,20 +184,20 @@ ListView {
 				Text {
 					text: UtilsCpp.boldTextPart(itemDelegate.displayName, mainItem.searchBarText)
 					font{
-						pixelSize: mainItem.showDefaultAddress ? 16 * DefaultStyle.dp : 14 * DefaultStyle.dp
+						pixelSize: mainItem.showDefaultAddress ? 16 * mainWindow.dp : 14 * mainWindow.dp
 						capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
-						weight: mainItem.showDefaultAddress ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
+						weight: mainItem.showDefaultAddress ? 800 * mainWindow.dp : 400 * mainWindow.dp
 					}
 					maximumLineCount: 1
 					Layout.fillWidth: true
 				}
 				Text {
-					Layout.topMargin: 2 * DefaultStyle.dp
+					Layout.topMargin: 2 * mainWindow.dp
 					visible: mainItem.showDefaultAddress
 					text: modelData.core.defaultAddress
 					font {
-						weight: 300 * DefaultStyle.dp
-						pixelSize: 12 * DefaultStyle.dp
+						weight: 300 * mainWindow.dp
+						pixelSize: 12 * mainWindow.dp
 					}
 				}
 			}
@@ -206,13 +206,13 @@ ListView {
 				id: actionsRow
 				z: 1
 				visible: actionButtons || friendPopup.visible || mainItem.multiSelectionEnabled
-				spacing: visible ? 16 * DefaultStyle.dp : 0
+				spacing: visible ? 16 * mainWindow.dp : 0
 				EffectImage {
 					id: isSelectedCheck
 					// visible: mainItem.multiSelectionEnabled && (mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1)
 					visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
+					Layout.preferredWidth: 24 * mainWindow.dp
+					Layout.preferredHeight: 24 * mainWindow.dp
 					imageSource: AppIcons.check
 					colorizationColor: DefaultStyle.main1_500_main
 					Connections {
@@ -224,19 +224,19 @@ ListView {
 				RowLayout{
 					id: actionButtons
 					visible: mainItem.actionLayoutVisible
-					spacing: visible ? 10 * DefaultStyle.dp : 0
+					spacing: visible ? 10 * mainWindow.dp : 0
 					Button {
 						id: callButton
-						Layout.preferredWidth: 45 * DefaultStyle.dp
-						Layout.preferredHeight: 45 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+						Layout.preferredWidth: 45 * mainWindow.dp
+						Layout.preferredHeight: 45 * mainWindow.dp
+						icon.width: 24 * mainWindow.dp
+						icon.height: 24 * mainWindow.dp
 						icon.source: AppIcons.phone
 						focus: visible
 						contentImageColor: DefaultStyle.main2_500main
 						background: Rectangle {
 							anchors.fill: parent
-							radius: 40 * DefaultStyle.dp
+							radius: 40 * mainWindow.dp
 							color: DefaultStyle.main2_200
 						}
 						onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
@@ -246,16 +246,16 @@ ListView {
 					Button {
 						id: chatButton
 						visible: actionButtons.visible && !SettingsCpp.disableChatFeature
-						Layout.preferredWidth: 45 * DefaultStyle.dp
-						Layout.preferredHeight: 45 * DefaultStyle.dp
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
+						Layout.preferredWidth: 45 * mainWindow.dp
+						Layout.preferredHeight: 45 * mainWindow.dp
+						icon.width: 24 * mainWindow.dp
+						icon.height: 24 * mainWindow.dp
 						icon.source: AppIcons.chatTeardropText
 						focus: visible && !callButton.visible
 						contentImageColor: DefaultStyle.main2_500main
 						background: Rectangle {
 							anchors.fill: parent
-							radius: 40 * DefaultStyle.dp
+							radius: 40 * mainWindow.dp
 							color: DefaultStyle.main2_200
 						}
 						KeyNavigation.right: callButton
@@ -265,11 +265,11 @@ ListView {
 				PopupButton {
 					id: friendPopup
 					z: 1
-					// Layout.rightMargin: 13 * DefaultStyle.dp
+					// Layout.rightMargin: 13 * mainWindow.dp
 					Layout.alignment: Qt.AlignVCenter
-					Layout.rightMargin: 8 * DefaultStyle.dp
+					Layout.rightMargin: 8 * mainWindow.dp
 					popup.x: 0
-					popup.padding: 10 * DefaultStyle.dp
+					popup.padding: 10 * mainWindow.dp
 					hoverEnabled: mainItem.hoverEnabled
 					visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!mainItem.delegateButtons || mainItem.delegateButtons.length === 0)
 					
@@ -278,11 +278,11 @@ ListView {
 							text: $modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
 							background: Item{}
 							icon.source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							spacing: 10 * DefaultStyle.dp
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
+							icon.width: 24 * mainWindow.dp
+							icon.height: 24 * mainWindow.dp
+							spacing: 10 * mainWindow.dp
+							textSize: 14 * mainWindow.dp
+							textWeight: 400 * mainWindow.dp
 							textColor: DefaultStyle.main2_500main
 							contentImageColor: modelData.core.starred ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 							onClicked: {
@@ -294,11 +294,11 @@ ListView {
 							text: qsTr("Partager")
 							background: Item{}
 							icon.source: AppIcons.shareNetwork
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							spacing: 10 * DefaultStyle.dp
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
+							icon.width: 24 * mainWindow.dp
+							icon.height: 24 * mainWindow.dp
+							spacing: 10 * mainWindow.dp
+							textSize: 14 * mainWindow.dp
+							textWeight: 400 * mainWindow.dp
 							textColor: DefaultStyle.main2_500main
 							onClicked: {
 								var vcard = modelData.core.getVCard()
@@ -313,11 +313,11 @@ ListView {
 							text: qsTr("Supprimer")
 							background: Item{}
 							icon.source: AppIcons.trashCan
-							icon.width: 24 * DefaultStyle.dp
-							icon.height: 24 * DefaultStyle.dp
-							spacing: 10 * DefaultStyle.dp
-							textSize: 14 * DefaultStyle.dp
-							textWeight: 400 * DefaultStyle.dp
+							icon.width: 24 * mainWindow.dp
+							icon.height: 24 * mainWindow.dp
+							spacing: 10 * mainWindow.dp
+							textSize: 14 * mainWindow.dp
+							textWeight: 400 * mainWindow.dp
 							textColor: DefaultStyle.danger_500main
 							contentImageColor: DefaultStyle.danger_500main
 							visible: !modelData.core.readOnly

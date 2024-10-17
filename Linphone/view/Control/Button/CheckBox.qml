@@ -7,16 +7,16 @@ Control.CheckBox {
 	id: mainItem
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	indicator: Item{
-		implicitWidth: 20 * DefaultStyle.dp
-		implicitHeight: 20 * DefaultStyle.dp
+		implicitWidth: 20 * mainWindow.dp
+		implicitHeight: 20 * mainWindow.dp
 		x: (parent.width - width) / 2
 		y: (parent.height - height) / 2
 		Rectangle {
 			id: backgroundArea
 			anchors.fill: parent	
-			radius: 3 * DefaultStyle.dp
+			radius: 3 * mainWindow.dp
 			border.color: DefaultStyle.main1_500_main
-			border.width: 2.2 * DefaultStyle.dp
+			border.width: 2.2 * mainWindow.dp
 			// color: mainItem.checked ? DefaultStyle.main1_500_main : "transparent"
 			EffectImage {
 				visible: mainItem.checked

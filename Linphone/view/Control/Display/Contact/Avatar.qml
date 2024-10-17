@@ -83,7 +83,7 @@ Loader{
 					z: 1
 					color: "transparent"
 					border {
-						width: 3 * DefaultStyle.dp
+						width: 3 * mainWindow.dp
 						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500main
 					}
 					Image {
@@ -126,7 +126,7 @@ Loader{
 						: DefaultStyle.main2_500main
 					: "transparent"
 					border {
-						width: 2 * DefaultStyle.dp
+						width: 2 * mainWindow.dp
 						color: DefaultStyle.grey_0
 					}
 				}
@@ -152,7 +152,7 @@ Loader{
 								text: initialItem.initials
 								font {
 									pixelSize: initialItem.height * 36 / 120
-									weight: 800 * DefaultStyle.dp
+									weight: 800 * mainWindow.dp
 									capitalization: Font.AllUppercase
 								}
 							}

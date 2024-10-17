@@ -8,8 +8,8 @@ Quick.Text {
 	width: txtMeter.advanceWidth
 	font {
 		family: DefaultStyle.defaultFont
-		pixelSize: 10 * DefaultStyle.dp
-		weight: 400 * DefaultStyle.dp
+		pixelSize: 10 * mainWindow.dp
+		weight: 400 * mainWindow.dp
 	}
 	color: DefaultStyle.main2_600
 	wrapMode: Quick.Text.Wrap

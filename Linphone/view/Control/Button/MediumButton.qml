@@ -10,8 +10,8 @@ Button {
 	textWeight: Typography.b3.weight
 	color: DefaultStyle.main1_100
 	textColor: DefaultStyle.main1_500_main
-	leftPadding: 16 * DefaultStyle.dp
-	rightPadding: 16 * DefaultStyle.dp
-	topPadding: 10 * DefaultStyle.dp
-	bottomPadding: 10 * DefaultStyle.dp
+	leftPadding: 16 * mainWindow.dp
+	rightPadding: 16 * mainWindow.dp
+	topPadding: 10 * mainWindow.dp
+	bottomPadding: 10 * mainWindow.dp
 }

@@ -57,7 +57,7 @@ ColumnLayout{
 	
 	GridView{
 		id: grid
-		property int margin: 10 * DefaultStyle.dp
+		property int margin: 10 * mainWindow.dp
 		property int itemCount: model.count ? model.count :( model.length ? model.length : 0)
 		property int columns: 1
 		property int rows: 1

@@ -8,12 +8,12 @@ Item{
 	property string iconSource
 	property string text
 	property color color: DefaultStyle.main2_600
-	property int iconSize: 17 * DefaultStyle.dp 
-	property int textSize: 14 * DefaultStyle.dp
-	property int textWeight: 400 * DefaultStyle.dp
+	property int iconSize: 17 * mainWindow.dp 
+	property int textSize: 14 * mainWindow.dp
+	property int textWeight: 400 * mainWindow.dp
 	property color backgroundColor: DefaultStyle.grey_0
 	readonly property color backgroundPressedColor: Qt.darker(backgroundColor, 1.1)
-	property int radius: 5 * DefaultStyle.dp
+	property int radius: 5 * mainWindow.dp
 	property bool shadowEnabled: mainItem.activeFocus//  || containsMouse
 	property alias containsMouse: mouseArea.containsMouse
 	

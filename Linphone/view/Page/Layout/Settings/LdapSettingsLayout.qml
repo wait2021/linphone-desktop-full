@@ -16,12 +16,12 @@ AbstractSettingsLayout {
 	Component {
 		id: topBar
 		RowLayout {
-			spacing: 20 * DefaultStyle.dp
+			spacing: 20 * mainWindow.dp
 			Button {
 				background: Item{}
 				icon.source: AppIcons.trashCan
-				icon.width: 32 * DefaultStyle.dp
-				icon.height: 32 * DefaultStyle.dp
+				icon.width: 32 * mainWindow.dp
+				icon.height: 32 * mainWindow.dp
 				contentImageColor: DefaultStyle.main2_600
 				visible: !isNew
 				onClicked: {
@@ -56,18 +56,18 @@ AbstractSettingsLayout {
 		id: content
 		ColumnLayout {
 			width: parent.width
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			RowLayout {
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						Layout.minimumWidth: 341 * DefaultStyle.dp
-						spacing: 5 * DefaultStyle.dp
+						Layout.preferredWidth: 341 * mainWindow.dp
+						Layout.maximumWidth: 341 * mainWindow.dp
+						Layout.minimumWidth: 341 * mainWindow.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Annuaires LDAP")
@@ -89,10 +89,10 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 20 * DefaultStyle.dp
-					Layout.rightMargin: 44 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
+					Layout.rightMargin: 44 * mainWindow.dp
+					Layout.topMargin: 20 * mainWindow.dp
+					Layout.leftMargin: 64 * mainWindow.dp
 					DecoratedTextField {
 						id: server
 						propertyName: "server"

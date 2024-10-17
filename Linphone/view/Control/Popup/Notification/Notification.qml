@@ -5,24 +5,26 @@ import Linphone
 // =============================================================================
 
 DesktopPopup {
-	id: mainItem
+	id: mainWindow
 	
 	
 	property var notificationData: ({
 										timelineModel : null
 									})
-	property int overriddenHeight: 120 * DefaultStyle.dp
-	property int overriddenWidth: 300 * DefaultStyle.dp
+	//property int overriddenHeight: 120 * mainWindow.dp
+	//property int overriddenWidth: 300 * mainWindow.dp
 	property double radius: 0
 	default property alias _content: content.data
 	
 	signal deleteNotification (var notification)
-	width: mainItem.overriddenWidth
-	height: mainItem.overriddenHeight
+	//width: mainWindow.overriddenWidth
+	//height: mainWindow.overriddenHeight
+	height: 120 * mainWindow.dp
+	width: 300 * mainWindow.dp
 	
 	// Use as an intermediate between signal/slot without propagate the notification var : last signal parameter will be the last notification instance
 	function deleteNotificationSlot(){
-		deleteNotification(mainItem)
+		deleteNotification(mainWindow)
 	}
 	
 	function _close (cb) {
@@ -35,10 +37,10 @@ DesktopPopup {
 		anchors.fill: parent
 		visible: backgroundLoader.status != Loader.Ready
 		color: DefaultStyle.grey_0
-		radius: mainItem.radius
+		radius: mainWindow.radius
 		border {
 			color: DefaultStyle.grey_400
-			width: 1 * DefaultStyle.dp
+			width: 1 * mainWindow.dp
 		}
 	}
 	
@@ -46,17 +48,19 @@ DesktopPopup {
 		id: backgroundLoader
 		asynchronous: true
 		sourceComponent: Item{
-			width: mainItem.overriddenWidth
-			height: mainItem.overriddenHeight
+			//width: mainWindow.overriddenWidth
+			//height: mainWindow.overriddenHeight
+			width: mainWindow.width
+			height: mainWindow.height
 			Rectangle {
 				id: background
 				anchors.fill: parent
 				visible: backgroundLoader.status != Loader.Ready
 				color: DefaultStyle.grey_0
-				radius: mainItem.radius
+				radius: mainWindow.radius
 				border {
 					color: DefaultStyle.grey_400
-					width: 1 * DefaultStyle.dp
+					width: 1 * mainWindow.dp
 				}
 			}
 			MultiEffect {

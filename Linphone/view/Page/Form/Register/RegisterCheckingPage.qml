@@ -16,14 +16,14 @@ LoginLayout {
 	onCtrlIsPressedChanged: console.log("ctrl is pressed", ctrlIsPressed)
 	titleContent: [
 		RowLayout {
-			spacing: 21 * DefaultStyle.dp
-			Layout.leftMargin: 119 * DefaultStyle.dp
+			spacing: 21 * mainWindow.dp
+			Layout.leftMargin: 119 * mainWindow.dp
 			Button {
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				Layout.preferredWidth: 24 * DefaultStyle.dp
+				Layout.preferredHeight: 24 * mainWindow.dp
+				Layout.preferredWidth: 24 * mainWindow.dp
 				icon.source: AppIcons.leftArrow
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
+				icon.width: 24 * mainWindow.dp
+				icon.height: 24 * mainWindow.dp
 				background: Rectangle {
 					color: "transparent"
 				}
@@ -43,8 +43,8 @@ LoginLayout {
 					text = qsTr("Inscription | Confirmer votre ") + completeString
 				}
 				font {
-					pixelSize: 36 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+					pixelSize: 36 * mainWindow.dp
+					weight: 800 * mainWindow.dp
 				}
 				scaleLettersFactor: 1.1
 			}
@@ -58,14 +58,14 @@ LoginLayout {
 		ColumnLayout {
 			anchors.left: parent.left
 			anchors.top: parent.top
-			anchors.topMargin: 51 * DefaultStyle.dp
-			anchors.leftMargin: 127 * DefaultStyle.dp
-			spacing: 104 * DefaultStyle.dp
+			anchors.topMargin: 51 * mainWindow.dp
+			anchors.leftMargin: 127 * mainWindow.dp
+			spacing: 104 * mainWindow.dp
 			Text {
 				font {
 					bold: true
-					pixelSize: 22 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
+					pixelSize: 22 * mainWindow.dp
+					weight: 800 * mainWindow.dp
 				}
 				color: DefaultStyle.main2_700
 				text: {
@@ -74,7 +74,7 @@ LoginLayout {
 				}
 			}
 			RowLayout {
-				spacing: 45 * DefaultStyle.dp
+				spacing: 45 * mainWindow.dp
 				Repeater {
 					model: 4
 					id: repeater
@@ -139,18 +139,18 @@ LoginLayout {
 				}
 			}
 			RowLayout {
-				spacing: 20 * DefaultStyle.dp
+				spacing: 20 * mainWindow.dp
 				Text {
 					text: "Didn't receive the code ?"
 					color: DefaultStyle.main2_700
-					font.pixelSize: 14 * DefaultStyle.dp
-					font.weight: 400 * DefaultStyle.dp
+					font.pixelSize: 14 * mainWindow.dp
+					font.weight: 400 * mainWindow.dp
 				}
 				Button {
-					leftPadding: 20 * DefaultStyle.dp
-					rightPadding: 20 * DefaultStyle.dp
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
+					leftPadding: 20 * mainWindow.dp
+					rightPadding: 20 * mainWindow.dp
+					topPadding: 11 * mainWindow.dp
+					bottomPadding: 11 * mainWindow.dp
 					inversedColors: true
 					text: "Resend a code"
 					onClicked: {
@@ -162,10 +162,10 @@ LoginLayout {
 		Image {
 			anchors.top: parent.top
 			anchors.right: parent.right
-			anchors.topMargin: 140 * DefaultStyle.dp
-			anchors.rightMargin: 97 * DefaultStyle.dp
-			width: 477 * DefaultStyle.dp
-			height: 345 * DefaultStyle.dp
+			anchors.topMargin: 140 * mainWindow.dp
+			anchors.rightMargin: 97 * mainWindow.dp
+			width: 477 * mainWindow.dp
+			height: 345 * mainWindow.dp
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.verif_page_image
 		}

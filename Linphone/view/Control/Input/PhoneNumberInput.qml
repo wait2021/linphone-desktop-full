@@ -23,8 +23,8 @@ ColumnLayout {
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
 		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		font {
-			pixelSize: 13 * DefaultStyle.dp
-			weight: 700 * DefaultStyle.dp
+			pixelSize: 13 * mainWindow.dp
+			weight: 700 * mainWindow.dp
 		}
 	}
 
@@ -34,8 +34,8 @@ ColumnLayout {
 		Rectangle {
 			id: contentBackground
 			width: mainItem.textInputWidth
-			height: 49 * DefaultStyle.dp
-			radius: 63 * DefaultStyle.dp
+			height: 49 * mainWindow.dp
+			radius: 63 * mainWindow.dp
 			color: DefaultStyle.grey_100
 			border.color: mainItem.errorMessage.length > 0 
 							? DefaultStyle.danger_500main 
@@ -46,14 +46,14 @@ ColumnLayout {
 				anchors.fill: parent
 				CountryIndicatorCombobox {
 					id: combobox
-					implicitWidth: 110 * DefaultStyle.dp
+					implicitWidth: 110 * mainWindow.dp
 					defaultCallingCode: mainItem.defaultCallingCode
 				}
 				Rectangle {
-					Layout.preferredWidth: 1 * DefaultStyle.dp
+					Layout.preferredWidth: 1 * mainWindow.dp
 					Layout.fillHeight: true
-					Layout.topMargin: 10 * DefaultStyle.dp
-					Layout.bottomMargin: 10 * DefaultStyle.dp
+					Layout.topMargin: 10 * mainWindow.dp
+					Layout.bottomMargin: 10 * mainWindow.dp
 					color: DefaultStyle.main2_600
 				}
 				TextField {
@@ -76,7 +76,7 @@ ColumnLayout {
 			elide: Text.ElideRight
 			wrapMode: Text.Wrap
 			font {
-				pixelSize: 13 * DefaultStyle.dp
+				pixelSize: 13 * mainWindow.dp
 				family: DefaultStyle.defaultFont
 				bold: true
 			}

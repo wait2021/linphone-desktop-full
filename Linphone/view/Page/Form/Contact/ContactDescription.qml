@@ -18,8 +18,8 @@ ColumnLayout{
 		Layout.fillHeight: true
 		verticalAlignment: (bottomTextItem.visible?Text.AlignBottom:Text.AlignVCenter)
 		visible: text != ''
-		font.weight: 400 * DefaultStyle.dp
-		font.pixelSize: 14 * DefaultStyle.dp
+		font.weight: 400 * mainWindow.dp
+		font.pixelSize: 14 * mainWindow.dp
 		color: DefaultStyle.main2_700
 		text: mainItem.topText
 		width: mainItem.width
@@ -32,8 +32,8 @@ ColumnLayout{
 		Layout.fillHeight: true
 		verticalAlignment: (topTextItem.visible?Text.AlignTop:Text.AlignVCenter)
 		visible: text != ''
-		font.weight: 300 * DefaultStyle.dp
-		font.pixelSize: 12 * DefaultStyle.dp
+		font.weight: 300 * mainWindow.dp
+		font.pixelSize: 12 * mainWindow.dp
 		color: DefaultStyle.main2_400
 		text: mainItem.bottomText
 		Layout.preferredWidth: mainItem.width

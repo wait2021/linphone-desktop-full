@@ -5,10 +5,12 @@ import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Qt.labs.platform
 
+import UtilsCpp
+
 
 // =============================================================================
   Window {
-	id: mainItem
+	id: mainWindow
 
 	// ---------------------------------------------------------------------------
 
@@ -16,8 +18,8 @@ import Qt.labs.platform
 	
 	property bool requestActivate: false
 	//property int flags: Qt.SplashScreen
-
-	
+	property real dp: 1/UtilsCpp.getPixelDensity(x,y)
+	onDpChanged: console.log("[Window] new DP: "+dp)
 
 	default property alias _content: content.data
 	property bool _isOpen: false
@@ -53,7 +55,7 @@ import Qt.labs.platform
 		id: content
 		anchors.fill:parent
 
-		property var $parent: mainItem
+		property var $parent: mainWindow
 	}
 
   // ---------------------------------------------------------------------------

@@ -21,18 +21,18 @@ Control.RadioButton {
 	background: Rectangle {
 		color: DefaultStyle.grey_100
 		border.color: mainItem.checked ? mainItem.color : "transparent"
-		radius: 20 * DefaultStyle.dp
+		radius: 20 * mainWindow.dp
 	}
 
 	indicator: RowLayout {
 		anchors.left: parent.left
-		anchors.leftMargin: 13 * DefaultStyle.dp
+		anchors.leftMargin: 13 * mainWindow.dp
 		anchors.top: parent.top
-		anchors.topMargin: 8 * DefaultStyle.dp
-		spacing: 4 * DefaultStyle.dp
+		anchors.topMargin: 8 * mainWindow.dp
+		spacing: 4 * mainWindow.dp
 		Rectangle {
-			implicitWidth: 16 * DefaultStyle.dp
-			implicitHeight: 16 * DefaultStyle.dp
+			implicitWidth: 16 * mainWindow.dp
+			implicitHeight: 16 * mainWindow.dp
 			radius: implicitWidth/2
 			border.color: mainItem.color
 
@@ -51,7 +51,7 @@ Control.RadioButton {
 			text: mainItem.title
 			font.bold: true
 			color: DefaultStyle.grey_900
-			font.pixelSize: 16 * DefaultStyle.dp
+			font.pixelSize: 16 * mainWindow.dp
 		}
 		Button {
 			padding: 0
@@ -59,12 +59,12 @@ Control.RadioButton {
 				visible: false
 			}
 			icon.source: AppIcons.info
-			Layout.preferredWidth: 2 * DefaultStyle.dp
-			Layout.preferredHeight: 2 * DefaultStyle.dp
-			width: 2 * DefaultStyle.dp
-			height: 2 * DefaultStyle.dp
-			icon.width: 2 * DefaultStyle.dp
-			icon.height: 2 * DefaultStyle.dp
+			Layout.preferredWidth: 2 * mainWindow.dp
+			Layout.preferredHeight: 2 * mainWindow.dp
+			width: 2 * mainWindow.dp
+			height: 2 * mainWindow.dp
+			icon.width: 2 * mainWindow.dp
+			icon.height: 2 * mainWindow.dp
 		}
 	}
 	
@@ -73,27 +73,27 @@ Control.RadioButton {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.leftMargin: 13 * DefaultStyle.dp
+		anchors.leftMargin: 13 * mainWindow.dp
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Layout.bottomMargin: 10 * DefaultStyle.dp
-			Layout.rightMargin: 10 * DefaultStyle.dp
+			Layout.bottomMargin: 10 * mainWindow.dp
+			Layout.rightMargin: 10 * mainWindow.dp
 			Layout.alignment: Qt.AlignVCenter
 			Text {
 				id: innerText
 				verticalAlignment: Text.AlignVCenter
-				Layout.preferredWidth: 220 * DefaultStyle.dp
-				Layout.preferredHeight: 100 * DefaultStyle.dp
-				font.pixelSize: 14 * DefaultStyle.dp
+				Layout.preferredWidth: 220 * mainWindow.dp
+				Layout.preferredHeight: 100 * mainWindow.dp
+				font.pixelSize: 14 * mainWindow.dp
 				text: mainItem.contentText
 				Layout.fillHeight: true
 			}
 			Image {
 				id: image
 				Layout.fillHeight: true
-				Layout.preferredWidth: 100 * DefaultStyle.dp
-				Layout.preferredHeight: 100 * DefaultStyle.dp
+				Layout.preferredWidth: 100 * mainWindow.dp
+				Layout.preferredHeight: 100 * mainWindow.dp
 				fillMode: Image.PreserveAspectFit
 				source: mainItem.imgUrl
 			}

@@ -7,8 +7,8 @@ import Linphone
 
 Control.TabBar {
 	id: mainItem
-	//spacing: 32 * DefaultStyle.dp
-	topPadding: 36 * DefaultStyle.dp
+	//spacing: 32 * mainWindow.dp
+	topPadding: 36 * mainWindow.dp
 
 	property var model
 	readonly property alias cornerRadius: bottomLeftCorner.radius
@@ -30,8 +30,8 @@ Control.TabBar {
 		id: unreadNotifications
 		property int unread: 0
 		visible: unread > 0
-		width: 15 * DefaultStyle.dp
-		height: 15 * DefaultStyle.dp
+		width: 15 * mainWindow.dp
+		height: 15 * mainWindow.dp
 		radius: width/2
 		color: DefaultStyle.danger_500main
 		Text{
@@ -41,7 +41,7 @@ Control.TabBar {
 			horizontalAlignment: Text.AlignHCenter
 			color: DefaultStyle.grey_0
 			fontSizeMode: Text.Fit
-			font.pixelSize: 15 *  DefaultStyle.dp
+			font.pixelSize: 15 *  mainWindow.dp
 			text: parent.unread > 100 ? '99+' : parent.unread
 		}
 	}
@@ -69,7 +69,7 @@ Control.TabBar {
 			id: bottomLeftCorner
 			anchors.fill: parent
 			color: DefaultStyle.main1_500_main
-			radius: 25 * DefaultStyle.dp
+			radius: 25 * mainWindow.dp
 		}
 		Rectangle {
 			color: DefaultStyle.main1_500_main
@@ -93,8 +93,8 @@ Control.TabBar {
 			id: tabButton
 			width: mainItem.width
 			height: visible ? undefined : 0
-			bottomInset:  32 * DefaultStyle.dp
-			topInset:  32 * DefaultStyle.dp
+			bottomInset:  32 * mainWindow.dp
+			topInset:  32 * mainWindow.dp
 			
 			visible: modelData?.visible != undefined ? modelData?.visible : true
 			UnreadNotification {
@@ -106,7 +106,7 @@ Control.TabBar {
 						? defaultAccount.core?.unreadMessageNotifications || -1
 						: 0
 				anchors.right: parent.right
-				anchors.rightMargin: 15 * DefaultStyle.dp
+				anchors.rightMargin: 15 * mainWindow.dp
 				anchors.top: parent.top
 			}
 			contentItem: ColumnLayout {
@@ -114,7 +114,7 @@ Control.TabBar {
 				// width: tabButton.width
 				EffectImage {
 					id: buttonIcon
-					property int buttonSize: 24 * DefaultStyle.dp
+					property int buttonSize: 24 * mainWindow.dp
 					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
@@ -126,8 +126,8 @@ Control.TabBar {
 					id: buttonText
 					text: modelData.label
 					font {
-						weight: mainItem.currentIndex === index ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
-						pixelSize: 9 * DefaultStyle.dp
+						weight: mainItem.currentIndex === index ? 800 * mainWindow.dp : 400 * mainWindow.dp
+						pixelSize: 9 * mainWindow.dp
 						underline: tabButton.activeFocus || tabButton.hovered
 					}
 					color: DefaultStyle.grey_0
@@ -135,8 +135,8 @@ Control.TabBar {
 					Layout.preferredHeight: txtMeter.height
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
-					leftPadding: 3 * DefaultStyle.dp
-					rightPadding: 3 * DefaultStyle.dp
+					leftPadding: 3 * mainWindow.dp
+					rightPadding: 3 * mainWindow.dp
 				}
 			}
 			TextMetrics {
@@ -144,7 +144,7 @@ Control.TabBar {
 				text: modelData.label
 				font: buttonText.font
 				Component.onCompleted: {
-					font.weight = 800 * DefaultStyle.dp
+					font.weight = 800 * mainWindow.dp
 					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
 				}
 			}

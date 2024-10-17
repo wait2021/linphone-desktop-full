@@ -10,7 +10,7 @@ AbstractSettingsLayout {
 	Component {
 		id: content
 		Column {
-			spacing: 40 * DefaultStyle.dp
+			spacing: 40 * mainWindow.dp
 			SwitchSetting {
 				titleText: qsTr("Chiffrer tous les fichiers")
 				subTitleText: qsTr("Attention, vous ne pourrez pas revenir en arrière !")

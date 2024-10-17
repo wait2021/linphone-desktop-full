@@ -49,7 +49,7 @@ AbstractSettingsLayout {
 	Component {
 		id: content
 		ColumnLayout {
-			spacing: 40 * DefaultStyle.dp
+			spacing: 40 * mainWindow.dp
 			SwitchSetting {
 				titleText: qsTr("Activer les traces de débogage")
 				propertyName: "logsEnabled"

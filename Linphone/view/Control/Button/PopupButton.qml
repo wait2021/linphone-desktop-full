@@ -10,17 +10,17 @@ Button {
 	property bool shadowEnabled: mainItem.activeFocus  || hovered
 	property alias popupBackgroundColor: popupBackground.color
 	checked: popup.visible
-	implicitWidth: 24 * DefaultStyle.dp
-	implicitHeight: 24 * DefaultStyle.dp
-	width: 24 * DefaultStyle.dp
-	height: 24 * DefaultStyle.dp
+	implicitWidth: 24 * mainWindow.dp
+	implicitHeight: 24 * mainWindow.dp
+	width: 24 * mainWindow.dp
+	height: 24 * mainWindow.dp
 	leftPadding: 0
 	rightPadding: 0
 	topPadding: 0
 	bottomPadding: 0
 	icon.source: AppIcons.more
-	icon.width: 24 * DefaultStyle.dp
-	icon.height: 24 * DefaultStyle.dp
+	icon.width: 24 * mainWindow.dp
+	icon.height: 24 * mainWindow.dp
 	function close() {
 		popup.close()
 	}
@@ -41,7 +41,7 @@ Button {
 			anchors.fill: parent
 			visible: mainItem.checked || mainItem.shadowEnabled
 			color:  mainItem.checked ? DefaultStyle.main2_300 : DefaultStyle.grey_100
-			radius: 40 * DefaultStyle.dp
+			radius: 40 * mainWindow.dp
 		}
 		MultiEffect {
 			enabled: mainItem.shadowEnabled
@@ -70,7 +70,7 @@ Button {
 		x: 0
 		y: mainItem.height
 		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
-		padding: 10 * DefaultStyle.dp
+		padding: 10 * mainWindow.dp
 		parent: mainItem	// Explicit define for coordinates references.
 
 		onVisibleChanged: {
@@ -96,7 +96,7 @@ Button {
 				id: popupBackground
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
-				radius: 16 * DefaultStyle.dp
+				radius: 16 * mainWindow.dp
 			}
 			MultiEffect {
 				source: popupBackground

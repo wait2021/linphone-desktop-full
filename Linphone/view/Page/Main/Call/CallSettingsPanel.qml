@@ -17,28 +17,28 @@ Control.Page {
 	signal returnRequested()
 	signal validateRequested()
 
-	topPadding: 16 * DefaultStyle.dp
-	// bottomPadding: 16 * DefaultStyle.dp
+	topPadding: 16 * mainWindow.dp
+	// bottomPadding: 16 * mainWindow.dp
 
 	background: Rectangle {
 		width: mainItem.width
 		height: mainItem.height
 		color: DefaultStyle.grey_100
-		radius: 15 * DefaultStyle.dp
+		radius: 15 * mainWindow.dp
 	}
 	
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
-		height: 56 * DefaultStyle.dp
-		leftPadding: 10 * DefaultStyle.dp
-		rightPadding: 10 * DefaultStyle.dp
+		height: 56 * mainWindow.dp
+		leftPadding: 10 * mainWindow.dp
+		rightPadding: 10 * mainWindow.dp
 		background: Rectangle {
 			id: headerBackground
 			width: pageHeader.width
 			height: pageHeader.height
 			color: DefaultStyle.grey_0
-			radius: 15 * DefaultStyle.dp
+			radius: 15 * mainWindow.dp
 			Rectangle {
 				y: pageHeader.height/2
 				height: pageHeader.height/2
@@ -49,7 +49,7 @@ Control.Page {
 			id: headerStack
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 				Text {
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
@@ -58,8 +58,8 @@ Control.Page {
 					verticalAlignment: Text.AlignVCenter
 					color: DefaultStyle.main1_500_main
 					font {
-						pixelSize: 16 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
+						pixelSize: 16 * mainWindow.dp
+						weight: 800 * mainWindow.dp
 					}
 				}
 				RowLayout {
@@ -72,21 +72,21 @@ Control.Page {
 						visible: false
 					}
 					icon.source: AppIcons.closeX
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+					Layout.preferredWidth: 24 * mainWindow.dp
+					Layout.preferredHeight: 24 * mainWindow.dp
+					icon.width: 24 * mainWindow.dp
+					icon.height: 24 * mainWindow.dp
 					onClicked: mainItem.visible = false
 				}
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-				spacing: 10 * DefaultStyle.dp
+				spacing: 10 * mainWindow.dp
 				Button {
 					background: Item{}
 					icon.source: AppIcons.leftArrow
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
+					icon.width: 24 * mainWindow.dp
+					icon.height: 24 * mainWindow.dp
 					contentImageColor: DefaultStyle.main1_500_main
 					onClicked: mainItem.returnRequested()
 				}
@@ -98,8 +98,8 @@ Control.Page {
 						text: mainItem.headerTitleText
 						color: DefaultStyle.main1_500_main
 						font {
-							pixelSize: 16 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+							pixelSize: 16 * mainWindow.dp
+							weight: 800 * mainWindow.dp
 						}
 					}
 					Text {
@@ -109,8 +109,8 @@ Control.Page {
 						text: mainItem.headerSubtitleText
 						color: DefaultStyle.main2_500main
 						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
+							pixelSize: 12 * mainWindow.dp
+							weight: 300 * mainWindow.dp
 						}
 					}
 				}
@@ -120,13 +120,13 @@ Control.Page {
 				}
 				Button {
 					text: mainItem.headerValidateButtonText
-					textSize: 13 * DefaultStyle.dp
-					textWeight: 600 * DefaultStyle.dp
+					textSize: 13 * mainWindow.dp
+					textWeight: 600 * mainWindow.dp
 					onClicked: mainItem.validateRequested()
-					topPadding: 6 * DefaultStyle.dp
-					bottomPadding: 6 * DefaultStyle.dp
-					leftPadding: 12 * DefaultStyle.dp
-					rightPadding: 12 * DefaultStyle.dp
+					topPadding: 6 * mainWindow.dp
+					bottomPadding: 6 * mainWindow.dp
+					leftPadding: 12 * mainWindow.dp
+					rightPadding: 12 * mainWindow.dp
 				}
 			}
 		}

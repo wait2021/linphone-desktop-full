@@ -15,18 +15,18 @@ AbstractSettingsLayout {
 		id: content
 		ColumnLayout {
 			width: parent.width
-			spacing: 5 * DefaultStyle.dp
+			spacing: 5 * mainWindow.dp
 			RowLayout {
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						Layout.minimumWidth: 341 * DefaultStyle.dp
-						spacing: 5 * DefaultStyle.dp
+						Layout.preferredWidth: 341 * mainWindow.dp
+						Layout.maximumWidth: 341 * mainWindow.dp
+						Layout.minimumWidth: 341 * mainWindow.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Détails")
@@ -48,23 +48,23 @@ AbstractSettingsLayout {
 				}
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 20 * DefaultStyle.dp
-					Layout.rightMargin: 44 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.leftMargin: 64 * DefaultStyle.dp
+					spacing: 20 * mainWindow.dp
+					Layout.rightMargin: 44 * mainWindow.dp
+					Layout.topMargin: 20 * mainWindow.dp
+					Layout.leftMargin: 64 * mainWindow.dp
 					Avatar {
 						account: model
 						displayPresence: false
-						Layout.preferredWidth: 100 * DefaultStyle.dp
-						Layout.preferredHeight: 100 * DefaultStyle.dp
+						Layout.preferredWidth: 100 * mainWindow.dp
+						Layout.preferredHeight: 100 * mainWindow.dp
 						Layout.alignment: Qt.AlignHCenter
 					}
 					IconLabelButton {
 						visible: model.core.pictureUri.length === 0
 						Layout.preferredWidth: width
-						Layout.preferredHeight: 17 * DefaultStyle.dp
+						Layout.preferredHeight: 17 * mainWindow.dp
 						iconSource: AppIcons.camera
-						iconSize: 17 * DefaultStyle.dp
+						iconSize: 17 * mainWindow.dp
 						text: qsTr("Ajouter une image")
 						onClicked: fileDialog.open()
 						Layout.alignment: Qt.AlignHCenter
@@ -73,21 +73,21 @@ AbstractSettingsLayout {
 					RowLayout {
 						visible: model.core.pictureUri.length > 0
 						Layout.alignment: Qt.AlignHCenter
-						spacing: 5 * DefaultStyle.dp
+						spacing: 5 * mainWindow.dp
 						IconLabelButton {
 							Layout.preferredWidth: width
-							Layout.preferredHeight: 17 * DefaultStyle.dp
+							Layout.preferredHeight: 17 * mainWindow.dp
 							iconSource: AppIcons.pencil
-							iconSize: 17 * DefaultStyle.dp
+							iconSize: 17 * mainWindow.dp
 							text: qsTr("Modifier l'image")
 							color: DefaultStyle.main2_600
 							onClicked: fileDialog.open()
 						}
 						IconLabelButton {
 							Layout.preferredWidth: width
-							Layout.preferredHeight: 17 * DefaultStyle.dp
+							Layout.preferredHeight: 17 * mainWindow.dp
 							iconSource: AppIcons.trashCan
-							iconSize: 17 * DefaultStyle.dp
+							iconSize: 17 * mainWindow.dp
 							text: qsTr("Supprimer l'image")
 							color: DefaultStyle.main2_600
 							onClicked: model.core.pictureUri = ""
@@ -105,7 +105,7 @@ AbstractSettingsLayout {
 					}
 					RowLayout {
 						Layout.fillWidth: true
-						spacing: 5 * DefaultStyle.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.alignment: Qt.AlignLeft
 							text: qsTr("Adresse SIP :")
@@ -123,16 +123,16 @@ AbstractSettingsLayout {
 						}
 						IconLabelButton {
 							Layout.alignment: Qt.AlignRight
-							Layout.preferredWidth: 20 * DefaultStyle.dp
-							Layout.preferredHeight: 20 * DefaultStyle.dp
-							iconSize: 24 * DefaultStyle.dp
+							Layout.preferredWidth: 20 * mainWindow.dp
+							Layout.preferredHeight: 20 * mainWindow.dp
+							iconSize: 24 * mainWindow.dp
 							iconSource: AppIcons.copy
 							color: DefaultStyle.main2_600
 							onClicked: UtilsCpp.copyToClipboard(model.core.identityAddress)
 						}
 					}
 					ColumnLayout {
-						spacing: 5 * DefaultStyle.dp
+						spacing: 5 * mainWindow.dp
 						Layout.alignment: Qt.AlignLeft
 						Text {
 							text: qsTr("Nom d’affichage")
@@ -148,7 +148,7 @@ AbstractSettingsLayout {
 					TextField {
 						Layout.alignment: Qt.AlignLeft
 						Layout.fillWidth: true
-						Layout.preferredHeight: 49 * DefaultStyle.dp
+						Layout.preferredHeight: 49 * mainWindow.dp
 						initialText: model.core.displayName
 						backgroundColor: DefaultStyle.grey_100
 						onEditingFinished: {
@@ -163,7 +163,7 @@ AbstractSettingsLayout {
 					}
 					ComboSetting {
 						Layout.fillWidth: true
-						Layout.topMargin: -15 * DefaultStyle.dp
+						Layout.topMargin: -15 * mainWindow.dp
 						entries: account.core.dialPlans
 						propertyName: "dialPlan"
 						propertyOwner: account.core
@@ -176,9 +176,9 @@ AbstractSettingsLayout {
 					}
 					RowLayout {
 						id:mainItem
-						spacing : 20 * DefaultStyle.dp
+						spacing : 20 * mainWindow.dp
 						ColumnLayout {
-							spacing : 5 * DefaultStyle.dp
+							spacing : 5 * mainWindow.dp
 							Text {
 								text: qsTr("Supprimer mon compte")
 								font: Typography.p2l
@@ -200,17 +200,17 @@ AbstractSettingsLayout {
 						Button {
 							background: Item{}
 							Layout.alignment: Qt.AlignRight
-							Layout.rightMargin: 5 * DefaultStyle.dp
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
+							Layout.rightMargin: 5 * mainWindow.dp
+							Layout.preferredWidth: 24 * mainWindow.dp
+							Layout.preferredHeight: 24 * mainWindow.dp
 							contentItem: RowLayout {
 								Layout.alignment: Qt.AlignRight
 								EffectImage {
 									imageSource: AppIcons.trashCan
-									width: 24 * DefaultStyle.dp
-									height: 24 * DefaultStyle.dp
-									Layout.preferredWidth: 24 * DefaultStyle.dp
-									Layout.preferredHeight: 24 * DefaultStyle.dp
+									width: 24 * mainWindow.dp
+									height: 24 * mainWindow.dp
+									Layout.preferredWidth: 24 * mainWindow.dp
+									Layout.preferredHeight: 24 * mainWindow.dp
 									fillMode: Image.PreserveAspectFit
 									colorizationColor: DefaultStyle.danger_500main
 								}
@@ -233,22 +233,22 @@ AbstractSettingsLayout {
 			}
 			Rectangle {
 				Layout.fillWidth: true
-				Layout.topMargin: 16 * DefaultStyle.dp
-				height: 1 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				height: 1 * mainWindow.dp
 				color: DefaultStyle.main2_500main
 			}
 			RowLayout {
 				Layout.fillWidth: true
-				Layout.topMargin: 16 * DefaultStyle.dp
-				spacing: 5 * DefaultStyle.dp
+				Layout.topMargin: 16 * mainWindow.dp
+				spacing: 5 * mainWindow.dp
 				ColumnLayout {
 					Layout.fillWidth: true
-					spacing: 5 * DefaultStyle.dp
+					spacing: 5 * mainWindow.dp
 					ColumnLayout {
-						Layout.preferredWidth: 341 * DefaultStyle.dp
-						Layout.maximumWidth: 341 * DefaultStyle.dp
-						Layout.minimumWidth: 341 * DefaultStyle.dp
-						spacing: 5 * DefaultStyle.dp
+						Layout.preferredWidth: 341 * mainWindow.dp
+						Layout.maximumWidth: 341 * mainWindow.dp
+						Layout.minimumWidth: 341 * mainWindow.dp
+						spacing: 5 * mainWindow.dp
 						Text {
 							Layout.fillWidth: true
 							text: qsTr("Vos appareils")
@@ -271,22 +271,22 @@ AbstractSettingsLayout {
 				RoundedPane {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					// Layout.minimumHeight: account.core.devices.length * 133 * DefaultStyle.dp + (account.core.devices.length - 1) * 15 * DefaultStyle.dp +  2 * 21 * DefaultStyle.dp
-					Layout.rightMargin: 30 * DefaultStyle.dp
-					Layout.topMargin: 20 * DefaultStyle.dp
-					Layout.bottomMargin: 4 * DefaultStyle.dp
-					Layout.leftMargin: 44 * DefaultStyle.dp
-					topPadding: 21 * DefaultStyle.dp
-					bottomPadding: 21 * DefaultStyle.dp
-					leftPadding: 17 * DefaultStyle.dp
-					rightPadding: 17 * DefaultStyle.dp
+					// Layout.minimumHeight: account.core.devices.length * 133 * mainWindow.dp + (account.core.devices.length - 1) * 15 * mainWindow.dp +  2 * 21 * mainWindow.dp
+					Layout.rightMargin: 30 * mainWindow.dp
+					Layout.topMargin: 20 * mainWindow.dp
+					Layout.bottomMargin: 4 * mainWindow.dp
+					Layout.leftMargin: 44 * mainWindow.dp
+					topPadding: 21 * mainWindow.dp
+					bottomPadding: 21 * mainWindow.dp
+					leftPadding: 17 * mainWindow.dp
+					rightPadding: 17 * mainWindow.dp
 					background: Rectangle {
 						anchors.fill: parent
 						color: DefaultStyle.grey_100
-						radius: 15 * DefaultStyle.dp
+						radius: 15 * mainWindow.dp
 					}
 					contentItem: ColumnLayout {
-						spacing: 15 * DefaultStyle.dp
+						spacing: 15 * mainWindow.dp
 						Repeater {
 							id: devices
 							model: AccountDeviceProxy {
@@ -295,25 +295,25 @@ AbstractSettingsLayout {
 							}
 							Control.Control{
 								Layout.fillWidth: true
-								height: 133 * DefaultStyle.dp
-								topPadding: 26 * DefaultStyle.dp
-								bottomPadding: 26 * DefaultStyle.dp
-								rightPadding: 36 * DefaultStyle.dp
-								leftPadding: 33 * DefaultStyle.dp
+								height: 133 * mainWindow.dp
+								topPadding: 26 * mainWindow.dp
+								bottomPadding: 26 * mainWindow.dp
+								rightPadding: 36 * mainWindow.dp
+								leftPadding: 33 * mainWindow.dp
 								
 								background: Rectangle {
 									anchors.fill: parent
 									color: DefaultStyle.grey_0
-									radius: 10 * DefaultStyle.dp
+									radius: 10 * mainWindow.dp
 								}
 								contentItem: ColumnLayout {
 									width: parent.width
-									spacing: 20 * DefaultStyle.dp
+									spacing: 20 * mainWindow.dp
 									RowLayout {
-										spacing: 5 * DefaultStyle.dp
+										spacing: 5 * mainWindow.dp
 										EffectImage {
-											Layout.preferredWidth: 24 * DefaultStyle.dp
-											Layout.preferredHeight: 24 * DefaultStyle.dp
+											Layout.preferredWidth: 24 * mainWindow.dp
+											Layout.preferredHeight: 24 * mainWindow.dp
 											fillMode: Image.PreserveAspectFit
 											colorizationColor: DefaultStyle.main2_600
 											imageSource: modelData.core.userAgent.toLowerCase().includes('ios') | modelData.core.userAgent.toLowerCase().includes('android') ? AppIcons.mobile : AppIcons.desktop
@@ -330,8 +330,8 @@ AbstractSettingsLayout {
 											Layout.alignment: Qt.AlignRight
 											text: qsTr("Supprimer")
 											icon.source: AppIcons.trashCan
-											icon.width: 16 * DefaultStyle.dp
-											icon.height: 16 * DefaultStyle.dp
+											icon.width: 16 * mainWindow.dp
+											icon.height: 16 * mainWindow.dp
 											contentImageColor: DefaultStyle.main1_500_main
 											onClicked: {
 												var mainWin = UtilsCpp.getMainWindow()
@@ -347,15 +347,15 @@ AbstractSettingsLayout {
 										}
 									}
 									RowLayout {
-										spacing: 5 * DefaultStyle.dp
+										spacing: 5 * mainWindow.dp
 										Text {
 											text: qsTr("Dernière connexion:")
 											color: DefaultStyle.main2_600
 											font: Typography.p2
 										}
 										EffectImage {
-											Layout.preferredWidth: 20 * DefaultStyle.dp
-											Layout.preferredHeight: 20 * DefaultStyle.dp
+											Layout.preferredWidth: 20 * mainWindow.dp
+											Layout.preferredHeight: 20 * mainWindow.dp
 											imageSource: AppIcons.calendar
 											colorizationColor: DefaultStyle.main2_600
 											fillMode: Image.PreserveAspectFit
@@ -366,8 +366,8 @@ AbstractSettingsLayout {
 											font: Typography.p1
 										}
 										EffectImage {
-											Layout.preferredWidth: 20 * DefaultStyle.dp
-											Layout.preferredHeight: 20 * DefaultStyle.dp
+											Layout.preferredWidth: 20 * mainWindow.dp
+											Layout.preferredHeight: 20 * mainWindow.dp
 											imageSource: AppIcons.clock
 											colorizationColor: DefaultStyle.main2_600
 											fillMode: Image.PreserveAspectFit

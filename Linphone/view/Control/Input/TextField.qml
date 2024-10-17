@@ -6,18 +6,18 @@ import Linphone
 Control.TextField {
 	id: mainItem
 	property var customWidth
-	width: (customWidth ? customWidth - 1 : 360) * DefaultStyle.dp
-	height: 49 * DefaultStyle.dp
-	leftPadding: 15 * DefaultStyle.dp
-	rightPadding: eyeButton.visible ? 5 * DefaultStyle.dp + eyeButton.width + eyeButton.rightMargin : 15 * DefaultStyle.dp
+	width: (customWidth ? customWidth - 1 : 360) * mainWindow.dp
+	height: 49 * mainWindow.dp
+	leftPadding: 15 * mainWindow.dp
+	rightPadding: eyeButton.visible ? 5 * mainWindow.dp + eyeButton.width + eyeButton.rightMargin : 15 * mainWindow.dp
 	echoMode: (hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 	verticalAlignment: TextInput.AlignVCenter
 	color: isError ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 	placeholderTextColor: DefaultStyle.placeholders
 	font {
 		family: DefaultStyle.defaultFont
-		pixelSize: 14 * DefaultStyle.dp
-		weight: 400 * DefaultStyle.dp
+		pixelSize: 14 * mainWindow.dp
+		weight: 400 * mainWindow.dp
 	}
 	selectByMouse: true
 	activeFocusOnTab: true
@@ -31,8 +31,8 @@ Control.TextField {
 	property color disabledBackgroundColor: DefaultStyle.grey_200
 	property color backgroundBorderColor: DefaultStyle.grey_200
 	property string initialText
-	property int pixelSize: 14 * DefaultStyle.dp
-	property int weight: 400 * DefaultStyle.dp
+	property int pixelSize: 14 * mainWindow.dp
+	property int weight: 400 * mainWindow.dp
 
 	// fill propertyName and propertyOwner to check text validity
 	property string propertyName
@@ -62,7 +62,7 @@ Control.TextField {
 		id: inputBackground
 		visible: mainItem.backgroundVisible
 		anchors.fill: parent
-		radius: 79 * DefaultStyle.dp
+		radius: 79 * mainWindow.dp
 		color: mainItem.enabled ? mainItem.backgroundColor : mainItem.disabledBackgroundColor
 		border.color: mainItem.isError 
 			? DefaultStyle.danger_500main
@@ -74,7 +74,7 @@ Control.TextField {
 	cursorDelegate: Rectangle {
 		id: cursor
 		color: DefaultStyle.main1_500_main
-		width: 1 * DefaultStyle.dp
+		width: 1 * mainWindow.dp
 		anchors.verticalCenter: mainItem.verticalCenter
 
 		SequentialAnimation {
@@ -122,7 +122,7 @@ Control.TextField {
 	Button {
 		id: eyeButton
 		KeyNavigation.left: mainItem
-		property int rightMargin: 15 * DefaultStyle.dp
+		property int rightMargin: 15 * mainWindow.dp
 		z: 1
 		visible: mainItem.hidden
 		checkable: true
@@ -130,8 +130,8 @@ Control.TextField {
 			color: "transparent"
 		}
 		icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
-		width: 20 * DefaultStyle.dp
-		height: 20 * DefaultStyle.dp
+		width: 20 * mainWindow.dp
+		height: 20 * mainWindow.dp
 		icon.width: width
 		icon.height: height
 		anchors.verticalCenter: parent.verticalCenter

@@ -24,6 +24,7 @@
 #include <QtNetworkAuth>
 
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
@@ -42,7 +43,7 @@ public:
 };
 
 QString OAuthHttpServerReplyHandler::callback() const {
-	QString uri;
+	QString uri = SettingsModel::getInstance()->getOIDCRedirectUri();
 	if (uri != "") return QUrl::toPercentEncoding(uri);
 	else return QOAuthHttpServerReplyHandler::callback(); // Return default
 }

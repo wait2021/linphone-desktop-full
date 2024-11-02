@@ -186,6 +186,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToModel(
 	    &AccountModel::removed, [this]() { mAccountModelConnection->invokeToCore([this]() { emit removed(); }); });
 
+	mAccountModelConnection->makeConnectToModel(&AccountModel::callVoiceMailError, [this](QString message) {
+		mAccountModelConnection->invokeToCore([this, message]() { emit callVoiceMailError(message); });
+	});
+
 	// From GUI
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetPictureUri, [this](QString uri) {
 		mAccountModelConnection->invokeToModel([this, uri]() { mAccountModel->setPictureUri(uri); });
@@ -569,4 +573,8 @@ void AccountCore::onLimeServerUrlChanged(QString value) {
 		mLimeServerUrl = value;
 		emit limeServerUrlChanged();
 	}
+}
+
+void AccountCore::callVoiceMail() {
+	mAccountModelConnection->invokeToModel([this]() { mAccountModel->callVoiceMail(); });
 }

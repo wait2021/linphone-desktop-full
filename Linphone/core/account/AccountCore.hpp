@@ -127,6 +127,7 @@ public:
 	QString getConferenceFactoryAddress();
 	QString getAudioVideoConferenceFactoryAddress();
 	QString getLimeServerUrl();
+	Q_INVOKABLE void callVoiceMail();
 
 	void onNotificationsAllowedChanged(bool value);
 	void onMwiServerAddressChanged(QString value);
@@ -168,6 +169,7 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged();
 	void limeServerUrlChanged();
 	void removed();
+	void callVoiceMailError(QString message);
 
 	// Account requests
 	void lSetPictureUri(QString pictureUri);

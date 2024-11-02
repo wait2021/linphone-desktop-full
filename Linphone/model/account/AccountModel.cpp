@@ -22,6 +22,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include <QDebug>
@@ -91,7 +92,7 @@ void AccountModel::setPictureUri(QString uri) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit pictureUriChanged(uri);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {
@@ -140,7 +141,7 @@ void AccountModel::setDisplayName(QString displayName) {
 	// Hack because Account doesn't provide callbacks on updated data
 	// emit displayNameChanged(displayName);
 	auto core = CoreModel::getInstance()->getCore();
-	emit CoreModel::getInstance()->defaultAccountChanged(core, core->getDefaultAccount());
+	emit CoreModel::getInstance() -> defaultAccountChanged(core, core->getDefaultAccount());
 }
 
 void AccountModel::setDialPlan(int index) {
@@ -317,6 +318,22 @@ bool AccountModel::getShowMwi() {
 	auto userData = getUserData(mMonitor);
 	if (userData) return userData->showMwi;
 	else return false;
+}
+
+void AccountModel::callVoiceMail() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto voicemailAddress = mMonitor->getParams()->getVoicemailAddress();
+	QString errorMessage;
+	if (!voicemailAddress || voicemailAddress->asString().empty()) {
+		errorMessage = tr("L'adresse de la messagerie vocale n'est pas définie.");
+	} else {
+		bool success = ToolModel::createCall(Utils::coreStringToAppString(voicemailAddress->asString()), {}, "", {},
+		                                     linphone::MediaEncryption::None, &errorMessage);
+		if (!success) {
+			if (errorMessage.isEmpty()) errorMessage = tr("L'appel à la messagerie n'a pas pu être créé");
+		}
+	}
+	if (!errorMessage.isEmpty()) emit callVoiceMailError(errorMessage);
 }
 
 // UserData (see hpp for explanations)

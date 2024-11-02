@@ -69,6 +69,7 @@ public:
 	int getVoicemailCount();
 	bool getShowMwi();
 	void callVoiceMail();
+	void setVoicemailAddress(QString value);
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -98,6 +99,7 @@ signals:
 	void voicemailCountChanged(int count);
 	void showMwiChanged(bool show);
 	void callVoiceMailError(QString message);
+	void voicemailAddressChanged(QString value);
 
 private:
 	/**Linphone **/

@@ -150,11 +150,12 @@ Control.Control{
 			Layout.preferredHeight: 28 * DefaultStyle.dp
 			visible: mainItem.account.core.showMwi
 			voicemailCount: mainItem.account.core.voicemailCount >= 100 ? '99+' : mainItem.account.core.voicemailCount
-			onClicked: {
-				if (mainItem.account.core.mwiServerAddress.length > 0)
-					UtilsCpp.createCall(mainItem.account.core.mwiServerAddress)
-				else
-					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("L'adresse de la messagerie vocale n'est pas définie."), false)
+			onClicked: mainItem.account.core.callVoiceMail()
+			Connections {
+				target: mainItem.account.core
+				onCallVoiceMailError:function(message) {
+					UtilsCpp.showInformationPopup(qsTr("Erreur"), message, false)
+				}
 			}
 		}
 		Item{Layout.fillWidth: true}

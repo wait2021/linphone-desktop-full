@@ -22,6 +22,7 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include <QDebug>
@@ -317,6 +318,33 @@ bool AccountModel::getShowMwi() {
 	auto userData = getUserData(mMonitor);
 	if (userData) return userData->showMwi;
 	else return false;
+}
+
+void AccountModel::callVoiceMail() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto voicemailAddress = mMonitor->getParams()->getVoicemailAddress();
+	QString errorMessage;
+	if (!voicemailAddress || voicemailAddress->asString().empty()) {
+		errorMessage = tr("L'URI de messagerie vocale n'est pas définie.");
+	} else {
+		bool success = ToolModel::createCall(Utils::coreStringToAppString(voicemailAddress->asString()), {}, "", {},
+		                                     linphone::MediaEncryption::None, &errorMessage);
+		if (!success) {
+			if (errorMessage.isEmpty()) errorMessage = tr("L'appel à la messagerie n'a pas pu aboutir.");
+		}
+	}
+	if (!errorMessage.isEmpty()) emit callVoiceMailError(errorMessage);
+}
+
+void AccountModel::setVoicemailAddress(QString value) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = mMonitor->getParams()->clone();
+	auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	if (address) {
+		params->setVoicemailAddress(address);
+		mMonitor->setParams(params);
+		emit voicemailAddressChanged(value);
+	} else qWarning() << "Unable to set VoicemailAddress, failed creating address from" << value;
 }
 
 // UserData (see hpp for explanations)

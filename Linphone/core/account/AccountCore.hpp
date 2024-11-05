@@ -73,6 +73,7 @@ class AccountCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString limeServerUrl READ getLimeServerUrl WRITE lSetLimeServerUrl NOTIFY limeServerUrlChanged)
 	DECLARE_CORE_GET(int, voicemailCount, VoicemailCount)
 	DECLARE_CORE_GET(bool, showMwi, ShowMwi)
+	DECLARE_CORE_GETSET_MEMBER(QString, voicemailAddress, VoicemailAddress)
 
 public:
 	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
@@ -127,6 +128,7 @@ public:
 	QString getConferenceFactoryAddress();
 	QString getAudioVideoConferenceFactoryAddress();
 	QString getLimeServerUrl();
+	Q_INVOKABLE void callVoiceMail();
 
 	void onNotificationsAllowedChanged(bool value);
 	void onMwiServerAddressChanged(QString value);
@@ -168,6 +170,7 @@ signals:
 	void audioVideoConferenceFactoryAddressChanged();
 	void limeServerUrlChanged();
 	void removed();
+	void callVoiceMailError(QString message);
 
 	// Account requests
 	void lSetPictureUri(QString pictureUri);

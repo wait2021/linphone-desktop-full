@@ -95,6 +95,8 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 			mDialPlan = mAccountModel->dialPlanAsString(dialPlan);
 		}
 	}
+	mVoicemailAddress =
+	    params->getVoicemailAddress() ? Utils::coreStringToAppString(params->getVoicemailAddress()->asString()) : "";
 
 	INIT_CORE_MEMBER(VoicemailCount, mAccountModel)
 	INIT_CORE_MEMBER(ShowMwi, mAccountModel)
@@ -186,6 +188,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	mAccountModelConnection->makeConnectToModel(
 	    &AccountModel::removed, [this]() { mAccountModelConnection->invokeToCore([this]() { emit removed(); }); });
 
+	mAccountModelConnection->makeConnectToModel(&AccountModel::callVoiceMailError, [this](QString message) {
+		mAccountModelConnection->invokeToCore([this, message]() { emit callVoiceMailError(message); });
+	});
+
 	// From GUI
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetPictureUri, [this](QString uri) {
 		mAccountModelConnection->invokeToModel([this, uri]() { mAccountModel->setPictureUri(uri); });
@@ -270,6 +276,8 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
 	                        VoicemailCount)
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, showMwi, ShowMwi)
+	DEFINE_CORE_GETSET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, QString,
+	                           voicemailAddress, VoicemailAddress)
 }
 
 const std::shared_ptr<AccountModel> &AccountCore::getModel() const {
@@ -569,4 +577,8 @@ void AccountCore::onLimeServerUrlChanged(QString value) {
 		mLimeServerUrl = value;
 		emit limeServerUrlChanged();
 	}
+}
+
+void AccountCore::callVoiceMail() {
+	mAccountModelConnection->invokeToModel([this]() { mAccountModel->callVoiceMail(); });
 }

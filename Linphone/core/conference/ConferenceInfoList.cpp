@@ -236,6 +236,10 @@ int ConferenceInfoList::sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSo
 	          [nowDate](const QSharedPointer<QObject> &a, const QSharedPointer<QObject> &b) {
 		          auto l = a.objectCast<ConferenceInfoCore>();
 		          auto r = b.objectCast<ConferenceInfoCore>();
+		          if (!l && !r) {
+			          lCritical() << "[ConferenceInfoList] there are 2 null pointers in list that should not happen!";
+			          return false;
+		          }
 		          if (!l || !r) { // sort on date
 			          return !l ? nowDate <= r->getDateTimeUtc().date() : l->getDateTimeUtc().date() < nowDate;
 		          } else {

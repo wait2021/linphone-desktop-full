@@ -423,7 +423,6 @@ void App::init() {
 	}
 
 	lInfo() << log().arg("Display server : %1").arg(platformName());
-	DesktopTools::init();
 }
 
 void App::initCore() {
@@ -443,6 +442,8 @@ void App::initCore() {
 		    auto settings = SettingsCore::create();
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings, coreStarted] {
+			    // Initialize DestopTools here to have logs into files in case of errors.
+			    DesktopTools::init();
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
 			    assert(mEngine);

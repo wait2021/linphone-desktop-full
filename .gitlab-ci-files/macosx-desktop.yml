@@ -139,7 +139,7 @@ macosx-codesigning:
 # Deploy - Nightly
 #################################################
 
-macosx-makefile-deploy:
+macosx-deploy:
  stage: deploy
  tags: [ "macos-xcode15" ]
  needs:

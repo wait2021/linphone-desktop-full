@@ -40,9 +40,11 @@ endif()
 ################################################################
 #						CONFIGS
 ################################################################
+
 #if(NOT WIN32)
 #	add_compile_options(-Werror=deprecated-declarations)
 #endif()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")

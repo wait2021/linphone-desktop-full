@@ -10,11 +10,11 @@
 void DesktopTools::init(){
 // Request permissions
 	if([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized) {
-		qDebug() << "Requesting Video permission";
+		qInfo() << "Requesting Video permission";
 		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL) {}];
 	}
 	if([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] != AVAuthorizationStatusAuthorized){
-		qDebug() << "Requesting Audio permission";
+		qInfo() << "Requesting Audio permission";
 		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL) {}];
 	}
 }

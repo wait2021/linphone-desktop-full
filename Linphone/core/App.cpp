@@ -423,6 +423,7 @@ void App::init() {
 	}
 
 	lInfo() << log().arg("Display server : %1").arg(platformName());
+	DesktopTools::init();
 }
 
 void App::initCore() {

@@ -95,6 +95,8 @@
 
 DEFINE_ABSTRACT_OBJECT(App)
 
+using namespace Qt::Literals::StringLiterals;
+
 #ifdef Q_OS_LINUX
 const QString AutoStartDirectory(QDir::homePath().append(QStringLiteral("/.config/autostart/")));
 const QString ApplicationsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/applications/")));
@@ -528,7 +530,7 @@ void App::initCore() {
 					    if (mSettings) setLocale(mSettings->getConfigLocale());
 				    });
 			    }
-			    const QUrl url(u"qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml"_qs);
+			    const QUrl url(u"qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml"_s);
 			    QObject::connect(
 			        mEngine, &QQmlApplicationEngine::objectCreated, this,
 			        [this, url, coreStarted](QObject *obj, const QUrl &objUrl) {

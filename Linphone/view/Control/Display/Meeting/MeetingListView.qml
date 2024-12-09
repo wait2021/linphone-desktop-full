@@ -9,24 +9,86 @@ import UtilsCpp
 ListView {
 	id: mainItem
 	visible: count > 0
+	onVisibleChanged: if (!visible) confInfoProxy.clear()
 	clip: true
 
 	property string searchBarText
 	property bool hoverEnabled: true	
 	property var delegateButtons
-	property ConferenceInfoGui selectedConference: model && currentIndex != -1 ? model.getAt(currentIndex) : null
-	
-	spacing: 8 * DefaultStyle.dp
-	highlightFollowsCurrentItem: true
-	highlightMoveVelocity: 1500
+	property ConferenceInfoGui selectedConference
+	property bool _moveToIndex: false
 
-	onCountChanged: {
-		selectedConference = model && currentIndex != -1 && currentIndex < model.count ? model.getAt(currentIndex) : null
+	signal meetingSelected()
+	onMeetingSelected: {
+		updatePosition()
 	}
-	onCurrentIndexChanged: {
-		selectedConference = model.getAt(currentIndex) || null
+	spacing: 8 * DefaultStyle.dp
+	highlightFollowsCurrentItem: false
+	// highlightMoveVelocity: 1500
+
+	onCountChanged: if(_moveToIndex && count > mainItem.currentIndex){
+		_moveToIndex = false
+		selectIndex(mainItem.currentIndex)
 	}
+
+	function selectIndex(index){
+		if (index < 0) return
+		// confInfoProxy.loadUntil()
+		mainItem.currentIndex = index
+		console.log("select index", currentIndex, index)
+		var item = itemAtIndex(index)
+		confInfoProxy.loadUntil(model.count - 1)
+		if(item){// Item is ready and available
+			mainItem.selectedConference = item && item.itemGui || null
+			item.forceActiveFocus()
+			updatePosition()
+		} else {
+			_moveToIndex = true
+			console.log("NO ITEM")
+		}
+	}
+	
 	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
+
+	function updatePosition(){
+		var item = itemAtIndex(currentIndex)
+		var centerItemPos = 0
+		console.log("update position for item", item, currentIndex)
+		if(item){
+			centerItemPos = item.y + y + item.height/2
+			var centerPos = centerItemPos - height/2
+			mainItem.contentY = Math.max(0, Math.min(centerPos, contentHeight-height, height))
+		} else {
+			console.log("NO ITEM")
+		}
+	}
+	Behavior on contentY{
+		NumberAnimation {
+			duration: 500
+			easing.type: Easing.OutExpo
+		}
+	}
+
+	Keys.onPressed: (event)=> {
+		var direction = (event.key == Qt.Key_Up ? -1 : 1)
+		if(event.key == Qt.Key_Up) {
+			if(currentIndex > 0 ) {
+				selectIndex(mainItem.currentIndex-1)
+				event.accepted = true
+			} else {
+				selectIndex(model.count - 1)
+				event.accepted = true
+			}
+		}else if(event.key == Qt.Key_Down){
+			if(currentIndex < model.count - 1) {
+				selectIndex(currentIndex+1)
+				event.accepted = true
+			} else {
+				selectIndex(0)
+				event.accepted = true
+			}
+		}
+	}
 	
 	model: ConferenceInfoProxy {
 		id: confInfoProxy
@@ -34,10 +96,17 @@ ListView {
 		filterType: ConferenceInfoProxy.None
 		initialDisplayItems: mainItem.height / (63 * DefaultStyle.dp) + 5
 		displayItemsStep: initialDisplayItems/2
-		onConferenceInfoCreated: (index) => {
-			mainItem.currentIndex = index
+		onConferenceInfoCreated: (data) => {
+			console.log("select conf created", data.core.subject)
+			// confInfoProxy.loadUntil(data)
+			mainItem.selectedConference = data
 		}
-		onCurrentDateIndexChanged: (index) => mainItem.currentIndex = index
+		onCurrentConfInfoChanged: (confInfoGui) => {
+			console.log("selected conf changed", confInfoGui)
+			confInfoProxy.loadUntil(confInfoGui)
+			if (confInfoGui.core) console.log("with subject", confInfoGui.core.subject)
+			mainItem.selectedConference = confInfoGui
+		}
 	}
 
 	section {
@@ -62,16 +131,25 @@ ListView {
 		height: 63 * DefaultStyle.dp
 		width: mainItem.width
 		enabled: !isCanceled && haveModel
-		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
-		property var dateTime: !!$modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
+		property ConferenceInfoGui itemGui: $modelData
+		property ConferenceInfoGui previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
+		property var dateTime: itemGui ? itemGui.core.dateTime : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
 		property string dateString:  UtilsCpp.toDateString(dateTime)
 		property string previousDateString: previousItem ? UtilsCpp.toDateString(previousItem.core ? previousItem.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
-		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
-		property var haveModel: !!$modelData && $modelData != undefined && $modelData.core.haveModel || false
-		property bool isCanceled: $modelData?.core.state === LinphoneEnums.ConferenceInfoState.Cancelled || false
+		property var endDateTime: itemGui ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTime()
+		property bool haveModel: itemGui ? itemGui.core.haveModel : false
+		property bool isCanceled: itemGui ? itemGui.core.state === LinphoneEnums.ConferenceInfoState.Cancelled : false
+		property bool isSelected: !itemGui ? !mainItem.selectedConference : mainItem.selectedConference && itemGui.core === mainItem.selectedConference.core
+		onIsSelectedChanged: {
+			if(isSelected) {
+				console.log("select delegate at index", index)
+				// mainItem.currentIndex = index
+				mainItem.selectIndex(index)
+			}
+		}
 		Component.onCompleted: if (!isFirst && dateDay.visible) {
 			height = (63+topOffset)*DefaultStyle.dp
 			delegateIn.anchors.topMargin = topOffset
@@ -141,7 +219,7 @@ ListView {
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
 					radius: 10 * DefaultStyle.dp
 					visible: itemDelegate.haveModel || itemDelegate.activeFocus
-					color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.grey_0
+					color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
 					ColumnLayout {
 						anchors.fill: parent
 						anchors.left: parent.left
@@ -156,7 +234,7 @@ ListView {
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
 							Text {
-								text: $modelData? $modelData.core.subject : ""
+								text: itemGui? itemGui.core.subject : ""
 								Layout.fillWidth: true
 								maximumLineCount: 1
 								font {
@@ -203,8 +281,9 @@ ListView {
 					cursorShape: Qt.PointingHandCursor
 					visible: itemDelegate.haveModel
 					onClicked: {
-						mainItem.currentIndex = index
+						confInfoProxy.setCurrentConfInfo(itemGui)
 						itemDelegate.forceActiveFocus()
+						mainItem.meetingSelected()
 					}
 				}
 			}

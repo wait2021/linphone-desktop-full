@@ -32,27 +32,27 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	connect(
 	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
 	    [this] {
-		    setCurrentDateIndex(getCurrentDateIndex());
+		    qDebug() << "have current date changed =========================";
+		    auto currentConfInfo = getCurrentDateConfInfo();
+		    setCurrentConfInfo(currentConfInfo);
 		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
 		    sortModel->invalidate();
 	    },
 	    Qt::QueuedConnection);
 	connect(
-	    App::getInstance(), &App::currentDateChanged, this, [this] { setCurrentDateIndex(getCurrentDateIndex()); },
+	    App::getInstance(), &App::currentDateChanged, this, [this] { setCurrentConfInfo(getCurrentDateConfInfo()); },
 	    Qt::QueuedConnection);
 	connect(
 	    mList.get(), &ConferenceInfoList::confInfoInserted, this,
-	    [this](int index, ConferenceInfoGui *data) {
-		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
-		    if (sortModel) {
-			    auto proxyIndex = sortModel->mapFromSource(mList->index(index, 0)).row();
-			    if (proxyIndex >= getMaxDisplayItems()) setMaxDisplayItems(proxyIndex + 1);
-			    emit conferenceInfoCreated(proxyIndex);
-		    }
-	    },
-	    Qt::QueuedConnection);
-	connect(mList.get(), &ConferenceInfoList::initialized, this,
-	        [this] { setCurrentDateIndex(getCurrentDateIndex()); });
+	    [this](int index, ConferenceInfoGui *data) { emit conferenceInfoCreated(data); }, Qt::QueuedConnection);
+	connect(mList.get(), &ConferenceInfoList::initialized, this, [this] {
+		qDebug() << "initialized =========================";
+		auto currentConfInfo = getCurrentDateConfInfo();
+		// auto confIndex = loadUntil(currentConfInfo);
+		setCurrentConfInfo(currentConfInfo);
+		// force emitting on initialized to handle dummy item which is nullptr
+		// emit currentConfInfoChanged(currentConfInfo);
+	});
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {
@@ -90,19 +90,44 @@ bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const 
 	}
 }
 
-int ConferenceInfoProxy::getCurrentDateIndex() const {
-	auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
-	auto modelIndex = mList->getCurrentDateIndex();
-	auto proxyIndex = sortModel->mapFromSource(mList->index(modelIndex, 0)).row();
-	return proxyIndex;
+void ConferenceInfoProxy::clear() {
+	mList->clearData();
 }
 
-void ConferenceInfoProxy::setCurrentDateIndex(int index) {
-	if (mCurrentDateIndex != index) {
-		if (index >= mMaxDisplayItems) setMaxDisplayItems(index + 1);
-		mCurrentDateIndex = index;
-		emit currentDateIndexChanged(index);
+ConferenceInfoGui *ConferenceInfoProxy::getCurrentDateConfInfo() const {
+	auto confInfoCore = mList->getCurrentDateConfInfo();
+	if (confInfoCore) qDebug() << "current is" << confInfoCore->getSubject();
+	else qDebug() << "current is dummy";
+	return new ConferenceInfoGui(confInfoCore);
+}
+
+void ConferenceInfoProxy::setCurrentConfInfo(ConferenceInfoGui *confInfoGui) {
+	if (mCurrentConfInfo != confInfoGui->getCore()) {
+		mCurrentConfInfo = confInfoGui->getCore();
+		emit currentConfInfoChanged(confInfoGui);
 	}
+}
+
+int ConferenceInfoProxy::loadUntil(ConferenceInfoGui *confInfo) {
+	auto confInfoList = getListModel<ConferenceInfoList>();
+	if (confInfoList) {
+		int listIndex = -1;
+		confInfoList->get(confInfo ? confInfo->getCore() : nullptr, &listIndex);
+		qDebug() << "list index" << listIndex;
+		if (listIndex != -1) {
+			listIndex =
+			    dynamic_cast<SortFilterList *>(sourceModel())->mapFromSource(confInfoList->index(listIndex, 0)).row();
+			qDebug() << "proxy index" << listIndex << mMaxDisplayItems;
+			if (mMaxDisplayItems < listIndex) setMaxDisplayItems(mMaxDisplayItems + mDisplayItemsStep);
+		}
+		return listIndex;
+	}
+	return -1;
+}
+
+void ConferenceInfoProxy::loadUntil(int i) {
+	qDebug() << "max display" << mMaxDisplayItems << "i" << i;
+	if (mMaxDisplayItems < i) setMaxDisplayItems(i + 1);
 }
 
 bool ConferenceInfoProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,

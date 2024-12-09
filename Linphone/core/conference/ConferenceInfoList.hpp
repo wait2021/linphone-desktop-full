@@ -46,6 +46,7 @@ public:
 	void updateHaveCurrentDate();
 
 	int getCurrentDateIndex();
+	QSharedPointer<ConferenceInfoCore> getCurrentDateConfInfo();
 
 	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo);
 	void connectItem(QSharedPointer<ConferenceInfoCore> confInfoCore);

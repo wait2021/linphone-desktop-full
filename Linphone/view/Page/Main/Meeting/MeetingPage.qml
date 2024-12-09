@@ -26,7 +26,7 @@ AbstractMainPage {
 
 	onSelectedConferenceChanged: {
 		overridenRightPanelStackView.clear()
-		if (selectedConference && selectedConference.core.haveModel) {
+		if (selectedConference.core && selectedConference.core.haveModel) {
 			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem != meetingDetail) overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
 		}
 	}
@@ -579,7 +579,7 @@ AbstractMainPage {
 						}
 						Text {
 							Layout.fillWidth: true
-							text: mainItem.selectedConference ? mainItem.selectedConference.core.subject : ""
+							text: mainItem.selectedConference ? mainItem.selectedConference.core?.subject : ""
 							maximumLineCount: 1
 							font {
 								pixelSize: 20 * DefaultStyle.dp
@@ -591,7 +591,7 @@ AbstractMainPage {
 						}
 						Button {
 							id: editButton
-							property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
+							property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
 							visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -622,8 +622,8 @@ AbstractMainPage {
 								textColor: DefaultStyle.danger_500main
 								contentImageColor: DefaultStyle.danger_500main
 								inversedColors: true
-								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core.organizerAddress)
-								property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference.core.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
+								property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
 								icon.source: AppIcons.trashCan
 								icon.width: 24 * DefaultStyle.dp
 								icon.height: 24 * DefaultStyle.dp
@@ -670,7 +670,7 @@ AbstractMainPage {
 								id: linkButton
 								Layout.fillWidth: true
 								font.bold: shadowEnabled
-								text: mainItem.selectedConference ? mainItem.selectedConference.core.uri : ""
+								text: mainItem.selectedConference ? mainItem.selectedConference.core?.uri : ""
 								textSize: 14 * DefaultStyle.dp
 								textWeight: 400 * DefaultStyle.dp
 								underline: true
@@ -719,10 +719,10 @@ AbstractMainPage {
 							}
 							Text {
 								text: mainItem.selectedConference
-										? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTimeUtc) 
-										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTimeUtc) 
+										? UtilsCpp.toDateString(mainItem.selectedConference.core?.dateTimeUtc) 
+										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core?.dateTimeUtc) 
 										+ " - " 
-										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
+										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core?.endDateTime)
 										: ''
 								font {
 									pixelSize: 14 * DefaultStyle.dp
@@ -738,7 +738,7 @@ AbstractMainPage {
 								source: AppIcons.globe
 							}
 							Text {
-								text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
+								text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core?.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
 									pixelSize: 14 * DefaultStyle.dp
 									capitalization: Font.Capitalize
@@ -748,7 +748,7 @@ AbstractMainPage {
 					}
 				}
 				Section {
-					visible: mainItem.selectedConference && mainItem.selectedConference.core.description.length != 0
+					visible: mainItem.selectedConference && mainItem.selectedConference.core?.description.length != 0
 					content: RowLayout {
 						spacing: 8 * DefaultStyle.dp
 						EffectImage {
@@ -758,7 +758,7 @@ AbstractMainPage {
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core.description : ""
+							text: mainItem.selectedConference ? mainItem.selectedConference.core?.description : ""
 							Layout.fillWidth: true
 							font {
 								pixelSize: 14 * DefaultStyle.dp
@@ -779,10 +779,10 @@ AbstractMainPage {
 						Avatar {
 							Layout.preferredWidth: 45 * DefaultStyle.dp
 							Layout.preferredHeight: 45 * DefaultStyle.dp
-							_address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
+							_address: mainItem.selectedConference ? mainItem.selectedConference.core?.organizerAddress : ""
 						}
 						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core.organizerName : ""
+							text: mainItem.selectedConference ? mainItem.selectedConference.core?.organizerName : ""
 							font {
 								pixelSize: 14 * DefaultStyle.dp
 								capitalization: Font.Capitalize
@@ -807,7 +807,7 @@ AbstractMainPage {
 							id: participantList
 							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
 							Layout.fillWidth: true
-							model: mainItem.selectedConference ? mainItem.selectedConference.core.participants : []
+							model: mainItem.selectedConference ? mainItem.selectedConference.core?.participants : []
 							clip: true
 							delegate: RowLayout {
 								height: 56 * DefaultStyle.dp
@@ -828,7 +828,7 @@ AbstractMainPage {
 								}
 								Text {
 									text: qsTr("Organizer")
-									visible: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress === modelData.address
+									visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress === modelData.address
 									color: DefaultStyle.main2_400
 									font {
 										pixelSize: 12 * DefaultStyle.dp
@@ -841,7 +841,7 @@ AbstractMainPage {
 				}
 				Button {
 					id: joinButton
-					visible: mainItem.selectedConference && mainItem.selectedConference.core.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+					visible: mainItem.selectedConference && mainItem.selectedConference.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
 					Layout.fillWidth: true
 					text: qsTr("Rejoindre la réunion")
 					topPadding: 11 * DefaultStyle.dp

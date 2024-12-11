@@ -155,11 +155,16 @@ ColumnLayout {
 		}
 	}
 	Button {
+		Layout.alignment: Qt.AlignHCenter
 		visible: mainItem.screenSharingAvailable
 		enabled: windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing
 					? qsTr("Stop")
 					: qsTr("Partager")
 		onClicked: mainItem.conference.core.lToggleScreenSharing()
+		leftPadding: 20 * DefaultStyle.dp
+		rightPadding: 20 * DefaultStyle.dp
+		topPadding: 11 * DefaultStyle.dp
+		bottomPadding: 11 * DefaultStyle.dp
 	}
 }

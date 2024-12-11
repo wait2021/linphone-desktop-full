@@ -85,7 +85,11 @@ AbstractWindow {
 	}
 	
 	function endCall(callToFinish) {
-		if (callToFinish) callToFinish.core.lTerminate()
+		if (callToFinish) {
+			if (callToFinish && callToFinish.conference && callToFinish.conference.core.isScreenSharingEnabled)
+				callToFinish.conference.core.lToggleScreenSharing()
+			callToFinish.core.lTerminate()
+		}
 		// var mainWin = UtilsCpp.getMainWindow()
 		// mainWin.goToCallHistory()
 	}

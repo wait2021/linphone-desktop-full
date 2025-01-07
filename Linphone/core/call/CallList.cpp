@@ -210,6 +210,7 @@ void CallList::onStateChanged() {
 			}
 			sharedCall->disconnect(this);
 			remove(sharedCall);
+			call->deleteLater();
 			break;
 		}
 		default: {

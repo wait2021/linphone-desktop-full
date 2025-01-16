@@ -101,11 +101,24 @@ AbstractMainPage {
 			anchors.leftMargin: 45 * DefaultStyle.dp
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
+			
+			property var setFocusAtEnd
+			
 			clip: true
 			initialItem: historyListItem
 			focus: true
+			
 			onActiveFocusChanged: if(activeFocus){
 				currentItem.forceActiveFocus()
+			}
+			
+			onBusyChanged: if( !busy && setFocusAtEnd) {
+							   setFocusAtEnd.forceActiveFocus()
+							   setFocusAtEnd = undefined
+							}
+			function doPop(setFocus){
+				setFocusAtEnd = setFocus
+				listStackView.pop()
 			}
 		}
 
@@ -457,8 +470,7 @@ AbstractMainPage {
 					KeyNavigation.down: listStackView
 					onClicked: {
 						console.debug("[CallPage]User: return to call history")
-						listStackView.pop()
-						listStackView.forceActiveFocus()
+						listStackView.doPop(listStackView)
 					}
 				}
 				Text {
@@ -531,8 +543,7 @@ AbstractMainPage {
 					KeyNavigation.right: groupCallButton
 					KeyNavigation.left: groupCallButton
 					onClicked: {
-						listStackView.pop()
-						titleLoader.item.forceActiveFocus()
+						listStackView.doPop(titleLoader.item)
 					}
 				}
 				ColumnLayout {

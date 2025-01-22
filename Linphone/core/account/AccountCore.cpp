@@ -141,8 +141,7 @@ AccountCore::AccountCore(const AccountCore &accountCore) {
 }
 
 void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
-	mAccountModelConnection = QSharedPointer<SafeConnection<AccountCore, AccountModel>>(
-	    new SafeConnection<AccountCore, AccountModel>(me, mAccountModel));
+	mAccountModelConnection = SafeConnection<AccountCore, AccountModel>::create(me, mAccountModel);
 	mAccountModelConnection->makeConnectToModel(
 	    &AccountModel::registrationStateChanged, [this](const std::shared_ptr<linphone::Account> &account,
 	                                                    linphone::RegistrationState state, const std::string &message) {
@@ -229,16 +228,15 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 		mAccountModelConnection->invokeToModel([this, uri]() { mAccountModel->setPictureUri(uri); });
 	});
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDefaultAccount, [this]() {
-		mAccountModelConnection->invokeToModel([this]() { mAccountModel->setDefault(); });
+		mAccountModelConnection->invokeToModel([this, model = mAccountModel]() { model->setDefault(); });
 	});
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lResetMissedCalls, [this]() {
-		mAccountModelConnection->invokeToModel([this]() { mAccountModel->resetMissedCallsCount(); });
+		mAccountModelConnection->invokeToModel([this, model = mAccountModel]() { model->resetMissedCallsCount(); });
 	});
 	mAccountModelConnection->makeConnectToCore(&AccountCore::lRefreshNotifications, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->refreshUnreadNotifications(); });
 	});
-	mCoreModelConnection = QSharedPointer<SafeConnection<AccountCore, CoreModel>>(
-	    new SafeConnection<AccountCore, CoreModel>(me, CoreModel::getInstance()));
+	mCoreModelConnection = SafeConnection<AccountCore, CoreModel>::create(me, CoreModel::getInstance());
 	mAccountModelConnection->makeConnectToCore(&AccountCore::unreadCallNotificationsChanged, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { CoreModel::getInstance()->unreadNotificationsChanged(); });
 	});

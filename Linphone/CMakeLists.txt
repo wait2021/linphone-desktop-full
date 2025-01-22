@@ -219,4 +219,102 @@ foreach(T ${QT_PACKAGES})
 	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::${T})
 endforeach()
 
+################################################################
+#						CRASHPAD
+################################################################
 
+if (ENABLE_CRASH_HANDLER)
+
+	# Clone required repos
+	######################
+	
+	function(clone_git_repo repo_url dest_dir)
+		if(NOT EXISTS ${dest_dir})
+			execute_process(
+				COMMAND git clone ${repo_url} ${dest_dir}
+				RESULT_VARIABLE result
+				WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+			)
+			if(result)
+				message(FATAL_ERROR "Failed to clone repository: ${repo_url}")
+			else()
+				message(STATUS "Repository cloned successfully: ${repo_url}")
+			endif()
+		else()
+        	message(STATUS "Repository already cloned: ${dest_dir}")
+    	endif()
+	endfunction()
+	
+	#clone_git_repo("https://gn.googlesource.com/gn" "${CMAKE_BINARY_DIR}/gn")
+	clone_git_repo("https://chromium.googlesource.com/chromium/tools/depot_tools.git" "${CMAKE_BINARY_DIR}/depot_tools")
+	#clone_git_repo("https://chromium.googlesource.com/crashpad/crashpad" "${CMAKE_BINARY_DIR}/crashpad")
+	
+	# Sync crashpad repo content with gclient
+	##########################################
+	
+	execute_process(
+		COMMAND "${CMAKE_BINARY_DIR}/depot_tools/gclient" " config --name=crashpad" "--unmanaged" "https://chromium.googlesource.com/crashpad/crashpad"
+		#&& ${CMAKE_BINARY_DIR}/depot_tools/gclient sync
+		ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
+		RESULT_VARIABLE result
+		OUTPUT_VARIABLE output
+    	ERROR_VARIABLE error
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+	)
+	if(result)
+		message(FATAL_ERROR "Failed fetching craspad with gclient : ${result} ${output} ${error}")
+	endif()
+	
+	
+	# Build crashpad client
+	##########################################
+	execute_process(
+		COMMAND gn gen -C out && ninja -C out
+		ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
+		RESULT_VARIABLE result
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/crashpad
+	)
+	if(result)
+		message(FATAL_ERROR "Failed building crashpad")
+	endif()
+	
+	# Define Crashpad dependencies
+	##############################
+	
+	set(CRASHPAD_LIB_DIR "${CMAKE_SOURCE_DIR}/external/crashpad/out/obj")
+	set(CRASHPAD_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/external/crashpad")
+
+	# Include Crashpad headers
+	##############################
+		
+	target_include_directories(${TARGET_NAME} SYSTEM PRIVATE
+		${CRASHPAD_INCLUDE_DIR}
+		${CRASHPAD_INCLUDE_DIR}/third_party/mini_chromium/mini_chromium
+		${CRASHPAD_INCLUDE_DIR}/out/gen
+	)
+
+	# Add Crashpad libraries
+	##############################
+
+	set(CRASHPAD_LIBRARIES
+		"${CRASHPAD_LIB_DIR}/client/libclient.a"
+		"${CRASHPAD_LIB_DIR}/util/libutil.a"
+		"${CRASHPAD_LIB_DIR}/third_party/mini_chromium/mini_chromium/base/libbase.a"
+		"${CRASHPAD_LIB_DIR}/util/libmig_output.a"
+		# Add more libraries here
+	)
+
+	foreach(lib_path ${CRASHPAD_LIBRARIES})
+		# Create an imported target for each library
+		get_filename_component(lib_name ${lib_path} NAME_WE)  # Get the base name of the file without extension
+		add_library(${lib_name} STATIC IMPORTED)
+		set_target_properties(${lib_name} PROPERTIES
+			IMPORTED_LOCATION ${lib_path}
+		)
+		# Link it to your main target (replace YOUR_TARGET with your actual target name)
+		target_link_libraries(${TARGET_NAME} PRIVATE ${lib_name})
+	endforeach()
+
+	target_link_libraries(${TARGET_NAME} PRIVATE bsm)
+
+endif()

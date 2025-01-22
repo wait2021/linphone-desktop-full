@@ -55,6 +55,9 @@ SettingsModel::SettingsModel() {
 		    if (gstate == linphone::GlobalState::On) { // reached when misc|config-uri is set in config and app starts
 			                                           // and after config is fetched.
 			    notifyConfigReady();
+
+			    int *p = nullptr;
+			    *p = 42; // Causes segmentation fault
 		    }
 	    });
 	QObject::connect(CoreModel::getInstance().get(), &CoreModel::configuringStatus, this,

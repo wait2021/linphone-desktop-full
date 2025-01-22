@@ -22,11 +22,14 @@ FILE *gStream = NULL;
 #define ACCESSBILITY_WORKAROUND
 #include <QAccessible>
 #include <QAccessibleEvent>
+
 void DummyUpdateHandler(QAccessibleEvent *event) {
 }
 void DummyRootObjectHandler(QObject *) {
 }
 #endif
+
+#include <client/crashpad_client.h>
 
 void cleanStream() {
 #ifdef _WIN32
@@ -39,6 +42,28 @@ void cleanStream() {
 }
 
 int main(int argc, char *argv[]) {
+
+	// Set up Crashpad
+	std::vector<std::string> arguments;
+
+	base::FilePath handler_path("/Users/Tof/Desktop/belledonne-communications/master-gitosis/linphone-desktop/external/"
+	                            "crashpad/out/crashpad_handler");
+	base::FilePath database_path("crashes"); // TODO same place as logs.
+	base::FilePath metrics_path("metrics_path");
+
+	std::map<std::string, std::string> annotations;
+	annotations["product"] = "Linphone"; // TODO from CMake
+	annotations["version"] = "1.0.0";    // TODO from CMAKE
+
+	crashpad::CrashpadClient crashpad_client;
+	if (!crashpad_client.StartHandler(handler_path, database_path, metrics_path,
+	                                  "https://files.linphone.org:443/http-file-transfer-server/hft.php", annotations,
+	                                  arguments, true, true, {})) {
+		std::cerr << "Failed to start Crashpad handler. Crashes will not be logged." << std::endl;
+	} else {
+		std::cout << "Started Crashpad handler" << std::endl;
+	}
+
 	/*
 	#if defined _WIN32
 	    // log in console only if launched from console

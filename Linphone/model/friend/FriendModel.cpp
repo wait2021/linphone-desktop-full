@@ -80,6 +80,7 @@ QDateTime FriendModel::getPresenceTimestamp() const {
 }
 
 void FriendModel::setAddress(const std::shared_ptr<linphone::Address> &address) {
+	qWarning() << "LINQT-1482 3 - setAddress" << address->asString();
 	if (!mMonitor) return;
 	if (address) {
 		mMonitor->setAddress(address);
@@ -88,10 +89,15 @@ void FriendModel::setAddress(const std::shared_ptr<linphone::Address> &address) 
 }
 
 std::list<std::shared_ptr<linphone::FriendPhoneNumber>> FriendModel::getPhoneNumbers() const {
+	for (auto &num : mMonitor->getPhoneNumbersWithLabel()) {
+		qWarning() << "LINQT-1482 3 - getPhoneNumbers" << num->getPhoneNumber();
+		if (num) mMonitor->addPhoneNumberWithLabel(num);
+	}
 	return mMonitor->getPhoneNumbersWithLabel();
 }
 
 void FriendModel::appendPhoneNumber(const std::shared_ptr<linphone::FriendPhoneNumber> &number) {
+	qWarning() << "LINQT-1482 1 - addPhoneNumberWithLabel" << number->getPhoneNumber();
 	if (!mMonitor) return;
 	if (number) {
 		mMonitor->addPhoneNumberWithLabel(number);
@@ -101,8 +107,10 @@ void FriendModel::appendPhoneNumber(const std::shared_ptr<linphone::FriendPhoneN
 
 void FriendModel::appendPhoneNumbers(const std::list<std::shared_ptr<linphone::FriendPhoneNumber>> &numbers) {
 	if (!mMonitor) return;
-	for (auto &num : numbers)
+	for (auto &num : numbers) {
+		qWarning() << "LINQT-1482 2 - addPhoneNumberWithLabel" << num->getPhoneNumber();
 		if (num) mMonitor->addPhoneNumberWithLabel(num);
+	}
 	emit phoneNumbersChanged();
 }
 
@@ -131,6 +139,7 @@ std::list<std::shared_ptr<linphone::Address>> FriendModel::getAddresses() const 
 }
 
 void FriendModel::appendAddress(const std::shared_ptr<linphone::Address> &addr) {
+	qWarning() << "LINQT-1482 3 - appendAddress" << addr->asString();
 	if (!mMonitor) return;
 	if (addr) {
 		mMonitor->addAddress(addr);
@@ -140,8 +149,10 @@ void FriendModel::appendAddress(const std::shared_ptr<linphone::Address> &addr) 
 
 void FriendModel::appendAddresses(const std::list<std::shared_ptr<linphone::Address>> &addresses) {
 	if (!mMonitor) return;
-	for (auto &addr : addresses)
+	for (auto &addr : addresses) {
 		if (addr) mMonitor->addAddress(addr);
+		qWarning() << "LINQT-1482 4 - appendAddresses" << addr->asString();
+	}
 	emit addressesChanged();
 }
 

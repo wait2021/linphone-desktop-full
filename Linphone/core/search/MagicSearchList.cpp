@@ -95,6 +95,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 					    auto linphoneFriend = it->getFriend();
 					    bool isStored = false;
 					    if (linphoneFriend) {
+							qWarning() << "LINQT-1482 is linphoneFriend";
 						    isStored =
 						        (ldapContacts->findFriendByAddress(linphoneFriend->getAddress()) != linphoneFriend);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());
@@ -116,6 +117,7 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 						        address->asString())); // linphone Friend object remove specific address.
 						    contacts->append(contact);
 					    } else if (!it->getPhoneNumber().empty()) {
+							qWarning() << "LINQT-1482 searchResultsReceived -> " << (address ? address->asString() : "adress is null");
 						    linphoneFriend = CoreModel::getInstance()->getCore()->createFriend();
 						    linphoneFriend->setAddress(address);
 						    contact = FriendCore::create(linphoneFriend, isStored, it->getSourceFlags());

@@ -95,7 +95,7 @@ public:
 	
 	Q_INVOKABLE bool addOrUpdateAccount (const std::shared_ptr<linphone::Account> &account, const QVariantMap &data);
 	Q_INVOKABLE bool addOrUpdateAccount (const QVariantMap &data);// Create default account and apply data
-	Q_INVOKABLE void removeAccount (const std::shared_ptr<linphone::Account> &account);
+	Q_INVOKABLE void removeAccount (const std::shared_ptr<linphone::Account> &account, bool unregisterFirst);
 	
 	Q_INVOKABLE std::shared_ptr<linphone::Account> createAccount (const QString& assistantFile);
 	
@@ -122,7 +122,8 @@ signals:
 	void primarySipAddressChanged();
 	
 	void accountsChanged();
-	
+	void unregisterFailed();
+
 	void accountSettingsUpdated ();
 	void defaultAccountChanged();
 	void publishPresenceChanged();
@@ -151,13 +152,15 @@ private:
 	QVariantList getAccounts () const;
 	
 	// ---------------------------------------------------------------------------
-	
+
 	void handleRegistrationStateChanged (
 			const std::shared_ptr<linphone::Account> &account,
 			linphone::RegistrationState state
 			);
-	
+	void doRemoveAccount (const std::shared_ptr<linphone::Account> &account);
+
 	QVector<std::shared_ptr<linphone::Account> > mRemovingAccounts;
+	QVector<std::shared_ptr<linphone::Account> > mRemovedAccounts;
 	std::shared_ptr<linphone::Account> mSelectedAccount;
 };
 

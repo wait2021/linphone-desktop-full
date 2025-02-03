@@ -127,6 +127,7 @@ void AccountModel::removeAccount() {
 	                .arg(params && params->getIdentityAddress()
 	                         ? Utils::coreStringToAppString(params->getIdentityAddress()->asString())
 	                         : "Null");
+	if (mMonitor) core->removeAccount(mMonitor);
 }
 
 std::shared_ptr<linphone::Account> AccountModel::getAccount() const {

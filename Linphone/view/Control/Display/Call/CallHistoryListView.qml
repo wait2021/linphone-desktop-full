@@ -11,11 +11,10 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 ListView {
     id: mainItem
     clip: true
-    Layout.fillWidth: true
-    Layout.fillHeight: true
+    
     property SearchBar searchBar
 	property bool loading: false
-	property string searchText: searchBar.text
+	property string searchText: searchBar?.text
 
 	signal resultsReceived()
 
@@ -27,16 +26,14 @@ ListView {
 
     model: CallHistoryProxy {
         id: callHistoryProxy
-        filterText: searchBar.text
+        filterText: mainItem.searchText
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
         initialDisplayItems: Math.max(20, 2 * mainItem.height / (56 * DefaultStyle.dp))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelReset: {
-            console.log("model reset================")
 			mainItem.resultsReceived()
         }
     }
-    cacheBuffer: contentHeight>0 ? contentHeight : 0// cache all items
     flickDeceleration: 10000
     spacing: 10 * DefaultStyle.dp
                                         
@@ -47,10 +44,13 @@ ListView {
             event.accepted = true
         }
     }
+
+    Component.onCompleted: cacheBuffer = Math.max(contentHeight,0)//contentHeight>0 ? contentHeight : 0// cache all items
     // remove binding loop
     onContentHeightChanged: Qt.callLater(function(){
-        mainItem.cacheBuffer = Math.max(contentHeight,0)
+        if (mainItem) mainItem.cacheBuffer = Math?.max(contentHeight,0) || 0
     })
+    
     onActiveFocusChanged: if(activeFocus && currentIndex < 0 && count > 0) currentIndex = 0
     onCountChanged: {
         if(currentIndex < 0 && count > 0){
@@ -68,7 +68,7 @@ ListView {
     
     onAtYEndChanged: {
         if(atYEnd && count > 0){
-                callHistoryProxy.displayMore()
+            callHistoryProxy.displayMore()
         }
     }
     //----------------------------------------------------------------

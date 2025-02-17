@@ -83,7 +83,7 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 		    } else mModelConnection->invokeToCore([this]() { setDefaultAccount(nullptr); });
 	    });
 	mModelConnection->makeConnectToModel(&CoreModel::accountRemoved, [this] { emit lUpdate(); });
-	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(); });
+	mModelConnection->makeConnectToModel(&CoreModel::accountAdded, [this] { emit lUpdate(true); });
 
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::globalStateChanged,

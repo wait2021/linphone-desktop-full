@@ -123,10 +123,6 @@ AbstractWindow {
 		id: mainWindowStackView
 		anchors.fill: parent
 		initialItem: splashScreen
-		Component.onCompleted: {
-			clear()
-			push(splashScreen)
-		}
 	}
 	Component {
 		id: splashScreen
@@ -158,7 +154,8 @@ AbstractWindow {
 			onGoBack: openMainPage()
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-            showBackButton: mainWindow.accountProxy?.haveAccount || false
+            showBackButton: false
+            StackView.onActivated: if (mainWindow.accountProxy?.haveAccount) showBackButton = true
 		}
 	}
 	Component {
@@ -172,7 +169,8 @@ AbstractWindow {
 					mainWindowStackView.pop()
 			}
 			onGoToRegister: mainWindowStackView.replace(registerPage)
-            showBackButton: !SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || mainWindow.accountProxy?.haveAccount
+            showBackButton: false
+            StackView.onActivated: if (!SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || mainWindow.accountProxy?.haveAccount) showBackButton = true
 		}
 	}
 	Component {

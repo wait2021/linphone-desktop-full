@@ -66,6 +66,7 @@ void LoginPage::login(const QString &username,
                       QString domain,
                       LinphoneEnums::TransportType transportType) {
 	setErrorMessage("");
+	//
 	App::postModelAsync([=]() {
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();

@@ -116,6 +116,7 @@ AbstractWindow {
 				mainWindow.accountProxy = this
 				mainWindow.initStackViewItem()
             }
+            onHaveAccountChanged: if (haveAccount) mainWindow.initStackViewItem()
 		}
 	}
 

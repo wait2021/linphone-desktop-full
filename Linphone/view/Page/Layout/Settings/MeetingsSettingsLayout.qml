@@ -48,10 +48,15 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
                 Layout.topMargin: Math.round(12 * DefaultStyle.dp)
 				Layout.preferredWidth: parent.width
-				entries: SettingsCpp.conferenceLayouts
+                model: [
+                    {id: LinphoneEnums.ConferenceLayout.ActiveSpeaker, display_name: qsTr("conference_layout_active_speaker")},
+                    {id: LinphoneEnums.ConferenceLayout.Grid, display_name: qsTr("conference_layout_grid")}
+                ]
+//                entries: SettingsCpp.conferenceLayouts
 				propertyName: "conferenceLayout"
 				propertyOwner: SettingsCpp
-				textRole: 'display_name'
+                textRole: 'display_name'
+                valueRole: "id"
 			}
 		}
 	}

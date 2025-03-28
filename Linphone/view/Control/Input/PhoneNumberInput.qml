@@ -45,6 +45,7 @@ ColumnLayout {
 			RowLayout {
 				anchors.fill: parent
 				CountryIndicatorCombobox {
+                    RectangleTest{anchors.fill: parent}
 					id: combobox
                     implicitWidth: Math.round(110 * DefaultStyle.dp)
 					defaultCallingCode: mainItem.defaultCallingCode

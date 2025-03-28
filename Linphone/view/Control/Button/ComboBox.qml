@@ -8,7 +8,6 @@ Control.ComboBox {
 	id: mainItem
 	// Usage : each item of the model list must be {text: …, img: …}
 	// If string list, only text part of the delegate will be filled
-	// readonly property string currentText: selectedItemText.text
 	property alias listView: listView
 	property string constantImageSource
     property real pixelSize: Typography.p1.pixelSize
@@ -19,24 +18,25 @@ Control.ComboBox {
 	property string flagRole// Specific case if flag is shown (special font)
 
 	onConstantImageSourceChanged: if (constantImageSource)  selectedItemImg.imageSource = constantImageSource
-	onCurrentIndexChanged: {
-		var item = model[currentIndex]
-		if (!item) item = model.getAt(currentIndex)
-		if (!item) return
-		selectedItemText.text = mainItem.textRole
-								? item[mainItem.textRole]
-								: item.text
-									? item.text
-									: item 
-										? item
-										: ""
-		if(mainItem.flagRole) selectedItemFlag.text = item[mainItem.flagRole]
-		selectedItemImg.imageSource = constantImageSource 
-			? constantImageSource 
-			: item.img
-				? item.img
-				: ""
-	}
+    onCurrentIndexChanged: {
+        var item = model[currentIndex]
+        if (!item) item = model.getAt(currentIndex)
+        if (!item) return
+        console.log("select item", item)
+        selectedItemText.text = mainItem.textRole
+                                ? item[mainItem.textRole]
+                                : item.text
+                                    ? item.text
+                                    : item
+                                        ? item
+                                        : ""
+        if(mainItem.flagRole) selectedItemFlag.text = item[mainItem.flagRole]
+        selectedItemImg.imageSource = constantImageSource
+            ? constantImageSource
+            : item.img
+                ? item.img
+                : ""
+    }
 	
 	Keys.onPressed: (event)=>{
 		if(!mainItem.contentItem.activeFocus && (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return)){
@@ -168,7 +168,10 @@ Control.ComboBox {
 				height: mainItem.height
 				// anchors.left: listView.left
 				// anchors.right: listView.right
-				RowLayout{
+                property string img: delegateImg.imageSource
+                property string flag: delegateFlag.text
+                property string text: delegateText.text
+                RowLayout{
 					anchors.fill: parent
 					EffectImage {
 						id: delegateImg
@@ -181,6 +184,7 @@ Control.ComboBox {
 					}
 					
 					Text {
+                        id: delegateFlag
 						Layout.preferredWidth: implicitWidth
                         Layout.leftMargin: delegateImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
 						Layout.alignment: Qt.AlignCenter
@@ -197,21 +201,24 @@ Control.ComboBox {
 								: ""
 					}
 					Text {
+                        id: delegateText
 						Layout.fillWidth: true
                         Layout.leftMargin: delegateImg.visible ? 0 : Math.round(5 * DefaultStyle.dp)
                         Layout.rightMargin: Math.round(20 * DefaultStyle.dp)
 						Layout.alignment: Qt.AlignCenter
-						text: typeof(modelData) != "undefined"
-								? mainItem.textRole
-									? modelData[mainItem.textRole]
-									: modelData.text
-										? modelData.text
-										: modelData
-								: $modelData
-									? mainItem.textRole
-										? $modelData[mainItem.textRole]
-										: $modelData
-									: ""
+                        text: typeof(modelData) != "undefined"
+                                ? mainItem.textRole
+                                    ? modelData[mainItem.textRole]
+                                    : modelData.text
+                                        ? modelData.text
+                                        : modelData
+                                : typeof($modelData) != "undefined"
+                                    ? mainItem.textRole
+                                        ? $modelData[mainItem.textRole]
+                                        : $modelData
+                                    : mainItem.texRole
+                                        ? mainItem.texRole
+                                        : ""
 						elide: Text.ElideRight
 						maximumLineCount: 1
 						wrapMode: Text.WrapAnywhere

@@ -496,6 +496,7 @@ void App::initCore() {
 			    else mCallList->lUpdate();
 			    if (!mSettings) {
 				    mSettings = settings;
+					mSettings->setMediaEncryptions(new MediaEncryptionList());
 				    setLocale(settings->getConfigLocale());
 				    setAutoStart(settings->getAutoStart());
 				    setQuitOnLastWindowClosed(settings->getExitOnClose());

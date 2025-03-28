@@ -18,9 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_CORE_H_
-#define SETTINGS_CORE_H_
 
+#include "core/proxy/AbstractListProxy.hpp"
 #include "model/setting/SettingsModel.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
@@ -28,6 +27,24 @@
 #include <QObject>
 #include <QSettings>
 #include <QVariantMap>
+
+#ifndef MEDIA_ENCRYPTION_LIST_H_
+#define MEDIA_ENCRYPTION_LIST_H_
+
+class MediaEncryptionList : public AbstractListProxy<LinphoneEnums::MediaEncryption> {
+	Q_OBJECT
+public:
+	MediaEncryptionList(QObject *parent = Q_NULLPTR);
+	~MediaEncryptionList();
+
+	Q_INVOKABLE LinphoneEnums::MediaEncryption getAt(const int& index) const;
+	virtual QHash<int, QByteArray> roleNames() const override;
+	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+};
+#endif
+
+#ifndef SETTINGS_CORE_H_
+#define SETTINGS_CORE_H_
 
 class SettingsCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -51,7 +68,7 @@ public:
 	Q_PROPERTY(QVariantList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged)
 	Q_PROPERTY(QVariantList ringerDevices READ getRingerDevices NOTIFY ringerDevicesChanged)
 	Q_PROPERTY(QVariantList conferenceLayouts READ getConferenceLayouts NOTIFY conferenceLayoutsChanged)
-	Q_PROPERTY(QVariantList mediaEncryptions READ getMediaEncryptions NOTIFY mediaEncryptionsChanged)
+	Q_PROPERTY(MediaEncryptionList* mediaEncryptions READ getMediaEncryptions NOTIFY mediaEncryptionsChanged)
 
 	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE setPlaybackGain NOTIFY playbackGainChanged)
 	Q_PROPERTY(float captureGain READ getCaptureGain WRITE setCaptureGain NOTIFY captureGainChanged)
@@ -139,8 +156,8 @@ public:
 	void setRingerDevices(QVariantList devices);
 	QVariantList getConferenceLayouts() const;
 	void setConferenceLayouts(QVariantList layouts);
-	QVariantList getMediaEncryptions() const;
-	void setMediaEncryptions(QVariantList encryptions);
+	MediaEncryptionList* getMediaEncryptions() const;
+	void setMediaEncryptions(MediaEncryptionList* encryptions);
 
 	QVariantMap getCaptureDevice() const;
 	void setCaptureDevice(QVariantMap device);
@@ -302,7 +319,7 @@ private:
 
 	// Security
 	bool mVfsEnabled;
-	QVariantList mMediaEncryptions;
+	QSharedPointer<MediaEncryptionList> mMediaEncryptions;
 	QVariantMap mMediaEncryption;
 	bool mMediaEncryptionMandatory;
 

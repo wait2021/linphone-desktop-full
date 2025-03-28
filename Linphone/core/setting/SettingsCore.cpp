@@ -21,13 +21,46 @@
 #include "SettingsCore.hpp"
 #include "core/App.hpp"
 #include "core/path/Paths.hpp"
-#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
 #include <QUrl>
 #include <QVariant>
 
 DEFINE_ABSTRACT_OBJECT(SettingsCore)
+
+// =============================================================================
+
+MediaEncryptionList::MediaEncryptionList(QObject *parent) {
+	mList = {LinphoneEnums::MediaEncryption::None, LinphoneEnums::MediaEncryption::Srtp,
+						   LinphoneEnums::MediaEncryption::Zrtp, LinphoneEnums::MediaEncryption::Dtls};
+}
+MediaEncryptionList::~MediaEncryptionList(){}
+
+LinphoneEnums::MediaEncryption MediaEncryptionList::getAt(const int& index) const {
+	if (index < mList.size()) {
+		return mList[index];
+	}
+	return {};
+}
+
+QHash<int, QByteArray> MediaEncryptionList::roleNames() const {
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "display_name";
+	roles[Qt::DisplayRole+1] = "id";
+	return roles;
+}
+QVariant MediaEncryptionList::data(const QModelIndex &index, int role) const {
+	if(!checkIndex(index)){
+		return QVariant();
+	}
+	auto encryption = mList.at(index.row());
+	if(role == Qt::DisplayRole){
+		return LinphoneEnums::toString(encryption);
+	} else if(role == Qt::DisplayRole+1) {
+		return QVariant::fromValue(encryption);
+	}
+	return QVariant();
+}
 
 // =============================================================================
 
@@ -63,7 +96,6 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mConferenceLayout =
 	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultConferenceLayout()));
 
-	mMediaEncryptions = LinphoneEnums::mediaEncryptionsToVariant();
 	mMediaEncryption =
 	    LinphoneEnums::toVariant(LinphoneEnums::fromLinphone(settingsModel->getDefaultMediaEncryption()));
 
@@ -444,7 +476,6 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setConferenceLayouts(settingsCore.mConferenceLayouts);
 	setConferenceLayout(settingsCore.mConferenceLayout);
 
-	setMediaEncryptions(settingsCore.mMediaEncryptions);
 	setMediaEncryption(settingsCore.mMediaEncryption);
 
 	setMediaEncryptionMandatory(settingsCore.mMediaEncryptionMandatory);
@@ -571,13 +602,12 @@ void SettingsCore::setConferenceLayouts(QVariantList layouts) {
 	emit conferenceLayoutsChanged(layouts);
 }
 
-QVariantList SettingsCore::getMediaEncryptions() const {
-	return mMediaEncryptions;
+MediaEncryptionList *SettingsCore::getMediaEncryptions() const {
+	return mMediaEncryptions.get();
 }
 
-void SettingsCore::setMediaEncryptions(QVariantList encryptions) {
-	mMediaEncryptions = encryptions;
-	emit mediaEncryptionsChanged(encryptions);
+void SettingsCore::setMediaEncryptions(MediaEncryptionList* encryptions) {
+	mMediaEncryptions = QSharedPointer<MediaEncryptionList>(encryptions);
 }
 
 bool SettingsCore::isMediaEncryptionMandatory() const {

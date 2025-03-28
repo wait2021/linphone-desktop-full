@@ -120,10 +120,18 @@ AbstractSettingsLayout {
 				ComboSetting {
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
-					entries: SettingsCpp.mediaEncryptions
+//                    model: SettingsCpp.mediaEncryptions
+                    // Somehow translations do not work when coming from a QVariantList
+                    model: [
+                        {id: LinphoneEnums.MediaEncryption.None, display_name: qsTr("media_encryption_none")},
+                        {id: LinphoneEnums.MediaEncryption.Srtp, display_name: qsTr("media_encryption_srtp")},
+                        {id: LinphoneEnums.MediaEncryption.Zrtp, display_name: qsTr("media_encryption_zrtp")},
+                        {id: LinphoneEnums.MediaEncryption.Dtls, display_name: qsTr("media_encryption_dtls")}
+                    ]
 					propertyName: "mediaEncryption"
-					textRole: 'display_name'
-                    propertyOwner: SettingsCpp
+                    textRole: "display_name"
+                    valueRole: "id"
+					propertyOwner: SettingsCpp
 				}
 			}
 			SwitchSetting {

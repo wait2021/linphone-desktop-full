@@ -19,6 +19,7 @@ ComboBox {
 		else
 			return Utils.equalObject(entry,propertyOwner[propertyName])
 	})
+    onCurrentIndexChanged: console.log("current index changed =======================", currentIndex)
 	onCurrentValueChanged: {
 		if(propertyOwnerGui) {
 			binding.when = !Utils.equalObject(currentValue,propertyOwnerGui.core[propertyName])

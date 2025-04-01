@@ -122,9 +122,8 @@ void CoreModel::start() {
 	linphoneSearch->setLimitedSearch(true);
 	mMagicSearch = Utils::makeQObject_ptr<MagicSearchModel>(linphoneSearch);
 	mMagicSearch->setSelf(mMagicSearch);
-	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this, [this] {
-		emit magicSearchResultReceived(mMagicSearch->mLastSearch);
-	});
+	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this,
+	        [this] { emit magicSearchResultReceived(mMagicSearch->mLastSearch); });
 }
 // -----------------------------------------------------------------------------
 
@@ -352,10 +351,11 @@ void CoreModel::migrate() {
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
-void CoreModel::searchInMagicSearch(QString filter, int sourceFlags,
-                         LinphoneEnums::MagicSearchAggregation aggregation,
-                         int maxResults) {
-    mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
+void CoreModel::searchInMagicSearch(QString filter,
+                                    int sourceFlags,
+                                    LinphoneEnums::MagicSearchAggregation aggregation,
+                                    int maxResults) {
+	mMagicSearch->search(filter, sourceFlags, aggregation, maxResults);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
@@ -425,6 +425,14 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 	    core->getCallsNb() == 0) { // Disable tones in DND mode if no more calls are running.
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(false);
 	}
+	App::postModelAsync([core]() {
+		for (int i = 0; i < App::getInstance()->getAccountList()->rowCount(); ++i) {
+			auto accountCore = App::getInstance()->getAccountList()->getAt<AccountCore>(i);
+			emit accountCore->lSetPresence(core->getCallsNb() == 0 ? LinphoneEnums::Presence::Online
+			                                                       : LinphoneEnums::Presence::Busy,
+			                               false, false);
+		}
+	});
 	emit callStateChanged(core, call, state, message);
 }
 void CoreModel::onCallStatsUpdated(const std::shared_ptr<linphone::Core> &core,

@@ -139,6 +139,9 @@ public:
 	Q_INVOKABLE static QString getFileChecksum(const QString &filePath);
 	Q_INVOKABLE QList<QVariant> append(const QList<QVariant> a, const QList<QVariant> b);
 	Q_INVOKABLE QString getAddressToDisplay(QVariantList addressList, QString filter, QString defaultAddress);
+	Q_INVOKABLE static QColor getPresenceColor(LinphoneEnums::Presence presence);
+	Q_INVOKABLE static QUrl getPresenceIcon(LinphoneEnums::Presence presence);
+	Q_INVOKABLE static QString getPresenceStatus(LinphoneEnums::Presence presence);
 
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
@@ -189,6 +192,12 @@ public:
 	// CLI
 
 	static void runCommandLine(QString command);
+
+	// Presence
+
+	static QColor getDefaultStyleColor(const QString &colorName);
+	static QUrl getAppIcon(const QString &iconName);
+	static QUrl getRegistrationStateIcon(LinphoneEnums::RegistrationState state);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

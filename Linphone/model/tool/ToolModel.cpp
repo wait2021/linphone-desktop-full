@@ -120,20 +120,18 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &
 	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
 	if (!defaultFriendList) return nullptr;
 	auto linphoneAddr = ToolModel::interpretUrl(address);
-	if (linphoneAddr)
-		return ToolModel::findFriendByAddress(linphoneAddr);
-	else
-		return nullptr;
+	if (linphoneAddr) return ToolModel::findFriendByAddress(linphoneAddr);
+	else return nullptr;
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr<linphone::Address> linphoneAddr) {
 	auto friendsManager = FriendsManager::getInstance();
 	QString key = Utils::coreStringToAppString(linphoneAddr->asStringUriOnly());
 	if (friendsManager->isInKnownFriends(key)) {
-//		qDebug() << key << "have been found in known friend, return it";
+		//		qDebug() << key << "have been found in known friend, return it";
 		return friendsManager->getKnownFriendAtKey(key);
-	} else 	if (friendsManager->isInUnknownFriends(key)) {
-//		qDebug() << key << "have been found in unknown friend, return it";
+	} else if (friendsManager->isInUnknownFriends(key)) {
+		//		qDebug() << key << "have been found in unknown friend, return it";
 		return friendsManager->getUnknownFriendAtKey(key);
 	}
 	auto f = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
@@ -141,20 +139,21 @@ std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(std::shared_ptr
 		if (friendsManager->isInUnknownFriends(key)) {
 			friendsManager->removeUnknownFriend(key);
 		}
-//		qDebug() << "found friend, add to known map";
+		//		qDebug() << "found friend, add to known map";
 		friendsManager->appendKnownFriend(linphoneAddr, f);
 	}
 	if (!f) {
 		if (friendsManager->isInOtherAddresses(key)) {
-//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found, return";
+			//			qDebug() << "A magic search has already be done for address" << key << "and nothing was found,
+			// return";
 			return nullptr;
 		}
 		friendsManager->appendOtherAddress(key);
-//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
+		//		qDebug() << "Couldn't find friend" << linphoneAddr->asStringUriOnly() << "in core, use magic search";
 		CoreModel::getInstance()->searchInMagicSearch(Utils::coreStringToAppString(linphoneAddr->asStringUriOnly()),
-														(int)linphone::MagicSearch::Source::LdapServers
-														| (int)linphone::MagicSearch::Source::RemoteCardDAV
-														, LinphoneEnums::MagicSearchAggregation::Friend, 50);
+		                                              (int)linphone::MagicSearch::Source::LdapServers |
+		                                                  (int)linphone::MagicSearch::Source::RemoteCardDAV,
+		                                              LinphoneEnums::MagicSearchAggregation::Friend, 50);
 	}
 	return f;
 }
@@ -466,4 +465,86 @@ QString ToolModel::computeUserAgent(const std::shared_ptr<linphone::Config> &con
 	    .arg(Utils::getOsProduct())
 	    .arg(qVersion())
 	    .remove("'");
+}
+
+// Presence mapping from SDK PresenceModel/RFC 3863 <-> Linphone UI (5 statuses Online, Offline, Away, Busy, DND).
+// Online 	= Basic Status open with no activity
+// Busy 	= Basic Status open with activity Busy and description busy
+// Away 	= Basic Status open with activity Away and description away
+// Offline 	= Basic Status open with activity PermanentAbsence and description offline
+// DND 		= Basic Status open with activity Other and description dnd
+// Note : close status on the last 2 items would be preferrable, but they currently trigger multiple tuple NOTIFY from
+// flexisip presence server Note 2 : close status with no activity triggers an unsubscribe.
+
+LinphoneEnums::Presence
+ToolModel::corePresenceModelToAppPresence(std::shared_ptr<const linphone::PresenceModel> presenceModel) {
+	if (!presenceModel) {
+		lWarning() << sLog().arg("presence model is null.");
+		return LinphoneEnums::Presence::Undefined;
+	}
+
+	auto presenceActivity = presenceModel->getActivity();
+	if (presenceModel->getBasicStatus() == linphone::PresenceBasicStatus::Open) {
+		if (!presenceActivity) return LinphoneEnums::Presence::Online;
+		else if (presenceActivity->getType() == linphone::PresenceActivity::Type::Busy)
+			return LinphoneEnums::Presence::Busy;
+		else if (presenceActivity->getType() == linphone::PresenceActivity::Type::Away)
+			return LinphoneEnums::Presence::Away;
+		else if (presenceActivity->getType() == linphone::PresenceActivity::Type::PermanentAbsence)
+			return LinphoneEnums::Presence::Offline;
+		else if (presenceActivity->getType() == linphone::PresenceActivity::Type::Other)
+			return LinphoneEnums::Presence::DoNotDisturb;
+		else {
+			lWarning() << sLog().arg("unhandled core activity type : ") << (int)presenceActivity->getType();
+			return LinphoneEnums::Presence::Undefined;
+		}
+	}
+	return LinphoneEnums::Presence::Undefined;
+}
+
+std::shared_ptr<linphone::PresenceModel> ToolModel::appPresenceToCorePresenceModel(LinphoneEnums::Presence presence,
+                                                                                   QString presenceNote) {
+	auto presenceModel = CoreModel::getInstance()->getCore()->createPresenceModel();
+
+	switch (presence) {
+		case LinphoneEnums::Presence::Online:
+			presenceModel->setBasicStatus(linphone::PresenceBasicStatus::Open);
+			break;
+		case LinphoneEnums::Presence::Busy:
+			presenceModel->setBasicStatus(linphone::PresenceBasicStatus::Open);
+			presenceModel->setActivity(linphone::PresenceActivity::Type::Busy, "busy");
+			break;
+		case LinphoneEnums::Presence::Away:
+			presenceModel->setBasicStatus(linphone::PresenceBasicStatus::Open);
+			presenceModel->setActivity(linphone::PresenceActivity::Type::Away, "away");
+			break;
+		case LinphoneEnums::Presence::Offline:
+			presenceModel->setBasicStatus(linphone::PresenceBasicStatus::Open);
+			presenceModel->setActivity(linphone::PresenceActivity::Type::PermanentAbsence, "offline");
+			break;
+		case LinphoneEnums::Presence::DoNotDisturb:
+			presenceModel->setBasicStatus(linphone::PresenceBasicStatus::Open);
+			presenceModel->setActivity(linphone::PresenceActivity::Type::Other, "dnd");
+			break;
+		case LinphoneEnums::Presence::Undefined:
+			lWarning() << sLog().arg("Trying to build PresenceModel from Undefined presence ");
+			return nullptr;
+	}
+
+	if (!presenceNote.isEmpty()) {
+		auto note = CoreModel::getInstance()->getCore()->createPresenceNote(
+		    Utils::appStringToCoreString(presenceNote), Utils::appStringToCoreString(QLocale().name().left(2)));
+		auto service = presenceModel->getNthService(0);
+		service->addNote(note);
+	}
+	return presenceModel;
+}
+
+std::string ToolModel::configAccountSection(const std::shared_ptr<linphone::Account> &account) {
+	int count = 0;
+	for (auto item : CoreModel::getInstance()->getCore()->getAccountList()) {
+		if (account == item) return "proxy_" + std::to_string(count);
+		count++;
+	}
+	return "account";
 }

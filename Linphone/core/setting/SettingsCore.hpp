@@ -80,7 +80,8 @@ public:
 	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
 	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
-	Q_PROPERTY(bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
+	Q_PROPERTY(
+	    bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
 
 	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
@@ -223,6 +224,8 @@ public:
 	DECLARE_CORE_MEMBER(int, shortcutCount, ShortcutCount)
 	DECLARE_CORE_MEMBER(QVariantList, shortcuts, Shortcuts)
 	DECLARE_CORE_GETSET_MEMBER(bool, callToneIndicationsEnabled, CallToneIndicationsEnabled)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableCommandLine, DisableCommandLine)
+	DECLARE_CORE_GETSET_MEMBER(QString, commandLine, CommandLine)
 
 signals:
 
@@ -345,7 +348,7 @@ private:
 	QSettings mAppSettings;
 	QSharedPointer<SafeConnection<SettingsCore, SettingsModel>> mSettingsModelConnection;
 
-	//Account
+	// Account
 	QString mDefaultDomain;
 	bool mShowAccountDevices = false;
 

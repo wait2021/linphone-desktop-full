@@ -40,6 +40,7 @@
 #include <QDesktopServices>
 #include <QHostAddress>
 #include <QImageReader>
+#include <QProcess>
 #include <QQuickWindow>
 #include <QRandomGenerator>
 #include <QRegularExpression>
@@ -304,9 +305,9 @@ QString Utils::formatDate(const QDateTime &date, bool includeTime, QString forma
 	//: "Hier
 	else if (date.date() == QDate::currentDate().addDays(-1)) dateDay = tr("yesterday");
 	else {
-		if(format.isEmpty()) format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year()
-		                     ? "dd MMMM"
-		                     : "dd MMMM yyyy";
+		if (format.isEmpty())
+			format = date.date().year() == QDateTime::currentDateTime(date.timeZone()).date().year() ? "dd MMMM"
+			                                                                                         : "dd MMMM yyyy";
 		dateDay = App::getInstance()->getLocale().toString(date.date(), format);
 	}
 	if (!includeTime) return dateDay;
@@ -1473,4 +1474,24 @@ Utils::createFriendDeviceVariant(const QString &name, const QString &address, Li
 	map.insert("address", address);
 	map.insert("securityLevel", QVariant::fromValue(level));
 	return map;
+}
+
+// CLI
+
+void Utils::runCommandLine(const QString command) {
+	QStringList arguments;
+	QString program;
+
+#ifdef Q_OS_WIN
+	QProcess process;
+	program = "cmd.exe";
+	arguments = {"/C", command};
+	process.setCreateProcessArgumentsModifier(
+	    [](QProcess::CreateProcessArguments *args) { args->flags |= CREATE_NO_WINDOW; });
+	process.startDetached(program, arguments);
+#elif defined(Q_OS_MACOS) || defined(Q_OS_LINUX)
+	QProcess::startDetached("/bin/sh", {"-c", command});
+#else
+	lWarning() << "Unsupported OS!";
+#endif
 }

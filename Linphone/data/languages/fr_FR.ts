@@ -1066,6 +1066,12 @@
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
         <translation>Autoriser la vidéo</translation>
     </message>
+	<message>
+		<location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="77"/>
+		<source>settings_calls_command_line_title</source>
+		<extracomment>&quot;Redirection vers outil externe lors d'un appel entrant&quot;</extracomment>
+		<translation>Redirection vers outil externe lors d'un appel entrant.</translation>
+	</message>
 </context>
 <context>
     <name>CallStatistics</name>

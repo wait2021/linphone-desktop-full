@@ -46,7 +46,7 @@ void ConferenceListener::onActiveSpeakerParticipantDevice(const std::shared_ptr<
 	emit activeSpeakerParticipantDevice(participantDevice);
 }
 
-void ConferenceListener::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
+void ConferenceListener::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<linphone::Participant> & participant){
 	qDebug() << "onParticipantAdded: " << participant->getAddress()->asString().c_str();
 	emit participantAdded(participant);
 }
@@ -54,7 +54,7 @@ void ConferenceListener::onParticipantRemoved(const std::shared_ptr<linphone::Co
 	qDebug() << "onParticipantRemoved";
 	emit participantRemoved(participant);
 }
-void ConferenceListener::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+void ConferenceListener::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "onParticipantDeviceAdded";
 	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	if( conference->getMe()->getDevices().size() > 1)

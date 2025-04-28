@@ -170,7 +170,6 @@ static void cliInitiateConference(QHash<QString, QString> &args) {
 		}
 	}
 
-	shared_ptr<linphone::Conference> conference = core->getConference();
 	const QString id = args["conference-id"];
 
 	auto updateCallsWindow = []() {
@@ -183,23 +182,20 @@ static void cliInitiateConference(QHash<QString, QString> &args) {
 		} else App::smartShowWindow(callsWindow);
 	};
 
+	shared_ptr<linphone::Conference> conference = core->searchConferenceByIdentifier(Utils::appStringToCoreString(id));
 	if (conference) {
-		if (conference->getId() == Utils::appStringToCoreString(id)) {
-			qInfo() << QStringLiteral("Conference `%1` already exists.").arg(id);
-			updateCallsWindow();
-			return;
-		}
-
-		qInfo() << QStringLiteral("Remove existing conference with id: `%1`.")
-					   .arg(Utils::coreStringToAppString(conference->getId()));
-		core->terminateConference();
+		qInfo() << QStringLiteral("Conference `%1` already exists.").arg(id);
+		updateCallsWindow();
+		return;
 	}
 
 	qInfo() << QStringLiteral("Create conference with id: `%1`.").arg(id);
 	auto confParameters = core->createConferenceParams(conference);
 	confParameters->enableVideo(false); // Video is not yet fully supported by the application in conference
 	conference = core->createConferenceWithParams(confParameters);
-	conference->setId(Utils::appStringToCoreString(id));
+	auto confAddress = conference->getConferenceAddress()->clone();
+	confAddress->setHeader("conf-id", Utils::appStringToCoreString(id));
+	conference->setConferenceAddress(confAddress);
 
 	if (core->enterConference() == -1) {
 		qWarning() << QStringLiteral("Unable to join created conference: `%1`.").arg(id);

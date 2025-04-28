@@ -395,16 +395,14 @@ int CallsListModel::addAllToConference(){
 void CallsListModel::mergeAll(){
 	auto core = CoreManager::getInstance()->getCore();
 	auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
-	shared_ptr<linphone::Conference> conference = core->getConference();
+	shared_ptr<linphone::Conference> conference;
 	
 	// Search a managable conference from calls
-	if(!conference){
-		for(auto call : currentCalls){
-			auto dbConference = call->getConference();
-			if(dbConference && dbConference->getMe()->isAdmin()){
-				conference = dbConference;
-				break;
-			}
+	for(auto call : currentCalls){
+		auto dbConference = call->getConference();
+		if(dbConference && dbConference->getMe()->isAdmin()){
+			conference = dbConference;
+			break;
 		}
 	}
   
@@ -563,15 +561,15 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
 		return;
 	
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!core->getConference()) {
+	if (!core->isInConference()) {
 		qWarning() << QStringLiteral("Not in a conference. => Responding to `join-conference` as a simple call...");
 		return;
 	}
 	
-	shared_ptr<linphone::Conference> conference = core->getConference();
+	shared_ptr<linphone::Conference> conference = core->searchConferenceByIdentifier(call->getToHeader("conference-id"));
 	const QString conferenceId = Utils::coreStringToAppString(call->getToHeader("conference-id"));
 	
-	if (conference->getId() != Utils::appStringToCoreString(conferenceId)) {
+	if (!conference) {
 		qWarning() << QStringLiteral("Trying to join conference with an invalid conference id: `%1`. Responding as a simple call...")
 					  .arg(conferenceId);
 		return;

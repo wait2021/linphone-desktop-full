@@ -21,7 +21,7 @@
 #ifndef CHAT_CORE_H_
 #define CHAT_CORE_H_
 
-#include "core/chat/message/ChatMessageGui.hpp"
+#include "core/chat/message/EventLogGui.hpp"
 #include "model/chat/ChatModel.hpp"
 #include "model/search/MagicSearchModel.hpp"
 #include "tool/LinphoneEnums.hpp"
@@ -29,6 +29,8 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
+
+class EventLogCore;
 
 class ChatCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -40,9 +42,9 @@ public:
 	Q_PROPERTY(QString chatRoomAddress READ getChatRoomAddress CONSTANT)
 	Q_PROPERTY(QString avatarUri READ getAvatarUri WRITE setAvatarUri NOTIFY avatarUriChanged)
 	Q_PROPERTY(QDateTime lastUpdatedTime READ getLastUpdatedTime WRITE setLastUpdatedTime NOTIFY lastUpdatedTimeChanged)
-	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastMessageChanged)
-	Q_PROPERTY(ChatMessageGui *lastMessage READ getLastMessage NOTIFY lastMessageChanged)
-	Q_PROPERTY(LinphoneEnums::ChatMessageState lastMessageState READ getLastMessageState NOTIFY lastMessageChanged)
+	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastEventChanged)
+	Q_PROPERTY(EventLogGui *lastEvent READ getLastEvent NOTIFY lastEventChanged)
+	Q_PROPERTY(LinphoneEnums::ChatMessageState lastMessageState READ getLastMessageState NOTIFY lastEventChanged)
 	Q_PROPERTY(LinphoneEnums::ChatRoomState state READ getChatRoomState NOTIFY chatRoomStateChanged)
 	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY
 	               unreadMessagesCountChanged)
@@ -74,7 +76,7 @@ public:
 	QString getSendingText() const;
 	void setSendingText(const QString &text);
 
-	ChatMessageGui *getLastMessage() const;
+	EventLogGui *getLastEvent() const;
 	QString getLastMessageText() const;
 
 	LinphoneEnums::ChatMessageState getLastMessageState() const;
@@ -86,7 +88,7 @@ public:
 	void setIsReadOnly(bool readOnly);
 
 	QSharedPointer<ChatMessageCore> getLastMessageCore() const;
-	void setLastMessage(QSharedPointer<ChatMessageCore> lastMessage);
+	void setLastEvent(QSharedPointer<EventLogCore> lastEvent);
 
 	int getUnreadMessagesCount() const;
 	void setUnreadMessagesCount(int count);
@@ -94,12 +96,12 @@ public:
 	QString getChatRoomAddress() const;
 	QString getPeerAddress() const;
 
-	QList<QSharedPointer<ChatMessageCore>> getChatMessageList() const;
-	void resetChatMessageList(QList<QSharedPointer<ChatMessageCore>> list);
-	void appendMessageToMessageList(QSharedPointer<ChatMessageCore> message);
-	void appendMessagesToMessageList(QList<QSharedPointer<ChatMessageCore>> list);
-	void removeMessagesFromMessageList(QList<QSharedPointer<ChatMessageCore>> list);
-	void clearMessagesList();
+	QList<QSharedPointer<EventLogCore>> getEventLogList() const;
+	void resetEventLogList(QList<QSharedPointer<EventLogCore>> list);
+	void appendEventLogToEventLogList(QSharedPointer<EventLogCore> event);
+	void appendEventLogsToEventLogList(QList<QSharedPointer<EventLogCore>> list);
+	void removeEventLogsFromEventLogList(QList<QSharedPointer<EventLogCore>> list);
+	void clearEventLogList();
 
 	QString getAvatarUri() const;
 	void setAvatarUri(QString avatarUri);
@@ -115,12 +117,12 @@ signals:
 	// used to close all the notifications when one is clicked
 	void messageOpen();
 	void lastUpdatedTimeChanged(QDateTime time);
-	void lastMessageChanged();
+	void lastEventChanged();
 	void titleChanged(QString title);
 	void unreadMessagesCountChanged(int count);
-	void messageListChanged();
-	void messagesInserted(QList<QSharedPointer<ChatMessageCore>> list);
-	void messageRemoved();
+	void eventListChanged();
+	void eventsInserted(QList<QSharedPointer<EventLogCore>> list);
+	void eventRemoved();
 	void avatarUriChanged();
 	void deleted();
 	void composingUserChanged();
@@ -156,8 +158,8 @@ private:
 	bool mIsReadOnly = false;
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
-	QSharedPointer<ChatMessageCore> mLastMessage;
-	QList<QSharedPointer<ChatMessageCore>> mChatMessageList;
+	QSharedPointer<EventLogCore> mLastEvent;
+	QList<QSharedPointer<EventLogCore>> mEventLogList;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT

@@ -191,7 +191,8 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateLastMessage, [this]() {
-		auto lastMessageModel = mLastEvent ? mLastEvent->getChatMessageCore()->getModel() : nullptr;
+		auto lastMessageModel =
+		    mLastEvent && mLastEvent->getChatMessageCore() ? mLastEvent->getChatMessageCore()->getModel() : nullptr;
 		mChatModelConnection->invokeToModel([this, lastMessageModel]() {
 			auto linphoneMessage = mChatModel->getLastChatMessage();
 			if (!lastMessageModel || lastMessageModel->getMonitor() != linphoneMessage) {

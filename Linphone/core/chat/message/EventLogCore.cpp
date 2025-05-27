@@ -144,4 +144,5 @@ QString EventLogCore::getEphemeralFormatedTime(int selectedTime) {
 	else if (selectedTime == 86400) mEventDetails = tr("nDay", "", 1).arg(1);
 	else if (selectedTime == 259200) mEventDetails = tr("nDay", "", 3).arg(3);
 	else if (selectedTime == 604800) mEventDetails = tr("nWeek", "", 1).arg(1);
+	else return "";
 }

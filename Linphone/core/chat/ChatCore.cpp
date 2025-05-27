@@ -75,8 +75,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mChatModel = Utils::makeQObject_ptr<ChatModel>(chatRoom);
 	mChatModel->setSelf(mChatModel);
 	auto lastMessage = chatRoom->getLastMessageInHistory();
-	auto lastEvent = lastMessage ? chatRoom->findEventLog(lastMessage->getMessageId()) : nullptr;
-	mLastEvent = lastEvent ? EventLogCore::create(lastEvent) : nullptr;
+	mLastMessage = lastMessage ? ChatMessageCore::create(lastMessage) : nullptr;
 
 	int filter = mIsGroupChat ? static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage) |
 	                                static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
@@ -191,16 +190,12 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	});
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lUpdateLastMessage, [this]() {
-		auto lastMessageModel =
-		    mLastEvent && mLastEvent->getChatMessageCore() ? mLastEvent->getChatMessageCore()->getModel() : nullptr;
+		auto lastMessageModel = mLastMessage ? mLastMessage->getModel() : nullptr;
 		mChatModelConnection->invokeToModel([this, lastMessageModel]() {
 			auto linphoneMessage = mChatModel->getLastChatMessage();
 			if (!lastMessageModel || lastMessageModel->getMonitor() != linphoneMessage) {
-				auto lastEvent = linphoneMessage->getChatRoom()->findEventLog(linphoneMessage->getMessageId());
-				if (lastEvent) {
-					auto eventLogCore = EventLogCore::create(lastEvent);
-					mChatModelConnection->invokeToCore([this, eventLogCore]() { setLastEvent(eventLogCore); });
-				}
+				auto chatMessageCore = ChatMessageCore::create(linphoneMessage);
+				mChatModelConnection->invokeToCore([this, chatMessageCore]() { setLastMessage(chatMessageCore); });
 			}
 		});
 	});
@@ -300,12 +295,11 @@ void ChatCore::setAvatarUri(QString avatarUri) {
 }
 
 QString ChatCore::getLastMessageText() const {
-	return mLastEvent && mLastEvent->getChatMessageCore() ? mLastEvent->getChatMessageCore()->getText() : QString();
+	return mLastMessage ? mLastMessage->getText() : QString();
 }
 
 LinphoneEnums::ChatMessageState ChatCore::getLastMessageState() const {
-	return mLastEvent && mLastEvent->getChatMessageCore() ? mLastEvent->getChatMessageCore()->getMessageState()
-	                                                      : LinphoneEnums::ChatMessageState::StateIdle;
+	return mLastMessage ? mLastMessage->getMessageState() : LinphoneEnums::ChatMessageState::StateIdle;
 }
 
 LinphoneEnums::ChatRoomState ChatCore::getChatRoomState() const {
@@ -330,19 +324,16 @@ bool ChatCore::getIsReadOnly() const {
 	return mIsReadOnly;
 }
 
-EventLogGui *ChatCore::getLastEvent() const {
-	return mLastEvent ? new EventLogGui(mLastEvent) : nullptr;
+ChatMessageGui *ChatCore::getLastMessage() const {
+	return mLastMessage ? new ChatMessageGui(mLastMessage) : nullptr;
 }
 
-void ChatCore::setLastEvent(QSharedPointer<EventLogCore> lastEvent) {
-	if (mLastEvent != lastEvent) {
-		auto chatCore = mLastEvent->getChatMessageCore();
-		if (chatCore) disconnect(chatCore.get());
-		mLastEvent = lastEvent;
-		if (mLastEvent->getChatMessageCore())
-			connect(mLastEvent->getChatMessageCore().get(), &ChatMessageCore::messageStateChanged, this,
-			        &ChatCore::lastEventChanged);
-		emit lastEventChanged();
+void ChatCore::setLastMessage(QSharedPointer<ChatMessageCore> lastMessage) {
+	if (mLastMessage != lastMessage) {
+		disconnect(mLastMessage.get());
+		mLastMessage = lastMessage;
+		connect(mLastMessage.get(), &ChatMessageCore::messageStateChanged, this, &ChatCore::lastMessageChanged);
+		emit lastMessageChanged();
 	}
 }
 

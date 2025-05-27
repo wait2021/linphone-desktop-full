@@ -22,6 +22,7 @@
 #define CHAT_CORE_H_
 
 #include "core/chat/message/EventLogGui.hpp"
+#include "message/ChatMessageGui.hpp"
 #include "model/chat/ChatModel.hpp"
 #include "model/search/MagicSearchModel.hpp"
 #include "tool/LinphoneEnums.hpp"
@@ -42,9 +43,9 @@ public:
 	Q_PROPERTY(QString chatRoomAddress READ getChatRoomAddress CONSTANT)
 	Q_PROPERTY(QString avatarUri READ getAvatarUri WRITE setAvatarUri NOTIFY avatarUriChanged)
 	Q_PROPERTY(QDateTime lastUpdatedTime READ getLastUpdatedTime WRITE setLastUpdatedTime NOTIFY lastUpdatedTimeChanged)
-	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastEventChanged)
-	Q_PROPERTY(EventLogGui *lastEvent READ getLastEvent NOTIFY lastEventChanged)
-	Q_PROPERTY(LinphoneEnums::ChatMessageState lastMessageState READ getLastMessageState NOTIFY lastEventChanged)
+	Q_PROPERTY(QString lastMessageText READ getLastMessageText NOTIFY lastMessageChanged)
+	Q_PROPERTY(ChatMessageGui *lastMessage READ getLastMessage NOTIFY lastMessageChanged)
+	Q_PROPERTY(LinphoneEnums::ChatMessageState lastMessageState READ getLastMessageState NOTIFY lastMessageChanged)
 	Q_PROPERTY(LinphoneEnums::ChatRoomState state READ getChatRoomState NOTIFY chatRoomStateChanged)
 	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY
 	               unreadMessagesCountChanged)
@@ -76,7 +77,7 @@ public:
 	QString getSendingText() const;
 	void setSendingText(const QString &text);
 
-	EventLogGui *getLastEvent() const;
+	ChatMessageGui *getLastMessage() const;
 	QString getLastMessageText() const;
 
 	LinphoneEnums::ChatMessageState getLastMessageState() const;
@@ -88,7 +89,7 @@ public:
 	void setIsReadOnly(bool readOnly);
 
 	QSharedPointer<ChatMessageCore> getLastMessageCore() const;
-	void setLastEvent(QSharedPointer<EventLogCore> lastEvent);
+	void setLastMessage(QSharedPointer<ChatMessageCore> lastMessage);
 
 	int getUnreadMessagesCount() const;
 	void setUnreadMessagesCount(int count);
@@ -117,7 +118,7 @@ signals:
 	// used to close all the notifications when one is clicked
 	void messageOpen();
 	void lastUpdatedTimeChanged(QDateTime time);
-	void lastEventChanged();
+	void lastMessageChanged();
 	void titleChanged(QString title);
 	void unreadMessagesCountChanged(int count);
 	void eventListChanged();
@@ -158,7 +159,7 @@ private:
 	bool mIsReadOnly = false;
 	LinphoneEnums::ChatRoomState mChatRoomState;
 	std::shared_ptr<ChatModel> mChatModel;
-	QSharedPointer<EventLogCore> mLastEvent;
+	QSharedPointer<ChatMessageCore> mLastMessage;
 	QList<QSharedPointer<EventLogCore>> mEventLogList;
 	QSharedPointer<SafeConnection<ChatCore, ChatModel>> mChatModelConnection;
 

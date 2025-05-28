@@ -5979,6 +5979,13 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 		<translation>Ephemeral messages have been updated: %1</translation>
 	</message>
 	<message numerus="yes">
+		<source>nSeconds</source>
+		<translation>
+			<numerusform>%1 second</numerusform>
+			<numerusform>%1 seconds</numerusform>
+		</translation>
+	</message>
+	<message numerus="yes">
 		<source>nMinute</source>
 		<translation>
 			<numerusform>%1 minute</numerusform>

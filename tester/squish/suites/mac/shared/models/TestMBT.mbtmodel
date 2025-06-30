@@ -1,0 +1,50 @@
+{
+    "schema_version": 0,
+    "type": "squish_step_diagram",
+    "steps": {
+        "initial": {
+            "initial": true,
+            "geometry": {
+                "x": 0,
+                "width": 25,
+                "y": 0,
+                "height": 25
+            }
+        },
+        "594c2781-e602-4858-8d61-f1375b1f2bd4": {
+            "implementation": "",
+            "name": "step_2",
+            "description": "",
+            "geometry": {
+                "x": 262,
+                "width": 150,
+                "y": 94,
+                "height": 100
+            }
+        },
+        "5b002f22-003d-4220-96fa-48ca5f8f4d22": {
+            "implementation": "",
+            "name": "step_3",
+            "description": "",
+            "geometry": {
+                "x": 368,
+                "width": 150,
+                "y": 114,
+                "height": 100
+            }
+        },
+        "fae13a2a-7436-4077-906c-cad8e9d74a23": {
+            "implementation": "",
+            "name": "step_1",
+            "description": "",
+            "geometry": {
+                "x": 807,
+                "width": 150,
+                "y": 101,
+                "height": 100
+            }
+        }
+    },
+    "connections": [],
+    "implementation_file": "x-testsuite:/shared/scripts/TestMBT_0.js"
+}

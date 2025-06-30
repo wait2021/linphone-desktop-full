@@ -60,5 +60,6 @@ include:
 stages:
   - build
   - package
+  - test
   - signing
   - deploy

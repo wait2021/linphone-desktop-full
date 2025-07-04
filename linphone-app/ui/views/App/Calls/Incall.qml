@@ -596,8 +596,8 @@ Rectangle {
 										camera._activateCamera = true
 									}else
 										callModel.cameraEnabled = !callModel.cameraEnabled
-								}else{// In one-one, we deactivate all videos.
-									callModel.videoEnabled = !callModel.videoEnabled
+								}else{
+                                    callModel.cameraEnabled = !callModel.cameraEnabled
 								}
 							}
 				Connections{// Enable camera only when status is ok

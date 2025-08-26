@@ -75,6 +75,16 @@ macosx-ninja-novideo:
     CMAKE_GENERATOR: Ninja
   extends: .macosx-desktop
 
+macosx-xcode:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+  variables:
+    XCODE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+    CMAKE_GENERATOR: Xcode
+    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
+  extends: .macosx-desktop
+
 #macosx-xcode:
 #  extends: .macosx-desktop
 #  variables:

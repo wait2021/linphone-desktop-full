@@ -26,7 +26,7 @@
 
 .macosx-desktop:
   stage: build
-  tags: [ "macos-min-xcode12.2" ]
+  tags: [ "macmini-m1-3-xcode16" ]
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
     - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
@@ -75,17 +75,15 @@ macosx-ninja-novideo:
     CMAKE_GENERATOR: Ninja
   extends: .macosx-desktop
 
-#macosx-xcode:
-#  extends: .macosx-desktop
-#  variables:
-#    XCODE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
-#   CMAKE_GENERATOR: Xcode
-#    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
-# only:
-#   variables:
-#     - $NIGHTLY_MASTER
-#     - $DEPLOY_RUN_MACOSX
-#      
+macosx-xcode:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+  variables:
+    XCODE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+    CMAKE_GENERATOR: Xcode
+    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
+  extends: .macosx-desktop 
 
 #################################################
 # Package - Nightly
@@ -93,7 +91,7 @@ macosx-ninja-novideo:
 # WAIT for QT6 for arm64
 macosx-ninja-package:
   stage: package
-  tags: [ "macos-min-xcode12.2" ]
+  tags: [ "macmini-m1-3-xcode16" ]
   dependencies: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
@@ -117,7 +115,7 @@ macosx-ninja-package:
 
 macosx-codesigning:
   stage: signing
-  tags: [ "macos-min-xcode12.2" ]
+  tags: [ "macmini-m1-3-xcode16" ]
   needs:
     - macosx-ninja-package
   rules:
@@ -142,7 +140,7 @@ macosx-codesigning:
 
 macosx-deploy:
  stage: deploy
- tags: [ "macos-min-xcode12.2" ]
+ tags: [ "macmini-m1-3-xcode16" ]
  needs:
    - macosx-codesigning
  only:
@@ -160,7 +158,7 @@ macosx-deploy:
 
 macosx-makefile-plugins-deploy:
  stage: deploy
- tags: [ "macos-min-xcode12.2" ]
+ tags: [ "macmini-m1-3-xcode16" ]
  needs:
    - macosx-makefile
  only:

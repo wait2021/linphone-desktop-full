@@ -22,6 +22,21 @@
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 
+/*
+ * This files uses a few methods of linphone::LdapParams class that are marked as deprecated.
+ * They are replaced by equivalents in the linphone::RemoteContactDirectory class, that actually holds
+ * the linphone::LdapParams.
+ * TODO: do the migration to new methods.
+ * Meanwhile, make the deprecated warning not to be treated as an error.
+ */
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996)
+#else
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#endif
+
 DEFINE_ABSTRACT_OBJECT(LdapModel)
 
 LdapModel::LdapModel(const std::shared_ptr<linphone::RemoteContactDirectory> &ldap, QObject *parent) {

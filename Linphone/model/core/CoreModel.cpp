@@ -138,6 +138,12 @@ bool CoreModel::isInitialized() const {
 	return mStarted;
 }
 
+void CoreModel::setTranscriptionModel() {
+	auto transcription = mCore->getTranscription();
+	mTranscription = Utils::makeQObject_ptr<TranscriptionModel>(transcription);
+	mTranscription->setSelf(mTranscription);
+}
+
 std::shared_ptr<CoreModel> CoreModel::getInstance() {
 	return gCoreModel;
 }

@@ -38,6 +38,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/object/VariantObject.cpp
 	
 	model/search/MagicSearchModel.cpp
+
+	model/transcription/TranscriptionModel.cpp
 	
 	model/setting/SettingsModel.cpp
 	model/setting/MediastreamerUtils.cpp

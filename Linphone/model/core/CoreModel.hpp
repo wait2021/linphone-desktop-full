@@ -36,6 +36,7 @@
 #include "model/listener/Listener.hpp"
 #include "model/logger/LoggerModel.hpp"
 #include "model/search/MagicSearchModel.hpp"
+#include "model/transcription/TranscriptionModel.hpp"
 #include "tool/AbstractObject.hpp"
 
 // =============================================================================
@@ -71,6 +72,8 @@ public:
 	                         LinphoneEnums::MagicSearchAggregation aggregation,
 	                         int maxResults);
 
+	void setTranscriptionModel();
+
 	bool mEnd = false;
 	linphone::ConfiguringState mConfigStatus;
 	QString mConfigMessage;
@@ -96,6 +99,8 @@ private:
 	QTimer *mIterateTimer = nullptr;
 	QMap<QString, OIDCModel *> mOpenIdConnections;
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
+	std::shared_ptr<TranscriptionModel> mTranscription;
+
 	bool mStarted = false;
 
 	void setPathBeforeCreation();

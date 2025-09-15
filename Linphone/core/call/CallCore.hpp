@@ -346,6 +346,7 @@ private:
 	AudioStats mAudioStats;
 	VideoStats mVideoStats;
 	std::shared_ptr<MagicSearchModel> mRemoteMagicSearchModel;
+	std::shared_ptr<TranscriptionModel> mTranscriptionModel;
 	bool mShouldFindRemoteFriend;
 	QSharedPointer<SafeConnection<CallCore, MagicSearchModel>> mRemoteMagicSearchModelConnection;
 

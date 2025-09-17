@@ -53,5 +53,12 @@ void TranscriptionModel::onTranscriptionDisplay(const std::shared_ptr<linphone::
 	// }
 	auto name = transcription->getNameById(lastId);
 	auto sentence = transcription->getSentenceById(lastId);
-	lInfo() << log().arg("onTranscriptionDisplay: ID [%1] - NAME [%2]: %3").arg(lastId).arg(name).arg(sentence);
+	if (system("clear")) std::cout << "DIDNT CLEAR!" << std::endl;
+	if (name.empty()) {
+		lInfo() << log().arg("onTranscriptionDisplay: ID [%1]: %2").arg(lastId).arg(sentence);
+		std::cout << "onTranscriptionDisplay ID [" << lastId << "]: " << sentence << std::endl;
+	} else {
+		lInfo() << log().arg("onTranscriptionDisplay: ID [%1] - NAME [%2]: %3").arg(lastId).arg(name).arg(sentence);
+		std::cout << "onTranscriptionDisplay ID [" << lastId << "] - NAME [" << name << "]: " << sentence << std::endl;
+	}
 }

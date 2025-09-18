@@ -27,6 +27,8 @@ AbstractSettingsMenu {
         {title: qsTr("settings_security_title"), layout: "SecuritySettingsLayout"},
         //: "Réseau"
         {title: qsTr("settings_network_title"), layout: "NetworkSettingsLayout"},
+        //: "Accessibilité"
+        {title: "Accessibilité", layout: "AccessibilitySettingsLayout"},
         //: "Paramètres avancés"
         {title: qsTr("settings_advanced_title"), layout: "AdvancedSettingsLayout"}
 	]

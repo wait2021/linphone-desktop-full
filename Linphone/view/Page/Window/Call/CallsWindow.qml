@@ -1575,22 +1575,27 @@ AbstractWindow {
                                             mainWindow.call.core.lStartRecording()
                                 }
                             }
-                            IconLabelButton {
-                                Layout.fillWidth: true
+                            Control.Action {
+                                id: speakerMuteUnmuteAction
                                 checkable: true
-                                style: ButtonStyle.noBackground
                                 icon.width: Math.round(32 * DefaultStyle.dp)
                                 icon.height: Math.round(32 * DefaultStyle.dp)
                                 icon.source: !mainWindow.call
                                              || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
-                                contentImageColor: mainWindow.call
-                                                   && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
-                                hoveredImageColor: contentImageColor
+                                shortcut: "Ctrl+M"
                                 text: mainWindow.call && mainWindow.call.core.speakerMuted
                                     //: "Activer le son"
                                     ? qsTr("call_activate_speaker_hint")
                                     //: "Désactiver le son"
                                     : qsTr("call_deactivate_speaker_hint")
+                            }
+                            IconLabelButton {
+                                Layout.fillWidth: true
+                                action: speakerMuteUnmuteAction
+                                style: ButtonStyle.noBackground
+                                contentImageColor: mainWindow.call
+                                                   && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
+                                hoveredImageColor: contentImageColor
                                 textColor: mainWindow.call
                                            && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_500main
                                 hoveredTextColor: textColor

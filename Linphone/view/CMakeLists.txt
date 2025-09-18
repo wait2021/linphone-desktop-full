@@ -19,6 +19,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Button/Slider.qml
 	view/Control/Button/Switch.qml
 	view/Control/Button/Settings/ComboSetting.qml
+	view/Control/Button/Settings/KeyboardShortcutSetting.qml
 	view/Control/Button/Settings/SwitchSetting.qml
 	view/Control/Button/LabelButton.qml
 
@@ -92,6 +93,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Input/Calendar.qml
 	view/Control/Input/DecoratedTextField.qml
 	view/Control/Input/DigitInput.qml
+	view/Control/Input/KeyboardShortcutInput.qml
 	view/Control/Input/NumericPad.qml
 	view/Control/Input/PhoneNumberInput.qml
 	view/Control/Input/SearchBar.qml
@@ -154,6 +156,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/ChatSettingsLayout.qml
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 	view/Page/Layout/Settings/NetworkSettingsLayout.qml
+	view/Page/Layout/Settings/AccessibilitySettingsLayout.qml
 	view/Page/Layout/Settings/AdvancedSettingsLayout.qml
 	view/Page/Layout/Chat/MessageImdnStatusInfos.qml
 	view/Page/Layout/Chat/MessageInfosLayout.qml

@@ -196,8 +196,8 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 							auto foundParticipant = *it;
 							// participants.at(std::distance(participants.begin(), it));
 							auto address = foundParticipant->getAddress()->clone();
-							auto isFriend = findFriendByAddress(address);
 							address->clean();
+							auto isFriend = findFriendByAddress(address);
 							auto addressString = Utils::coreStringToAppString(address->asStringUriOnly());
 							if (isFriend)
 								part = "@" + Utils::coreStringToAppString(isFriend->getAddress()->getDisplayName());
@@ -221,8 +221,6 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 }
 
 std::shared_ptr<linphone::Friend> ToolModel::findFriendByAddress(const QString &address) {
-	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
-	if (!defaultFriendList) return nullptr;
 	auto linphoneAddr = ToolModel::interpretUrl(address);
 	if (linphoneAddr) return ToolModel::findFriendByAddress(linphoneAddr);
 	else return nullptr;

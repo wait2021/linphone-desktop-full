@@ -47,6 +47,7 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	mLastUpdatedTime = QDateTime::fromSecsSinceEpoch(chatRoom->getLastUpdateTime());
 	auto chatRoomAddress = chatRoom->getPeerAddress()->clone();
 	chatRoomAddress->clean();
+	// TODO FIXME Ne pas stocker les Address sous forme de string et avoir à les re-parser en Address après, autant garder directement le shared_ptr en mémoire
 	mChatRoomAddress = Utils::coreStringToAppString(chatRoomAddress->asStringUriOnly());
 	if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
 		mTitle = ToolModel::getDisplayName(chatRoomAddress);
@@ -90,15 +91,26 @@ ChatCore::ChatCore(const std::shared_ptr<linphone::ChatRoom> &chatRoom) : QObjec
 	                                static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
 	                          : static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage);
 
-	auto history = chatRoom->getHistory(0, filter);
+	// TODO FIXME Tu récupère l'historique entier de chaque chat room qui est mise dans la liste, du coup ça prend du temps
+	// et potentiellement ça sert a rien si l'utilisateur va jamais dedans.
+	// Peut-être il faudrait un ChatListCore/ChatListModel pour juste la partie liste ?
+
+	// TODO FIXME Aussi il ne faut pas tout charger mais uniquement mettons les 30 derniers messages 
+	// et les charger à la volée quand l'utilisateur scrolle vers le haut
+
+	// Dernière question : pourquoi bouger les eventLog depuis history dans lHistory et pas faire directement
+	// lHistory = chatRoom->getHistory(0, filter); ?
+	auto history = chatRoom->getHistory(30, filter);
 	std::list<std::shared_ptr<linphone::EventLog>> lHistory;
 	for (auto &eventLog : history) {
 		lHistory.push_back(eventLog);
 	}
+
 	QList<QSharedPointer<EventLogCore>> eventList;
 	for (auto &event : lHistory) {
 		auto eventLogCore = EventLogCore::create(event);
 		eventList.append(eventLogCore);
+		// TODO faudra que tu m'expliques pourquoi tu as besoin de cette liste des fichiers de chaque message de la chat room
 		if (auto isMessage = eventLogCore->getChatMessageCore()) {
 			for (auto content : isMessage->getChatMessageContentList()) {
 				if (content->isFile() && !content->isVoiceRecording()) {
@@ -258,6 +270,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 			    auto event = EventLogCore::create(e);
 			    list.push_back(event);
 		    }
+			// TODO FIXME On devrait déjà être dans le thread du Core ici, du coup je pense que c'est pas nécessaire
 		    mChatModelConnection->invokeToCore([this, list]() {
 			    appendEventLogsToEventLogList(list);
 			    emit lUpdateUnreadCount();
@@ -723,6 +736,7 @@ QSharedPointer<AccountCore> ChatCore::getLocalAccount() const {
 
 void ChatCore::updateInfo(const std::shared_ptr<linphone::Friend> &updatedFriend, bool isRemoval) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	// TODO FIXME Je sais pas quand UpdateInfo() est appelé ni pourquoi mais le check sur la peerAddress ne marchera que pour les Basic
 	auto fAddress = ToolModel::interpretUrl(mPeerAddress);
 	bool isThisFriend = mFriendModel && updatedFriend == mFriendModel->getFriend();
 	if (!isThisFriend)

@@ -44,9 +44,10 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 		    Utils::coreStringToAppString(mMonitor->getParams()->getIdentityAddress()->getDisplayName()));
 	});
 
-	connect(CoreModel::getInstance().get(), &CoreModel::unreadNotificationsChanged, this, [this]() {
+	// TODO FIXME infinite loop
+	/*connect(CoreModel::getInstance().get(), &CoreModel::unreadNotificationsChanged, this, [this]() {
 		emit unreadNotificationsChanged(mMonitor->getUnreadChatMessageCount(), mMonitor->getMissedCallsCount());
-	});
+	});*/
 	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this,
 	        [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
 		        if (account == mMonitor) {

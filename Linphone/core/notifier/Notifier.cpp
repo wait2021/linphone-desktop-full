@@ -395,6 +395,7 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 		});
 		auto settings = SettingsModel::getInstance();
 		if (settings && !settings->dndEnabled()) {
+			// TODO FIXME on serait pas sur le mauvais thread ici ?
 			CoreModel::getInstance()->getCore()->playLocal(
 			    Utils::appStringToCoreString(settings->getChatNotificationSoundPath()));
 		}

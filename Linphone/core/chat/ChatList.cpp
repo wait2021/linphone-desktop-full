@@ -89,11 +89,14 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			QList<QSharedPointer<ChatCore>> *chats = new QList<QSharedPointer<ChatCore>>();
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (!currentAccount) return;
+			// TODO FIXME J'ai pas réussi à trouver si c'était le cas mais il ne faut pas re-trier la liste des chat rooms renvoyée par filterChatRooms()
+			// Tu ne dois le faire uniquement que dans les callback onMessageSent() et onMessagesReceived()
 			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
 			for (auto it : linphoneChatRooms) {
 				auto model = createChatCore(it);
 				chats->push_back(model);
 			}
+			// TODO FIXME t'es pas déjà dans le thread du core ici ?
 			mModelConnection->invokeToCore([this, chats]() {
 				for (auto &chat : getSharedList<ChatCore>()) {
 					if (chat) {
@@ -139,6 +142,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		}
 
 		auto chatCore = ChatCore::create(room);
+		// TODO FIXME t'es pas déjà dans le thread du core ici ?
 		mModelConnection->invokeToCore([this, chatCore] {
 			auto chatList = getSharedList<ChatCore>();
 			auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
@@ -163,6 +167,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	    [this, addChatToList](const std::shared_ptr<linphone::Core> &core,
 	                          const std::shared_ptr<linphone::ChatRoom> &room,
 	                          const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+			// TODO FIXME c'est normal que seul le premier des messages soit ajouté à la liste et pas tous ?
 		    addChatToList(core, room, messages.front());
 	    });
 	mModelConnection->makeConnectToModel(

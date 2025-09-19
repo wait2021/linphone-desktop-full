@@ -52,27 +52,20 @@ QDateTime ChatModel::getLastUpdateTime() {
 	return QDateTime::fromSecsSinceEpoch(mMonitor->getLastUpdateTime());
 }
 
-std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getHistory() const {
-	auto history = mMonitor->getHistory(0, (int)linphone::ChatRoom::HistoryFilter::ChatMessage);
-	std::list<std::shared_ptr<linphone::ChatMessage>> res;
-	for (auto &eventLog : history) {
-		if (!eventLog->getChatMessage()) res.push_back(eventLog->getChatMessage());
-	}
-	return res;
-}
-
 QString ChatModel::getIdentifier() const {
 	return Utils::coreStringToAppString(mMonitor->getIdentifier());
 }
 
 QString ChatModel::getTitle() {
 	if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)) {
+		// TODO FIXME Ne pas cloner les addresses si possible, ça prend beaucoup de ressources !
 		return ToolModel::getDisplayName(mMonitor->getPeerAddress()->clone());
 	} else {
 		if (mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			auto participants = mMonitor->getParticipants();
 			if (participants.size() > 0) {
 				auto peer = participants.front();
+				// TODO FIXME Ne pas cloner les addresses si possible, ça prend beaucoup de ressources !
 				return peer ? ToolModel::getDisplayName(peer->getAddress()->clone()) : "";
 			} else {
 				return "";
@@ -106,9 +99,6 @@ int ChatModel::getUnreadMessagesCount() const {
 
 void ChatModel::markAsRead() {
 	mMonitor->markAsRead();
-	for (auto &message : getHistory()) {
-		message->markAsRead();
-	}
 	emit messagesRead();
 }
 

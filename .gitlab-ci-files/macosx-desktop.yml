@@ -5,9 +5,7 @@
 
 .build_all_script: &build_all_script |
   ccache -s
-  export Qt6_DIR=~/Qt/${QT_OPEN_SOURCE_DIRECTORY:-proprietary}/$QT_MAC_VER/lib/cmake/Qt6
   echo $Qt6_DIR
-  export PATH=~/Qt/${QT_OPEN_SOURCE_DIRECTORY:-proprietary}/$QT_MAC_VER/bin:$PATH
   echo $PATH
   if [ -d "build" ]; then rm -rf build; fi;
   mkdir -p build/OUTPUT

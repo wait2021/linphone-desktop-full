@@ -61,14 +61,17 @@ std::list<std::shared_ptr<linphone::Content>> ChatModel::getSharedDocuments() co
 }
 
 std::list<std::shared_ptr<linphone::EventLog>> ChatModel::getHistory() const {
+	// Pas besoin de faire le filtre au niveau app, tu peux utiliser juste getHistory(count) qui renvoie ce qu'il faut, ça sera sans doute plus efficace
 	int filter = mMonitor->hasCapability((int)linphone::ChatRoom::Capabilities::Conference)
 	                 ? static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage) |
 	                       static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice)
 	                 : static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage);
-	return mMonitor->getHistory(0, filter);
+	// Ne fais pas le getHistory(0), ça va charger tout l'histoire d'une chat room pour rien (ce qui explique le spinner quand tu ouvres une conversation)
+	// A la place ne prend que 20-30 items et rajoute un scroll listener pour les charger à la volée avec getHistoryRangeEvents(currentCount, step)
+	return mMonitor->getHistory(30, filter);
 }
 
-std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHistory() const {
+/*std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHistory() const {
 	auto history = mMonitor->getHistory(0, (int)linphone::ChatRoom::HistoryFilter::ChatMessage);
 	std::list<std::shared_ptr<linphone::ChatMessage>> res;
 	for (auto &eventLog : history) {
@@ -76,7 +79,7 @@ std::list<std::shared_ptr<linphone::ChatMessage>> ChatModel::getChatMessageHisto
 		if (chatMessage) res.push_back(chatMessage);
 	}
 	return res;
-}
+}*/
 
 QString ChatModel::getIdentifier() const {
 	return Utils::coreStringToAppString(mMonitor->getIdentifier());
@@ -123,9 +126,10 @@ int ChatModel::getUnreadMessagesCount() const {
 
 void ChatModel::markAsRead() {
 	mMonitor->markAsRead();
-	for (auto &message : getChatMessageHistory()) {
+	/*for (auto &message : getChatMessageHistory()) {
 		message->markAsRead();
-	}
+	}*/
+	mMonitor->markAsRead(); // pas besoin d'itérer sur tout l'historique des messages, ça fera gagner du temps
 	emit messagesRead();
 }
 

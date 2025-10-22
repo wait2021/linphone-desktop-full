@@ -128,6 +128,7 @@ add_subdirectory(core)
 set(LANGUAGES_DIRECTORY "data/languages")
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES en fr de)
+set(CMAKE_CPP_COMPILER gcc)
 
 # Add languages support.
 add_subdirectory("${LANGUAGES_DIRECTORY}" "data/languages")
@@ -225,6 +226,15 @@ endforeach()
 
 if (ENABLE_CRASH_HANDLER)
 
+	find_package(Python3 REQUIRED)
+    set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
+	check_python_module(httplib2)
+	execute_process(
+		COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.executable)"
+		OUTPUT_VARIABLE which_python
+	)
+	message(STATUS "Using Python interpreter: ${which_python}")
+
 	# Clone required repos
 	######################
 	
@@ -245,44 +255,113 @@ if (ENABLE_CRASH_HANDLER)
     	endif()
 	endfunction()
 	
-	#clone_git_repo("https://gn.googlesource.com/gn" "${CMAKE_BINARY_DIR}/gn")
+	clone_git_repo("https://gn.googlesource.com/gn" "${CMAKE_BINARY_DIR}/gn")
 	clone_git_repo("https://chromium.googlesource.com/chromium/tools/depot_tools.git" "${CMAKE_BINARY_DIR}/depot_tools")
-	#clone_git_repo("https://chromium.googlesource.com/crashpad/crashpad" "${CMAKE_BINARY_DIR}/crashpad")
+	clone_git_repo("https://chromium.googlesource.com/crashpad/crashpad" "${CMAKE_BINARY_DIR}/crashpad")
+
+	set(DEPOT_TOOLS_DIR "${CMAKE_BINARY_DIR}/depot_tools")
+	set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient") # gclient is a python script in depot_tools
 	
 	# Sync crashpad repo content with gclient
 	##########################################
-	
+	# set(GCLIENT_SPEC "solutions = [{\\\"name\\\": \\\"crashpad\\\", \\\"url\\\": \\\"https://chromium.googlesource.com/crashpad/crashpad\\\", \\\"managed\\\": False}]")
+
+	# execute_process(
+	# 	COMMAND "${CMAKE_BINARY_DIR}/depot_tools/gclient" config "--spec=${GCLIENT_SPEC}"
+	# 	ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
+	# 	WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+	# 	RESULT_VARIABLE gclient_config_result
+	# 	OUTPUT_VARIABLE gclient_config_output
+	# 	ERROR_VARIABLE gclient_config_error
+	# )
+	# if(gclient_config_result)
+	# 	message(FATAL_ERROR "Failed configuring crashpad with gclient: ${gclient_config_result} ${gclient_config_output} ${gclient_config_error}")
+	# endif()
+	# --- Write a .gclient file directly (avoid gclient config quoting issues) ---
+	set(GCLIENT_CONTENT "solutions = [{\"name\": \"crashpad\", \"url\": \"https://chromium.googlesource.com/crashpad/crashpad\", \"managed\": False}]")
+
+	file(WRITE "${CMAKE_BINARY_DIR}/.gclient" "${GCLIENT_CONTENT}\n")
+	message(STATUS "Wrote ${CMAKE_BINARY_DIR}/.gclient with content:\n${GCLIENT_CONTENT}")
+
 	execute_process(
-		COMMAND "${CMAKE_BINARY_DIR}/depot_tools/gclient" " config --name=crashpad" "--unmanaged" "https://chromium.googlesource.com/crashpad/crashpad"
-		#&& ${CMAKE_BINARY_DIR}/depot_tools/gclient sync
-		ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
-		RESULT_VARIABLE result
-		OUTPUT_VARIABLE output
-    	ERROR_VARIABLE error
+		COMMAND "${DEPOT_TOOLS_DIR}/gclient" sync --nohooks --shallow
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    	# ENV
+		# 	PATH=${DEPOT_TOOLS_DIR}:$ENV{PATH}
+		RESULT_VARIABLE gclient_sync_result
+		OUTPUT_VARIABLE gclient_sync_output
+		ERROR_VARIABLE gclient_sync_error
 	)
-	if(result)
-		message(FATAL_ERROR "Failed fetching craspad with gclient : ${result} ${output} ${error}")
+	if(gclient_sync_result)
+		message(FATAL_ERROR "Failed syncing crashpad with gclient: ${gclient_sync_result} ${gclient_sync_output} ${gclient_sync_error}")
 	endif()
-	
-	
+	message(STATUS "Synced crashpad with gclient")
+
+	# Generate gn build files
+	##########################################
+	execute_process(
+		COMMAND python build/gen.py --allow-warning
+		RESULT_VARIABLE gen_result
+		OUTPUT_VARIABLE gen_output
+		ERROR_VARIABLE gen_error
+		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/gn"
+	)
+	if(gen_result)
+		message(FATAL_ERROR "Failed running gn gen.py: ${gen_result} ${gen_output} ${gen_error}")
+	endif()
+	message(STATUS "gn build files generated")
+
+	# Build gn
+	##########################################
+	execute_process(
+		COMMAND ninja -C out
+		RESULT_VARIABLE ninja_result
+		OUTPUT_VARIABLE ninja_output
+		ERROR_VARIABLE ninja_error
+		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/gn"
+	)
+	if(ninja_result)
+		message(FATAL_ERROR "Failed building gn: ${ninja_result} ${ninja_output} ${ninja_error}")
+	endif()
+	message(STATUS "gn builded")
+
+	# Generate crashpad gen folder
+	##########################################
+	# file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/crashpad/out")
+	execute_process(
+		# COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen -C out
+		COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen out
+		# ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
+		RESULT_VARIABLE crashpad_gen_result
+		OUTPUT_VARIABLE crashpad_gen_output
+    	ERROR_VARIABLE crashpad_gen_error
+		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/crashpad"
+	)
+	if(crashpad_gen_result)
+		message(FATAL_ERROR "Failed generate crashpad build files: ${crashpad_gen_result} ${crashpad_gen_output} ${crashpad_gen_error}")
+	endif()
+	message(STATUS "Crashpad build files generated")
+
 	# Build crashpad client
 	##########################################
 	execute_process(
-		COMMAND gn gen -C out && ninja -C out
-		ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
-		RESULT_VARIABLE result
-		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/crashpad
+		COMMAND ninja -C out
+		# ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
+		RESULT_VARIABLE crashpad_build_result
+		OUTPUT_VARIABLE crashpad_build_output
+    	ERROR_VARIABLE crashpad_build_error
+		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/crashpad"
 	)
-	if(result)
-		message(FATAL_ERROR "Failed building crashpad")
+	if(crashpad_build_result)
+		message(FATAL_ERROR "Failed building crashpad: ${crashpad_build_result} ${crashpad_build_output} ${crashpad_build_error}")
 	endif()
+	message(STATUS "Crashpad builded")
 	
 	# Define Crashpad dependencies
 	##############################
 	
-	set(CRASHPAD_LIB_DIR "${CMAKE_SOURCE_DIR}/external/crashpad/out/obj")
-	set(CRASHPAD_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/external/crashpad")
+	set(CRASHPAD_LIB_DIR "${CMAKE_BINARY_DIR}/crashpad/out/obj")
+	set(CRASHPAD_INCLUDE_DIR "${CMAKE_BINARY_DIR}/crashpad")
 
 	# Include Crashpad headers
 	##############################
@@ -300,9 +379,14 @@ if (ENABLE_CRASH_HANDLER)
 		"${CRASHPAD_LIB_DIR}/client/libclient.a"
 		"${CRASHPAD_LIB_DIR}/util/libutil.a"
 		"${CRASHPAD_LIB_DIR}/third_party/mini_chromium/mini_chromium/base/libbase.a"
-		"${CRASHPAD_LIB_DIR}/util/libmig_output.a"
 		# Add more libraries here
 	)
+
+	if(APPLE)
+		list(APPEND CRASHPAD_LIBRARIES
+			"${CRASHPAD_LIB_DIR}/util/libmig_output.a"
+		)
+	endif()
 
 	foreach(lib_path ${CRASHPAD_LIBRARIES})
 		# Create an imported target for each library
@@ -315,6 +399,8 @@ if (ENABLE_CRASH_HANDLER)
 		target_link_libraries(${TARGET_NAME} PRIVATE ${lib_name})
 	endforeach()
 
-	target_link_libraries(${TARGET_NAME} PRIVATE bsm)
+	if(APPLE)
+		target_link_libraries(${TARGET_NAME} PRIVATE bsm)
+	endif()
 
 endif()

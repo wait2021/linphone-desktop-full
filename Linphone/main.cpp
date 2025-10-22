@@ -46,10 +46,10 @@ int main(int argc, char *argv[]) {
 	// Set up Crashpad
 	std::vector<std::string> arguments;
 
-	base::FilePath handler_path("/Users/Tof/Desktop/belledonne-communications/master-gitosis/linphone-desktop/external/"
+	base::FilePath handler_path("/home/parallels/Projects/linphone-desktop/build/" // TODO change this
 	                            "crashpad/out/crashpad_handler");
-	base::FilePath database_path("crashes"); // TODO same place as logs.
-	base::FilePath metrics_path("metrics_path");
+	base::FilePath database_path("/home/parallels/Projects/linphone-desktop/crashes"); // TODO same place as logs.
+	base::FilePath metrics_path("/home/parallels/Projects/linphone-desktop/metrics_path");
 
 	std::map<std::string, std::string> annotations;
 	annotations["product"] = "Linphone"; // TODO from CMake

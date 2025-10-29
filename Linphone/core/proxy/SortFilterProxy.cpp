@@ -63,9 +63,10 @@ int SortFilterProxy::getFilterType() const {
 
 void SortFilterProxy::setFilterType(int filterType) {
 	if (getFilterType() != filterType) {
+		beginFilterChange();
 		mFilterType = filterType;
+		endFilterChange();
 		emit filterTypeChanged(filterType);
-		invalidate();
 	}
 }
 

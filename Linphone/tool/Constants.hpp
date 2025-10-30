@@ -146,6 +146,7 @@ public:
 	static constexpr char PathTools[] = "/tools/";
 	static constexpr char PathLogs[] = "/logs/";
 	static constexpr char PathVCards[] = "/vcards/";
+	static constexpr char PathMetrics[] = "/metrics/";
 #ifdef APPLE
 	static constexpr char PathPlugins[] = "/Plugins/";
 #else

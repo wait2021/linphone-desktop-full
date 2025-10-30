@@ -3,6 +3,7 @@
 
 #include "core/App.hpp"
 #include "core/logger/QtLogger.hpp"
+#include "core/path/Paths.hpp"
 #include <QLocale>
 #include <QSurfaceFormat>
 #include <QTranslator>
@@ -43,27 +44,6 @@ void cleanStream() {
 
 int main(int argc, char *argv[]) {
 
-	// Set up Crashpad
-	std::vector<std::string> arguments;
-
-	base::FilePath handler_path("/home/parallels/Projects/linphone-desktop/build/" // TODO change this
-	                            "crashpad/out/crashpad_handler");
-	base::FilePath database_path("/home/parallels/Projects/linphone-desktop/crashes"); // TODO same place as logs.
-	base::FilePath metrics_path("/home/parallels/Projects/linphone-desktop/metrics_path");
-
-	std::map<std::string, std::string> annotations;
-	annotations["product"] = "Linphone"; // TODO from CMake
-	annotations["version"] = "1.0.0";    // TODO from CMAKE
-
-	crashpad::CrashpadClient crashpad_client;
-	if (!crashpad_client.StartHandler(handler_path, database_path, metrics_path,
-	                                  "https://files.linphone.org:443/http-file-transfer-server/hft.php", annotations,
-	                                  arguments, true, true, {})) {
-		std::cerr << "Failed to start Crashpad handler. Crashes will not be logged." << std::endl;
-	} else {
-		std::cout << "Started Crashpad handler" << std::endl;
-	}
-
 	/*
 	#if defined _WIN32
 	    // log in console only if launched from console
@@ -88,6 +68,29 @@ int main(int argc, char *argv[]) {
 	setlocale(LC_CTYPE, ".UTF8");
 	lDebug() << "[Main] Creating application";
 	auto app = QSharedPointer<App>::create(argc, argv);
+
+	// Set up Crashpad
+	std::vector<std::string> arguments;
+
+	base::FilePath handler_path("/home/parallels/Projects/linphone-desktop/build/" // TODO change this
+	                            "crashpad/out/crashpad_handler");
+	base::FilePath database_path(Utils::appStringToCoreString(Paths::getLogsDirPath()));
+	base::FilePath metrics_path(Utils::appStringToCoreString(Paths::getMetricsDirPath()));
+
+	std::map<std::string, std::string> annotations;
+	annotations["product"] = APPLICATION_NAME;
+	annotations["version"] = (Utils::appStringToCoreString(app->getShortApplicationVersion()));
+
+	crashpad::CrashpadClient crashpad_client;
+	if (!crashpad_client.StartHandler(handler_path, database_path, metrics_path,
+	                                  "https://files.linphone.org:443/http-file-transfer-server/hft.php", annotations,
+	                                  arguments, true, true, {})) {
+		lWarning() << "Failed to start Crashpad handler. Crashes will not be logged.";
+	} else {
+		lDebug() << "Started Crashpad handler";
+	}
+	// End set up crashpad
+
 #ifdef ACCESSBILITY_WORKAROUND
 	QAccessible::installUpdateHandler(DummyUpdateHandler);
 	QAccessible::installRootObjectHandler(DummyRootObjectHandler);

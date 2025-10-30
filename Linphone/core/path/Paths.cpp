@@ -283,6 +283,11 @@ QString Paths::getLogsDirPath() {
 	                          Constants::PathLogs);
 }
 
+QString Paths::getMetricsDirPath() {
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathMetrics);
+}
+
 QString Paths::getMessageHistoryFilePath() {
 	return getReadableFilePath(
 	    getAppMessageHistoryFilePath()); // No need to ensure that the file exists as this DB is deprecated

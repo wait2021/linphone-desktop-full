@@ -69,11 +69,12 @@ int main(int argc, char *argv[]) {
 	lDebug() << "[Main] Creating application";
 	auto app = QSharedPointer<App>::create(argc, argv);
 
+#ifndef APPLE // In a first time, set-up only crashpad for Windows and Linux
 	// Set up Crashpad
 	std::vector<std::string> arguments;
 
-	base::FilePath handler_path("/home/parallels/Projects/linphone-desktop/build/" // TODO change this
-	                            "crashpad/out/crashpad_handler");
+	base::FilePath handler_path(
+	    Utils::appStringToCoreString(Paths::getCrashpadHandlerBinFilePath())); // Aller le chercher dans bin
 	base::FilePath database_path(Utils::appStringToCoreString(Paths::getLogsDirPath()));
 	base::FilePath metrics_path(Utils::appStringToCoreString(Paths::getMetricsDirPath()));
 
@@ -82,14 +83,15 @@ int main(int argc, char *argv[]) {
 	annotations["version"] = (Utils::appStringToCoreString(app->getShortApplicationVersion()));
 
 	crashpad::CrashpadClient crashpad_client;
-	if (!crashpad_client.StartHandler(handler_path, database_path, metrics_path,
-	                                  "https://files.linphone.org:443/http-file-transfer-server/hft.php", annotations,
+	if (!crashpad_client.StartHandler(handler_path, database_path, metrics_path, Constants::DefaultUploadLogsServer,
+	                                  annotations, // TODO use core->getLogCollectionUploadServerUrl
 	                                  arguments, true, true, {})) {
 		lWarning() << "Failed to start Crashpad handler. Crashes will not be logged.";
 	} else {
 		lDebug() << "Started Crashpad handler";
 	}
 	// End set up crashpad
+#endif
 
 #ifdef ACCESSBILITY_WORKAROUND
 	QAccessible::installUpdateHandler(DummyUpdateHandler);

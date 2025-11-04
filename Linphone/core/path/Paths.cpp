@@ -139,6 +139,10 @@ static inline QString getAppPackagePluginsDirPath() {
 	return getAppPackageDir().absolutePath() + Constants::PathPlugins;
 }
 
+static inline QString getAppBinDirPath() {
+	return getAppPackageDir().absolutePath() + Constants::PathBin;
+}
+
 static inline QString getAppAssistantConfigDirPath() {
 	return getAppPackageDataDirPath() + Constants::PathAssistantConfig;
 }
@@ -340,6 +344,10 @@ QString Paths::getUserCertificatesDirPath() {
 QString Paths::getZrtpSecretsFilePath() {
 	return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
 	                           Constants::PathZrtpSecrets);
+}
+
+QString Paths::getCrashpadHandlerBinFilePath() {
+	return getAppBinDirPath() + Constants::PathCrashpadHandler;
 }
 
 // -----------------------------------------------------------------------------

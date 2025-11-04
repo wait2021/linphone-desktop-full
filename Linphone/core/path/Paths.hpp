@@ -57,6 +57,7 @@ QString getToolsDirPath();
 QString getUserCertificatesDirPath();
 QString getZrtpDataFilePath();
 QString getZrtpSecretsFilePath();
+QString getCrashpadHandlerBinFilePath();
 
 void migrate();
 } // namespace Paths

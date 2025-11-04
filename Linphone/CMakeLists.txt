@@ -224,7 +224,8 @@ endforeach()
 #						CRASHPAD
 ################################################################
 
-if (ENABLE_CRASH_HANDLER)
+# In a first time, set-up only crashpad for Windows and Linux
+if (ENABLE_CRASH_HANDLER AND NOT APPLE) # TODO : peut-être que windows
 
 	find_package(Python3 REQUIRED)
     set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
@@ -264,24 +265,10 @@ if (ENABLE_CRASH_HANDLER)
 	
 	# Sync crashpad repo content with gclient
 	##########################################
-	# set(GCLIENT_SPEC "solutions = [{\\\"name\\\": \\\"crashpad\\\", \\\"url\\\": \\\"https://chromium.googlesource.com/crashpad/crashpad\\\", \\\"managed\\\": False}]")
-
-	# execute_process(
-	# 	COMMAND "${CMAKE_BINARY_DIR}/depot_tools/gclient" config "--spec=${GCLIENT_SPEC}"
-	# 	ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
-	# 	WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-	# 	RESULT_VARIABLE gclient_config_result
-	# 	OUTPUT_VARIABLE gclient_config_output
-	# 	ERROR_VARIABLE gclient_config_error
-	# )
-	# if(gclient_config_result)
-	# 	message(FATAL_ERROR "Failed configuring crashpad with gclient: ${gclient_config_result} ${gclient_config_output} ${gclient_config_error}")
-	# endif()
 	# --- Write a .gclient file directly (avoid gclient config quoting issues) ---
 	set(GCLIENT_CONTENT "solutions = [{\"name\": \"crashpad\", \"url\": \"https://chromium.googlesource.com/crashpad/crashpad\", \"managed\": False}]")
-
 	file(WRITE "${CMAKE_BINARY_DIR}/.gclient" "${GCLIENT_CONTENT}\n")
-	message(STATUS "Wrote ${CMAKE_BINARY_DIR}/.gclient with content:\n${GCLIENT_CONTENT}")
+	message(STATUS "Wrote ${CMAKE_BINARY_DIR}/.gclient file")
 
 	execute_process(
 		COMMAND "${DEPOT_TOOLS_DIR}/gclient" sync --nohooks --shallow
@@ -331,7 +318,6 @@ if (ENABLE_CRASH_HANDLER)
 	execute_process(
 		# COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen -C out
 		COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen out
-		# ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
 		RESULT_VARIABLE crashpad_gen_result
 		OUTPUT_VARIABLE crashpad_gen_output
     	ERROR_VARIABLE crashpad_gen_error
@@ -345,8 +331,7 @@ if (ENABLE_CRASH_HANDLER)
 	# Build crashpad client
 	##########################################
 	execute_process(
-		COMMAND ninja -C out
-		# ENVIRONMENT "PATH=${CMAKE_BINARY_DIR}/depot_tools:$ENV{PATH}"
+		COMMAND ninja -C out # Target install ?
 		RESULT_VARIABLE crashpad_build_result
 		OUTPUT_VARIABLE crashpad_build_output
     	ERROR_VARIABLE crashpad_build_error

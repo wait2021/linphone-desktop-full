@@ -153,8 +153,11 @@ public:
 	static constexpr char PathPlugins[] = "/plugins/";
 #endif
 	static constexpr char PathPluginsApp[] = "app/";
+	static constexpr char PathBin[] = "/bin/";
 	static constexpr char PathSounds[] = "/sounds/linphone";
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
+
+	static constexpr char PathCrashpadHandler[] = "crashpad_handler";
 
 	static constexpr char PathCallHistoryList[] = "/call-history.db";
 	static constexpr char PathConfig[] = "/linphonerc";

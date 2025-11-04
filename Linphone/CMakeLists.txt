@@ -225,7 +225,7 @@ endforeach()
 ################################################################
 
 # In a first time, set-up only crashpad for Windows and Linux
-if (ENABLE_CRASH_HANDLER AND NOT APPLE) # TODO : peut-être que windows
+if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 
 	find_package(Python3 REQUIRED)
     set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})

@@ -309,3 +309,9 @@ if(${ENABLE_APP_PACKAGING})
 	include(CPack)
 endif()
 
+################################################################
+#						CRASHPAD
+################################################################
+if(ENABLE_CRASH_HANDLER AND NOT APPLE)
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/crashpad/out/crashpad_handler" DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+endif()

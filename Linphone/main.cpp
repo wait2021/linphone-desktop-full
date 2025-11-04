@@ -30,7 +30,9 @@ void DummyRootObjectHandler(QObject *) {
 }
 #endif
 
+#ifndef APPLE
 #include <client/crashpad_client.h>
+#endif
 
 void cleanStream() {
 #ifdef _WIN32

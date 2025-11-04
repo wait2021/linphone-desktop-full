@@ -66,6 +66,9 @@ RUN sudo apt-get install -y gnupg2
 # Install configuration tools
 RUN sudo apt-get install -y wget
 
+# Install crashpad build tools
+RUN sudo pip3 install httplib2==0.22.0
+
 # Configure user bc
 RUN useradd -ms /bin/bash bc && \
     echo 'bc:cotcot' | chpasswd && \

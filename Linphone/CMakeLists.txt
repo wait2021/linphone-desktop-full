@@ -267,8 +267,14 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 	file(WRITE "${CMAKE_BINARY_DIR}/.gclient" "${GCLIENT_CONTENT}\n")
 	message(STATUS "Wrote ${CMAKE_BINARY_DIR}/.gclient file")
 
+	if(WIN32)
+		set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient.bat")
+	else()
+		set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient")
+	endif()
+
 	execute_process(
-		COMMAND "${DEPOT_TOOLS_DIR}/gclient" sync --nohooks --shallow
+		COMMAND "${GCLIENT_SCRIPT}" sync --nohooks --shallow
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		RESULT_VARIABLE gclient_sync_result
 		OUTPUT_VARIABLE gclient_sync_output

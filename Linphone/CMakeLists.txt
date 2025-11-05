@@ -258,8 +258,13 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 	clone_git_repo("https://chromium.googlesource.com/crashpad/crashpad" "${CMAKE_BINARY_DIR}/crashpad")
 
 	set(DEPOT_TOOLS_DIR "${CMAKE_BINARY_DIR}/depot_tools")
-	set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient") # gclient is a python script in depot_tools
 	
+	if(WIN32)
+		set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient.bat")
+	else()
+		set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient")
+	endif()
+		
 	# Sync crashpad repo content with gclient
 	##########################################
 	# --- Write a .gclient file directly (avoid gclient config quoting issues) ---
@@ -267,15 +272,10 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 	file(WRITE "${CMAKE_BINARY_DIR}/.gclient" "${GCLIENT_CONTENT}\n")
 	message(STATUS "Wrote ${CMAKE_BINARY_DIR}/.gclient file")
 
-	if(WIN32)
-		set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient.bat")
-	else()
-		set(GCLIENT_SCRIPT "${DEPOT_TOOLS_DIR}/gclient")
-	endif()
 
 	execute_process(
 		COMMAND "${GCLIENT_SCRIPT}" sync --nohooks --shallow
-		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/crashpad
 		RESULT_VARIABLE gclient_sync_result
 		OUTPUT_VARIABLE gclient_sync_output
 		ERROR_VARIABLE gclient_sync_error
@@ -284,40 +284,45 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 		message(FATAL_ERROR "Failed syncing crashpad with gclient: ${gclient_sync_result} ${gclient_sync_output} ${gclient_sync_error}")
 	endif()
 	message(STATUS "Synced crashpad with gclient")
-
-	# Generate gn build files
-	##########################################
-	execute_process(
-		COMMAND ${PYTHON_EXECUTABLE} build/gen.py --allow-warning
-		RESULT_VARIABLE gen_result
-		OUTPUT_VARIABLE gen_output
-		ERROR_VARIABLE gen_error
-		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/gn"
-	)
-	if(gen_result)
-		message(FATAL_ERROR "Failed running gn gen.py: ${gen_result} ${gen_output} ${gen_error}")
+	
+	# TODO: check if we still need to compile gn on linux and apple
+	if(WIN32)
+		set(GN_SCRIPT "${DEPOT_TOOLS_DIR}/gn.bat")
+	else()
+		# Generate gn build files
+		##########################################
+		execute_process(
+			COMMAND ${PYTHON_EXECUTABLE} build/gen.py --allow-warning
+			RESULT_VARIABLE gen_result
+			OUTPUT_VARIABLE gen_output
+			ERROR_VARIABLE gen_error
+			WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/gn"
+		)
+		if(gen_result)
+			message(FATAL_ERROR "Failed running gn gen.py: ${gen_result} ${gen_output} ${gen_error}")
+		endif()
+		message(STATUS "gn build files generated")
+		
+		# Build gn
+		##########################################
+		execute_process(
+			COMMAND ninja -C out
+			WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/gn"
+			RESULT_VARIABLE ninja_result
+			OUTPUT_VARIABLE ninja_output
+			ERROR_VARIABLE ninja_error
+		)
+		if(ninja_result)
+			message(FATAL_ERROR "Failed building gn: ${ninja_result} ${ninja_output} ${ninja_error}")
+		endif()
+		message(STATUS "gn builded")
+		set(GN_SCRIPT "${CMAKE_BINARY_DIR}/gn/out/gn")
 	endif()
-	message(STATUS "gn build files generated")
-
-	# Build gn
-	##########################################
-	execute_process(
-		COMMAND ninja -C out
-		RESULT_VARIABLE ninja_result
-		OUTPUT_VARIABLE ninja_output
-		ERROR_VARIABLE ninja_error
-		WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/gn"
-	)
-	if(ninja_result)
-		message(FATAL_ERROR "Failed building gn: ${ninja_result} ${ninja_output} ${ninja_error}")
-	endif()
-	message(STATUS "gn builded")
-
+				
 	# Generate crashpad gen folder
 	##########################################
-	# file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/crashpad/out")
 	execute_process(
-		COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen out
+		COMMAND ${GN_SCRIPT} gen out
 		RESULT_VARIABLE crashpad_gen_result
 		OUTPUT_VARIABLE crashpad_gen_output
     	ERROR_VARIABLE crashpad_gen_error

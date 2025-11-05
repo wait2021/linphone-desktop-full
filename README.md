@@ -36,7 +36,7 @@ The following QT optional modules are required: qt5compat, qtmultimedia qtnetwor
 
 If you wan't to build with Crash handler, you need to install the following tools:
 - clang
-- curl
+- curl dev (for C development headers) (ex: `sudo apt install libcurl4-openssl-dev`)
 - httplib2 v0.22.0 (use `pip install httplib2==0.22.0` or `pip3 install httplib2==0.22.0`)
 
 ### Set your environment

@@ -227,14 +227,11 @@ endforeach()
 # In a first time, set-up only crashpad for Windows and Linux
 if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 
+	# Check python packages
+	#######################
 	find_package(Python3 REQUIRED)
     set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE})
 	check_python_module(httplib2)
-	execute_process(
-		COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.executable)"
-		OUTPUT_VARIABLE which_python
-	)
-	message(STATUS "Using Python interpreter: ${which_python}")
 
 	# Clone required repos
 	######################
@@ -273,8 +270,6 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 	execute_process(
 		COMMAND "${DEPOT_TOOLS_DIR}/gclient" sync --nohooks --shallow
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    	# ENV
-		# 	PATH=${DEPOT_TOOLS_DIR}:$ENV{PATH}
 		RESULT_VARIABLE gclient_sync_result
 		OUTPUT_VARIABLE gclient_sync_output
 		ERROR_VARIABLE gclient_sync_error
@@ -287,7 +282,7 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 	# Generate gn build files
 	##########################################
 	execute_process(
-		COMMAND python build/gen.py --allow-warning
+		COMMAND ${PYTHON_EXECUTABLE} build/gen.py --allow-warning
 		RESULT_VARIABLE gen_result
 		OUTPUT_VARIABLE gen_output
 		ERROR_VARIABLE gen_error
@@ -316,7 +311,6 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 	##########################################
 	# file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/crashpad/out")
 	execute_process(
-		# COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen -C out
 		COMMAND ${CMAKE_BINARY_DIR}/gn/out/gn gen out
 		RESULT_VARIABLE crashpad_gen_result
 		OUTPUT_VARIABLE crashpad_gen_output

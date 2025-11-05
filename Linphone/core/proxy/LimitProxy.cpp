@@ -46,6 +46,7 @@ void LimitProxy::setSourceModels(SortFilterProxy *firstList) {
 		connect(secondList, &QAbstractItemModel::modelReset, this, &LimitProxy::invalidate);
 	}
 	connect(firstList, &SortFilterProxy::filterTextChanged, this, &LimitProxy::filterTextChanged);
+	connect(firstList, &SortFilterProxy::filterTextAboutToChange, this, &LimitProxy::filterTextAboutToChange);
 	connect(firstList, &SortFilterProxy::filterTypeChanged, this, &LimitProxy::filterTypeChanged);
 
 	// Restore old values

@@ -74,6 +74,7 @@ QString SortFilterProxy::getFilterText() const {
 }
 
 void SortFilterProxy::setFilterText(const QString &filter) {
+	emit filterTextAboutToChange(filter);
 	if (mFilterText != filter) {
 		mFilterText = filter;
 		invalidateFilter();

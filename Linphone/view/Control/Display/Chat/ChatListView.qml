@@ -19,6 +19,7 @@ ListView {
 
     property ChatGui currentChatGui: model.getAt(currentIndex) || null
     property ChatGui chatToSelect: null
+    property ChatGui chatToSelectLater: null
     onChatToSelectChanged: {
         var index = chatProxy.findChatIndex(chatToSelect)
         if (index != -1) {
@@ -56,6 +57,18 @@ ListView {
             var index = mainItem.currentIndex
             mainItem.currentIndex = -1
             mainItem.currentIndex = index
+        }
+        onFilterTextAboutToChange: (filter) => {
+            // if (filter.length === 0) {
+                console.log("filter about to be reset, select chat", mainItem.currentChatGui)
+                console.log(mainItem.currentChatGui.core.title)
+                mainItem.chatToSelectLater = mainItem.currentChatGui
+            // }
+        }
+        onFilterTextChanged: {
+            console.log("filter reset, select chat", mainItem.chatToSelectLater)
+            console.log(mainItem.currentChatGui.core.title)
+            selectChat(mainItem.chatToSelectLater)
         }
         onLayoutChanged: {
             selectChat(mainItem.currentChatGui)

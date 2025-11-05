@@ -304,7 +304,7 @@ QString AccountModel::getOutboundProxyUri() const {
 
 void AccountModel::setOutboundProxyUri(QString value) {
 	auto linOutboundProxyAddress = ToolModel::interpretUrl(value);
-	if (!linOutboundProxyAddress) {
+	if (!value.isEmpty() && !linOutboundProxyAddress) {
 		//: Unable to set outbound proxy uri, failed creating address from %1
 		emit setValueFailed(tr("set_outbound_proxy_uri_failed_error_message").arg(value));
 		return;

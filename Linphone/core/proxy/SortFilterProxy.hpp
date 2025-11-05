@@ -77,6 +77,7 @@ public:
 signals:
 	void countChanged();
 	void filterTypeChanged(int filterType);
+	void filterTextAboutToChange(const QString &filter);
 	void filterTextChanged();
 
 protected:

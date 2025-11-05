@@ -26,6 +26,7 @@ AbstractMainPage {
                                           == LinphoneEnums.RegistrationState.Ok : false
 
     property var selectedChatGui: null
+    // Used to open a new chat room by clicking on contact in new chat form
     property string remoteAddress
     onRemoteAddressChanged: console.log("ChatPage : remote address changed :", remoteAddress)
     property var remoteChatObj: UtilsCpp.getChatForAddress(remoteAddress)
@@ -199,7 +200,8 @@ AbstractMainPage {
                             Connections {
                                 target: mainItem
                                 function onSelectedChatGuiChanged() {
-                                    chatListView.selectChat(mainItem.selectedChatGui)
+                                    chatListView.chatToSelect = mainItem.selectedChatGui
+                                    // chatListView.selectChat(mainItem.selectedChatGui)
                                 }
                                 function onOpenChatRequested(chat) {
                                     chatListView.chatToSelect = chat
@@ -363,9 +365,9 @@ AbstractMainPage {
                 visible: chat != undefined //&& (chat.core.isBasic || chat.core.conferenceJoined)
                 anchors.fill: parent
                 chat: mainItem.selectedChatGui ? mainItem.selectedChatGui : null
-                onChatChanged: {
-                    if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
-                }
+                // onChatChanged: {
+                //     if (mainItem.selectedChatGui !== chat) mainItem.selectedChatGui = chat
+                // }
                 // Reset current chat when switching account, otherwise the binding makes
                 // the last chat from last account the current chat for the new default account
                 Connections {

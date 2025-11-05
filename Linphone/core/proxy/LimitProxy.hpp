@@ -99,6 +99,7 @@ signals:
 	void haveMoreChanged();
 	//-----------------------------------------------------------------
 	void filterTypeChanged(int filterType);
+	void filterTextAboutToChange(const QString &filter);
 	void filterTextChanged();
 };
 

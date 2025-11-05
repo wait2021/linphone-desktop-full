@@ -86,14 +86,15 @@ AbstractWindow {
         }
     }
     onClosing: close => {
-                   DesktopToolsCpp.screenSaverStatus = true
-                   if (callsModel.haveCall) {
-                       close.accepted = false
-                       terminateAllCallsDialog.open()
-                   }
-                   if (middleItemStackView.currentItem.objectName === "waitingRoom")
-                   middleItemStackView.replace(inCallItem)
-               }
+        DesktopToolsCpp.screenSaverStatus = true
+        if (callsModel.haveCall) {
+            close.accepted = false
+            terminateAllCallsDialog.open()
+        }
+        if (middleItemStackView.currentItem.objectName === "waitingRoom")
+            middleItemStackView.replace(inCallItem)
+        call = null
+    }
 
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
@@ -122,8 +123,9 @@ AbstractWindow {
             middleItemStackView.replace(inCallItem)
         }
         if (!callsModel.haveCall) {
-            if (call && call.core.isConference)
+            if (call && call.core.isConference) {
                 UtilsCpp.closeCallsWindow()
+            }
             else {
                 bottomButtonsLayout.setButtonsEnabled(false)
                 autoCloseWindow.restart()

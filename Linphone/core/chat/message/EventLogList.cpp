@@ -136,7 +136,7 @@ void EventLogList::setDisplayItemsStep(int displayItemsStep) {
 }
 
 void EventLogList::displayMore() {
-	auto loadMoreItems = [this] {
+	if (!mIsUpdating) {
 		if (!mChatCore) return;
 		auto chatModel = mChatCore->getModel();
 		if (!chatModel) return;
@@ -148,6 +148,7 @@ void EventLogList::displayMore() {
 			if (newCount <= totalItemsCount) {
 				return;
 			}
+			qDebug() << "old count" << totalItemsCount << "new count" << newCount;
 			auto linphoneLogs = chatModel->getHistoryRange(totalItemsCount, newCount);
 			QList<QSharedPointer<EventLogCore>> *events = new QList<QSharedPointer<EventLogCore>>();
 			for (auto it : linphoneLogs) {
@@ -158,20 +159,13 @@ void EventLogList::displayMore() {
 				int currentCount = mList.count();
 				for (auto it = events->end() - 1; it >= events->begin(); --it) {
 					connectItem(*it);
+					qDebug() << "prepend item";
 					prepend(*it);
+					qDebug() << "added";
 				}
 			});
 		});
-	};
-	if (mIsUpdating) {
-		connect(this, &EventLogList::isUpdatingChanged, this, [this, loadMoreItems] {
-			if (!mIsUpdating) {
-				disconnect(this, &EventLogList::isUpdatingChanged, this, nullptr);
-				loadMoreItems();
-			}
-		});
-		return;
-	} else loadMoreItems();
+	}
 }
 
 void EventLogList::loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event) {
@@ -274,6 +268,7 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 			});
 			return;
 		}
+		qDebug() << "update event log list";
 		setIsUpdating(true);
 		beginResetModel();
 		for (auto &event : getSharedList<EventLogCore>()) {

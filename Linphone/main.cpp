@@ -30,7 +30,7 @@ void DummyRootObjectHandler(QObject *) {
 }
 #endif
 
-#ifndef APPLE
+#ifdef _CRASH_HANDLER
 #include <client/crashpad_client.h>
 #endif
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
 	lDebug() << "[Main] Creating application";
 	auto app = QSharedPointer<App>::create(argc, argv);
 
-#ifndef APPLE // In a first time, set-up only crashpad for Windows and Linux
+#ifdef _CRASH_HANDLER
 	// Set up Crashpad
 	std::vector<std::string> arguments;
 

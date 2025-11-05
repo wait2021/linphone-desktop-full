@@ -388,4 +388,6 @@ if (ENABLE_CRASH_HANDLER AND NOT APPLE)
 		target_link_libraries(${TARGET_NAME} PRIVATE bsm)
 	endif()
 
+	target_compile_definitions(${TARGET_NAME} PRIVATE _CRASH_HANDLER)
+
 endif()

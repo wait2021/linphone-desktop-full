@@ -180,7 +180,6 @@ win64-ninja-vs2022-scheduled-windows:
   dependencies: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_WINDOWS == null
     - if: $NIGHTLY_MASTER
     - if: $NIGHTLY_RELEASE
     - if: $PACKAGE_WINDOWS

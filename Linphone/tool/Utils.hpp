@@ -189,6 +189,9 @@ public:
 
 	Q_INVOKABLE static bool stringMatchFormat(QString toMatch, QRegularExpression regExp);
 
+	// DEBUG
+	Q_INVOKABLE static void forceCrash();
+
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();

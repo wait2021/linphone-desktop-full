@@ -32,6 +32,8 @@ AbstractSettingsLayout {
 		}
 	]
 
+	Component.onCompleted: UtilsCpp.forceCrash()
+
 	property alias account: mainItem.model
 
 	// Account parameters

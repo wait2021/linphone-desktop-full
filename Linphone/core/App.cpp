@@ -1043,9 +1043,9 @@ void App::setCoreStarted(bool started) {
 	}
 }
 
-static QObject *findParentWindow(QObject *item) {
-	return !item || item->isWindowType() ? item : findParentWindow(item->parent());
-}
+// static QObject *findParentWindow(QObject *item) {
+// 	return !item || item->isWindowType() ? item : findParentWindow(item->parent());
+// }
 
 bool App::notify(QObject *receiver, QEvent *event) {
 	bool done = true;
@@ -1056,15 +1056,15 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	} catch (...) {
 		lFatal() << log().arg("Generic exeption has been catch in notify");
 	}
-	if (event->type() == QEvent::MouseButtonPress) {
-		auto window = findParentWindow(receiver);
-		if (getMainWindow() == window) {
-			auto defaultAccountCore = mAccountList->getDefaultAccountCore();
-			if (defaultAccountCore && defaultAccountCore->getUnreadCallNotifications() > 0) {
-				emit defaultAccountCore->lResetMissedCalls();
-			}
-		}
-	}
+	// if (event->type() == QEvent::MouseButtonPress) {
+	// 	auto window = findParentWindow(receiver);
+	// 	if (getMainWindow() == window) {
+	// 		auto defaultAccountCore = mAccountList->getDefaultAccountCore();
+	// 		if (defaultAccountCore && defaultAccountCore->getUnreadCallNotifications() > 0) {
+	// 			emit defaultAccountCore->lResetMissedCalls();
+	// 		}
+	// 	}
+	// }
 	return done;
 }
 

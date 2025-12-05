@@ -1,0 +1,835 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE  
+-- Found OpenGL: /usr/lib/x86_64-linux-gnu/libOpenGL.so   
+-- Found WrapOpenGL: TRUE  
+-- Found WrapVulkanHeaders: /usr/include  
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- 'pystache' python module found
+-- 'six' python module found
+-- The ASM compiler identification is GNU
+-- Found assembler: /usr/bin/cc
+-- The ASM_NASM compiler identification is NASM
+-- Found assembler: /usr/bin/nasm
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/flore/Dev/Desktop/linphone-desktop/build/external/linphone-sdk/Autotools
+-- Found Doxygen: /usr/bin/doxygen (found version "1.9.8") found components: doxygen dot 
+-- JsonCpp Version: 1.9.5
+-- Looking for C++ include clocale
+-- Looking for C++ include clocale - found
+-- Looking for localeconv
+-- Looking for localeconv - found
+-- Looking for C++ include sys/types.h
+-- Looking for C++ include sys/types.h - found
+-- Looking for C++ include stdint.h
+-- Looking for C++ include stdint.h - found
+-- Looking for C++ include stddef.h
+-- Looking for C++ include stddef.h - found
+-- Check size of lconv
+-- Check size of lconv - done
+-- Performing Test HAVE_DECIMAL_POINT
+-- Performing Test HAVE_DECIMAL_POINT - Success
+-- Using CMake's NASM integration
+-- CMAKE_BUILD_TYPE = RelWithDebInfo
+-- VERSION = 3.0.3, BUILD = 20251117
+-- 64-bit build (x86_64)
+-- Arithmetic decoding support enabled (WITH_ARITH_DEC = 1)
+-- Arithmetic encoding support enabled (WITH_ARITH_ENC = 1)
+-- TurboJPEG API library enabled (WITH_TURBOJPEG = 1)
+-- TurboJPEG Java wrapper disabled (WITH_JAVA = 0)
+-- Emulating libjpeg API/ABI v6.2 (WITH_JPEG7 = 0, WITH_JPEG8 = 0)
+-- libjpeg API shared library version = 62.4.0
+-- Compiler flags =  -O3 -g -DNDEBUG
+-- Linker flags =  
+-- Check size of size_t
+-- Check size of size_t - done
+-- Check size of unsigned long
+-- Check size of unsigned long - done
+-- Performing Test HAVE_BUILTIN_CTZL
+-- Performing Test HAVE_BUILTIN_CTZL - Success
+-- Performing Test RIGHT_SHIFT_IS_UNSIGNED
+-- Performing Test RIGHT_SHIFT_IS_UNSIGNED - Failed
+-- Performing Test HIDDEN_WORKS
+-- Performing Test HIDDEN_WORKS - Success
+-- HIDDEN = __attribute__((visibility("hidden")))
+-- Performing Test INLINE_WORKS
+-- Performing Test INLINE_WORKS - Success
+-- INLINE = __inline__ __attribute__((always_inline)) (FORCE_INLINE = 1)
+-- Performing Test HAVE_THREAD_LOCAL
+-- Performing Test HAVE_THREAD_LOCAL - Success
+-- THREAD_LOCAL = __thread
+-- Performing Test HAVE_VERSION_SCRIPT
+-- Performing Test HAVE_VERSION_SCRIPT - Success
+-- Linker supports GNU-style version scripts
+-- CMAKE_EXECUTABLE_SUFFIX = 
+-- CMAKE_ASM_NASM_COMPILER = /usr/bin/nasm
+-- CMAKE_ASM_NASM_OBJECT_FORMAT = elf64
+-- Performing Test HAVE_CET
+-- Performing Test HAVE_CET - Success
+-- CMAKE_ASM_NASM_FLAGS =  -DELF -D__x86_64__ -DPIC -D__CET__ 
+-- SIMD extensions: x86_64 (WITH_SIMD = 1)
+-- RPM architecture = x86_64, DEB architecture = amd64
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for sys/stat.h
+-- Looking for sys/stat.h - found
+-- Looking for poll.h
+-- Looking for poll.h - found
+-- Looking for sys/poll.h
+-- Looking for sys/poll.h - found
+-- Looking for sys/uio.h
+-- Looking for sys/uio.h - found
+-- Looking for fcntl.h
+-- Looking for fcntl.h - found
+-- Looking for sys/time.h
+-- Looking for sys/time.h - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/shm.h
+-- Looking for sys/shm.h - found
+-- Looking for windows.h
+-- Looking for windows.h - not found
+-- Looking for dlfcn.h
+-- Looking for dlfcn.h - found
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for ctype.h
+-- Looking for ctype.h - found
+-- Looking for dirent.h
+-- Looking for dirent.h - found
+-- Looking for errno.h
+-- Looking for errno.h - found
+-- Looking for malloc.h
+-- Looking for malloc.h - found
+-- Looking for stdarg.h
+-- Looking for stdarg.h - found
+-- Looking for time.h
+-- Looking for time.h - found
+-- Looking for ansidecl.h
+-- Looking for ansidecl.h - not found
+-- Looking for ieeefp.h
+-- Looking for ieeefp.h - not found
+-- Looking for nan.h
+-- Looking for nan.h - not found
+-- Looking for math.h
+-- Looking for math.h - found
+-- Looking for limits.h
+-- Looking for limits.h - found
+-- Looking for fp_class.h
+-- Looking for fp_class.h - not found
+-- Looking for float.h
+-- Looking for float.h - found
+-- Looking for sys/socket.h
+-- Looking for sys/socket.h - found
+-- Looking for netinet/in.h
+-- Looking for netinet/in.h - found
+-- Looking for arpa/inet.h
+-- Looking for arpa/inet.h - found
+-- Looking for netdb.h
+-- Looking for netdb.h - found
+-- Looking for sys/select.h
+-- Looking for sys/select.h - found
+-- Looking for sys/mman.h
+-- Looking for sys/mman.h - found
+-- Looking for sys/timeb.h
+-- Looking for sys/timeb.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for arpa/nameser.h
+-- Looking for arpa/nameser.h - found
+-- Looking for resolv.h
+-- Looking for resolv.h - found
+-- Looking for dl.h
+-- Looking for dl.h - not found
+-- Looking for va_copy
+-- Looking for va_copy - found
+-- Found TurboJpeg: turbojpeg  
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- Looking for byteswap.h
+-- Looking for byteswap.h - found
+-- Looking for machine/types.h
+-- Looking for machine/types.h - not found
+-- Looking for sys/int_types.h
+-- Looking for sys/int_types.h - not found
+-- Looking for winsock2.h
+-- Looking for winsock2.h - not found
+-- Looking for sigaction
+-- Looking for sigaction - found
+-- Looking for inet_aton
+-- Looking for inet_aton - found
+-- Looking for inet_pton
+-- Looking for inet_pton - found
+-- Looking for usleep
+-- Looking for usleep - found
+-- Check size of uint8_t
+-- Check size of uint8_t - done
+-- Check size of uint16_t
+-- Check size of uint16_t - done
+-- Check size of uint32_t
+-- Check size of uint32_t - done
+-- Check size of uint64_t
+-- Check size of uint64_t - done
+-- Check size of int32_t
+-- Check size of int32_t - done
+-- Check size of unsigned long
+-- Check size of unsigned long - done
+-- Check size of unsigned long long
+-- Check size of unsigned long long - done
+-- Performing Test HAVE_INLINE
+-- Performing Test HAVE_INLINE - Success
+-- Warnings Active for: srtp2
+-- Warnings as Errors: ON
+-- Found MbedTLS: mbedtls  
+-- Looking for bits/types.h
+-- Looking for bits/types.h - found
+-- Looking for conio.h
+-- Looking for conio.h - not found
+-- Looking for crypt.h
+-- Looking for crypt.h - found
+-- Looking for direct.h
+-- Looking for direct.h - not found
+-- Looking for getopt.h
+-- Looking for getopt.h - found
+-- Looking for grp.h
+-- Looking for grp.h - found
+-- Looking for io.h
+-- Looking for io.h - not found
+-- Looking for netinet/tcp.h
+-- Looking for netinet/tcp.h - found
+-- Looking for pwd.h
+-- Looking for pwd.h - found
+-- Looking for process.h
+-- Looking for process.h - not found
+-- Looking for sched.h
+-- Looking for sched.h - found
+-- Looking for sgtty.h
+-- Looking for sgtty.h - found
+-- Looking for shadow.h
+-- Looking for shadow.h - found
+-- Looking for sysexits.h
+-- Looking for sysexits.h - found
+-- Looking for sys/errno.h
+-- Looking for sys/errno.h - found
+-- Looking for sys/event.h
+-- Looking for sys/event.h - not found
+-- Looking for sys/ioctl.h
+-- Looking for sys/ioctl.h - found
+-- Looking for sys/filio.h
+-- Looking for sys/filio.h - not found
+-- Looking for sys/param.h
+-- Looking for sys/param.h - found
+-- Looking for sys/resource.h
+-- Looking for sys/resource.h - found
+-- Looking for sys/syslog.h
+-- Looking for sys/syslog.h - found
+-- Looking for sys/ucred.h
+-- Looking for sys/ucred.h - not found
+-- Looking for sys/un.h
+-- Looking for sys/un.h - found
+-- Looking for syslog.h
+-- Looking for syslog.h - found
+-- Looking for termios.h
+-- Looking for termios.h - found
+-- Looking for sys/epoll.h
+-- Looking for sys/epoll.h - found
+-- Looking for epoll_create
+-- Looking for epoll_create - found
+-- Looking for uuid/uuid.h
+-- Looking for uuid/uuid.h - found
+-- Looking for uuid_generate in uuid
+-- Looking for uuid_generate in uuid - found
+-- Looking for _spawnlp
+-- Looking for _spawnlp - not found
+-- Looking for bcopy
+-- Looking for bcopy - found
+-- Looking for chroot
+-- Looking for chroot - found
+-- Looking for ctime_r
+-- Looking for ctime_r - found
+-- Looking for endgrent
+-- Looking for endgrent - found
+-- Looking for endpwent
+-- Looking for endpwent - found
+-- Looking for fcntl
+-- Looking for fcntl - found
+-- Looking for flock
+-- Looking for flock - found
+-- Looking for fmemopen
+-- Looking for fmemopen - found
+-- Looking for gai_strerror
+-- Looking for gai_strerror - found
+-- Looking for getdtablesize
+-- Looking for getdtablesize - found
+-- Looking for geteuid
+-- Looking for geteuid - found
+-- Looking for getgrgid
+-- Looking for getgrgid - found
+-- Looking for gethostbyaddr_r
+-- Looking for gethostbyaddr_r - found
+-- Looking for gethostbyname_r
+-- Looking for gethostbyname_r - found
+-- Looking for getpeereid
+-- Looking for getpeereid - not found
+-- Looking for getpwuid
+-- Looking for getpwuid - found
+-- Looking for getpwnam
+-- Looking for getpwnam - found
+-- Looking for getspnam
+-- Looking for getspnam - found
+-- Looking for gmtime_r
+-- Looking for gmtime_r - found
+-- Looking for hstrerror
+-- Looking for hstrerror - found
+-- Looking for initgroups
+-- Looking for initgroups - found
+-- Looking for ioctl
+-- Looking for ioctl - found
+-- Looking for kqueue
+-- Looking for kqueue - not found
+-- Looking for localtime_r
+-- Looking for localtime_r - found
+-- Looking for lockf
+-- Looking for lockf - found
+-- Looking for memrchr
+-- Looking for memrchr - found
+-- Looking for pipe
+-- Looking for pipe - found
+-- Looking for res_query
+-- Looking for res_query - found
+-- Looking for sched_yield
+-- Looking for sched_yield - found
+-- Looking for sendmsg
+-- Looking for sendmsg - found
+-- Looking for setgid
+-- Looking for setgid - found
+-- Looking for setegid
+-- Looking for setegid - found
+-- Looking for setsid
+-- Looking for setsid - found
+-- Looking for setuid
+-- Looking for setuid - found
+-- Looking for seteuid
+-- Looking for seteuid - found
+-- Looking for sigset
+-- Looking for sigset - found
+-- Looking for strerror_r
+-- Looking for strerror_r - found
+-- Looking for strsep
+-- Looking for strsep - found
+-- Looking for strtoq
+-- Looking for strtoq - found
+-- Looking for strtouq
+-- Looking for strtouq - found
+-- Looking for sysconf
+-- Looking for sysconf - found
+-- Looking for waitpid
+-- Looking for waitpid - found
+-- Looking for wait4
+-- Looking for wait4 - found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for getaddrinfo
+-- Looking for getaddrinfo - found
+-- Looking for getnameinfo
+-- Looking for getnameinfo - found
+-- Looking for inet_ntop
+-- Looking for inet_ntop - found
+-- Looking for recv
+-- Looking for recv - found
+-- Looking for recvfrom
+-- Looking for recvfrom - found
+-- Looking for send
+-- Looking for send - found
+-- Looking for sendto
+-- Looking for sendto - found
+-- Looking for snprintf
+-- Looking for snprintf - found
+-- Looking for vsnprintf
+-- Looking for vsnprintf - found
+-- Looking for _vsnprintf
+-- Looking for _vsnprintf - not found
+-- Looking for TIOCGWINSZ
+-- Looking for TIOCGWINSZ - not found
+-- Looking for TIOCGWINSZ
+-- Looking for TIOCGWINSZ - found
+-- Performing Test HAVE_STRUCT_MSGHDR_MSG_CONTROL
+-- Performing Test HAVE_STRUCT_MSGHDR_MSG_CONTROL - Success
+-- Performing Test HAVE_STRUCT_PASSWD_PW_GECOS
+-- Performing Test HAVE_STRUCT_PASSWD_PW_GECOS - Success
+-- Performing Test HAVE_STRUCT_PASSWD_PW_PASSWD
+-- Performing Test HAVE_STRUCT_PASSWD_PW_PASSWD - Success
+-- Performing Test HAVE_STRUCT_STAT_ST_BLKSIZE
+-- Performing Test HAVE_STRUCT_STAT_ST_BLKSIZE - Failed
+-- Performing Test HAVE_SYS_ERRLIST
+-- Performing Test HAVE_SYS_ERRLIST - Failed
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- Check size of long long
+-- Check size of long long - done
+-- Check size of short
+-- Check size of short - done
+-- Check size of wchar_t
+-- Check size of wchar_t - done
+-- Check size of gid_t
+-- Check size of gid_t - done
+-- Check size of uid_t
+-- Check size of uid_t - done
+-- Check size of caddr_t
+-- Check size of caddr_t - done
+-- Check size of socklen_t
+-- Check size of socklen_t - done
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Looking for pthread_detach
+-- Looking for pthread_detach - found
+-- Looking for pthread_getconcurrency
+-- Looking for pthread_getconcurrency - not found
+-- Looking for pthread_kill
+-- Looking for pthread_kill - not found
+-- Looking for pthread_rwlock_destroy
+-- Looking for pthread_rwlock_destroy - found
+-- Looking for pthread_setconcurrency
+-- Looking for pthread_setconcurrency - not found
+-- Looking for pthread_yield
+-- Looking for pthread_yield - not found
+-- Opus library version: 0.8.0
+-- Found Git: /usr/bin/git (found version "2.43.0") 
+-- Opus package version: 1.3.1
+-- Opus project version: 1.3.1
+-- OPUS_HAVE_RTCD set
+-- Looking for floor in m
+-- Looking for floor in m - found
+-- Looking for cpuid.h
+-- Looking for cpuid.h - found
+-- Check SIMD support by compiler
+-- Looking for xmmintrin.h
+-- Looking for xmmintrin.h - found
+-- Performing Test SSE1_SUPPORTED
+-- Performing Test SSE1_SUPPORTED - Success
+-- Looking for emmintrin.h
+-- Looking for emmintrin.h - found
+-- Performing Test SSE2_SUPPORTED
+-- Performing Test SSE2_SUPPORTED - Success
+-- Looking for smmintrin.h
+-- Looking for smmintrin.h - found
+-- Performing Test SSE4_1_SUPPORTED
+-- Performing Test SSE4_1_SUPPORTED - Success
+-- Looking for immintrin.h
+-- Looking for immintrin.h - found
+-- Performing Test AVX_SUPPORTED
+-- Performing Test AVX_SUPPORTED - Success
+-- Performing Test STACK_PROTECTION_STRONG_SUPPORTED
+-- Performing Test STACK_PROTECTION_STRONG_SUPPORTED - Success
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+-- Looking for __i386__
+-- Looking for __i386__ - not found
+-- Looking for __x86_64__
+-- Looking for __x86_64__ - found
+-- Looking for __arm__
+-- Looking for __arm__ - not found
+-- [1;4;34mConfiguring SOCI:[0m 
+-- SOCI_VERSION                             = 4.0.0 
+-- SOCI_ABI_VERSION                         = 4.0 
+-- SOCI_SHARED                              = ON 
+-- SOCI_STATIC                              = OFF 
+-- SOCI_FRAMEWORK                           =  
+-- SOCI_TESTS                               = OFF 
+-- SOCI_ASAN                                = OFF 
+-- SOCI_CXX_C11                             =  
+-- LIB_SUFFIX                               = 64 
+-- [1;4;34mLooking for SOCI dependencies:[0m 
+-- CMAKE_THREAD_LIBS_INIT                   =  
+-- [1;31mMySQL:[0m [31mdisabled, since WITH_MYSQL=OFF[0m 
+-- [1;31mODBC:[0m [31mdisabled, since WITH_ODBC=OFF[0m 
+-- [1;31mOracle:[0m [31mdisabled, since WITH_ORACLE=OFF[0m 
+-- [1;31mPostgreSQL:[0m [31mdisabled, since WITH_POSTGRESQL=OFF[0m 
+-- [1;36mSQLite3:[0m 
+-- SQLITE3_INCLUDE_DIR                      = $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:/home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/sqlite3> 
+-- SQLITE3_LIBRARIES                        = sqlite3 
+-- [1;31mFirebird:[0m [31mdisabled, since WITH_FIREBIRD=OFF[0m 
+-- [1;31mDB2:[0m [31mdisabled, since WITH_DB2=OFF[0m 
+-- [1;4;34mConfiguring SOCI core library:[0m 
+-- SOCI_CORE_TARGET                         = soci_core 
+-- SOCI_CORE_TARGET_OUTPUT_NAME             = soci_core 
+-- SOCI_CORE_DEPS_LIBS                      = /usr/lib/x86_64-linux-gnu/libdl.a 
+-- SOCI_CORE_INCLUDE_DIRS                   = /home/flore/Dev/Desktop/linphone-desktop/build/external/linphone-sdk/external/soci /home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/soci/include /home/flore/Dev/Desktop/linphone-desktop/build/external/linphone-sdk/external/soci/include /home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/soci/include/private /home/flore/Dev/Desktop/linphone-desktop/build/external/linphone-sdk/external/soci/src/core 
+-- WITH_BOOST                               =  
+-- COMPILE_DEFINITIONS                      = SOCI_ABI_VERSION="4.0" HAVE_DL=1 SOCI_LIB_PREFIX="libsoci_" SOCI_LIB_SUFFIX=".so" SOCI_DEBUG_POSTFIX="" 
+-- 
+-- [1;4;34mConfiguring SOCI backend libraries:[0m 
+-- [1;32mSQLite3 - SOCI backend for SQLite 3[0m 
+-- SOCI_SQLITE3                             = ON 
+-- SOCI_SQLITE3_TARGET                      = soci_sqlite3 
+-- SOCI_SQLITE3_OUTPUT_NAME                 = soci_sqlite3 
+-- SOCI_SQLITE3_COMPILE_DEFINITIONS         = SOCI_ABI_VERSION="4.0" HAVE_DL=1 
+-- SOCI_SQLITE3_INCLUDE_DIRECTORIES         = /home/flore/Dev/Desktop/linphone-desktop/build/external/linphone-sdk/external/soci /home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/soci/include /home/flore/Dev/Desktop/linphone-desktop/build/external/linphone-sdk/external/soci/include /home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/soci/include/private /home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/soci/include/private $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:/home/flore/Dev/Desktop/linphone-desktop/external/linphone-sdk/external/sqlite3> 
+-- 
+-- 
+-- Looking for sys/audioio.h
+-- Looking for sys/audioio.h - not found
+-- Looking for sys/soundcard.h
+-- Looking for sys/soundcard.h - found
+-- Looking for getopt_long
+-- Looking for getopt_long - found
+-- Performing Test VAR_ARRAYS
+-- Performing Test VAR_ARRAYS - Success
+-- Performing Test HAS_ALLOCA
+-- Performing Test HAS_ALLOCA - Success
+-- Performing Test HAS_SSE
+-- Performing Test HAS_SSE - Success
+-- Performing Test HAS_VISIBILITY
+-- Performing Test HAS_VISIBILITY - Success
+-- Check size of short
+-- Check size of short - done
+-- Check size of int
+-- Check size of int - done
+-- Check size of long
+-- Check size of long - done
+-- RNNoise library version: 0.4.1
+-- RNNoise package version: 0.2.0
+-- RNNoise project version: 0.2.0
+-- RNN_HAVE_RTCD set
+-- Check SIMD support by compiler
+-- Performing Test AVX2_SUPPORTED
+-- Performing Test AVX2_SUPPORTED - Success
+-- RTCD enabled on x86 architectures for RNNoise
+-- Download RNNoise model
+-- Extract RNNoise model
+-- Looking for langinfo.h
+-- Looking for langinfo.h - found
+-- Looking for locale.h
+-- Looking for locale.h - found
+-- Looking for nl_types.h
+-- Looking for nl_types.h - found
+-- Looking for wchar.h
+-- Looking for wchar.h - found
+-- Looking for wctype.h
+-- Looking for wctype.h - found
+-- Looking for CoreServices/CoreServices.h
+-- Looking for CoreServices/CoreServices.h - not found
+-- Looking for endian.h
+-- Looking for endian.h - found
+-- Looking for machine/endian.h
+-- Looking for machine/endian.h - not found
+-- Looking for arpa/nameser_compat.h
+-- Looking for arpa/nameser_compat.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for C++ include stdbool.h
+-- Looking for C++ include stdbool.h - found
+-- Looking for getcwd
+-- Looking for getcwd - found
+-- Looking for pathconf
+-- Looking for pathconf - found
+-- Looking for realpath
+-- Looking for realpath - found
+-- Looking for gethostbyaddr
+-- Looking for gethostbyaddr - found
+-- Looking for gethostbyname
+-- Looking for gethostbyname - found
+-- Looking for socket
+-- Looking for socket - found
+-- Looking for clock_gettime
+-- Looking for clock_gettime - found
+-- Looking for ftime
+-- Looking for ftime - found
+-- Looking for gettimeofday
+-- Looking for gettimeofday - found
+-- Looking for memmove
+-- Looking for memmove - found
+-- Looking for memset
+-- Looking for memset - found
+-- Looking for nl_langinfo
+-- Looking for nl_langinfo - found
+-- Looking for setlocale
+-- Looking for setlocale - found
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for strncasecmp
+-- Looking for strncasecmp - found
+-- Looking for stricmp
+-- Looking for stricmp - not found
+-- Looking for strnicmp
+-- Looking for strnicmp - not found
+-- Looking for strchr
+-- Looking for strchr - found
+-- Looking for strdup
+-- Looking for strdup - found
+-- Looking for strrchr
+-- Looking for strrchr - found
+-- Looking for strstr
+-- Looking for strstr - found
+-- Looking for strtol
+-- Looking for strtol - found
+-- Looking for strtoul
+-- Looking for strtoul - found
+-- Looking for towupper
+-- Looking for towupper - found
+-- Looking for towlower
+-- Looking for towlower - found
+-- Looking for mblen
+-- Looking for mblen - found
+-- Looking for wcsupr
+-- Looking for wcsupr - not found
+-- Looking for wcslwr
+-- Looking for wcslwr - not found
+-- Looking for wcsnicmp
+-- Looking for wcsnicmp - not found
+-- Looking for wcsicmp
+-- Looking for wcsicmp - not found
+-- Check size of __int64
+-- Check size of __int64 - failed
+-- Check size of off64_t
+-- Check size of off64_t - done
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Found Git: /usr/bin/git (found suitable version "2.43.0", minimum required is "1.7.10") 
+-- MBEDTLS Enabled
+-- Found mbedTLS v3
+-- Found Decaf: decaf  
+-- Using Decaf
+-- DTLS SRTP available
+-- Found BCUnit: bcunit (Required is at least version "3.0.2") 
+-- Looking for clock_gettime in rt
+-- Looking for clock_gettime in rt - found
+-- Looking for dladdr in dl
+-- Looking for dladdr in dl - found
+-- Looking for execinfo.h
+-- Looking for execinfo.h - found
+-- Found BCToolbox: bctoolbox (Required is at least version "5.3.0")  
+-- Looking for sys/audio.h
+-- Looking for sys/audio.h - not found
+-- Performing Test HAVE_ATOMIC
+-- Performing Test HAVE_ATOMIC - Success
+-- Looking for arc4random
+-- Looking for arc4random - found
+-- Looking for recvmsg
+-- Looking for recvmsg - found
+-- Looking for sqrt in m
+-- Looking for sqrt in m - found
+-- Found BCToolbox: bctoolbox (Required is at least version "5.3.0") found components: tester 
+-- Found SQLite3: sqlite3  
+-- Found BCToolbox: bctoolbox (Required is at least version "5.3.0")  
+-- Looking for dlopen in dl
+-- Looking for dlopen in dl - found
+-- Found BCToolbox: bctoolbox (Required is at least version "5.3.0") found components: tester 
+-- Found Ortp: ortp (Required is at least version "5.3.0")  
+-- Found SRTP: srtp2 (Required is at least version "2") 
+-- Found BZRTP: bzrtp (Required is at least version "5.3.0")  
+-- Found GSM: gsm  
+-- Found BV16: bv16  
+-- Found Opus: opus  
+-- Found Speex: speex  
+-- Found SpeexDSP: speexdsp  
+-- Found ALSA: /usr/lib/x86_64-linux-gnu/libasound.so (found version "1.2.11") 
+-- Found PulseAudio: pulseaudio  
+-- Found ZLIB: zlib  
+-- Found RNNoise: rnnoise  
+-- Found V4L: v4l2;v4lconvert  
+-- Found X11: /usr/include   
+-- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so
+-- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so - found
+-- Looking for gethostbyname
+-- Looking for gethostbyname - found
+-- Looking for connect
+-- Looking for connect - found
+-- Looking for remove
+-- Looking for remove - found
+-- Looking for shmat
+-- Looking for shmat - found
+-- Looking for IceConnectionNumber in ICE
+-- Looking for IceConnectionNumber in ICE - found
+-- Could NOT find Xinerama (missing: XINERAMA_LIBRARY XINERAMA_INCLUDE_DIR) 
+-- Found OpenGL: /usr/lib/x86_64-linux-gnu/libOpenGL.so  found components: GLX 
+-- Found GLEW: /usr/include (found version "2.2.0") 
+-- Found VPX: libvpx  
+-- Found BCMatroska2: bcmatroska2 (Required is at least version "0.23") 
+-- Found LibYUV: yuv  
+-- Found Dav1d: libdav1d  
+-- Found Aom: aom  
+-- Build MSQOgl with Qt6
+-- Found Git: /usr/bin/git (found version "2.43.0") 
+-- LINUX_OS_PRETTY_NAME=Ubuntu 24.04.3 LTS
+
+-- Found Mediastreamer2: mediastreamer2 (Required is at least version "5.3.0")  
+-- Found OpenH264: libopenh264  
+-- Found BCToolbox: bctoolbox (Required is at least version "5.4.0")  
+-- Found Mediastreamer2: mediastreamer2 (Required is at least version "5.4.0")  
+-- Performing Test COMPILER_SUPPORTS_SSE2
+-- Performing Test COMPILER_SUPPORTS_SSE2 - Success
+-- Found BCToolbox: bctoolbox (Required is at least version "5.3.0") found components: tester 
+-- Looking for include file libudev.h
+-- Looking for include file libudev.h - found
+-- Looking for res_ndestroy
+-- Looking for res_ndestroy - not found
+-- Performing Test HAVE_RES_GETSERVERS
+-- Performing Test HAVE_RES_GETSERVERS - Failed
+-- Found Belr: belr (Required is at least version "5.3.0")  
+-- Found Soci: soci_core  found components: sqlite3 
+-- Support Curve 25519
+-- Support Curve 448
+-- Looking for getifaddrs
+-- Looking for getifaddrs - found
+-- Found BelCard: belcard (Required is at least version "5.3.0")  
+-- Target libbelle-sip-tester not found
+-- Found BelleSIP: belle-sip (Required is at least version "5.3.0")  missing components: tester
+-- Found Mediastreamer2: mediastreamer2 (Required is at least version "5.3.0")  
+-- Found XercesC: xerces-c  
+-- Found LibXml2: xml2  
+-- Found Soci: soci_core   
+-- Found Lime: lime (Required is at least version "5.3.0")  
+-- 'pystache' python module found
+-- 'six' python module found
+-- Found OpenLDAP: ldap;lber   
+-- Found JsonCPP: jsoncpp_lib  
+-- Performing Test Iconv_IS_BUILT_IN
+-- Performing Test Iconv_IS_BUILT_IN - Success
+-- Performing Test SUGGEST_OVERRIDE
+-- Performing Test SUGGEST_OVERRIDE - Success
+-- Enabled features:
+ * Assets, Enable packaging of assets (ringtones) when building the SDK.
+ * Tests component, Enable compilation of tests helper library.
+ * Non free features, Allow inclusion of non-free features (mainly codecs) in the build.
+ * Baudot, Baudot text transmission support.
+ * BV16, BroadVoice 16 audio encoding/decoding support.
+ * GSM, GSM audio encoding/decoding support.
+ * MKV, MKV playing and recording support.
+ * OPUS, OPUS audio encoding/decoding support.
+ * Speex, Speex audio encoding/decoding and DSP support.
+ * WebRTC AEC, WebRTC echo canceller support.
+ * WebRTC VAD, WebRTC voice activation detector support.
+ * RNNoise, Noise suppression in audio with RNNoise support.
+ * Video, Ability to capture and display video.
+ * AV1, Build mediastreamer2 with AV1 support through libaom and dav1d (needs ENABLE_VIDEO=ON).
+ * jpeg, JPEG support with libjpeg-turbo (needs ENABLE_VIDEO=ON).
+ * LibYUV, Build mediastreamer2 with LibYUV support (needs ENABLE_VIDEO=ON).
+ * Qt GL, Enable Qt OpenGL rendering support.
+ * VPX, Build mediastreamer2 with VPX codec.
+ * Advanced IM, Enable advanced instant messaging such as group chat.
+ * DB Storage, Enable the database storage.
+ * FlexiAPI, Enable the FlexiAPI support in Liblinphone.
+ * LDAP, Enable LDAP Liblinphone.
+ * Relative prefix, liblinphone and mediastreamer will look for their respective ressources relatively to their location.
+ * VCARD, Enable vCard 4 support in Linphone and Liblinphone.
+ * Decaf, Enable Elliptic Curve Cryptography support
+ * LIME X3DH, Enable Linphone IM Encryption version 2 support in Liblinphone.
+ * Mbedtls, Crypto stack implementation based on mbedtls.
+ * SRTP (required version >= 2), SRTP media encryption support.
+ * ZRTP, Build with ZRTP support (needs ENABLE_SRTP=ON).
+ * GoClear, Build with ZRTP GoClear message support (RFC 6189 - section 5.11) (needs ENABLE_ZRTP=ON).
+ * CXX wrapper, Build the C++ wrapper for Liblinphone.
+ * STACK_PROTECTOR, Use stack protection
+ * FLOAT_API, compile with the floating point API (for machines with float library)
+ * INSTALL_PKG_CONFIG_MODULE, install PkgConfig module
+ * INSTALL_CMAKE_CONFIG_MODULE, install CMake package config module
+ * X86_MAY_HAVE_SSE, does runtime check for SSE1 support for RNNoise
+ * X86_MAY_HAVE_SSE2, does runtime check for SSE2 support for RNNoise
+ * X86_MAY_HAVE_SSE4_1, does runtime check for SSE4_1 support for RNNoise
+ * X86_MAY_HAVE_AVX, does runtime check for AVX support
+ * X86_PRESUME_SSE, assume target CPU has SSE1 support for RNNoise
+ * X86_PRESUME_SSE2, assume target CPU has SSE2 support for RNNoise
+ * X86_MAY_HAVE_AVX2, does runtime check for AVX2 support for RNNoise
+
+-- Disabled features:
+ * HW Sanitizer, Enable Android HW sanitizer
+ * Sanitizer, Enable Clang sanitizer
+ * Strict, Pass strict flags to the compiler.
+ * Doc, Enable documentation generation with Doxygen.
+ * Tools, Enable tools binary compilation.
+ * Deprecated tests, Enable execution of deprecated tests
+ * GPL third parties, Usage of GPL third-party code (FFmpeg).
+ * AMRNB, AMR narrow-band audio encoding/decoding support (require license) (needs ENABLE_NON_FREE_FEATURES=ON).
+ * AMRWB, AMR wide-band audio encoding/decoding support (require license) (needs ENABLE_NON_FREE_FEATURES=ON).
+ * Codec2, Codec2 audio encoding/decoding support.
+ * G726, G726 audio encoding/decoding support.
+ * G729, G.729 audio encoding/decoding support.
+ * G729B CNG, G.729 annex B confort noise generation.
+ * Theora, Theora video encoding/decoding support.
+ * WASAPI, Windows Audio Session API (WASAPI) sound card support.
+ * H263, H263 video encoding/decoding support (require license) (needs ENABLE_FFMPEG=ON and ENABLE_NON_FREE_FEATURES=ON).
+ * H263p, H263+ video encoding/decoding support (require license) (needs ENABLE_FFMPEG=ON and ENABLE_NON_FREE_FEATURES=ON).
+ * MPEG4, MPEG4 video encoding/decoding support (require license) (needs ENABLE_FFMPEG=ON and ENABLE_NON_FREE_FEATURES=ON).
+ * Embedded OpenH264, Embed the openh264 library instead of downloading it from Cisco (needs ENABLE_OPENH264=ON).
+ * MSWinRTVideo, Build mswinrtvid mediastreamer plugin (Deprecated).
+ * Daemon, Enable Linphone Daemon.
+ * DNS_SERVICE, Enable Apple DNS Service. Available on Mac and iOS. Incompatible with ENABLE_MDNS=ON.
+ * Example Plugin, Enable build of the liblinphone example plugin.
+ * mDNS, Multicast DNS support.
+ * Microsoft Store App, Enable build for Microsoft Store.
+ * OpenSSL Export, Enable OpenSSL deployment
+ * PCAP, PCAP support.
+ * RTP Map always in SDP, Always include rtpmap in SDP.
+ * Tunnel, Enable build of tunnel.
+ * Ekt Server Plugin, Enable build of the EKT server plugin (needs ENABLE_CXX_WRAPPER).
+ * LIME, Enable Linphone IM Encryption support in Liblinphone (Deprecated, use ENABLE_LIME_X3DH=ON instead).
+ * Openssl, Crypto stack implementation based on openssl.
+ * PQCrypto, Post Quantum Cryptography (require license) (needs ENABLE_NON_FREE_FEATURES=ON).
+ * CSharp wrapper, Build the C# wrapper from Liblinphone.
+ * Python wrapper, Build the Python wrapper from Liblinphone.
+ * Java wrapper, Build the Java wrapper from Liblinphone.
+ * Swift wrapper, Build the Swift wrapper sources from Liblinphone.
+ * Swift wrapper compilation, Compile and package the swift wrapper framework (needs ENABLE_SWIFT_WRAPPER=ON).
+ * Swift doc, Build the Swift doc from Liblinphone (needs ENABLE_SWIFT_WRAPPER=ON).
+ * AAudio, AAudio Android sound card for Android 8+.
+ * Oboe, Oboe Android sound card for Android 8+.
+ * Camera2, Android capture filter using Camera2 API for Android 8+ (needs ENABLE_VIDEO=ON).
+ * USE_ALLOCA, Use alloca for stack arrays (on non-C99 compilers)
+ * CUSTOM_MODES, Enable non-Opus modes, e.g. 44.1 kHz & 2^n frames
+ * BUILD_PROGRAMS, Build programs
+ * FIXED_POINT, compile as fixed-point (for machines without a fast enough FPU)
+ * X86_PRESUME_SSE4_1, assume target CPU has SSE4_1 support
+ * X86_PRESUME_AVX, assume target CPU has AVX support
+
+-- Trying to find Mediastreamer2
+-- Found Mediastreamer2: mediastreamer2   
+-- Trying to find LinphoneCxx
+-- Found LinphoneCxx: liblinphone++   
+-- Trying to find BCToolbox
+-- Found BCToolbox: bctoolbox   
+-- Trying to find LibLinphone
+-- Found LibLinphone: liblinphone   
+-- Configuring done (48.0s)
+-- Generating done (0.6s)
+-- Build files have been written to: /home/flore/Dev/Desktop/linphone-desktop/build

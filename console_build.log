@@ -1,0 +1,112 @@
+[  0%] Built target dav1d
+[  0%] Built target openh264
+[  0%] Built target vpx
+[  0%] Built target libaom
+[  1%] Built target gsm
+[  1%] Built target bv16
+[  2%] Built target jpeg16
+[  2%] Built target simd
+[  3%] Built target jpeg12
+[  4%] Built target turbojpeg12
+[  5%] Built target p256m
+[  5%] Built target turbojpeg16
+[  5%] Built target everest
+[  5%] Built target sqlite3
+[  5%] Built target speexdsp
+[  7%] Built target speex
+[  7%] Built target rnnoise
+[  7%] Built target decaf-gen-ed448-ntab
+[  7%] Built target mediastreamer2-yuv2rgb-vs-header
+[  7%] Built target decaf-generator-common-code
+[  7%] Built target decaf-gen-c25519-ntab
+[  8%] Built target zlib
+[  8%] Built target bcmatroska2-ebml-objects
+[ 14%] Built target opus
+[ 14%] Built target mediastreamer2-basedescs-header
+[ 14%] Built target liblinphone-plugins
+[ 14%] Built target jsoncpp_lib
+[ 14%] Built target cjpeg12
+[ 14%] Built target cjpeg16
+[ 14%] Built target mediastreamer2-fragment-es-shader-header
+[ 14%] Built target mediastreamer2-fragment-shader-header
+[ 14%] Built target mediastreamer2-vertex-es-shader-header
+[ 14%] Built target mediastreamer2-voipdescs-header
+[ 14%] Built target mediastreamer2-vertex-shader-header
+[ 14%] Built target mediastreamer2-yuv2rgb-fs-header
+[ 14%] Built target djpeg12
+[ 15%] Built target djpeg16
+[ 15%] Built target lber
+[ 16%] Built target bcunit
+[ 17%] Built target soci_core
+[ 17%] Built target big_resources_fonts
+[ 17%] Built target liblinphone-doc
+[ 19%] Built target xml2
+[ 19%] Built target Linphone_qmlimportscan
+[ 19%] Built target Linphone_copy_qml
+[ 19%] Built target Linphone_copy_res
+[ 19%] Built target decaf-generator-p448
+[ 19%] Built target Linphone_lrelease
+[ 19%] Built target decaf-generator-p25519
+[ 19%] Built target liblinphone-cxx-wrapper
+[ 21%] Built target jpeg
+[ 21%] Built target soci_sqlite3
+[ 21%] Built target rcc_object_fonts
+[ 24%] Built target mbedcrypto
+[ 25%] Built target decaf-generator-ed448goldilocks
+[ 25%] Built target decaf-p448
+[ 25%] Built target decaf-generator-curve25519
+[ 26%] Built target jpegtran
+[ 26%] Built target decaf-p25519
+[ 26%] Built target cjpeg
+[ 26%] Built target example
+[ 26%] Built target djpeg
+[ 27%] Built target jcstest
+[ 27%] Built target linphone-cpp-html-doc
+[ 27%] Built target decaf-generated-code
+[ 27%] Built target mbedx509
+[ 38%] Built target xerces-c
+[ 40%] Built target turbojpeg
+[ 40%] Built target decaf-curve448
+[ 40%] Built target decaf-curve25519
+[ 41%] Built target mbedtls
+[ 44%] Built target decaf
+[ 44%] Built target yuv
+[ 45%] Built target srtp2
+[ 46%] Built target bctoolbox
+[ 49%] Built target ldap
+[ 50%] Built target bzrtp
+[ 50%] Built target bctoolbox-tester
+[ 50%] Built target belr
+[ 52%] Built target lime
+[ 52%] Built target bcmatroska2-corec-objects
+[ 53%] Built target ortp
+[ 53%] Built target bcmatroska2
+[ 53%] Built target belcard
+[ 55%] Built target belle-sip
+[ 55%] Built target mediastreamer2-git-version
+[ 55%] Built target liblinphone-git-version
+[ 55%] Building C object external/linphone-sdk/mediastreamer2/src/CMakeFiles/mediastreamer2.dir/base/msfactory.c.o
+[ 55%] Building C object external/linphone-sdk/mediastreamer2/src/CMakeFiles/mediastreamer2.dir/audiofilters/msnoisesuppressor.c.o
+[ 55%] Building C object external/linphone-sdk/mediastreamer2/src/CMakeFiles/mediastreamer2.dir/voip/msvoip.c.o
+[ 55%] Building C object external/linphone-sdk/mediastreamer2/src/CMakeFiles/mediastreamer2.dir/voip/audiostream.c.o
+[ 56%] Linking CXX shared library ../../../../lib/libmediastreamer2.so
+[ 61%] Built target mediastreamer2
+[ 61%] Linking CXX shared module ../../../../lib/mediastreamer2/plugins/libmsopenh264.so
+[ 61%] Linking CXX shared module ../../../../lib/libmsqogl.so
+[ 61%] Building CXX object external/linphone-sdk/mswebrtc/CMakeFiles/mswebrtc.dir/mswebrtc_aec3.cc.o
+[ 61%] Built target msopenh264
+[ 62%] Built target liblinphone-coreapi
+[ 62%] Built target msqogl
+[ 62%] Linking CXX shared module ../../../lib/mediastreamer2/plugins/libmswebrtc.so
+[ 62%] Linking CXX shared library ../../../../lib/liblinphone.so
+[ 66%] Built target mswebrtc
+[ 66%] Built target mediastreamer2-plugins
+[ 78%] Built target liblinphone
+[ 78%] Linking CXX shared library ../../../../../lib/liblinphone++.so
+[ 78%] Built target liblinphone++
+[ 78%] Built target Linphone_autogen_timestamp_deps
+[ 79%] Built target Linphone_autogen
+[ 79%] Generating meta_types/qt6linphone_relwithdebinfo_metatypes.json
+[ 79%] Generating meta_types/qt6linphone_relwithdebinfo_metatypes.json
+[ 79%] Linking CXX executable ../bin/linphone6
+[100%] Built target Linphone

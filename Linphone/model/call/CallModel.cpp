@@ -298,8 +298,14 @@ void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layo
 	//	else
 	// coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getActiveSpeakerCameraMode());
 	auto params = coreManager->getCore()->createCallParams(mMonitor);
-	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
+	auto newLayout = LinphoneEnums::toLinphone(layout);
+	params->setConferenceVideoLayout(newLayout);
 	params->enableVideo(layout != LinphoneEnums::ConferenceLayout::AudioOnly);
+	lInfo() << log().arg("Change conference video layout to") << layout;
+	lInfo() << "linphone layout :" << (int)newLayout;
+	lInfo() << "video enabled" << params->videoEnabled();
+	lInfo() << "camera enabled" << params->cameraEnabled();
+	params->enableVideo(layout != LinphoneEnums::ConferenceLayout::AudioOnly && params->cameraEnabled());
 	if (!params->videoEnabled() && params->screenSharingEnabled()) {
 		params->enableScreenSharing(false); // Deactivate screensharing if going to audio only.
 	}
@@ -313,6 +319,9 @@ void CallModel::updateConferenceVideoLayout() {
 	auto newLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
 	if (!callParams->videoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
 	if (!mConference) newLayout = LinphoneEnums::ConferenceLayout::ActiveSpeaker;
+	lInfo() << log().arg("Updating conference video layout, new layout is") << newLayout;
+	lInfo() << "video enabled : " << callParams->videoEnabled();
+	lInfo() << "camera enabled : " << callParams->cameraEnabled();
 	if (mConferenceVideoLayout != newLayout) { // && !getPausedByUser()) { // Only update if not in pause.
 		                                       //		if (mMonitor->getConference()) {
 		//			if (callParams->getConferenceVideoLayout() == linphone::Conference::Layout::Grid)

@@ -382,19 +382,16 @@
         <translation>Kontoeinstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="33"/>
         <source>info_popup_invalid_registrar_uri_message</source>
         <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Die Registrar-URI ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (&lt;port&gt; ist optional)</translation>
+        <translation type="vanished">Die Registrar-URI ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (&lt;port&gt; ist optional)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="35"/>
         <source>info_popup_invalid_outbound_proxy_message</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
-        <translation>Die Ausgangsproxy-URI ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (&lt;port&gt; ist optional)</translation>
+        <translation type="vanished">Die Ausgangsproxy-URI ist ungültig. Bitte stellen Sie sicher, dass sie dem folgenden Format entspricht: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (&lt;port&gt; ist optional)</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="36"/>
         <source>info_popup_error_title</source>
         <translation type="vanished">Fehler</translation>
     </message>
@@ -765,30 +762,30 @@
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1408"/>
+        <location filename="../../core/App.cpp" line="1429"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1408"/>
+        <location filename="../../core/App.cpp" line="1429"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1423"/>
+        <location filename="../../core/App.cpp" line="1444"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1441"/>
+        <location filename="../../core/App.cpp" line="1462"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Auf Updates prüfen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1559"/>
+        <location filename="../../core/App.cpp" line="1580"/>
         <source>mark_all_read_action</source>
         <translation>Alle als gelesen markieren</translation>
     </message>
@@ -1142,67 +1139,67 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="372"/>
+        <location filename="../../model/call/CallModel.cpp" line="375"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
         <translation>Keine Antwort</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="376"/>
+        <location filename="../../model/call/CallModel.cpp" line="379"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
         <translation>403: Zugriff auf Ressource verweigert</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="380"/>
+        <location filename="../../model/call/CallModel.cpp" line="383"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
         <translation>Zeitüberschreitung der Anfrage</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="384"/>
+        <location filename="../../model/call/CallModel.cpp" line="387"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
         <translation>Der Benutzer hat den Anruf abgelehnt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="388"/>
+        <location filename="../../model/call/CallModel.cpp" line="391"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
         <translation>Benutzer nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="392"/>
+        <location filename="../../model/call/CallModel.cpp" line="395"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
         <translation>Der Benutzer ist beschäftigt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="396"/>
+        <location filename="../../model/call/CallModel.cpp" line="399"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
         <translation>Der Benutzer kann Ihren Anruf nicht annehmen</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="400"/>
+        <location filename="../../model/call/CallModel.cpp" line="403"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
         <translation>Dienst nicht verfügbar oder Netzwerkfehler</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="404"/>
+        <location filename="../../model/call/CallModel.cpp" line="407"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
         <translation>Benutzer kann nicht gestört werden</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="408"/>
+        <location filename="../../model/call/CallModel.cpp" line="411"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
         <translation>Vorübergehend nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="412"/>
+        <location filename="../../model/call/CallModel.cpp" line="415"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server tiemout&quot;</extracomment>
         <translation>Server-Zeitüberschreitung</translation>
@@ -2112,65 +2109,65 @@
 <context>
     <name>ChatListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="253"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="250"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 schreibt…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="255"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="252"/>
         <source>chat_message_draft_sending_text</source>
         <translation>Entwurf: %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="397"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="339"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="336"/>
         <source>chat_room_mute</source>
         <translation>Stummschalten</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="335"/>
         <source>chat_room_unmute</source>
         <extracomment>&quot;Mute&quot;</extracomment>
         <translation>Stummschaltung aufheben</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="352"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="349"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
         <translation>Als gelesen markieren</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="371"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="368"/>
         <source>chat_room_leave</source>
         <extracomment>&quot;leave&quot;</extracomment>
         <translation>Verlassen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="377"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="374"/>
         <source>chat_list_leave_chat_popup_title</source>
         <extracomment>leave the conversation ?</extracomment>
         <translation>Chat verlassen?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="379"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="376"/>
         <source>chat_list_leave_chat_popup_message</source>
         <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
         <translation>„Sie können in diesem Chat keine Nachrichten mehr senden oder empfangen. Möchten Sie fortfahren?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="403"/>
         <source>chat_list_delete_chat_popup_title</source>
         <extracomment>Delete the conversation ?</extracomment>
         <translation>Chat löschen?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="408"/>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="405"/>
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>Dieser Chat und alle seine Nachrichten werden gelöscht. Möchten Sie fortfahren?</translation>
@@ -2785,7 +2782,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="62"/>
         <source>close_accessible_name</source>
-        <extracomment>Close %n</extracomment>
+        <extracomment>Close %1</extracomment>
         <translation>Schließe %1</translation>
     </message>
     <message>
@@ -4623,19 +4620,19 @@ Ablauf: %1</translation>
 <context>
     <name>MeetingListView</name>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="277"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="274"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
         <translation>Besprechung abgesagt</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="301"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="298"/>
         <source>meetings_list_no_meeting_for_today</source>
         <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
         <translation>Heute keine Besprechungen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="335"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="332"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Besprechung löschen</translation>
@@ -5040,7 +5037,7 @@ Ablauf: %1</translation>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="362"/>
         <source>new_voice_message</source>
-        <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
+        <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
         <translation>Sprachnachricht empfangen!</translation>
     </message>
     <message>

@@ -109,3 +109,28 @@ ubuntu2204-makefile-gcc-plugins-deploy:
   script:
     - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
 
+.linux-squishrunner-script: &linux-squishrunner-script |
+  echo "Starting Squish tests..."
+  "$SQUISH_BIN_PATH_LINUX/squishserver" --config removeAUT $APPLICATION_NAME
+  "$SQUISH_BIN_PATH_LINUX/squishserver" --config addAUT $APPLICATION_NAME build/OUTPUT/macos-arm64
+  "$SQUISH_BIN_PATH_LINUX/squishserver" &
+  "$SQUISH_BIN_PATH_LINUX/squishrunner" --testsuite  tester/squish/suites/linux --reportgen html,build/output/squish-reports  --exitCodeOnFail 1
+  "$SQUISH_BIN_PATH_LINUX/squishrunner" --testsuite  tester/squish/suites/cross-platform --reportgen html,build/output/squish-reports  --exitCodeOnFail 1
+  "$SQUISH_BIN_PATH_LINUX/squishserver" --stop
+  echo "Squish tests finished."
+
+linux-squish-tests:
+  stage: test
+  image: gitlab.linphone.org:4567/bc/private/docker-private/bc-dev-ubuntu-25-04-squish:20250925_170856_20250925_add_squish_for_qt
+  tags: [ "docker" ]
+  needs:
+    - ubuntu2204-makefile-gcc-package
+  rules:
+    - if: $SQUISH_TESTS
+  script:
+    - *linux-squishrunner-script
+  artifacts:
+    paths:
+      - build/OUTPUT/squish-reports/*
+    when: always
+    expire_in: 1 week

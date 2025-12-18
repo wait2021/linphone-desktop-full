@@ -98,8 +98,8 @@ if(APPLE)
 	if (NOT DEPLOYQT_PROGRAM)
 		message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 	endif()
-	#Packaging is done by CPack in the cleanCPack.cmake file. But on mac, we need Qt files in .app
-	if(NOT ENABLE_APP_PACKAGING)
+	#Packaging is done by CPack in the cleanCPack.cmake file. But on mac, we need Qt files in .app, used by Squish tests.
+	if(NOT ENABLE_APP_PACKAGING OR SQUISH_TESTS)
 		install(CODE "MESSAGE(\"MacDeploy install: execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=0 -always-overwrite) \")")
 		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=0 -always-overwrite)")
 	endif()

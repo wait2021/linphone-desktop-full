@@ -220,7 +220,7 @@ win64-codesigning:
     - cd build-desktop/OUTPUT/Packages/
     - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe"
     - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Signature failed"}'
-  artifacts:
+  artifacts: 
     paths:
       - build-desktop\OUTPUT\Packages\*
     when: always
@@ -260,3 +260,35 @@ win64-ninja-vs2022-plugins-upload:
   extends: .win64-plugins-upload
   needs:
     - win64-ninja-vs2022-scheduled-windows
+
+#################################################
+#               TEST
+#################################################
+
+win64-squish-tests:
+  stage: test
+  tags: [ "windows-powershell-vs-17-2022" ]
+  needs:
+    - win64-ninja-vs2022-package-windows
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $PACKAGE_WINDOWS && $SQUISH_TESTS
+  script:
+    - |
+      try {
+        & "$env:SQUISH_BIN_PATH_WIN64\squishserver" --config removeAUT linphone.exe
+        & "$env:SQUISH_BIN_PATH_WIN64\squishserver" --config addAUT linphone.exe build-desktop/OUTPUT/bin
+        Start-Process -FilePath "$env:SQUISH_BIN_PATH_WIN64\squishserver" -PassThru
+        mkdir "build-desktop/OUTPUT\squish\reports" -Force
+        & "$env:SQUISH_BIN_PATH_WIN64\squishrunner.exe" --testsuite tester\squish\suites\windows  --reportgen html,build-desktop\OUTPUT\squish\reports --exitCodeOnFail 1
+        if ($LASTEXITCODE -ne 0) {
+         throw "Squish test suite failed with exit code $LASTEXITCODE"
+        }
+      } finally {
+        & "$env:SQUISH_BIN_PATH_WIN64\squishserver" --stop
+      }
+  artifacts:
+    paths:
+      - build-desktop\OUTPUT\squish\reports
+    when: always
+    expire_in: 1 week
+

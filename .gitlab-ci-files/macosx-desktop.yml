@@ -107,6 +107,7 @@ macosx-ninja-package:
   extends: macosx-ninja
   script:
     - if [[ $MAKE_RELEASE_FILE_URL == "" ]]; then export RELEASE_FILE=""; fi
+    - export CMAKE_OPTIONS="$CMAKE_OPTIONS -DSQUISH_TESTS=${SQUISH_TESTS:-OFF}"
     - *build_all_script
   artifacts:
     when: always
@@ -168,4 +169,38 @@ macosx-makefile-plugins-deploy:
       - $DEPLOY_PLUGINS
  script:
    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER/plugins
+
+#################################################
+#               TEST
+#################################################
+
+.macosx-squishrunner-script: &macosx-squishrunner-script |
+  set -eo pipefail
+  mkdir -p build/OUTPUT/squish/reports
+  rm -f ~/Library/Preferences/linphone/linphonerc
+  "$SQUISH_BIN_PATH_MACOS/squishserver" --config removeAUT "$APPLICATION_NAME"
+  "$SQUISH_BIN_PATH_MACOS/squishserver" --config addAUT   "$APPLICATION_NAME" build/OUTPUT/macos-arm64
+  set +e
+  "$SQUISH_BIN_PATH_MACOS/squishrunner" \
+    --testsuite  tester/squish/suites/mac \
+    --reportgen html,build/OUTPUT/squish/reports \
+    --exitCodeOnFail 1
+  TEST_RESULT_SQUISHRUNNER=$?
+  set -e
+  exit $TEST_RESULT_SQUISHRUNNER
+
+macosx-squish-tests:
+  stage: test
+  tags: [ "macos-min-xcode12.2" ]
+  needs:
+    - macosx-ninja-package
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $PACKAGE_MACOSX && $SQUISH_TESTS
+  script:
+    - *macosx-squishrunner-script
+  artifacts:
+    paths:
+      - build/OUTPUT/squish/reports/*
+    when: always
+    expire_in: 1 week
 

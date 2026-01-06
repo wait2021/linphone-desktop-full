@@ -36,6 +36,7 @@
 #include "core/recorder/RecorderGui.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
+#include "tool/accessibility/AccessibilityHelper.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 
 #include <limits.h>
@@ -248,6 +249,14 @@ void Utils::showInformationPopup(const QString &title,
                                  bool isSuccess,
                                  QQuickWindow *window) {
 	if (!window) window = App::getInstance()->getMainWindow();
+	// Accessibility alert
+	AccessibilityHelper::announceMessage((isSuccess
+	                                          //: Error message popup : title : %1 ; description : %2
+	                                          ? tr("error_message_alert_accessible_name")
+	                                          //: Information message popup : title : %1 ; description : %2
+	                                          : tr("information_message_alert_accessible_name"))
+	                                         .arg(title)
+	                                         .arg(description));
 	QMetaObject::invokeMethod(window, "showInformationPopup", Q_ARG(QVariant, title), Q_ARG(QVariant, description),
 	                          Q_ARG(QVariant, isSuccess));
 }

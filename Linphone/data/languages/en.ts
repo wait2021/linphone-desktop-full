@@ -820,25 +820,25 @@
 <context>
     <name>CallListView</name>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="54"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="56"/>
         <source>meeting</source>
         <extracomment>&quot;Réunion</extracomment>
         <translation>Meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="56"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="58"/>
         <source>call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="61"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="63"/>
         <source>paused_call_or_meeting</source>
         <extracomment>&quot;%1 en pause&quot;</extracomment>
         <translation>%1 paused</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="63"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="65"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
         <translation>Ongoing %1</translation>

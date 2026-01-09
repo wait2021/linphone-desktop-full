@@ -20,6 +20,9 @@
 
 #include "SortFilterProxy.hpp"
 
+SortFilterProxy::SortFilterProxy() : QSortFilterProxyModel() {
+}
+
 SortFilterProxy::SortFilterProxy(QAbstractItemModel *list) : QSortFilterProxyModel(list) {
 	connect(this, &SortFilterProxy::rowsInserted, this, &SortFilterProxy::countChanged);
 	connect(this, &SortFilterProxy::rowsRemoved, this, &SortFilterProxy::countChanged);
@@ -90,5 +93,10 @@ void SortFilterProxy::remove(int index, int count) {
 }
 
 void SortFilterProxy::invalidateFilter() {
-	QSortFilterProxyModel::invalidateFilter();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 10, 0)
+	QSortFilterProxyModel::beginFilterChange();
+	QSortFilterProxyModel::endFilterChange();
+#else
+	invalidateFilter();
+#endif
 }

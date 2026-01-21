@@ -37,6 +37,51 @@
     </message>
 </context>
 <context>
+    <name>AdminLeaveGroupView</name>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="43"/>
+        <source>admin_leave_group_title</source>
+        <extracomment>Leave the group</extracomment>
+        <translation>Leave the group</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="53"/>
+        <source>admin_leave_group_description</source>
+        <extracomment>You are the group admin. You can either leave the group or end it for all participants.</extracomment>
+        <translation>You are the group admin. You can either leave the group or end it for all participants.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="64"/>
+        <source>admin_leave_group_subtitle</source>
+        <extracomment>(The group will remain visible, but messaging will be disabled.)</extracomment>
+        <translation>(The group will remain visible, but messaging will be disabled.)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="76"/>
+        <source>admin_leave_group_leave_only</source>
+        <extracomment>Leave group only for me</extracomment>
+        <translation>Leave group only for me</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="89"/>
+        <source>admin_leave_group_end_for_all</source>
+        <extracomment>End group for everyone</extracomment>
+        <translation>End group for everyone</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="93"/>
+        <source>admin_leave_group_confirm_title</source>
+        <extracomment>End Group?</extracomment>
+        <translation>End Group?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/AdminLeaveGroupView.qml" line="95"/>
+        <source>admin_leave_group_confirm_message</source>
+        <extracomment>This will end the group for all participants. The group will become read-only. Do you want to continue?</extracomment>
+        <translation>This will end the group for all participants. The group will become read-only. Do you want to continue?</translation>
+    </message>
+</context>
+<context>
     <name>AccountCore</name>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="446"/>
@@ -2072,6 +2117,18 @@
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation>Message history has been deleted</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="410"/>
+        <source>chat_operation_failed_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="410"/>
+        <source>chat_operation_failed_message</source>
+        <extracomment>An error occurred</extracomment>
+        <translation>An error occurred</translation>
     </message>
 </context>
 <context>
@@ -5524,6 +5581,33 @@ Expiration : %1</translation>
         <source>assistant_account_create_missing_email_error</source>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
         <translation>Please enter an email</translation>
+    </message>
+</context>
+<context>
+    <name>SelectNewAdminView</name>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/SelectNewAdminView.qml" line="42"/>
+        <source>admin_leave_group_title</source>
+        <extracomment>Leave the group</extracomment>
+        <translation>Leave the group</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/SelectNewAdminView.qml" line="53"/>
+        <source>select_new_admin_description</source>
+        <extracomment>You are the last remaining administrator. Please select a participant to transfer the administrator role to before leaving the group.</extracomment>
+        <translation>You are the last remaining administrator. Please select a participant to transfer the administrator role to before leaving the group.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/SelectNewAdminView.qml" line="63"/>
+        <source>select_new_admin_subtitle</source>
+        <extracomment>Select a participant from the list below.</extracomment>
+        <translation>Select a participant from the list below.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/SelectNewAdminView.qml" line="127"/>
+        <source>select_new_admin_leave_button</source>
+        <extracomment>Leave the group</extracomment>
+        <translation>Leave the group</translation>
     </message>
 </context>
 <context>

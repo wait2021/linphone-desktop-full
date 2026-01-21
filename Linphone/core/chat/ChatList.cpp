@@ -181,7 +181,12 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	auto core = chatGui->mCore;
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [core](const QSharedPointer<ChatCore> item) {
-		return item->getIdentifier() == core->getIdentifier();
+		// Compare by pointer first (same object)
+		if (item.get() == core.get()) return true;
+		// Only compare by identifier if both are non-empty
+		auto id1 = item->getIdentifier();
+		auto id2 = core->getIdentifier();
+		return !id1.isEmpty() && !id2.isEmpty() && id1 == id2;
 	});
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
@@ -190,7 +195,13 @@ bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	auto chatList = getSharedList<ChatCore>();
 	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
-		return item && chatCore && item->getIdentifier() == chatCore->getIdentifier();
+		if (!item || !chatCore) return false;
+		// Check if it's the same ChatCore object
+		if (item.get() == chatCore.get()) return true;
+		// Only compare by identifier if both are non-empty
+		auto id1 = item->getIdentifier();
+		auto id2 = chatCore->getIdentifier();
+		return !id1.isEmpty() && !id2.isEmpty() && id1 == id2;
 	});
 	if (it == chatList.end()) {
 		connectItem(chatCore);

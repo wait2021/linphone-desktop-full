@@ -79,7 +79,12 @@ ListView {
         // force adding chat to list if not in list for now
         if (index === -1 && force === true && chatGui) {
             if (chatProxy.addChatInList(chatGui)) {
-                var index = chatProxy.findChatIndex(chatGui)
+                // Delay to let the model update propagate
+                Qt.callLater(function() {
+                    var newIndex = chatProxy.findChatIndex(chatGui)
+                    mainItem.currentIndex = newIndex
+                })
+                return
             }
         }
         mainItem.currentIndex = index

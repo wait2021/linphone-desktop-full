@@ -22,7 +22,7 @@ FocusScope {
     property alias callHeaderContent: splitPanel.header.contentItem
     property bool replyingToMessage: false
     property bool editingMessage: false
-    enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
+    enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, AdminLeaveGroup, SelectNewAdmin, None}
     
     signal oneOneCall(bool video)
     signal groupCall()
@@ -578,7 +578,11 @@ FocusScope {
                                     ? forwardToListsComponent
                                     : panelType === SelectedChatView.PanelType.ManageParticipants
                                         ? manageParticipantsComponent
-                                        : infoComponent
+                                        : panelType === SelectedChatView.PanelType.AdminLeaveGroup
+                                            ? adminLeaveGroupComponent
+                                            : panelType === SelectedChatView.PanelType.SelectNewAdmin
+                                                ? selectNewAdminComponent
+                                                : infoComponent
                 active: detailsPanel.visible
                 onLoaded: {
                     if (contentLoader.item && contentLoader.item.parentView) {
@@ -603,6 +607,7 @@ FocusScope {
                         contentLoader.panelType = showMedias ? SelectedChatView.PanelType.Medias : SelectedChatView.PanelType.SharedFiles
                     }
                     onManageParticipantsRequested: contentLoader.panelType = SelectedChatView.PanelType.ManageParticipants
+                    onAdminLeaveGroupRequested: contentLoader.panelType = SelectedChatView.PanelType.AdminLeaveGroup
                     onOneOneCall: (video) => mainItem.oneOneCall(video)
                     onGroupCall: mainItem.groupCall()
                 }
@@ -659,6 +664,23 @@ FocusScope {
                 EphemeralSettings {
                     chatGui: mainItem.chat
                     onDone: contentLoader.panelType = SelectedChatView.PanelType.None
+                }
+            }
+
+            Component {
+                id: adminLeaveGroupComponent
+                AdminLeaveGroupView {
+                    chatGui: mainItem.chat
+                    onDone: detailsPanel.visible = false
+                    onSelectNewAdminRequested: contentLoader.panelType = SelectedChatView.PanelType.SelectNewAdmin
+                }
+            }
+
+            Component {
+                id: selectNewAdminComponent
+                SelectNewAdminView {
+                    chatGui: mainItem.chat
+                    onDone: detailsPanel.visible = false
                 }
             }
 

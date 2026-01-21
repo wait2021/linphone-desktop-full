@@ -2073,6 +2073,18 @@
         <extracomment>Message history has been deleted</extracomment>
         <translation>L&apos;historique des messages a été supprimé</translation>
     </message>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="410"/>
+        <source>chat_operation_failed_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="410"/>
+        <source>chat_operation_failed_message</source>
+        <extracomment>An error occurred</extracomment>
+        <translation>Une erreur est survenue</translation>
+    </message>
 </context>
 <context>
     <name>ChatDroppableTextArea</name>

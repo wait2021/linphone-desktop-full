@@ -171,6 +171,16 @@ void ChatModel::leave() {
 	mMonitor->leave();
 }
 
+void ChatModel::close() {
+	mMonitor->close();
+}
+
+void ChatModel::nominateAdminAndLeave(int index) {
+	auto participant = *std::next(mMonitor->getParticipants().begin(), index);
+	auto address = participant->getAddress();
+	mMonitor->nominateAdminAndLeave(address);
+}
+
 void ChatModel::deleteChatRoom() {
 	CoreModel::getInstance()->getCore()->deleteChatRoom(mMonitor);
 }
@@ -415,4 +425,9 @@ void ChatModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatRoom> &
                                      const std::shared_ptr<linphone::ChatMessage> &message,
                                      const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
 	// emit onNewMessageReaction(chatRoom, message, reaction);
+}
+
+void ChatModel::onOperationFailed(const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
+	lWarning() << "[ChatModel] Operation failed on chatroom";
+	emit operationFailed(chatRoom);
 }

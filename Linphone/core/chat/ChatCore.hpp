@@ -65,6 +65,7 @@ public:
 	    int ephemeralLifetime READ getEphemeralLifetime WRITE lSetEphemeralLifetime NOTIFY ephemeralLifetimeChanged)
 	Q_PROPERTY(bool muted READ isMuted WRITE lSetMuted NOTIFY mutedChanged)
 	Q_PROPERTY(bool meAdmin READ getMeAdmin WRITE setMeAdmin NOTIFY meAdminChanged)
+	Q_PROPERTY(int adminCount READ getAdminCount NOTIFY participantsChanged)
 	Q_PROPERTY(QVariantList participants READ getParticipantsGui NOTIFY participantsChanged)
 	Q_PROPERTY(QStringList participantsAddresses READ getParticipantsAddresses WRITE lSetParticipantsAddresses NOTIFY
 	               participantsChanged)
@@ -121,6 +122,7 @@ public:
 
 	bool getMeAdmin() const;
 	void setMeAdmin(bool admin);
+	int getAdminCount() const;
 
 	bool isSecured() const;
 	void setIsSecured(bool secured);
@@ -188,6 +190,8 @@ signals:
 	void lSendVoiceMessage();
 	void lCompose();
 	void lLeave();
+	void lLeaveAsAdmin(bool closeGroupForAll);
+	void lAssignAdminAndLeave(int participantIndex);
 	void lSetMuted(bool muted);
 	void lEnableEphemeral(bool enable);
 	void lSetEphemeralLifetime(int time);

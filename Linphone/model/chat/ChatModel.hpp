@@ -63,6 +63,8 @@ public:
 	void deleteMessage(std::shared_ptr<linphone::ChatMessage> message);
 	void deleteChatRoom();
 	void leave();
+	void close();
+	void nominateAdminAndLeave(int index);
 	std::shared_ptr<linphone::ChatMessage>
 	createVoiceRecordingMessage(const std::shared_ptr<linphone::Recorder> &recorder);
 
@@ -171,6 +173,7 @@ private:
 	virtual void onNewMessageReaction(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                  const std::shared_ptr<linphone::ChatMessage> &message,
 	                                  const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) override;
+	virtual void onOperationFailed(const std::shared_ptr<linphone::ChatRoom> &chatRoom) override;
 
 signals:
 	void isComposingReceived(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
@@ -240,6 +243,7 @@ signals:
 	void newMessageReaction(const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                        const std::shared_ptr<linphone::ChatMessage> &message,
 	                        const std::shared_ptr<const linphone::ChatMessageReaction> &reaction);
+	void operationFailed(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 };
 
 #endif

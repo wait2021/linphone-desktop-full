@@ -316,15 +316,19 @@ AbstractMainPage {
             property var groupChatObj
             property var groupChat: groupChatObj ? groupChatObj.value : null
             onGroupChatChanged: if (groupChat && groupChat.core.state === LinphoneEnums.ChatRoomState.Created) {
-                mainItem.selectedChatGui = groupChat
+                var chat = groupChat
+                listStackView.pop(null)
+                Qt.callLater(function() { mainItem.openChatRequested(chat) })
             }
             Connections {
                 enabled: groupChat || false
                 target: groupChat?.core || null
                 function onChatRoomStateChanged() {
                     if (chatCreationLayout.groupChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                        var chat = chatCreationLayout.groupChat
                         mainWindow.closeLoadingPopup()
-                        mainItem.selectedChatGui = chatCreationLayout.groupChat
+                        listStackView.pop(null)
+                        Qt.callLater(function() { mainItem.openChatRequested(chat) })
                     } else if (chatCreationLayout.groupChat.core.state === LinphoneEnums.ChatRoomState.CreationFailed) {
                         mainWindow.closeLoadingPopup()
                         mainWindow.showInformationPopup(qsTr("information_popup_error_title"),

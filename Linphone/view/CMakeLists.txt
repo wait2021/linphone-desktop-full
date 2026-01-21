@@ -170,7 +170,8 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Chat/GroupChatInfoParticipants.qml
 	view/Page/Layout/Chat/ManageParticipants.qml
 	view/Page/Layout/Chat/EphemeralSettings.qml
-	
+	view/Page/Layout/Chat/AdminLeaveGroupView.qml
+	view/Page/Layout/Chat/SelectNewAdminView.qml
 
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/Account/AccountListView.qml

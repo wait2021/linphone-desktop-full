@@ -15,7 +15,7 @@ ColumnLayout {
 	property ChatGui chatGui
 	property var chatCore: chatGui.core
 	property var contactObj: chatGui ? UtilsCpp.findFriendByAddress(mainItem.chatCore.peerAddress) : null
-	property FriendGui contact: contactObj ? contactObj.value : null
+	property FriendGui contact: (contactObj && contactObj.value) ? contactObj.value : null
 	property bool isAppFriend: contact && contact.core.isAppFriend
 	property bool isGroup: chatCore && chatCore.isGroupChat
 	spacing: 0
@@ -25,6 +25,7 @@ ColumnLayout {
 
 	signal oneOneCall(bool video)
 	signal groupCall()
+	signal adminLeaveGroupRequested()
 
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
@@ -337,16 +338,20 @@ ColumnLayout {
 						color: DefaultStyle.main2_600,
 						showRightArrow: false,
 						action: function() {
-						//: Leave Chat Room ?
-							mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_leave_room_toast_title"),
-							//: All the messages will be removed from the chat room. Do you want to continue ?
-							qsTr("group_infos_leave_room_toast_message"),
-							"",
-							function(confirmed) {
-								if (confirmed) {
-									mainItem.chatCore.lLeave()
-								}
-							})
+							if (mainItem.chatCore.meAdmin) {
+								mainItem.adminLeaveGroupRequested()
+							} else {
+								//: Leave Chat Room ?
+								mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_leave_room_toast_title"),
+								//: All the messages will be removed from the chat room. Do you want to continue ?
+								qsTr("group_infos_leave_room_toast_message"),
+								"",
+								function(confirmed) {
+									if (confirmed) {
+										mainItem.chatCore.lLeave()
+									}
+								})
+							}
 						}
 					},
 					{

@@ -138,6 +138,19 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 
 	mChatModelConnection->makeConnectToCore(
 	    &ChatCore::lLeave, [this]() { mChatModelConnection->invokeToModel([this]() { mChatModel->leave(); }); });
+	mChatModelConnection->makeConnectToCore(&ChatCore::lLeaveAsAdmin, [this](bool closeGroupForAll) {
+		mChatModelConnection->invokeToModel([this, closeGroupForAll]() {
+			if (closeGroupForAll) {
+				mChatModel->close();
+			} else {
+				mChatModel->leave();
+			}
+		});
+	});
+	mChatModelConnection->makeConnectToCore(&ChatCore::lAssignAdminAndLeave, [this](int participantIndex) {
+		mChatModelConnection->invokeToModel(
+		    [this, participantIndex]() { mChatModel->nominateAdminAndLeave(participantIndex); });
+	});
 	mChatModelConnection->makeConnectToModel(&ChatModel::historyDeleted, [this]() {
 		mChatModelConnection->invokeToCore([this]() {
 			emit eventListCleared();
@@ -179,6 +192,7 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	    &ChatModel::conferenceJoined, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                         const std::shared_ptr<const linphone::EventLog> &eventLog) {
 		    auto participants = buildParticipants(chatRoom);
+		    bool meAdmin = chatRoom->getMe() && chatRoom->getMe()->isAdmin();
 		    if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne)) {
 			    QString title, avatarUri;
 			    auto linParticipants = chatRoom->getParticipants();
@@ -199,7 +213,10 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 				    emit conferenceJoined();
 			    });
 		    }
-		    mChatModelConnection->invokeToCore([this, participants]() { setParticipants(participants); });
+		    mChatModelConnection->invokeToCore([this, participants, meAdmin]() {
+			    setParticipants(participants);
+			    setMeAdmin(meAdmin);
+		    });
 	    });
 
 	// Events (excluding messages)
@@ -386,6 +403,14 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 		    [this, index]() { mChatModel->toggleParticipantAdminStatusAtIndex(index); });
 	});
 
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::operationFailed, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
+		    mChatModelConnection->invokeToCore([this]() {
+			    Utils::showInformationPopup(tr("chat_operation_failed_title"), tr("chat_operation_failed_message"),
+			                                false);
+		    });
+	    });
+
 	mCoreModelConnection = SafeConnection<ChatCore, CoreModel>::create(me, CoreModel::getInstance());
 	if (!ToolModel::findFriendByAddress(mParticipantAddress))
 		mCoreModelConnection->makeConnectToModel(&CoreModel::friendCreated,
@@ -394,7 +419,6 @@ void ChatCore::setSelf(QSharedPointer<ChatCore> me) {
 	                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f); });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::friendRemoved,
 	                                         [this](std::shared_ptr<linphone::Friend> f) { updateInfo(f, true); });
-
 }
 
 QDateTime ChatCore::getLastUpdatedTime() const {
@@ -571,6 +595,16 @@ void ChatCore::setMeAdmin(bool admin) {
 
 bool ChatCore::getMeAdmin() const {
 	return mMeAdmin;
+}
+
+int ChatCore::getAdminCount() const {
+	int count = mMeAdmin ? 1 : 0;
+	for (const auto &participant : mParticipants) {
+		if (participant->isAdmin()) {
+			++count;
+		}
+	}
+	return count;
 }
 
 bool ChatCore::isSecured() const {

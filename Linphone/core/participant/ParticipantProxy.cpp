@@ -110,7 +110,12 @@ void ParticipantProxy::setShowMe(const bool &show) {
 	if (list->mShowMe != show) {
 		list->mShowMe = show;
 		emit showMeChanged();
-		invalidateFilter();
+#if QT_VERSION < QT_VERSION_CHECK(6, 10, 0)
+		QSortFilterProxyModel::invalidateFilter();
+#else
+		QSortFilterProxyModel::beginFilterChange();
+		QSortFilterProxyModel::endFilterChange();
+#endif
 	}
 }
 

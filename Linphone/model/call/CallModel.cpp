@@ -66,7 +66,11 @@ void CallModel::accept(bool withVideo) {
 			break;
 		}
 	}
+	lDebug() << log().arg("Accept with video") << withVideo;
 	activateLocalVideo(params, withVideo);
+	params->enableCamera(withVideo);
+	lDebug() << log().arg("Accept call with video directon") << (int)params->getVideoDirection()
+	         << "Camera enabled =" << params->cameraEnabled();
 	mMonitor->acceptWithParams(params);
 	emit localVideoEnabledChanged(withVideo);
 	emit cameraEnabledChanged(withVideo && params->cameraEnabled());
@@ -148,13 +152,16 @@ void CallModel::activateLocalVideo(std::shared_ptr<linphone::CallParams> &params
 	               .arg((int)params->getVideoDirection());
 	params->enableVideo(SettingsModel::getInstance()->getVideoEnabled());
 	auto videoDirection = params->getVideoDirection();
+	lDebug() << "Activate local video" << enable << "screen sharing enabled" << params->screenSharingEnabled();
 	params->setVideoDirection(enable || params->screenSharingEnabled() ? linphone::MediaDirection::SendRecv
 	                                                                   : linphone::MediaDirection::RecvOnly);
+	lDebug() << "video direction" << (int)params->getVideoDirection();
 }
 
 void CallModel::setLocalVideoEnabled(bool enabled) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto params = CoreModel::getInstance()->getCore()->createCallParams(mMonitor);
+	lDebug() << log().arg(Q_FUNC_INFO) << "enabled =" << enabled;
 	activateLocalVideo(params, enabled);
 	mMonitor->update(params);
 }

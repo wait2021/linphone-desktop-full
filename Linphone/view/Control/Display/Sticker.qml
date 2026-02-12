@@ -61,6 +61,7 @@ Item {
     property bool videoEnabled: (previewEnabled && call && call.core.cameraEnabled)
         || (!previewEnabled && call && call.core.remoteVideoEnabled)
         || (participantDevice && participantDevice.core.videoEnabled)
+	onVideoEnabledChanged: console.log("Sticker : video enabled changed", videoEnabled, "preview enabled =", previewEnabled, "call core camera enabled =", call.core.cameraEnabled)
 	property string qmlName
 	property bool displayAll : !!mainItem.call
 	property bool mutedStatus: participantDevice 

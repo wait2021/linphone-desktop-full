@@ -112,7 +112,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mLocalVideoEnabled =
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mCameraEnabled = mLocalVideoEnabled && callParams->cameraEnabled();
-	qDebug() << "create call with camera enabled" << mLocalVideoEnabled << callParams->cameraEnabled();
+	lDebug() << log().arg("create call with camera enabled") << mLocalVideoEnabled << callParams->cameraEnabled();
 	auto remoteParams = call->getRemoteParams();
 	videoDirection = remoteParams ? remoteParams->getVideoDirection() : linphone::MediaDirection::Inactive;
 	mRemoteVideoEnabled =
@@ -248,7 +248,10 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		mCallModelConnection->invokeToCore([this, enabled]() { setLocalVideoEnabled(enabled); });
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::cameraEnabledChanged, [this](bool enabled) {
-		mCallModelConnection->invokeToCore([this, enabled]() { setCameraEnabled(enabled); });
+		mCallModelConnection->invokeToCore([this, enabled]() {
+			lDebug() << log().arg("Camera enabled changed") << enabled;
+			setCameraEnabled(enabled);
+		});
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mCallModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
@@ -264,10 +267,18 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::stateChanged, [this](std::shared_ptr<linphone::Call> call,
 	                                                                          linphone::Call::State state,
 	                                                                          const std::string &message) {
+		if (state == linphone::Call::State::Connected) {
+			lDebug() << log().arg("call connected, video direction") << (int)call->getParams()->getVideoDirection()
+			         << call->getParams()->cameraEnabled();
+		}
 		bool isConf = call && call->getConference() != nullptr;
 		auto subject = call->getConference() ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
-		mCallModelConnection->invokeToCore([this, state, subject, isConf]() {
+		bool cameraEnabled = call->getParams()->cameraEnabled();
+		mCallModelConnection->invokeToCore([this, state, subject, isConf, cameraEnabled]() {
 			lDebug() << log().arg("::onStateChanged") << LinphoneEnums::fromLinphone(state);
+			if (state == linphone::Call::State::Connected) {
+				setCameraEnabled(cameraEnabled);
+			}
 			setRecordable(state == linphone::Call::State::StreamsRunning);
 			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
 			if (mConference) mConference->setSubject(subject);
@@ -573,7 +584,7 @@ bool CallCore::getCameraEnabled() const {
 void CallCore::setCameraEnabled(bool enabled) {
 	if (mCameraEnabled != enabled) {
 		mCameraEnabled = enabled;
-		lDebug() << "CameraEnabled: " << mCameraEnabled;
+		lDebug() << "Set cameraEnabled: " << mCameraEnabled;
 		emit cameraEnabledChanged();
 	}
 }

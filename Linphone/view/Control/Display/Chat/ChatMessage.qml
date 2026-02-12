@@ -132,6 +132,7 @@ Control.Control {
                                 ? qsTr("chat_message_user_replied_to").arg(mainItem.chatMessage.core.repliedToName)
                                 //: You replied
                                 : qsTr("chat_message_user_replied")
+                        textFormat: Text.RichText
                         color: DefaultStyle.main2_600
                         font {
                             pixelSize: Typography.p4.pixelSize

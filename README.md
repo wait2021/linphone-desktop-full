@@ -351,6 +351,20 @@ Please note that we don't offer free support and these contributions will be add
 - external : external projects.
 	- linphone-sdk
 
+#### Formating
+
+Code is formated using `clang` for C++ and `qmlformat` for QML
+
+##### Configuration
+
+* **VSCode**
+1. Install the followings extentions : [Qt Qml](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.qt-qml) and [Clang-Format](https://marketplace.visualstudio.com/items?itemName=xaver.clang-format)
+2. Add the following lines to your vscode settings workspace file `settings.json`
+```json
+"editor.formatOnSave": true,
+"clang-format.executable": ".clang-format",
+```
+
 #### Add new text/label
 
 For each text/label that you want to put in the application, you need to follow thoses steps:

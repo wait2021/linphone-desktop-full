@@ -9,16 +9,15 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
-	spacing: 0
-
 	id: mainItem
+	spacing: 0
 	width: Utils.getSizeWithScreenRatio(490)
 
 	property ConferenceInfoGui conferenceInfoGui
 	property var conferenceInfo: conferenceInfoGui?.core
 	property string timeRangeText: ""
 	property bool linkHovered: false
-	
+
 	signal mouseEvent(MouseEvent event)
 
 	function updateTimeRange() {
@@ -36,9 +35,8 @@ ColumnLayout {
 		let offsetHours = Math.floor(offsetMinutes / 60);
 		let timeZone = "UTC" + (offsetHours >= 0 ? "+" : "") + offsetHours;
 
-		timeRangeText =
-			qsTr("ics_bubble_meeting_from") + startTime +
-			qsTr("ics_bubble_meeting_to") + endTime + " (" + timeZone + ")";
+		timeRangeText = qsTr("ics_bubble_meeting_from") + startTime + qsTr("ics_bubble_meeting_to") + endTime + " ("
+				+ timeZone + ")";
 	}
 
 	Control.Control {
@@ -56,23 +54,19 @@ ColumnLayout {
 		}
 		contentItem: ColumnLayout {
 			Text {
-				visible: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Updated
-				|| conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Cancelled
-				text: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Updated
-					//: Meeting has been updated
-					? qsTr("ics_bubble_meeting_modified") + " :"
-					: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Cancelled 
-					//: Meeting has been canceled
-					? qsTr("ics_bubble_meeting_cancelled") + " :"
-					: ""
+				visible: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Updated || conferenceInfo.state
+						 == LinphoneEnums.ConferenceInfoState.Cancelled
+				text: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Updated ?
+						  //: Meeting has been updated
+						  qsTr("ics_bubble_meeting_modified") + " :" : conferenceInfo.state
+						  == LinphoneEnums.ConferenceInfoState.Cancelled ?
+							  //: Meeting has been canceled
+							  qsTr("ics_bubble_meeting_cancelled") + " :" : ""
 				font: Typography.p2
-				color: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.New ?
-						DefaultStyle.main2_600 :
-					conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Updated ?
-						DefaultStyle.warning_600 :
-					conferenceInfo.state == LinphoneEnums.ConferenceInfoState.Cancelled ?
-						DefaultStyle.danger_500_main :
-					DefaultStyle.main2_600
+				color: conferenceInfo.state == LinphoneEnums.ConferenceInfoState.New ? DefaultStyle.main2_600 : conferenceInfo.state
+																					   == LinphoneEnums.ConferenceInfoState.Updated ? DefaultStyle.warning_600 : conferenceInfo.state
+																																	  == LinphoneEnums.ConferenceInfoState.Cancelled ? DefaultStyle.danger_500_main :
+																																													   DefaultStyle.main2_600
 			}
 
 			RowLayout {
@@ -170,18 +164,16 @@ ColumnLayout {
 							style: ButtonStyle.noBackground
 							icon.source: AppIcons.calendarPlus
 							onClicked: {
-								conferenceInfo.exportConferenceToICS()
+								conferenceInfo.exportConferenceToICS();
 							}
 						}
 					}
 					Text {
 						//: from %1 to %2 (UTC%3)
-						property string offsetFromUtc: conferenceInfo.timeZoneModel.offsetFromUtc > 0
-							? "+" + conferenceInfo.timeZoneModel.offsetFromUtc/3600
-							: conferenceInfo.timeZoneModel.offsetFromUtc/3600
-						text: qsTr("").arg(
-								conferenceInfo.dateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(
-								conferenceInfo.endDateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(offsetFromUtc)
+						property string offsetFromUtc: conferenceInfo.timeZoneModel.offsetFromUtc > 0 ? "+" + conferenceInfo.timeZoneModel.offsetFromUtc
+																										/ 3600 : conferenceInfo.timeZoneModel.offsetFromUtc / 3600
+						text: qsTr("").arg(conferenceInfo.dateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(conferenceInfo.endDateTime.toLocaleString(
+																												 Qt.locale(), "hh:mm")).arg(offsetFromUtc)
 						color: DefaultStyle.main2_500_main
 						font: Typography.p4
 					}
@@ -195,8 +187,7 @@ ColumnLayout {
 			}
 		}
 	}
-	
-	
+
 	Rectangle {
 		visible: conferenceInfo.description.length > 0 || conferenceInfo.participantCount > 0
 		Layout.fillWidth: true
@@ -225,7 +216,7 @@ ColumnLayout {
 		MouseArea {
 			anchors.fill: parent
 			cursorShape: mainItem.linkHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-			onClicked: (mouse) => mouseEvent(mouse)
+			onClicked: mouse => mouseEvent(mouse)
 			acceptedButtons: Qt.AllButtons // Send all to parent
 		}
 
@@ -234,7 +225,7 @@ ColumnLayout {
 			color: DefaultStyle.grey_0
 			radius: Utils.getSizeWithScreenRatio(10)
 		}
-		
+
 		contentItem: ColumnLayout {
 			spacing: Utils.getSizeWithScreenRatio(10)
 
@@ -259,14 +250,14 @@ ColumnLayout {
 					maximumLineCount: 3
 					elide: Text.ElideRight
 					visible: conferenceInfo.description.length > 0
-					onLinkActivated: (link) => {
-						if (link.startsWith('sip'))
-							UtilsCpp.createCall(link)
-						else
-							Qt.openUrlExternally(link)
-					}
+					onLinkActivated: link => {
+										 if (link.startsWith('sip'))
+										 UtilsCpp.createCall(link);
+										 else
+										 Qt.openUrlExternally(link);
+									 }
 					onHoveredLinkChanged: {
-						mainItem.linkHovered = hoveredLink !== ""
+						mainItem.linkHovered = hoveredLink !== "";
 					}
 				}
 			}
@@ -297,9 +288,9 @@ ColumnLayout {
 					text: qsTr("ics_bubble_join")
 					visible: !SettingsCpp.disableMeetingsFeature && conferenceInfo.state != LinphoneEnums.ConferenceInfoState.Cancelled
 					onClicked: {
-						var callsWindow = UtilsCpp.getOrCreateCallsWindow()
-						callsWindow.setupConference(mainItem.conferenceInfoGui)
-						UtilsCpp.smartShowWindow(callsWindow)
+						var callsWindow = UtilsCpp.getOrCreateCallsWindow();
+						callsWindow.setupConference(mainItem.conferenceInfoGui);
+						UtilsCpp.smartShowWindow(callsWindow);
 					}
 				}
 			}

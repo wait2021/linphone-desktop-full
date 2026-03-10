@@ -7,7 +7,7 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
@@ -18,12 +18,12 @@ ColumnLayout {
 	property bool isAppFriend: contact && contact.core.isAppFriend
 	property bool isGroup: chatGui && chatGui.core.isGroupChat
 	spacing: 0
-	signal ephemeralSettingsRequested()
+	signal ephemeralSettingsRequested
 	signal showSharedFilesRequested(bool showMedias)
-	signal manageParticipantsRequested()
+	signal manageParticipantsRequested
 
 	signal oneOneCall(bool video)
-	signal groupCall()
+	signal groupCall
 
 	Avatar {
 		Layout.alignment: Qt.AlignHCenter
@@ -43,9 +43,10 @@ ColumnLayout {
 				z: parent.z + 1
 				anchors.fill: parent
 				acceptedButtons: Qt.LeftButton | Qt.RightButton
-				onPressAndHold: (mouse) => {
-					if (mouse.button === Qt.RightButton) debugButton.popup.open()
-				}
+				onPressAndHold: mouse => {
+									if (mouse.button === Qt.RightButton)
+									debugButton.popup.open();
+								}
 			}
 			popup.contentItem: RowLayout {
 				Text {
@@ -55,8 +56,8 @@ ColumnLayout {
 				SmallButton {
 					icon.source: AppIcons.copy
 					onClicked: {
-						UtilsCpp.copyToClipboard(chatroomaddress.text)
-						debugButton.close()
+						UtilsCpp.copyToClipboard(chatroomaddress.text);
+						debugButton.close();
 					}
 					style: ButtonStyle.noBackground
 				}
@@ -70,11 +71,11 @@ ColumnLayout {
 			id: titleMainItem
 			property bool isEditingSubject: false
 			property bool canEditSubject: mainItem.chatGui.core.meAdmin && mainItem.chatGui.core.isGroupChat
-			
+
 			function saveSubject() {
-				mainItem.chatGui.core.lSetSubject(title.text)
+				mainItem.chatGui.core.lSetSubject(title.text);
 			}
-			
+
 			Item {
 				visible: titleMainItem.canEditSubject
 				Layout.preferredWidth: Utils.getSizeWithScreenRatio(18)
@@ -115,13 +116,13 @@ ColumnLayout {
 					verticalAlignment: Text.AlignVCenter
 					Keys.onReturnPressed: {
 						if (titleMainItem.isEditingSubject)
-							titleMainItem.saveSubject()
-						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject
+							titleMainItem.saveSubject();
+						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject;
 					}
 					Keys.onEnterPressed: {
 						if (titleMainItem.isEditingSubject)
-							titleMainItem.saveSubject()
-						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject
+							titleMainItem.saveSubject();
+						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject;
 					}
 				}
 			}
@@ -145,8 +146,8 @@ ColumnLayout {
 					hoverEnabled: true
 					onClicked: {
 						if (titleMainItem.isEditingSubject)
-							titleMainItem.saveSubject()
-						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject
+							titleMainItem.saveSubject();
+						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject;
 					}
 					cursorShape: Qt.PointingHandCursor
 				}
@@ -162,22 +163,24 @@ ColumnLayout {
 			text: mainItem.chatGui.core.title || ""
 		}
 	}
-	
+
 	Loader {
 		id: titleLayout
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(11)
 		sourceComponent: mainItem.isGroup ? groupTitleContent : oneOneTitleContent
 	}
-	
+
 	Text {
 		font: Typography.p3
 		color: DefaultStyle.main2_700
-		text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(mainItem.chatGui.core.peerAddress) : mainItem.chatGui.core.peerAddress
+		text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(mainItem.chatGui.core.peerAddress) :
+											 mainItem.chatGui.core.peerAddress
+
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 	}
-	
+
 	Text {
 		visible: mainItem.contact
 		font: Typography.p3
@@ -186,7 +189,7 @@ ColumnLayout {
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 	}
-	
+
 	RowLayout {
 		visible: !mainItem.chatGui.core.isReadOnly
 		spacing: Utils.getSizeWithScreenRatio(10)
@@ -221,7 +224,7 @@ ColumnLayout {
 			//: "Sourdine"
 			label: mainItem.chatGui.core.muted ? qsTr("one_one_infos_unmute") : qsTr("one_one_infos_mute")
 			button.onClicked: {
-				mainItem.chatGui.core.muted = !mainItem.chatGui.core.muted
+				mainItem.chatGui.core.muted = !mainItem.chatGui.core.muted;
 			}
 		}
 		LabelButton {
@@ -234,27 +237,23 @@ ColumnLayout {
 			Layout.maximumWidth: Utils.getSizeWithScreenRatio(130)
 			button.icon.width: Utils.getSizeWithScreenRatio(24)
 			button.icon.height: Utils.getSizeWithScreenRatio(24)
-			button.icon.source: mainItem.isGroup 
-				? AppIcons.videoconference
-				: mainItem.isAppFriend
-					? AppIcons.adressBook 
-					: AppIcons.plusCircle
-			label: mainItem.isGroup
-				//: Schedule a meeting
-				? qsTr("group_infos_meeting") 
-				: mainItem.isAppFriend
-					//: Show contact
-					? qsTr("one_one_infos_open_contact") 
-					//: Create contact
-					: qsTr("one_one_infos_create_contact")
+			button.icon.source: mainItem.isGroup ? AppIcons.videoconference : mainItem.isAppFriend ? AppIcons.adressBook :
+																									 AppIcons.plusCircle
+			label: mainItem.isGroup ?
+					   //: Schedule a meeting
+					   qsTr("group_infos_meeting") : mainItem.isAppFriend ?
+						   //: Show contact
+						   qsTr("one_one_infos_open_contact") :
+						   //: Create contact
+						   qsTr("one_one_infos_create_contact")
 			button.onClicked: {
 				if (mainItem.isGroup)
-					UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatGui.core.title, mainItem.chatGui.core.participantsAddresses)
+					UtilsCpp.getMainWindow().scheduleMeeting(mainItem.chatGui.core.title, mainItem.chatGui.core.participantsAddresses);
 				else {
 					if (mainItem.isAppFriend)
-						mainWindow.displayContactPage(mainItem.contact.core.defaultAddress)
+						mainWindow.displayContactPage(mainItem.contact.core.defaultAddress);
 					else
-						mainWindow.displayCreateContactPage("",mainItem.chatGui.core.peerAddress)
+						mainWindow.displayCreateContactPage("", mainItem.chatGui.core.peerAddress);
 				}
 			}
 		}
@@ -275,11 +274,11 @@ ColumnLayout {
 			anchors.right: parent.right
 			visible: scrollView.contentHeight > scrollView.height
 		}
-		
+
 		ColumnLayout {
 			spacing: 0
 			width: scrollView.width - scrollbar.width - Utils.getSizeWithScreenRatio(5)
-			
+
 			Loader {
 				id: participantLoader
 				Layout.fillWidth: true
@@ -293,9 +292,10 @@ ColumnLayout {
 				}
 				Connections {
 					target: mainItem.chatGui ? mainItem.chatGui.core : null
-					onParticipantsChanged : { // hacky reload to update intric height
-						participantLoader.active = false
-						participantLoader.active = true
+					onParticipantsChanged: {
+						// hacky reload to update intric height
+						participantLoader.active = false;
+						participantLoader.active = true;
 					}
 				}
 			}
@@ -312,8 +312,8 @@ ColumnLayout {
 						text: qsTr("group_infos_shared_medias"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: true,
-						action: function() {
-							mainItem.showSharedFilesRequested(true)
+						action: function () {
+							mainItem.showSharedFilesRequested(true);
 						}
 					},
 					{
@@ -323,101 +323,97 @@ ColumnLayout {
 						text: qsTr("group_infos_shared_docs"),
 						color: DefaultStyle.main2_600,
 						showRightArrow: true,
-						action: function() {
-							mainItem.showSharedFilesRequested(false)
+						action: function () {
+							mainItem.showSharedFilesRequested(false);
 						}
 					}
 				]
 			}
-		
+
 			ChatInfoActionsGroup {
 				Layout.topMargin: Utils.getSizeWithScreenRatio(17)
 				//: Other actions
 				title: qsTr("group_infos_other_actions")
-				entries: mainItem.isGroup
-				? [
-					{
-						icon: AppIcons.clockCountDown,
-						visible: !mainItem.chatGui.core.isReadOnly,
-						text: mainItem.chatGui.core.ephemeralEnabled ? qsTr("group_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatGui.core.ephemeralLifetime) : qsTr("group_infos_enable_ephemerals"),
-						color: DefaultStyle.main2_600,
-						showRightArrow: false,
-						action: function() {
-							mainItem.ephemeralSettingsRequested()
-						}
-					},
-					{
-						icon: AppIcons.signOut,
-						visible: !mainItem.chatGui.core.isReadOnly,
-						//: Leave chat room
-						text: qsTr("group_infos_leave_room"),
-						color: DefaultStyle.main2_600,
-						showRightArrow: false,
-						action: function() {
-						//: Leave Chat Room ?
-							mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_leave_room_toast_title"),
-							//: All the messages will be removed from the chat room. Do you want to continue ?
-							qsTr("group_infos_leave_room_toast_message"),
-							"",
-							function(confirmed) {
-								if (confirmed) {
-									mainItem.chatGui.core.lLeave()
-								}
-							})
-						}
-					},
-					{
-						icon: AppIcons.trashCan,
-						visible: true,
-						//: Delete history
-						text: qsTr("group_infos_delete_history"),
-						color: DefaultStyle.danger_500_main,
-						showRightArrow: false,
-						action: function() {
-							//: Delete history ?
-							mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_delete_history_toast_title"),
-								//: All the messages will be removed from the chat room. Do you want to continue ?
-								qsTr("group_infos_delete_history_toast_message"),
-								"",
-								function(confirmed) {
-									if (confirmed) {
-										mainItem.chatGui.core.lDeleteHistory()
-									}
-								})
-						}
-					}
-				]
-				: [
-					{
-						icon: AppIcons.clockCountDown,
-						visible: !mainItem.chatGui.core.isReadOnly,
-						text: mainItem.chatGui.core.ephemeralEnabled ? qsTr("one_one_infos_ephemerals")+UtilsCpp.getEphemeralFormatedTime(mainItem.chatGui.core.ephemeralLifetime) : qsTr("one_one_infos_enable_ephemerals"),
-						color: DefaultStyle.main2_600,
-						showRightArrow: false,
-						action: function() {
-							mainItem.ephemeralSettingsRequested()
-						}
-					},
-					{
-						icon: AppIcons.trashCan,
-						visible: true,
-						text: qsTr("one_one_infos_delete_history"),
-						color: DefaultStyle.danger_500_main,
-						showRightArrow: false,
-						action: function() {
-							//: Delete history ?
-							mainWindow.showConfirmationLambdaPopup(qsTr("one_one_infos_delete_history_toast_title"),
-							//: All the messages will be removed from the chat room. Do you want to continue ?
-							qsTr("one_one_infos_delete_history_toast_message"),
-							"",
-							function(confirmed) {
-								if (confirmed) {
-									mainItem.chatGui.core.lDeleteHistory()
-								}
-							})
-						}
-					}
-				]
+				entries: mainItem.isGroup ? [
+												{
+													icon: AppIcons.clockCountDown,
+													visible: !mainItem.chatGui.core.isReadOnly,
+													text: mainItem.chatGui.core.ephemeralEnabled ? qsTr("group_infos_ephemerals")
+																								   + UtilsCpp.getEphemeralFormatedTime(mainItem.chatGui.core.ephemeralLifetime) : qsTr(
+																									   "group_infos_enable_ephemerals"),
+													color: DefaultStyle.main2_600,
+													showRightArrow: false,
+													action: function () {
+														mainItem.ephemeralSettingsRequested();
+													}
+												},
+												{
+													icon: AppIcons.signOut,
+													visible: !mainItem.chatGui.core.isReadOnly,
+													//: Leave chat room
+													text: qsTr("group_infos_leave_room"),
+													color: DefaultStyle.main2_600,
+													showRightArrow: false,
+													action: function () {
+														//: Leave Chat Room ?
+														mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_leave_room_toast_title"),
+																							   //: All the messages will be removed from the chat room. Do you want to continue ?
+																							   qsTr("group_infos_leave_room_toast_message"), "", function (confirmed) {
+																								   if (confirmed) {
+																									   mainItem.chatGui.core.lLeave();
+																								   }
+																							   });
+													}
+												},
+												{
+													icon: AppIcons.trashCan,
+													visible: true,
+													//: Delete history
+													text: qsTr("group_infos_delete_history"),
+													color: DefaultStyle.danger_500_main,
+													showRightArrow: false,
+													action: function () {
+														//: Delete history ?
+														mainWindow.showConfirmationLambdaPopup(qsTr("group_infos_delete_history_toast_title"),
+																							   //: All the messages will be removed from the chat room. Do you want to continue ?
+																							   qsTr("group_infos_delete_history_toast_message"), "", function (confirmed) {
+																								   if (confirmed) {
+																									   mainItem.chatGui.core.lDeleteHistory();
+																								   }
+																							   });
+													}
+												}
+											] : [
+												{
+													icon: AppIcons.clockCountDown,
+													visible: !mainItem.chatGui.core.isReadOnly,
+													text: mainItem.chatGui.core.ephemeralEnabled ? qsTr("one_one_infos_ephemerals")
+																								   + UtilsCpp.getEphemeralFormatedTime(mainItem.chatGui.core.ephemeralLifetime) : qsTr(
+																									   "one_one_infos_enable_ephemerals"),
+													color: DefaultStyle.main2_600,
+													showRightArrow: false,
+													action: function () {
+														mainItem.ephemeralSettingsRequested();
+													}
+												},
+												{
+													icon: AppIcons.trashCan,
+													visible: true,
+													text: qsTr("one_one_infos_delete_history"),
+													color: DefaultStyle.danger_500_main,
+													showRightArrow: false,
+													action: function () {
+														//: Delete history ?
+														mainWindow.showConfirmationLambdaPopup(qsTr("one_one_infos_delete_history_toast_title"),
+																							   //: All the messages will be removed from the chat room. Do you want to continue ?
+																							   qsTr("one_one_infos_delete_history_toast_message"), "", function (confirmed) {
+																								   if (confirmed) {
+																									   mainItem.chatGui.core.lDeleteHistory();
+																								   }
+																							   });
+													}
+												}
+											]
 			}
 		}
 	}

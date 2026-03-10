@@ -1,10 +1,9 @@
 import QtQuick
 
 Rectangle {
-	function genRandomColor(){
-		return '#'+ Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)
+	function genRandomColor() {
+		return '#' + Math.floor(Math.random() * 255).toString(16) + Math.floor(Math.random() * 255).toString(16) + Math.floor(
+					Math.random() * 255).toString(16);
 	}
 
 	color: genRandomColor() //"blue"

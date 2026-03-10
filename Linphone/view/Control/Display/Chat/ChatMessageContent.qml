@@ -14,30 +14,30 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 ColumnLayout {
 	id: mainItem
 	property ChatMessageGui chatMessageGui: null
-    property bool isRemoteMessage: chatMessageGui? chatMessageGui.core.isRemoteMessage : false
+	property bool isRemoteMessage: chatMessageGui ? chatMessageGui.core.isRemoteMessage : false
 	property ChatGui chatGui: null
-	
+
 	signal isFileHoveringChanged(bool isFileHovering)
 	signal lastSelectedTextChanged(string selectedText)
 	// signal conferenceIcsCopied()
 	signal mouseEvent(MouseEvent event)
-	signal endOfVoiceRecordingReached()
-	signal requestAutoPlayVoiceRecording()
+	signal endOfVoiceRecordingReached
+	signal requestAutoPlayVoiceRecording
 	property string selectedText
-	
+
 	property color textColor
 	property string searchedTextPart
-	
-	property int fileBorderWidth : 0
+
+	property int fileBorderWidth: 0
 	property int maxWidth
-	
+
 	spacing: Utils.getSizeWithScreenRatio(5)
 
 	property ChatMessageContentProxy filescontentProxy: ChatMessageContentProxy {
 		filterType: ChatMessageContentProxy.FilterContentType.File
 		chatMessageGui: mainItem.chatMessageGui
 	}
-	
+
 	// VOICE MESSAGES
 	Repeater {
 		id: messagesVoicesList
@@ -57,7 +57,7 @@ ColumnLayout {
 			Connections {
 				target: mainItem
 				function onRequestAutoPlayVoiceRecording() {
-					audioContent.requestPlaying()
+					audioContent.requestPlaying();
 				}
 			}
 			// width: conferenceList.width
@@ -68,14 +68,14 @@ ColumnLayout {
 	Repeater {
 		id: conferenceList
 		visible: count > 0
-		model: ChatMessageContentProxy{
+		model: ChatMessageContentProxy {
 			filterType: ChatMessageContentProxy.FilterContentType.Conference
 			chatMessageGui: mainItem.chatMessageGui
 		}
 		delegate: ChatMessageInvitationBubble {
 			Layout.preferredWidth: Utils.getSizeWithScreenRatio(490)
 			conferenceInfoGui: modelData.core.conferenceInfo
-			onMouseEvent: (event) => mainItem.mouseEvent(event)
+			onMouseEvent: event => mainItem.mouseEvent(event)
 		}
 	}
 	// SINGLE FILE
@@ -83,9 +83,7 @@ ColumnLayout {
 		id: singleImageFile
 		cache: false
 		visible: mainItem.filescontentProxy.count === 1 && source !== "" && UtilsCpp.isImage(contentGui.core.filePath)
-		contentGui: mainItem.filescontentProxy.count === 1
-			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
-			: null
+		contentGui: mainItem.filescontentProxy.count === 1 ? mainItem.filescontentProxy.getChatMessageContentAtIndex(0) : null
 		Layout.fillWidth: true
 		Layout.alignment: Qt.AlignHCenter
 		fillMode: Image.PreserveAspectFit
@@ -93,9 +91,7 @@ ColumnLayout {
 	AnimatedImageFileView {
 		id: singleAnimatedImageFile
 		visible: mainItem.filescontentProxy.count === 1 && source !== "" && UtilsCpp.isAnimatedImage(contentGui.core.filePath)
-		contentGui: mainItem.filescontentProxy.count === 1
-			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
-			: null
+		contentGui: mainItem.filescontentProxy.count === 1 ? mainItem.filescontentProxy.getChatMessageContentAtIndex(0) : null
 		Layout.fillWidth: true
 		Layout.preferredHeight: paintedHeight
 		Layout.alignment: Qt.AlignHCenter
@@ -107,22 +103,20 @@ ColumnLayout {
 		onStatusChanged: {
 			if (status == Image.Ready) {
 				if (singleAnimatedImageFile.initialization) {
-					initialSourceWidth = sourceSize.width
-					initialSourceHeight = sourceSize.height
-					singleAnimatedImageFile.initialization = false
+					initialSourceWidth = sourceSize.width;
+					initialSourceHeight = sourceSize.height;
+					singleAnimatedImageFile.initialization = false;
 				}
-				var sourceW = Math.min(initialSourceWidth, mainItem.maxWidth)
-				sourceSize.height = Math.round((sourceW/initialSourceWidth) * initialSourceHeight)
-				sourceSize.width = sourceW
+				var sourceW = Math.min(initialSourceWidth, mainItem.maxWidth);
+				sourceSize.height = Math.round((sourceW / initialSourceWidth) * initialSourceHeight);
+				sourceSize.width = sourceW;
 			}
 		}
 	}
 	VideoFileView {
 		id: singleVideoFile
 		visible: mainItem.filescontentProxy.count === 1 && UtilsCpp.isVideo(contentGui.core.filePath)
-		contentGui: mainItem.filescontentProxy.count === 1
-			? mainItem.filescontentProxy.getChatMessageContentAtIndex(0)
-			: null
+		contentGui: mainItem.filescontentProxy.count === 1 ? mainItem.filescontentProxy.getChatMessageContentAtIndex(0) : null
 		Layout.fillWidth: true
 		width: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
 		height: Math.min(Utils.getSizeWithScreenRatio(285), mainItem.maxWidth)
@@ -135,13 +129,11 @@ ColumnLayout {
 	// FILES
 	ChatFilesGridLayout {
 		id: messageFilesList
-		visible: mainItem.filescontentProxy.count > 0 
-		&& !singleImageFile.visible 
-		&& !singleAnimatedImageFile.visible
-		&& !singleVideoFile.visible
+		visible: mainItem.filescontentProxy.count > 0 && !singleImageFile.visible && !singleAnimatedImageFile.visible &&
+				 !singleVideoFile.visible
 		Layout.fillWidth: visible
 		Layout.fillHeight: visible
-		maxWidth: Utils.getSizeWithScreenRatio(115*3)
+		maxWidth: Utils.getSizeWithScreenRatio(115 * 3)
 		// Layout.fillHeight: true
 		proxyModel: visible ? mainItem.filescontentProxy : null
 		// onIsHoveringFileChanged: mainItem.isFileHoveringChanged(isHoveringFile)

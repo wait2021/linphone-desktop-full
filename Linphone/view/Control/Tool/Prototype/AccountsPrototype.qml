@@ -6,64 +6,61 @@ import UtilsCpp 1.0
 
 // Snippet
 
-ListView{
+ListView {
 	id: mainItem
 	model: AccountProxy {}
 	function printObject(o) {
-  var out = '';
-  for (var p in o) {
-    out += p + ': ' + o[p] + '\n';
-  }
-  if(!o)
-    return 'Empty'
-  else
-    return out;
-}
+		var out = '';
+		for (var p in o) {
+			out += p + ': ' + o[p] + '\n';
+		}
+		if (!o)
+			return 'Empty';
+		else
+			return out;
+	}
 
-	delegate: Rectangle{
+	delegate: Rectangle {
 		height: 50
 		width: mainItem.width
-		RowLayout{
+		RowLayout {
 			anchors.fill: parent
-			Rectangle{
+			Rectangle {
 				Layout.preferredHeight: 50
 				Layout.preferredWidth: 50
 				//color: '#111111'
-				Image{
+				Image {
 					id: avatar
 					anchors.fill: parent
 					source: $modelData.pictureUri
 				}
 			}
-			Text{
+			Text {
 				// Store the VariantObject and use value on this object. Do not use value in one line because of looping signals.
 				property var displayName: UtilsCpp.getDisplayName($modelData.identityAddress)
 				text: displayName ? displayName.value : ""
-				onTextChanged: console.log("[ProtoAccounts] Async account displayName: " +$modelData.identityAddress + " => " +text)
+				onTextChanged: console.log("[ProtoAccounts] Async account displayName: " + $modelData.identityAddress + " => "
+										   + text)
 			}
-			Text{
-				text: $modelData.registrationState == LinphoneEnums.RegistrationState.Ok 
-						? 'Online'
-						: $modelData.registrationState == LinphoneEnums.RegistrationState.Failed
-							? 'Error'
-							: $modelData.registrationState == LinphoneEnums.RegistrationState.Progress || $modelData.registrationState == LinphoneEnums.RegistrationState.Refreshing
-								? 'Connecting'
-								: 'Offline'
-			
+			Text {
+				text: $modelData.registrationState == LinphoneEnums.RegistrationState.Ok ? 'Online' : $modelData.registrationState
+																						   == LinphoneEnums.RegistrationState.Failed ? 'Error' : $modelData.registrationState
+																																	   == LinphoneEnums.RegistrationState.Progress || $modelData.registrationState
+																																	   == LinphoneEnums.RegistrationState.Refreshing ? 'Connecting' : 'Offline'
 			}
 		}
-		MouseArea{
+		MouseArea {
 			anchors.fill: parent
-			property int clickCount : 0
+			property int clickCount: 0
 			onClicked: {
-				if(++clickCount % 2 == 0)
+				if (++clickCount % 2 == 0)
 					$modelData.pictureUri = AppIcons.loginImage;
 				else
 					$modelData.pictureUri = AppIcons.eyeShow;
-					console.log(printObject($modelData))
-				console.debug("[ProtoAccounts] Account Select: " +$modelData.contactAddress +" / "+$modelData.identityAddress + " / " +$modelData.pictureUri + " / " +$modelData.registrationState)
+				console.log(printObject($modelData));
+				console.debug("[ProtoAccounts] Account Select: " + $modelData.contactAddress + " / " + $modelData.identityAddress
+							  + " / " + $modelData.pictureUri + " / " + $modelData.registrationState);
 			}
 		}
 	}
 }
-

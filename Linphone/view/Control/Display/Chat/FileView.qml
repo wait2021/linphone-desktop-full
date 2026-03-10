@@ -4,11 +4,10 @@ import QtQuick.Layouts
 
 import Linphone
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
-
 
 Item {
 	id: mainItem
@@ -17,7 +16,7 @@ Item {
 	property string name: contentGui && contentGui.core.name
 	property string filePath: contentGui && contentGui.core.filePath
 	property bool wasDownloaded: contentGui && contentGui.core.wasDownloaded
-	property bool isAnimatedImage : contentGui && contentGui.core.wasDownloaded && UtilsCpp.isAnimatedImage(filePath)
+	property bool isAnimatedImage: contentGui && contentGui.core.wasDownloaded && UtilsCpp.isAnimatedImage(filePath)
 	property bool haveThumbnail: contentGui && UtilsCpp.canHaveThumbnail(filePath) && UtilsCpp.fileExists(filePath)
 	property int fileSize: contentGui ? contentGui.core.fileSize : 0
 	property bool isTransferring
@@ -28,29 +27,23 @@ Item {
 	// property to change default view display
 	property bool showAsSquare: true
 	// default image
-	property var imageSource: mainItem.contentGui
-		? UtilsCpp.isImage(mainItem.filePath)
-			? AppIcons.fileImage
-			:  UtilsCpp.isPdf(mainItem.filePath)
-				? AppIcons.filePdf
-				: UtilsCpp.isText(mainItem.filePath)
-					? AppIcons.fileText
-					: AppIcons.file
-		: ''
+	property var imageSource: mainItem.contentGui ? UtilsCpp.isImage(mainItem.filePath) ? AppIcons.fileImage :
+																						  UtilsCpp.isPdf(mainItem.filePath) ? AppIcons.filePdf : UtilsCpp.isText(mainItem.filePath)
+																															  ? AppIcons.fileText : AppIcons.file : ''
 	property var thumbnailFillMode: Image.PreserveAspectCrop
-	
+
 	Connections {
 		enabled: contentGui
 		target: contentGui ? contentGui.core : null
 		function onMsgStateChanged(state) {
-			mainItem.isTransferring = state === LinphoneEnums.ChatMessageState.StateFileTransferInProgress 
-			|| state === LinphoneEnums.ChatMessageState.StateInProgress
+			mainItem.isTransferring = state === LinphoneEnums.ChatMessageState.StateFileTransferInProgress || state
+					=== LinphoneEnums.ChatMessageState.StateInProgress;
 		}
 	}
 
 	// property bool isHovering: thumbnailProvider.state == 'hovered'
 	property bool isOutgoing: false
-	
+
 	// ---------------------------------------------------------------------
 	// Thumbnail
 	// ---------------------------------------------------------------------
@@ -107,33 +100,33 @@ Item {
 				color: DefaultStyle.grey_1000
 				anchors.fill: parent
 				// Video {
-					// id: videoThumbnail
-					// anchors.fill: parent
-					// position: 100
-					// source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
-					// fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
-					EffectImage {
-						anchors.centerIn: parent
-						// visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState
-						width: Utils.getSizeWithScreenRatio(24)
-						height: Utils.getSizeWithScreenRatio(24)
-						imageSource: AppIcons.playFill
-						colorizationColor: DefaultStyle.main2_0
-					}
-					// Text {
-					// 	z: parent.z + 1
-					// 	property int timeDisplayed: videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.position : videoThumbnail.duration
-					// 	anchors.bottom: parent.bottom
-					// 	anchors.left: parent.left
-					// 	anchors.bottomMargin: Utils.getSizeWithScreenRatio(6)
-					// 	anchors.leftMargin: Utils.getSizeWithScreenRatio(6)
-					// 	text: UtilsCpp.formatDuration(timeDisplayed)
-					// 	color: DefaultStyle.grey_0
-					// 	font {
-					// 		pixelSize: Typography.d1.pixelSize
-					// 		weight: Typography.d1.weight
-					// 	}
-					// }
+				// id: videoThumbnail
+				// anchors.fill: parent
+				// position: 100
+				// source: mainItem.isVideo ? "file:///" + mainItem.filePath : ""
+				// fillMode: playbackState === MediaPlayer.PlayingState ? VideoOutput.PreserveAspectFit : VideoOutput.PreserveAspectCrop
+				EffectImage {
+					anchors.centerIn: parent
+					// visible: videoThumbnail.playbackState !== MediaPlayer.PlayingState
+					width: Utils.getSizeWithScreenRatio(24)
+					height: Utils.getSizeWithScreenRatio(24)
+					imageSource: AppIcons.playFill
+					colorizationColor: DefaultStyle.main2_0
+				}
+				// Text {
+				// 	z: parent.z + 1
+				// 	property int timeDisplayed: videoThumbnail.playbackState === MediaPlayer.PlayingState ? videoThumbnail.position : videoThumbnail.duration
+				// 	anchors.bottom: parent.bottom
+				// 	anchors.left: parent.left
+				// 	anchors.bottomMargin: Utils.getSizeWithScreenRatio(6)
+				// 	anchors.leftMargin: Utils.getSizeWithScreenRatio(6)
+				// 	text: UtilsCpp.formatDuration(timeDisplayed)
+				// 	color: DefaultStyle.grey_0
+				// 	font {
+				// 		pixelSize: Typography.d1.pixelSize
+				// 		weight: Typography.d1.weight
+				// 	}
+				// }
 				// }
 			}
 		}
@@ -143,7 +136,7 @@ Item {
 		AnimatedImage {
 			id: animatedImageSource
 			mipmap: false//SettingsModel.mipmapEnabled
-			source: 'file:/'+ mainItem.filePath
+			source: 'file:/' + mainItem.filePath
 			autoTransform: true
 			fillMode: Image.PreserveAspectFit
 		}
@@ -165,7 +158,7 @@ Item {
 				anchors.fill: parent
 				color: FileViewStyle.extension.background.color
 				radius: FileViewStyle.extension.radius
-				
+
 				Rectangle {
 					color: DefaultStyle.main2_200
 					anchors.top: parent.top
@@ -181,7 +174,7 @@ Item {
 					}
 				}
 			}
-						
+
 			contentItem: Item {
 				Text {
 					id: fileName
@@ -211,26 +204,29 @@ Item {
 					id: progressBar
 					anchors.centerIn: parent
 					to: 100
-					value: mainItem.contentGui ? (mainItem.fileSize>0 ? Math.floor(100 * mainItem.contentGui.core.fileOffset / mainItem.fileSize) : 0) : to
+					value: mainItem.contentGui ? (mainItem.fileSize > 0 ? Math.floor(100 * mainItem.contentGui.core.fileOffset
+																					 / mainItem.fileSize) : 0) : to
 					visible: mainItem.isTransferring && value != 0
 					/* Change format? Current is %
 					text: if(mainRow.contentGui){
-								var mainItem.fileSize = Utils.formatSize(mainRow.contentGui.core.mainItem.fileSize)
-								return progressBar.visible
-											? Utils.formatSize(mainRow.contentGui.core.fileOffset) + '/' + mainItem.fileSize
-											: mainItem.fileSize
-							}else
-								return ''
+					var mainItem.fileSize = Utils.formatSize(mainRow.contentGui.core.mainItem.fileSize)
+					return progressBar.visible
+					? Utils.formatSize(mainRow.contentGui.core.fileOffset) + '/' + mainItem.fileSize
+					: mainItem.fileSize
+					}else
+					return ''
 					*/
 				}
 				Rectangle {
-					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
+					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/
+																							  !mainItem.contentGui.core.wasDownloaded)
 					color: DefaultStyle.grey_0
 					opacity: 0.5
 					anchors.fill: parent
 				}
 				EffectImage {
-					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/ !mainItem.contentGui.core.wasDownloaded)
+					visible: thumbnailProvider.state === 'hovered' && mainItem.contentGui && (/*!mainItem.isOutgoing &&*/
+																							  !mainItem.contentGui.core.wasDownloaded)
 					anchors.centerIn: parent
 					imageSource: AppIcons.download
 					width: Utils.getSizeWithScreenRatio(24)
@@ -265,7 +261,6 @@ Item {
 						width: parent.width / 2
 						height: parent.height
 						radius: parent.radius
-						
 					}
 					EffectImage {
 						z: parent.z + 1
@@ -302,15 +297,8 @@ Item {
 	Loader {
 		id: thumbnailProvider
 		anchors.fill: parent
-		sourceComponent: mainItem.contentGui 
-			? mainItem.isAnimatedImage
-				? animatedImage
-				:  mainItem.haveThumbnail
-					? thumbnailImage
-					: mainItem.showAsSquare 
-						? defaultSquareView 
-						: defaultView
-			: undefined
+		sourceComponent: mainItem.contentGui ? mainItem.isAnimatedImage ? animatedImage : mainItem.haveThumbnail
+																		  ? thumbnailImage : mainItem.showAsSquare ? defaultSquareView : defaultView : undefined
 
 		states: State {
 			name: 'hovered'
@@ -324,33 +312,34 @@ Item {
 			// Changing cursor in MouseArea seems not to work with the Loader
 			// Use override cursor for this case
 			onContainsMouseChanged: {
-				if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
-				else UtilsCpp.restoreGlobalCursor()
-				thumbnailProvider.state = containsMouse ? 'hovered' : ''
+				if (containsMouse)
+					UtilsCpp.setGlobalCursor(Qt.PointingHandCursor);
+				else
+					UtilsCpp.restoreGlobalCursor();
+				thumbnailProvider.state = containsMouse ? 'hovered' : '';
 			}
-			onPressed: (mouse) => {
-				mouse.accepted = false
-				if(mainItem.isTransferring) {
-					mainItem.contentGui.core.lCancelDownloadFile()
-					mouse.accepted = true
-				}
-				else if(!mainItem.contentGui.core.wasDownloaded) {
-					mouse.accepted = true
-					mainItem.contentGui.core.lDownloadFile()
-				} else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
-					mouse.accepted = true
-					// if(SettingsModel.isVfsEncrypted){
-					//     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
-					//                                 contentGui: mainItem.contentGui,
-					//                             }, function (status) {
-					//                             })
-					// }else
-					mainItem.contentGui.core.lOpenFile()
-				} else if (mainItem.contentGui) {
-					mouse.accepted = true
-					mainItem.contentGui.core.lOpenFile(true)// Show directory
-				}
-			}
+			onPressed: mouse => {
+						   mouse.accepted = false;
+						   if (mainItem.isTransferring) {
+							   mainItem.contentGui.core.lCancelDownloadFile();
+							   mouse.accepted = true;
+						   } else if (!mainItem.contentGui.core.wasDownloaded) {
+							   mouse.accepted = true;
+							   mainItem.contentGui.core.lDownloadFile();
+						   } else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+							   mouse.accepted = true;
+							   // if(SettingsModel.isVfsEncrypted){
+							   //     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
+							   //                                 contentGui: mainItem.contentGui,
+							   //                             }, function (status) {
+							   //                             })
+							   // }else
+							   mainItem.contentGui.core.lOpenFile();
+						   } else if (mainItem.contentGui) {
+							   mouse.accepted = true;
+							   mainItem.contentGui.core.lOpenFile(true);// Show directory
+						   }
+					   }
 		}
 	}
 }

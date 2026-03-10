@@ -4,30 +4,30 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import ConstantsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 LoginLayout {
 	id: mainItem
-	signal goBack()
-	signal goToRegister()
+	signal goBack
+	signal goToRegister
 	property bool showBackButton: false
-	
+
 	titleContent: [
 		RowLayout {
-            Layout.leftMargin: Utils.getSizeWithScreenRatio(119)
+			Layout.leftMargin: Utils.getSizeWithScreenRatio(119)
 			visible: !SettingsCpp.assistantHideThirdPartyAccount
-            spacing: Utils.getSizeWithScreenRatio(21)
+			spacing: Utils.getSizeWithScreenRatio(21)
 			Button {
 				id: backButton
-				visible: mainItem.showBackButton 
-                Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-                Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+				visible: mainItem.showBackButton
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				onClicked: {
-					console.debug("[SIPLoginPage] User: return")
-					mainItem.goBack()
+					console.debug("[SIPLoginPage] User: return");
+					mainItem.goBack();
 				}
 				//: Return
 				Accessible.name: qsTr("return_accessible_name")
@@ -35,16 +35,16 @@ LoginLayout {
 			EffectImage {
 				fillMode: Image.PreserveAspectFit
 				imageSource: AppIcons.profile
-                Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
-                Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(34)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
-                //: Compte SIP tiers
-                text: qsTr("assistant_login_third_party_sip_account_title")
+				//: Compte SIP tiers
+				text: qsTr("assistant_login_third_party_sip_account_title")
 				font {
-                    pixelSize: Typography.h1.pixelSize
-                    weight: Typography.h1.weight
+					pixelSize: Typography.h1.pixelSize
+					weight: Typography.h1.weight
 				}
 				scaleLettersFactor: 1.1
 			}
@@ -54,30 +54,30 @@ LoginLayout {
 		},
 		RowLayout {
 			visible: !SettingsCpp.assistantHideCreateAccount
-            Layout.rightMargin: Utils.getSizeWithScreenRatio(51)
-            spacing: Utils.getSizeWithScreenRatio(20)
+			Layout.rightMargin: Utils.getSizeWithScreenRatio(51)
+			spacing: Utils.getSizeWithScreenRatio(20)
 			Text {
-                Layout.rightMargin: Utils.getSizeWithScreenRatio(15)
-                //: Pas encore de compte ?
-                text: qsTr("assistant_no_account_yet")
+				Layout.rightMargin: Utils.getSizeWithScreenRatio(15)
+				//: Pas encore de compte ?
+				text: qsTr("assistant_no_account_yet")
 				font {
-                    pixelSize: Typography.p1.pixelSize
-                    weight: Typography.p1.weight
+					pixelSize: Typography.p1.pixelSize
+					weight: Typography.p1.weight
 				}
 			}
 			BigButton {
 				Layout.alignment: Qt.AlignRight
-                //: S'inscrire
-                text: qsTr("assistant_account_register")
+				//: S'inscrire
+				text: qsTr("assistant_account_register")
 				style: ButtonStyle.main
 				onClicked: {
-					console.debug("[SIPLoginPage] User: go to register page")
-					mainItem.goToRegister()
+					console.debug("[SIPLoginPage] User: go to register page");
+					mainItem.goToRegister();
 				}
 			}
 		}
 	]
-	
+
 	Component {
 		id: firstItem
 		Flickable {
@@ -87,53 +87,55 @@ LoginLayout {
 			clip: true
 			flickableDirection: Flickable.VerticalFlick
 
-            Control.ScrollBar.vertical: scrollbar
+			Control.ScrollBar.vertical: scrollbar
 
 			ColumnLayout {
-                id: content
-                // rightMargin is negative margin
-                width: parent.width - scrollbar.width*2
-                spacing: Utils.getSizeWithScreenRatio(85)
+				id: content
+				// rightMargin is negative margin
+				width: parent.width - scrollbar.width * 2
+				spacing: Utils.getSizeWithScreenRatio(85)
 				ColumnLayout {
 					spacing: 0
 					ColumnLayout {
-                        spacing: Utils.getSizeWithScreenRatio(28)
+						spacing: Utils.getSizeWithScreenRatio(28)
 						Text {
 							Layout.fillWidth: true
 							Layout.preferredWidth: rootStackView.width
 							wrapMode: Text.WordWrap
 							color: DefaultStyle.main2_900
 							font {
-                                pixelSize: Typography.p1.pixelSize
-                                weight: Typography.p1.weight
+								pixelSize: Typography.p1.pixelSize
+								weight: Typography.p1.weight
 							}
-                            text: qsTr("Certaines fonctionnalités telles que les conversations de groupe, les vidéo-conférences, etc… nécessitent un compte %1.\n\nCes fonctionnalités seront masquées si vous utilisez un compte SIP tiers.\n\nPour les activer dans un projet commercial, merci de nous contacter.").arg(applicationName)
+							text: qsTr(
+									  "Certaines fonctionnalités telles que les conversations de groupe, les vidéo-conférences, etc… nécessitent un compte %1.\n\nCes fonctionnalités seront masquées si vous utilisez un compte SIP tiers.\n\nPour les activer dans un projet commercial, merci de nous contacter.").arg(
+									  applicationName)
 						}
 					}
 					SmallButton {
 						id: openLinkButton
 						Layout.alignment: Qt.AlignCenter
-                        Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+						Layout.topMargin: Utils.getSizeWithScreenRatio(18)
 						text: "linphone.org/contact"
 						style: ButtonStyle.secondary
 						onClicked: {
-							Qt.openUrlExternally(ConstantsCpp.ContactUrl)
+							Qt.openUrlExternally(ConstantsCpp.ContactUrl);
 						}
 						KeyNavigation.up: backButton
 						KeyNavigation.down: createAccountButton
 					}
 				}
 				ColumnLayout {
-                    spacing: Utils.getSizeWithScreenRatio(20)
+					spacing: Utils.getSizeWithScreenRatio(20)
 					BigButton {
 						id: createAccountButton
 						style: ButtonStyle.secondary
 						Layout.fillWidth: true
-                        //: "Créer un compte linphone"
-                        text: qsTr("assistant_third_party_sip_account_create_linphone_account")
+						//: "Créer un compte linphone"
+						text: qsTr("assistant_third_party_sip_account_create_linphone_account")
 						onClicked: {
-							console.debug("[SIPLoginPage] User: click register")
-							mainItem.goToRegister()
+							console.debug("[SIPLoginPage] User: click register");
+							mainItem.goToRegister();
 						}
 						KeyNavigation.up: openLinkButton
 						KeyNavigation.down: continueButton
@@ -141,11 +143,11 @@ LoginLayout {
 					BigButton {
 						id: continueButton
 						Layout.fillWidth: true
-                        //: "Je comprends"
-                        text: qsTr("assistant_third_party_sip_account_warning_ok")
+						//: "Je comprends"
+						text: qsTr("assistant_third_party_sip_account_warning_ok")
 						style: ButtonStyle.main
 						onClicked: {
-							rootStackView.replace(secondItem)
+							rootStackView.replace(secondItem);
 						}
 						KeyNavigation.up: createAccountButton
 					}
@@ -159,18 +161,18 @@ LoginLayout {
 	Component {
 		id: secondItem
 		Flickable {
-            id: formFlickable
+			id: formFlickable
 			width: Utils.getSizeWithScreenRatio(770)
 			contentWidth: content.implicitWidth
 			contentHeight: content.implicitHeight
 			clip: true
 			flickableDirection: Flickable.VerticalFlick
 
-            Control.ScrollBar.vertical: scrollbar
+			Control.ScrollBar.vertical: scrollbar
 
 			RowLayout {
 				id: content
-				width: formFlickable.width - scrollbar.width*2
+				width: formFlickable.width - scrollbar.width * 2
 				spacing: Utils.getSizeWithScreenRatio(50)
 				ColumnLayout {
 					spacing: Utils.getSizeWithScreenRatio(2)
@@ -236,7 +238,7 @@ LoginLayout {
 								Connections {
 									target: SettingsCpp
 									function onAssistantThirdPartySipAccountDomainChanged() {
-										domainEdit.resetText()
+										domainEdit.resetText();
 									}
 								}
 							}
@@ -263,13 +265,25 @@ LoginLayout {
 									textRole: "text"
 									valueRole: "value"
 									model: [
-										{text: "TCP", value: LinphoneEnums.TransportType.Tcp},
-										{text: "UDP", value: LinphoneEnums.TransportType.Udp},
-										{text: "TLS", value: LinphoneEnums.TransportType.Tls},
-										{text: "DTLS", value: LinphoneEnums.TransportType.Dtls}
+										{
+											text: "TCP",
+											value: LinphoneEnums.TransportType.Tcp
+										},
+										{
+											text: "UDP",
+											value: LinphoneEnums.TransportType.Udp
+										},
+										{
+											text: "TLS",
+											value: LinphoneEnums.TransportType.Tls
+										},
+										{
+											text: "DTLS",
+											value: LinphoneEnums.TransportType.Dtls
+										}
 									]
 									currentIndex: Utils.findIndex(model, function (entry) {
-										return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase()
+										return entry.text === SettingsCpp.assistantThirdPartySipAccountTransport.toUpperCase();
 									})
 									KeyNavigation.up: displayName
 									KeyNavigation.down: outboundProxyUriEdit
@@ -285,7 +299,7 @@ LoginLayout {
 						Connections {
 							target: LoginPageCpp
 							function onErrorMessageChanged(error) {
-								errorText.setText(error)
+								errorText.setText(error);
 							}
 						}
 					}
@@ -321,53 +335,53 @@ LoginLayout {
 								target: LoginPageCpp
 								function onRegistrationStateChanged() {
 									if (LoginPageCpp.registrationState != LinphoneEnums.RegistrationState.Progress) {
-										connectionButton.enabled = true
-										connectionButtonContent.currentIndex = 0
+										connectionButton.enabled = true;
+										connectionButtonContent.currentIndex = 0;
 									}
 								}
 								function onErrorMessageChanged(error) {
 									if (error.length != 0) {
-										connectionButton.enabled = true
-										connectionButtonContent.currentIndex = 0
+										connectionButton.enabled = true;
+										connectionButtonContent.currentIndex = 0;
 									}
 								}
 							}
 						}
 
 						function trigger() {
-							username.errorMessage = ""
-							password.errorMessage = ""
-							domain.errorMessage = ""
-							errorText.clear()
+							username.errorMessage = "";
+							password.errorMessage = "";
+							domain.errorMessage = "";
+							errorText.clear();
 
-							loginDelay.restart()
+							loginDelay.restart();
 						}
 						onPressed: trigger()
 						KeyNavigation.up: connectionId
 						KeyNavigation.tab: tabTarget
-						Timer{
+						Timer {
 							id: loginDelay
 							interval: 200
 							onTriggered: {
 								if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0 || domainEdit.text.length == 0) {
 									if (usernameEdit.text.length == 0)
-										username.errorMessage = qsTr("assistant_account_login_missing_username")
+										username.errorMessage = qsTr("assistant_account_login_missing_username");
 									if (passwordEdit.text.length == 0)
-										password.errorMessage = qsTr("assistant_account_login_missing_password")
+										password.errorMessage = qsTr("assistant_account_login_missing_password");
 									if (domainEdit.text.length == 0)
 										//: "Veuillez saisir un nom de domaine
-										domain.errorMessage = qsTr("assistant_account_login_missing_domain")
-									return
+										domain.errorMessage = qsTr("assistant_account_login_missing_domain");
+									return;
 								}
-								console.debug("[SIPLoginPage] User: Log in")
-								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text, 
-								transportCbox.currentValue, registrarUriEdit.text, outboundProxyUriEdit.text, connectionIdEdit.text);
-								connectionButton.enabled = false
-								connectionButtonContent.currentIndex = 1
+								console.debug("[SIPLoginPage] User: Log in");
+								LoginPageCpp.login(usernameEdit.text, passwordEdit.text, displayName.text, domainEdit.text,
+												   transportCbox.currentValue, registrarUriEdit.text, outboundProxyUriEdit.text, connectionIdEdit.text);
+								connectionButton.enabled = false;
+								connectionButtonContent.currentIndex = 1;
 							}
 						}
 					}
-					
+
 					Item {
 						Layout.fillHeight: true
 					}
@@ -425,9 +439,13 @@ LoginLayout {
 							}
 						}
 					}
-					Item{Layout.fillHeight: true}
+					Item {
+						Layout.fillHeight: true
+					}
 				}
-				Item{Layout.fillHeight: true}
+				Item {
+					Layout.fillHeight: true
+				}
 			}
 		}
 	}
@@ -457,21 +475,21 @@ LoginLayout {
 			anchors.leftMargin: Utils.getSizeWithScreenRatio(127)
 			width: currentItem ? currentItem.width : 0
 		},
-        // Item {
+		// Item {
 		// 	id: sipItem
 		// 	// spacing: Utils.getSizeWithScreenRatio(8)
-        //     anchors.fill: parent
-        //     anchors.rightMargin: Utils.getSizeWithScreenRatio(50) + image.width
-        // },
+		//     anchors.fill: parent
+		//     anchors.rightMargin: Utils.getSizeWithScreenRatio(50) + image.width
+		// },
 		Image {
 			id: image
 			z: -1
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Utils.getSizeWithScreenRatio(129)
-            anchors.rightMargin: Utils.getSizeWithScreenRatio(127)
-            width: Utils.getSizeWithScreenRatio(395)
-            height: Utils.getSizeWithScreenRatio(350)
+			anchors.topMargin: Utils.getSizeWithScreenRatio(129)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(127)
+			width: Utils.getSizeWithScreenRatio(395)
+			height: Utils.getSizeWithScreenRatio(350)
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.loginImage
 		}

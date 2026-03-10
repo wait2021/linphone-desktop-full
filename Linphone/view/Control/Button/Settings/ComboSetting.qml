@@ -2,28 +2,28 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ComboBox {
 	id: mainItem
-    Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+	Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 	property string propertyName
-	
+
 	property var propertyOwner
 	property var propertyOwnerGui
 	property alias entries: mainItem.model
 	oneLine: true
 	currentIndex: Utils.findIndex(model, function (entry) {
-		if(propertyOwnerGui)
-			return Utils.equalObject(entry,propertyOwnerGui.core[propertyName])
+		if (propertyOwnerGui)
+			return Utils.equalObject(entry, propertyOwnerGui.core[propertyName]);
 		else
-			return Utils.equalObject(entry,propertyOwner[propertyName])
+			return Utils.equalObject(entry, propertyOwner[propertyName]);
 	})
 	onCurrentValueChanged: {
-		if(propertyOwnerGui) {
-			binding.when = !Utils.equalObject(currentValue,propertyOwnerGui.core[propertyName])
-		}else{
-			binding.when = !Utils.equalObject(currentValue,propertyOwner[propertyName])
+		if (propertyOwnerGui) {
+			binding.when = !Utils.equalObject(currentValue, propertyOwnerGui.core[propertyName]);
+		} else {
+			binding.when = !Utils.equalObject(currentValue, propertyOwner[propertyName]);
 		}
 	}
 	Binding {

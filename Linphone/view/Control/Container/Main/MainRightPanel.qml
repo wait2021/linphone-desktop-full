@@ -46,11 +46,11 @@ ColumnLayout {
 		color: mainItem.panelColor
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                rightPanelContent.forceActiveFocus()
-            }
-        }
+		MouseArea {
+			anchors.fill: parent
+			onClicked: {
+				rightPanelContent.forceActiveFocus();
+			}
+		}
 	}
 }

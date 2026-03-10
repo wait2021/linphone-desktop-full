@@ -7,7 +7,7 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Rectangle {
@@ -20,20 +20,21 @@ Rectangle {
 	Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 	color: DefaultStyle.grey_0
 	height: participantAddColumn.implicitHeight
-	signal done()
+	signal done
 
 	Connections {
 		enabled: chatGui !== null
 		target: chatGui.core
 		function onParticipantAddressesChanged(success) {
-			if (!success) UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"), 
-			//: Error while setting participants !
-			qsTr("info_popup_manage_participant_error_message"), false)
+			if (!success)
+				UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"),
+											  //: Error while setting participants !
+											  qsTr("info_popup_manage_participant_error_message"), false);
 			else {
-				mainItem.done()
-				UtilsCpp.showInformationPopup(qsTr("info_popup_success_title"), 
-				//: Participants updated
-				qsTr("info_popup_manage_participant_updated_message"), true)
+				mainItem.done();
+				UtilsCpp.showInformationPopup(qsTr("info_popup_success_title"),
+											  //: Participants updated
+											  qsTr("info_popup_manage_participant_updated_message"), true);
 			}
 		}
 	}
@@ -52,7 +53,7 @@ Rectangle {
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
 				onClicked: {
-					mainItem.done()
+					mainItem.done();
 				}
 			}
 			Text {
@@ -67,7 +68,7 @@ Rectangle {
 				//: Apply
 				text: qsTr("apply_button_text")
 				onClicked: {
-					mainItem.chatGui.core.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants)
+					mainItem.chatGui.core.lSetParticipantsAddresses(manageParticipantsLayout.selectedParticipants);
 				}
 			}
 		}
@@ -82,7 +83,7 @@ Rectangle {
 			focus: true
 			onVisibleChanged: {
 				if (visible)
-					selectedParticipants = mainItem.chatGui.core.participantsAddresses
+					selectedParticipants = mainItem.chatGui.core.participantsAddresses;
 			}
 		}
 		Item {

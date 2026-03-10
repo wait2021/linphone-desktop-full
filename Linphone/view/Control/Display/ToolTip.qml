@@ -11,7 +11,7 @@ Control.ToolTip {
 		id: tooltipBackground
 		opacity: 0.7
 		color: DefaultStyle.main2_200
-        radius: Utils.getSizeWithScreenRatio(15)
+		radius: Utils.getSizeWithScreenRatio(15)
 	}
 	contentItem: Quick.Text {
 		text: mainItem.text

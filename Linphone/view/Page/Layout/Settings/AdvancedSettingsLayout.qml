@@ -1,44 +1,43 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import SettingsCpp 1.0
 import UtilsCpp 1.0
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-            //: System
-            title: qsTr("settings_system_title"),
+			//: System
+			title: qsTr("settings_system_title"),
 			subTitle: "",
 			contentComponent: systemComponent
 		},
 		{
-            //: Remote provisioning
-            title: qsTr("settings_remote_provisioning_title"),
+			//: Remote provisioning
+			title: qsTr("settings_remote_provisioning_title"),
 			subTitle: "",
 			contentComponent: remoteProvisioningComponent,
 			hideTopSeparator: true
 		},
 		{
-            //: Security / Encryption
-            title: qsTr("settings_security_title"),
+			//: Security / Encryption
+			title: qsTr("settings_security_title"),
 			subTitle: "",
-			contentComponent: securityComponent,
+			contentComponent: securityComponent
 		},
 		{
-            //: Audio codecs
-            title: qsTr("settings_advanced_audio_codecs_title"),
+			//: Audio codecs
+			title: qsTr("settings_advanced_audio_codecs_title"),
 			subTitle: "",
-			contentComponent: audioCodecsComponent,
+			contentComponent: audioCodecsComponent
 		},
 		{
-            //: Video codecs
-            title: qsTr("settings_advanced_video_codecs_title"),
+			//: Video codecs
+			title: qsTr("settings_advanced_video_codecs_title"),
 			subTitle: "",
 			contentComponent: videoCodecsComponent
 		},
@@ -50,7 +49,7 @@ AbstractSettingsLayout {
 	]
 
 	onSave: {
-		SettingsCpp.save()
+		SettingsCpp.save();
 	}
 	onUndo: SettingsCpp.undo()
 
@@ -60,11 +59,11 @@ AbstractSettingsLayout {
 	Component {
 		id: systemComponent
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(40)
+			spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
 				Layout.fillWidth: true
-                //: Auto start %1
-                titleText: qsTr("settings_advanced_auto_start_title").arg(applicationName)
+				//: Auto start %1
+				titleText: qsTr("settings_advanced_auto_start_title").arg(applicationName)
 				propertyName: "autoStart"
 				propertyOwner: SettingsCpp
 			}
@@ -77,27 +76,28 @@ AbstractSettingsLayout {
 	Component {
 		id: remoteProvisioningComponent
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(6)
+			spacing: Utils.getSizeWithScreenRatio(6)
 			DecoratedTextField {
-				Layout.fillWidth: true
 				id: configUri
-                //: Remote provisioning URL
-                title: qsTr("settings_advanced_remote_provisioning_url")
+				Layout.fillWidth: true
+				//: Remote provisioning URL
+				title: qsTr("settings_advanced_remote_provisioning_url")
 				toValidate: true
 			}
 			SmallButton {
-                Layout.topMargin: Utils.getSizeWithScreenRatio(-20)
+				Layout.topMargin: Utils.getSizeWithScreenRatio(-20)
 				Layout.alignment: Qt.AlignRight
-                //: Download and apply
-                text: qsTr("settings_advanced_download_apply_remote_provisioning")
+				//: Download and apply
+				text: qsTr("settings_advanced_download_apply_remote_provisioning")
 				style: ButtonStyle.tertiary
 				onClicked: {
-					var url = configUri.value()
+					var url = configUri.value();
 					if (UtilsCpp.isValidURL(url))
-						UtilsCpp.useFetchConfig(configUri.value())
+						UtilsCpp.useFetchConfig(configUri.value());
 					else
-                        //: Invalid URL format
-                        UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_advanced_invalid_url_message"), false, UtilsCpp.getMainWindow())
+						//: Invalid URL format
+						UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_advanced_invalid_url_message"),
+													  false, UtilsCpp.getMainWindow());
 				}
 				//: "Download and apply remote provisioning"
 				Accessible.name: qsTr("download_apply_remote_provisioning_accessible_name")
@@ -108,15 +108,15 @@ AbstractSettingsLayout {
 	Component {
 		id: securityComponent
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(20)
+			spacing: Utils.getSizeWithScreenRatio(20)
 			ColumnLayout {
-                spacing: Utils.getSizeWithScreenRatio(5)
+				spacing: Utils.getSizeWithScreenRatio(5)
 				Text {
-                    //: Media encryption
-                    text: qsTr("settings_advanced_media_encryption_title")
+					//: Media encryption
+					text: qsTr("settings_advanced_media_encryption_title")
 					font {
-                        pixelSize: Typography.p2l.pixelSize
-                        weight: Typography.p2l.weight
+						pixelSize: Typography.p2l.pixelSize
+						weight: Typography.p2l.weight
 					}
 				}
 				ComboSetting {
@@ -125,22 +125,22 @@ AbstractSettingsLayout {
 					entries: SettingsCpp.mediaEncryptions
 					propertyName: "mediaEncryption"
 					textRole: 'display_name'
-                    propertyOwner: SettingsCpp
+					propertyOwner: SettingsCpp
 					Accessible.name: qsTr("settings_advanced_media_encryption_title")
 				}
 			}
 			SwitchSetting {
 				Layout.fillWidth: true
-                //: Media encryption mandatory
-                titleText: qsTr("settings_advanced_media_encryption_mandatory_title")
+				//: Media encryption mandatory
+				titleText: qsTr("settings_advanced_media_encryption_mandatory_title")
 				propertyName: "mediaEncryptionMandatory"
 				propertyOwner: SettingsCpp
 			}
 			SwitchSetting {
 				visible: false
 				Layout.fillWidth: true
-                //: Create end to end encrypted meetings and group calls
-                titleText: qsTr("settings_advanced_create_endtoend_encrypted_meetings_title")
+				//: Create end to end encrypted meetings and group calls
+				titleText: qsTr("settings_advanced_create_endtoend_encrypted_meetings_title")
 				propertyName: "createEndToEndEncryptedMeetingsAndGroupCalls"
 				propertyOwner: SettingsCpp
 			}
@@ -156,26 +156,28 @@ AbstractSettingsLayout {
 			ListView {
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-                spacing: Utils.getSizeWithScreenRatio(20)
+				spacing: Utils.getSizeWithScreenRatio(20)
 				model: PayloadTypeProxy {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: parent.width
-                    height: Utils.getSizeWithScreenRatio(32)
+					height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
 					propertyName: "enabled"
 					propertyOwnerGui: modelData
 					Connections {
 						target: modelData.core
-						function onChanged() { SettingsCpp.isSaved = false }
+						function onChanged() {
+							SettingsCpp.isSaved = false;
+						}
 					}
 					Connections {
 						target: SettingsCpp
 						function onIsSavedChanged(saved) {
 							if (saved)
-								modelData.core.save()
+								modelData.core.save();
 						}
 					}
 				}
@@ -189,32 +191,34 @@ AbstractSettingsLayout {
 	Component {
 		id: videoCodecsComponent
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(20)
+			spacing: Utils.getSizeWithScreenRatio(20)
 			ListView {
 				id: videoCodecList
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-                spacing: Utils.getSizeWithScreenRatio(20)
+				spacing: Utils.getSizeWithScreenRatio(20)
 				model: PayloadTypeProxy {
 					id: videoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
 					width: videoCodecList.width
-                    height: Utils.getSizeWithScreenRatio(32)
+					height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
 					propertyName: "enabled"
 					propertyOwnerGui: modelData
 					Connections {
 						target: modelData.core
-						function onChanged() { SettingsCpp.isSaved = false }
+						function onChanged() {
+							SettingsCpp.isSaved = false;
+						}
 					}
 					Connections {
 						target: SettingsCpp
 						function onIsSavedChanged(saved) {
 							if (saved)
-								modelData.core.save()
+								modelData.core.save();
 						}
 					}
 				}
@@ -223,29 +227,25 @@ AbstractSettingsLayout {
 				id: payloadList
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
-                spacing: Utils.getSizeWithScreenRatio(20)
+				spacing: Utils.getSizeWithScreenRatio(20)
 				model: PayloadTypeProxy {
 					id: downloadableVideoPayloadTypeProxy
 					filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
 				}
 				delegate: SwitchSetting {
 					width: payloadList.width
-                    height: Utils.getSizeWithScreenRatio(32)
+					height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.encoderDescription
-					onToggled: Utils.openCodecOnlineInstallerDialog(
-						UtilsCpp.getMainWindow(),
-						modelData.core,
-						function cancelCallBack() {
-							checked = false
-						},
-						function successCallBack() {
-							videoPayloadTypeProxy.reload()
-							downloadableVideoPayloadTypeProxy.reload()
-						},
-						function errorCallBack() {
-							checked = false
-						})
+					onToggled: Utils.openCodecOnlineInstallerDialog(UtilsCpp.getMainWindow(), modelData.core, function cancelCallBack(
+						) {
+						checked = false;
+					}, function successCallBack() {
+						videoPayloadTypeProxy.reload();
+						downloadableVideoPayloadTypeProxy.reload();
+					}, function errorCallBack() {
+						checked = false;
+					})
 				}
 			}
 		}
@@ -257,10 +257,10 @@ AbstractSettingsLayout {
 	Component {
 		id: hideFpsComponent
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(40)
+			spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
-                //:"Cacher les FPS"
-                titleText:qsTr("settings_advanced_hide_fps_title")
+				//:"Cacher les FPS"
+				titleText: qsTr("settings_advanced_hide_fps_title")
 				propertyName: "hideFps"
 				propertyOwner: SettingsCpp
 			}

@@ -10,10 +10,10 @@ ColumnLayout {
 
 	property string label: ""
 	property alias errorMessage: errorText.text
-	property string placeholderText : ""
+	property string placeholderText: ""
 	property bool mandatory: false
 	property bool enableErrorText: true
-    property real textInputWidth: width
+	property real textInputWidth: width
 	property string initialPhoneNumber
 	readonly property string phoneNumber: textField.text
 	readonly property string countryCode: combobox.text
@@ -31,8 +31,8 @@ ColumnLayout {
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
 		color: (combobox.activeFocus || textField.activeFocus) ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		font {
-            pixelSize: Typography.p2.pixelSize
-            weight: Typography.p2.weight
+			pixelSize: Typography.p2.pixelSize
+			weight: Typography.p2.weight
 		}
 	}
 
@@ -42,14 +42,11 @@ ColumnLayout {
 		background: Rectangle {
 			id: contentBackground
 			anchors.fill: parent
-            radius: Utils.getSizeWithScreenRatio(63)
+			radius: Utils.getSizeWithScreenRatio(63)
 			color: DefaultStyle.grey_100
-			border.color: mainItem.errorMessage.length > 0 
-				? DefaultStyle.danger_500_main
-				: (textField.activeFocus || combobox.activeFocus)
-					? DefaultStyle.main1_500_main
-					: DefaultStyle.grey_200
-        	border.width: mainItem.borderWidth
+			border.color: mainItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : (textField.activeFocus
+																							 || combobox.activeFocus) ? DefaultStyle.main1_500_main : DefaultStyle.grey_200
+			border.width: mainItem.borderWidth
 		}
 		contentItem: RowLayout {
 			CountryIndicatorCombobox {
@@ -74,13 +71,15 @@ ColumnLayout {
 				placeholderText: mainItem.placeholderText
 				background: Rectangle {
 					visible: textField.keyboardFocus
-            		radius: Utils.getSizeWithScreenRatio(63)
+					radius: Utils.getSizeWithScreenRatio(63)
 					color: "transparent"
 					border.color: mainItem.keyboardFocusedBorderColor
-        			border.width: mainItem.keyboardFocusedBorderWidth
+					border.width: mainItem.keyboardFocusedBorderWidth
 				}
 				initialText: initialPhoneNumber
-				validator: RegularExpressionValidator{ regularExpression: /[0-9]+/}
+				validator: RegularExpressionValidator {
+					regularExpression: /[0-9]+/
+				}
 				//: %1 number
 				Accessible.name: qsTr("number_phone_number_accessible_name").arg(mainItem.Accessible.name)
 			}

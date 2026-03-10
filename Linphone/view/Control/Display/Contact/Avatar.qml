@@ -11,34 +11,21 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 // Fill contact, account or call
 // Initials will be displayed if there isn't any avatar.
 // TODO : get FriendGui from Call.
-Loader{
+Loader {
 	id: mainItem
 	property AccountGui account: null
 	property FriendGui contact: null
 	property CallGui call: null
 	property bool isConference: false
 	property bool shadowEnabled: true
-	property var _address: account
-		? account.core?.identityAddress || ""
-		: call
-			? call.core.remoteAddress
-			: contact
-				? contact.core.defaultAddress
-				: ''
+	property var _address: account ? account.core?.identityAddress || "" : call ? call.core.remoteAddress : contact
+																				  ? contact.core.defaultAddress : ''
 	readonly property var address: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
-	property var displayNameVal: account && account.core.displayName
-		? account.core.displayName
-		: contact && contact.core.fullName
-			? contact.core.fullName
-			: displayNameObj
-				? displayNameObj.value
-			: ""
-	property bool haveAvatar: account 
-		? account.core.pictureUri
-		: contact 
-			? contact.core.pictureUri
-			: computedAvatarUri.length != 0
+	property var displayNameVal: account && account.core.displayName ? account.core.displayName : contact && contact.core.fullName
+																	   ? contact.core.fullName : displayNameObj ? displayNameObj.value : ""
+	property bool haveAvatar: account ? account.core.pictureUri : contact ? contact.core.pictureUri :
+																			computedAvatarUri.length != 0
 	property var avatarObj: UtilsCpp.findAvatarByAddress(_address)
 	property string computedAvatarUri: avatarObj ? avatarObj.value : ''
 
@@ -46,25 +33,23 @@ Loader{
 	// override it as secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 	property var friendSecurityLevelObj: UtilsCpp.getFriendSecurityLevel(_address)
 	property var friendSecurityLevel: friendSecurityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
-	
+
 	// To get the secured property for a specific address,
 	// override it as secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 	property var securityLevelObj: UtilsCpp.getFriendAddressSecurityLevel(_address)
 	property var securityLevel: securityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
-	property bool secured: call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-						   ? call.core.tokenVerified
-						   : contact
-							 ? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount === contact.core.devices.length
-							 : false
-	
+	property bool secured: call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp ? call.core.tokenVerified :
+																								 contact ? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount
+																										   === contact.core.devices.length : false
+
 	property bool securityBreach: securityLevel === LinphoneEnums.SecurityLevel.Unsafe
 	property bool displayPresence: true
 
 	asynchronous: true
-	sourceComponent: Component{
+	sourceComponent: Component {
 		Item {
 			anchors.fill: parent
-			
+
 			MultiEffect {
 				visible: mainItem.shadowEnabled
 				enabled: mainItem.shadowEnabled
@@ -77,16 +62,17 @@ Loader{
 			}
 			StackView {
 				id: stackView
-				
+
 				initialItem: mainItem.haveAvatar ? avatar : initials
 				anchors.fill: parent
-				
-				Connections{
+
+				Connections {
 					target: mainItem
 					onHaveAvatarChanged: {
-						stackView.replace(mainItem.haveAvatar ? avatar : initials, StackView.Immediate)}
+						stackView.replace(mainItem.haveAvatar ? avatar : initials, StackView.Immediate);
+					}
 				}
-				
+
 				Rectangle {
 					visible: mainItem.secured || mainItem.securityBreach
 					anchors.fill: stackView.currentItem
@@ -94,7 +80,7 @@ Loader{
 					z: 1
 					color: "transparent"
 					border {
-                        width: Utils.getSizeWithScreenRatio(2)
+						width: Utils.getSizeWithScreenRatio(2)
 						color: mainItem.secured ? DefaultStyle.info_500_main : DefaultStyle.danger_500_main
 					}
 					EffectImage {
@@ -104,28 +90,22 @@ Loader{
 						height: width
 						imageSource: mainItem.secured ? AppIcons.trusted : AppIcons.notTrusted
 						fillMode: Image.PreserveAspectFit
-						
 					}
 				}
-				
+
 				Image {
 					visible: mainItem.displayPresence
-					width: stackView.width/4.5
+					width: stackView.width / 4.5
 					height: width
 					sourceSize.width: width
-    				sourceSize.height: width
+					sourceSize.height: width
 					smooth: false
 					anchors.bottom: parent.bottom
 					anchors.right: parent.right
 					anchors.rightMargin: stackView.width / 15
 					z: 1
-					source: account 
-							? (account.core?.registrationState !== LinphoneEnums.RegistrationState.Ok 
-								? account.core?.registrationIcon 
-								: account.core?.presenceIcon)
-							: (contact 
-								? contact.core?.presenceIcon
-								: "")
+					source: account ? (account.core?.registrationState !== LinphoneEnums.RegistrationState.Ok ? account.core?.registrationIcon :
+																												account.core?.presenceIcon) : (contact ? contact.core?.presenceIcon : "")
 					RotationAnimator on rotation {
 						running: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Progress
 						direction: RotationAnimator.Clockwise
@@ -135,10 +115,9 @@ Loader{
 						duration: 10000
 					}
 				}
-				
 			}
-			
-			Component{
+
+			Component {
 				id: initials
 				Item {
 					id: avatarItem
@@ -146,7 +125,8 @@ Loader{
 					width: height
 					Rectangle {
 						id: initialItem
-						property string initials: mainItem.isConference || (mainItem.displayNameVal && mainItem.displayNameVal[0] === "+") ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
+						property string initials: mainItem.isConference || (mainItem.displayNameVal && mainItem.displayNameVal[0]
+																			=== "+") ? "" : UtilsCpp.getInitials(mainItem.displayNameVal)
 						radius: width / 2
 						color: DefaultStyle.main2_200
 						height: stackView.height
@@ -167,7 +147,7 @@ Loader{
 						EffectImage {
 							id: initialImg
 							visible: initialItem.initials === "" || initialItem.initials[0] === "+"
-							width: stackView.width/2
+							width: stackView.width / 2
 							height: width
 							colorizationColor: DefaultStyle.main2_600
 							imageSource: mainItem.isConference ? AppIcons.videoconference : AppIcons.profile
@@ -188,7 +168,7 @@ Loader{
 					}
 				}
 			}
-			Component{
+			Component {
 				id: avatar
 				Item {
 					id: avatarItem
@@ -204,11 +184,8 @@ Loader{
 						sourceSize.height: avatarItem.height
 						fillMode: Image.PreserveAspectCrop
 						anchors.centerIn: parent
-						source: mainItem.account
-							? mainItem.account.core.pictureUri 
-							: mainItem.contact
-								? mainItem.contact.core.pictureUri
-								: computedAvatarUri
+						source: mainItem.account ? mainItem.account.core.pictureUri : mainItem.contact ? mainItem.contact.core.pictureUri :
+																										 computedAvatarUri
 						mipmap: true
 						layer.enabled: true
 					}

@@ -9,10 +9,10 @@ Button {
 	id: mainItem
 	textSize: Typography.b2.pixelSize
 	textWeight: Typography.b2.weight
-    leftPadding: Utils.getSizeWithScreenRatio(16)
-    rightPadding: Utils.getSizeWithScreenRatio(16)
-    topPadding: Utils.getSizeWithScreenRatio(10)
-    bottomPadding: Utils.getSizeWithScreenRatio(10)
-    icon.width: Utils.getSizeWithScreenRatio(16)
-    icon.height: Utils.getSizeWithScreenRatio(16)
+	leftPadding: Utils.getSizeWithScreenRatio(16)
+	rightPadding: Utils.getSizeWithScreenRatio(16)
+	topPadding: Utils.getSizeWithScreenRatio(10)
+	bottomPadding: Utils.getSizeWithScreenRatio(10)
+	icon.width: Utils.getSizeWithScreenRatio(16)
+	icon.height: Utils.getSizeWithScreenRatio(16)
 }

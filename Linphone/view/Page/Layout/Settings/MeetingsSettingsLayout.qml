@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
@@ -12,8 +11,8 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-            //: "Affichage"
-            title: qsTr("settings_meetings_display_title"),
+			//: "Affichage"
+			title: qsTr("settings_meetings_display_title"),
 			subTitle: "",
 			contentComponent: confDisplayParametersComponent,
 			hideTopMargin: true
@@ -21,14 +20,14 @@ AbstractSettingsLayout {
 	]
 
 	onSave: {
-		SettingsCpp.save()
+		SettingsCpp.save();
 	}
 	onUndo: SettingsCpp.undo()
 
 	Component {
 		id: confDisplayParametersComponent
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(20)
+			spacing: Utils.getSizeWithScreenRatio(20)
 			ColumnLayout {
 				spacing: Utils.getSizeWithScreenRatio(5)
 				Text {

@@ -4,76 +4,79 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp 1.0
 
-Window{
+Window {
 	id: mainItem
 	height: 400
 	width: 800
 	visible: true
-	Rectangle{
+	Rectangle {
 		anchors.centerIn: parent
 		height: 300
 		width: 200
 		color: 'gray'
-		Avatar{
+		Avatar {
 			anchors.centerIn: parent
 			height: 100
 			width: height
 			_address: 'sip:jul@toto.com'
 		}
-		Loader{
+		Loader {
 			id: cameraLoader
 			anchors.fill: parent
-			Timer{
+			Timer {
 				id: resetTimer
 				interval: 1
-				onTriggered: {cameraLoader.active=false; cameraLoader.active=true;}
+				onTriggered: {
+					cameraLoader.active = false;
+					cameraLoader.active = true;
+				}
 			}
 			active: true
 			sourceComponent: cameraComponent
 		}
-		Component{
+		Component {
 			id: cameraComponent
-			Rectangle{
+			Rectangle {
 				height: cameraLoader.height
 				width: cameraLoader.width
 				color: 'red'
-					CameraGui{
+				CameraGui {
 					id: cameraItem
 					anchors.fill: parent
 					visible: isReady
-					onVisibleChanged: console.log('Ready?'+visible)
-					
+					onVisibleChanged: console.log('Ready?' + visible)
+
 					onRequestNewRenderer: {
-						console.log("Request new renderer")
-						resetTimer.restart()
+						console.log("Request new renderer");
+						resetTimer.restart();
 					}
 				}
 			}
 		}
 	}
-	
+
 	/*
 	Control.StackView{
-		id: stackView
-		anchors.fill: parent
-		initialItem: cameraComponent
-		
-		Component{
-			id: avatarComponent
-			Avatar{
-			}
-		}
-		Component{
-			id: cameraComponent
-			CameraGui{
-				id: cameraItem
-				onRequestNewRenderer: {
-					console.log("Request new renderer")
-					stackView.replace(cameraComponent, Control.StackView.Immediate)
-					
-				}
-			}
-		}
+	id: stackView
+	anchors.fill: parent
+	initialItem: cameraComponent
+
+	Component{
+	id: avatarComponent
+	Avatar{
+	}
+	}
+	Component{
+	id: cameraComponent
+	CameraGui{
+	id: cameraItem
+	onRequestNewRenderer: {
+	console.log("Request new renderer")
+	stackView.replace(cameraComponent, Control.StackView.Immediate)
+
+	}
+	}
+	}
 	}
 	*/
 }

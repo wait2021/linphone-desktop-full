@@ -7,17 +7,17 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Control.CheckBox {
 	id: mainItem
 	hoverEnabled: enabled
-	indicator: Item{
-        implicitWidth: Utils.getSizeWithScreenRatio(20)
-        implicitHeight: Utils.getSizeWithScreenRatio(20)
+	indicator: Item {
+		implicitWidth: Utils.getSizeWithScreenRatio(20)
+		implicitHeight: Utils.getSizeWithScreenRatio(20)
 		x: (parent.width - width) / 2
 		y: (parent.height - height) / 2
 		Rectangle {
 			id: backgroundArea
-			anchors.fill: parent	
-            radius: Utils.getSizeWithScreenRatio(3)
+			anchors.fill: parent
+			radius: Utils.getSizeWithScreenRatio(3)
 			border.color: mainItem.hovered || mainItem.activeFocus ? DefaultStyle.main1_600 : DefaultStyle.main1_500_main
-            border.width: Utils.getSizeWithScreenRatio(2)
+			border.width: Utils.getSizeWithScreenRatio(2)
 			color: mainItem.checked ? DefaultStyle.main1_500_main : "transparent"
 			EffectImage {
 				visible: mainItem.checked

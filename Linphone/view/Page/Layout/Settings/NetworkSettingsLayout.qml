@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
@@ -11,25 +10,25 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-            //: "Réseau"
-            title: qsTr("settings_network_title"),
+			//: "Réseau"
+			title: qsTr("settings_network_title"),
 			subTitle: "",
 			contentComponent: content
 		}
 	]
 	onSave: {
-		SettingsCpp.save()
+		SettingsCpp.save();
 	}
 	onUndo: SettingsCpp.undo()
-	
+
 	Component {
 		id: content
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(40)
+			spacing: Utils.getSizeWithScreenRatio(40)
 			SwitchSetting {
 				Layout.fillWidth: true
-                //: "Autoriser l'IPv6"
-                titleText: qsTr("settings_network_allow_ipv6")
+				//: "Autoriser l'IPv6"
+				titleText: qsTr("settings_network_allow_ipv6")
 				propertyName: "ipv6Enabled"
 				propertyOwner: SettingsCpp
 			}

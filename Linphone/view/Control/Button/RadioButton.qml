@@ -12,13 +12,13 @@ Control.RadioButton {
 	property string imgUrl
 	property bool checkOnClick: true
 	property color color
-    property real indicatorSize: Utils.getSizeWithScreenRatio(16)
+	property real indicatorSize: Utils.getSizeWithScreenRatio(16)
 	property bool shadowEnabled: mainItem.activeFocus || mainItem.hovered
 	//onClicked: if (checkOnClick && !mainItem.checked) mainItem.toggle()
 
-	MouseArea{
+	MouseArea {
 		id: mouseArea
-		anchors.fill:parent
+		anchors.fill: parent
 		hoverEnabled: true
 		acceptedButtons: Qt.NoButton
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -31,16 +31,16 @@ Control.RadioButton {
 		Rectangle {
 			id: backgroundArea
 			anchors.fill: parent
-			radius: mainItem.indicatorSize/2
+			radius: mainItem.indicatorSize / 2
 			color: "transparent"
 			border.color: mainItem.color
-            border.width: Utils.getSizeWithScreenRatio(2)
+			border.width: Utils.getSizeWithScreenRatio(2)
 			Rectangle {
-				width: parent.width/2
-				height: parent.height/2
-				x: parent.width/4
-				y: parent.width/4
-				radius: width/2
+				width: parent.width / 2
+				height: parent.height / 2
+				x: parent.width / 4
+				y: parent.width / 4
+				radius: width / 2
 				color: mainItem.color
 				visible: mainItem.checked
 			}
@@ -49,7 +49,7 @@ Control.RadioButton {
 			enabled: mainItem.shadowEnabled
 			anchors.fill: backgroundArea
 			source: backgroundArea
-			visible:  mainItem.shadowEnabled
+			visible: mainItem.shadowEnabled
 			// Crash : https://bugreports.qt.io/browse/QTBUG-124730
 			shadowEnabled: true //mainItem.shadowEnabled
 			shadowColor: DefaultStyle.grey_1000

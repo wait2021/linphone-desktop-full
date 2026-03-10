@@ -14,11 +14,10 @@ GridLayout {
 	property bool isHoveringFile: false
 	property int itemCount: delModel.count
 	property int itemWidth: Utils.getSizeWithScreenRatio(95)
-	// cellWidth: 
+	// cellWidth:
 	// cellHeight: Utils.getSizeWithScreenRatio(105)
 	property real maxWidth: Utils.getSizeWithScreenRatio(3 * 105)
 	columns: optimalColumns
-	
 
 	property int optimalColumns: {
 		let maxCols = Math.floor(maxWidth / itemWidth);
@@ -30,10 +29,7 @@ GridLayout {
 			let rows = Math.ceil(itemCount / cols);
 			let emptySlots = cols * rows - itemCount;
 
-			if (
-				rows < minRows || 
-				(rows === minRows && emptySlots < minEmptySlots)
-			) {
+			if (rows < minRows || (rows === minRows && emptySlots < minEmptySlots)) {
 				bestCols = cols;
 				minRows = rows;
 				minEmptySlots = emptySlots;

@@ -20,7 +20,8 @@ MessageInfosLayout {
 			Layout.fillHeight: true
 			Layout.preferredHeight: contentHeight
 			cellWidth: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? width : Math.round(width / 4)
-			cellHeight: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? Utils.getSizeWithScreenRatio(69) : Math.round(width / 4)
+			cellHeight: mainItem.filter === ChatMessageFileProxy.FilterContentType.Documents ? Utils.getSizeWithScreenRatio(69) :
+																							   Math.round(width / 4)
 			property bool loading: true
 			model: ChatMessageFileProxy {
 				chat: mainItem.chatGui
@@ -36,11 +37,11 @@ MessageInfosLayout {
 				anchors.centerIn: parent
 				visible: !gridView.loading && gridView.count === 0
 				font: Typography.p2l
-				text: mainItem.filter === ChatMessageFileProxy.FilterContentType.Medias
-				//: No media
-				? qsTr("no_shared_medias")
-				//: No document
-				: qsTr("no_shared_documents")
+				text: mainItem.filter === ChatMessageFileProxy.FilterContentType.Medias ?
+						  //: No media
+						  qsTr("no_shared_medias") :
+						  //: No document
+						  qsTr("no_shared_documents")
 			}
 			delegate: FileView {
 				contentGui: modelData
@@ -49,6 +50,8 @@ MessageInfosLayout {
 				height: gridView.cellHeight - Utils.getSizeWithScreenRatio(2)
 			}
 		},
-		Item{Layout.fillHeight: true}
+		Item {
+			Layout.fillHeight: true
+		}
 	]
 }

@@ -7,7 +7,7 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
@@ -25,7 +25,7 @@ ColumnLayout {
 
 	spacing: Utils.getSizeWithScreenRatio(25)
 
-	signal goBackRequested()
+	signal goBackRequested
 
 	RowLayout {
 		BigButton {
@@ -49,7 +49,7 @@ ColumnLayout {
 			visible: mainItem.tabbarModel !== undefined
 			Layout.fillWidth: true
 			Layout.preferredWidth: implicitWidth
-            model: mainItem.tabbarModel
+			model: mainItem.tabbarModel
 			pixelSize: Typography.h4.pixelSize
 			textWeight: Typography.h4.weight
 			spacing: Utils.getSizeWithScreenRatio(10)

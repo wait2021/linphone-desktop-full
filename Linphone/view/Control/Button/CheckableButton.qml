@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import QtQuick.Controls.Basic as Control
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Button {
 	id: mainItem
@@ -14,11 +14,7 @@ Button {
 	color: style?.color?.normal || DefaultStyle.grey_500
 	pressedColor: checkedIconUrl ? color : style?.color?.pressed || DefaultStyle.grey_500
 	hoveredColor: checked ? Qt.darker(pressedColor, 1.05) : style?.color?.hovered || DefaultStyle.grey_500
-	property color backgroundColor: hovered
-		? hoveredColor
-		: checked
-			? pressedColor
-			: color
+	property color backgroundColor: hovered ? hoveredColor : checked ? pressedColor : color
 	checkable: true
 	Accessible.role: Accessible.Button
 	icon.source: checkedIconUrl && mainItem.checked ? checkedIconUrl : iconUrl

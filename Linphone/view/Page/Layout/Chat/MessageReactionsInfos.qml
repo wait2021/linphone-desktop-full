@@ -16,7 +16,9 @@ MessageInfosLayout {
 		reactions: chatMessageGui ? chatMessageGui.core.reactions : []
 		// First index of reactionsSingletonAsStrings list is all reactions combined which does not appear
 		// in reactionsSingleton list
-		filter: tabbar.currentIndex >=1 && chatMessageGui && chatMessageGui.core.reactionsSingleton[tabbar.currentIndex-1].body || ""
+		filter: tabbar.currentIndex >= 1 && chatMessageGui && chatMessageGui.core.reactionsSingleton[tabbar.currentIndex - 1].body
+				|| ""
+
 	}
 	listView.delegate: Item {
 		width: listView.width
@@ -61,7 +63,9 @@ MessageInfosLayout {
 					}
 				}
 			}
-			Item{Layout.fillWidth: true}
+			Item {
+				Layout.fillWidth: true
+			}
 			Text {
 				text: UtilsCpp.encodeEmojiToQmlRichFormat(modelData.body)
 				textFormat: Text.RichText

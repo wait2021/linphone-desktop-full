@@ -5,12 +5,12 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
 	id: mainItem
-    spacing: Utils.getSizeWithScreenRatio(30)
+	spacing: Utils.getSizeWithScreenRatio(30)
 
 	property var callHistoryGui
 
@@ -20,35 +20,32 @@ ColumnLayout {
 	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
 	property string contactAddress: specificAddress != "" ? specificAddress : contact && contact.core.defaultAddress || ""
 	property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
-	property string computedContactName: computedContactNameObj ? computedContactNameObj.value: ""
-	property string contactName: contact
-		? contact.core.fullName 
-		: callHistoryGui
-			? callHistoryGui.core.displayName
-			: computedContactName
+	property string computedContactName: computedContactNameObj ? computedContactNameObj.value : ""
+	property string contactName: contact ? contact.core.fullName : callHistoryGui ? callHistoryGui.core.displayName :
+																					computedContactName
 
-	// Set this property to get the security informations 
+	// Set this property to get the security informations
 	// for a specific address and not for the entire contact
 	property string specificAddress: ""
 
 	property alias buttonContent: rightButton.data
 	property alias detailContent: detailControl.data
 
-	signal conferenceChatDisplayRequested()
-	signal conferenceCallHistoryDisplayRequested()
+	signal conferenceChatDisplayRequested
+	signal conferenceCallHistoryDisplayRequested
 
 	ColumnLayout {
-        spacing: Utils.getSizeWithScreenRatio(13)
+		spacing: Utils.getSizeWithScreenRatio(13)
 		Layout.alignment: Qt.AlignHCenter
 		Item {
-            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 			Layout.preferredHeight: detailAvatar.height
 			Layout.alignment: Qt.AlignHCenter
 			Avatar {
 				id: detailAvatar
 				anchors.horizontalCenter: parent.horizontalCenter
-                width: Utils.getSizeWithScreenRatio(100)
-                height: Utils.getSizeWithScreenRatio(100)
+				width: Utils.getSizeWithScreenRatio(100)
+				height: Utils.getSizeWithScreenRatio(100)
 				contact: mainItem.contact || null
 				isConference: !!mainItem.conferenceInfo
 				displayNameVal: mainItem.contactName
@@ -58,18 +55,18 @@ ColumnLayout {
 				id: rightButton
 				anchors.right: parent.right
 				anchors.verticalCenter: detailAvatar.verticalCenter
-                anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
-                width: Utils.getSizeWithScreenRatio(30)
-                height: Utils.getSizeWithScreenRatio(30)
+				anchors.rightMargin: Utils.getSizeWithScreenRatio(20)
+				width: Utils.getSizeWithScreenRatio(30)
+				height: Utils.getSizeWithScreenRatio(30)
 			}
 		}
 		ColumnLayout {
 			Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
-            spacing: Utils.getSizeWithScreenRatio(5)
+			Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+			spacing: Utils.getSizeWithScreenRatio(5)
 
 			ColumnLayout {
-                spacing: Utils.getSizeWithScreenRatio(2)
+				spacing: Utils.getSizeWithScreenRatio(2)
 				Layout.alignment: Qt.AlignHCenter
 				Text {
 					Layout.preferredWidth: implicitWidth
@@ -79,8 +76,8 @@ ColumnLayout {
 					text: detailAvatar.displayNameVal
 					maximumLineCount: 1
 					font {
-                        pixelSize: Typography.p1.pixelSize
-                        weight: Typography.p1.weight
+						pixelSize: Typography.p1.pixelSize
+						weight: Typography.p1.weight
 					}
 				}
 				Text {
@@ -92,8 +89,8 @@ ColumnLayout {
 					elide: Text.ElideMiddle
 					maximumLineCount: 1
 					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(300)
+						pixelSize: Utils.getSizeWithScreenRatio(12)
+						weight: Utils.getSizeWithScreenRatio(300)
 					}
 				}
 			}
@@ -105,8 +102,8 @@ ColumnLayout {
 				text: contact ? contact.core.presenceStatus : ""
 				color: contact ? contact.core.presenceColor : 'transparent'
 				font {
-                    pixelSize: Utils.getSizeWithScreenRatio(12)
-                    weight: Utils.getSizeWithScreenRatio(300)
+					pixelSize: Utils.getSizeWithScreenRatio(12)
+					weight: Utils.getSizeWithScreenRatio(300)
 				}
 			}
 		}
@@ -119,9 +116,9 @@ ColumnLayout {
 		style: ButtonStyle.grey
 		onClicked: {
 			if (mainItem.conferenceInfo) {
-				var callsWindow = UtilsCpp.getOrCreateCallsWindow()
-				callsWindow.setupConference(mainItem.conferenceInfo)
-				UtilsCpp.smartShowWindow(callsWindow)
+				var callsWindow = UtilsCpp.getOrCreateCallsWindow();
+				callsWindow.setupConference(mainItem.conferenceInfo);
+				UtilsCpp.smartShowWindow(callsWindow);
 			}
 		}
 	}
@@ -129,96 +126,103 @@ ColumnLayout {
 		id: confWithChatLayout
 		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature && mainItem.chatGui !== null
 		Layout.alignment: Qt.AlignHCenter
-        spacing: Utils.getSizeWithScreenRatio(72)
+		spacing: Utils.getSizeWithScreenRatio(72)
 		// Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		LabelButton {
 			visible: !SettingsCpp.disableChatFeature
-            width: Utils.getSizeWithScreenRatio(56)
-            height: Utils.getSizeWithScreenRatio(56)
-            button.icon.width: Utils.getSizeWithScreenRatio(24)
-            button.icon.height: Utils.getSizeWithScreenRatio(24)
-            button.icon.source: AppIcons.videoconference
-            //: "Join"
-            label: qsTr("meeting_info_join_title")
+			width: Utils.getSizeWithScreenRatio(56)
+			height: Utils.getSizeWithScreenRatio(56)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
+			button.icon.source: AppIcons.videoconference
+			//: "Join"
+			label: qsTr("meeting_info_join_title")
 			button.onClicked: if (mainItem.conferenceInfo) {
-				var callsWindow = UtilsCpp.getOrCreateCallsWindow()
-				callsWindow.setupConference(mainItem.conferenceInfo)
-				UtilsCpp.smartShowWindow(callsWindow)
-			}
-        }
+								  var callsWindow = UtilsCpp.getOrCreateCallsWindow();
+								  callsWindow.setupConference(mainItem.conferenceInfo);
+								  UtilsCpp.smartShowWindow(callsWindow);
+							  }
+		}
 		LabelButton {
 			visible: !SettingsCpp.disableChatFeature
 			button.checkable: true
-            width: Utils.getSizeWithScreenRatio(56)
-            height: Utils.getSizeWithScreenRatio(56)
-            button.icon.width: Utils.getSizeWithScreenRatio(24)
-            button.icon.height: Utils.getSizeWithScreenRatio(24)
-            button.icon.source: button.checked ? AppIcons.callList : AppIcons.chatTeardropText
-            label: button.checked 
-            //: "Call history"
-			? qsTr("contact_call_history_action")
-            //: "Conversation"
-			: qsTr("contact_conversation_action")
+			width: Utils.getSizeWithScreenRatio(56)
+			height: Utils.getSizeWithScreenRatio(56)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
+			button.icon.source: button.checked ? AppIcons.callList : AppIcons.chatTeardropText
+			label: button.checked ?
+					   //: "Call history"
+					   qsTr("contact_call_history_action") :
+					   //: "Conversation"
+					   qsTr("contact_conversation_action")
 			button.onCheckedChanged: {
-				if (button.checked) mainItem.conferenceChatDisplayRequested()
-				else mainItem.conferenceCallHistoryDisplayRequested()
+				if (button.checked)
+					mainItem.conferenceChatDisplayRequested();
+				else
+					mainItem.conferenceCallHistoryDisplayRequested();
 			}
-        }
+		}
 	}
 	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
-        spacing: Utils.getSizeWithScreenRatio(72)
+		spacing: Utils.getSizeWithScreenRatio(72)
 		Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		visible: !mainItem.isConference
 		LabelButton {
-            width: Utils.getSizeWithScreenRatio(56)
-            height: Utils.getSizeWithScreenRatio(56)
-            button.icon.width: Utils.getSizeWithScreenRatio(24)
-            button.icon.height: Utils.getSizeWithScreenRatio(24)
+			width: Utils.getSizeWithScreenRatio(56)
+			height: Utils.getSizeWithScreenRatio(56)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
 			button.icon.source: AppIcons.phone
-            //: "Appel"
-            label: qsTr("contact_call_action")
+			//: "Appel"
+			label: qsTr("contact_call_action")
 			button.onClicked: {
-				if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, false, mainItem)
-				else UtilsCpp.createCall(mainItem.specificAddress)
+				if (mainItem.specificAddress === "")
+					mainWindow.startCallWithContact(mainItem.contact, false, mainItem);
+				else
+					UtilsCpp.createCall(mainItem.specificAddress);
 			}
 		}
 		LabelButton {
 			visible: !SettingsCpp.disableChatFeature
-            width: Utils.getSizeWithScreenRatio(56)
-            height: Utils.getSizeWithScreenRatio(56)
-            button.icon.width: Utils.getSizeWithScreenRatio(24)
-            button.icon.height: Utils.getSizeWithScreenRatio(24)
-            button.icon.source: AppIcons.chatTeardropText
-            //: "Message"
-            label: qsTr("contact_message_action")
+			width: Utils.getSizeWithScreenRatio(56)
+			height: Utils.getSizeWithScreenRatio(56)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
+			button.icon.source: AppIcons.chatTeardropText
+			//: "Message"
+			label: qsTr("contact_message_action")
 			button.onClicked: {
-				console.debug("[CallHistoryLayout.qml] Open conversation")
+				console.debug("[CallHistoryLayout.qml] Open conversation");
 				if (mainItem.specificAddress === "") {
-					mainWindow.sendMessageToContact(mainItem.contact)
-				}
-				else {
-					console.log("specific address", mainItem.specificAddress)
-					mainWindow.displayChatPage(mainItem.specificAddress)
+					mainWindow.sendMessageToContact(mainItem.contact);
+				} else {
+					console.log("specific address", mainItem.specificAddress);
+					mainWindow.displayChatPage(mainItem.specificAddress);
 				}
 			}
-        }
-        LabelButton {
-            visible: SettingsCpp.videoEnabled
-            width: Utils.getSizeWithScreenRatio(56)
-            height: Utils.getSizeWithScreenRatio(56)
-            button.icon.width: Utils.getSizeWithScreenRatio(24)
-            button.icon.height: Utils.getSizeWithScreenRatio(24)
-            button.icon.source: AppIcons.videoCamera
-            //: "Appel Video"
-            label: qsTr("contact_video_call_action")
-            button.onClicked: {
-                if (mainItem.specificAddress === "") mainWindow.startCallWithContact(mainItem.contact, true, mainItem)
-                else UtilsCpp.createCall(mainItem.specificAddress, {'localVideoEnabled': true})
-            }
-        }
+		}
+		LabelButton {
+			visible: SettingsCpp.videoEnabled
+			width: Utils.getSizeWithScreenRatio(56)
+			height: Utils.getSizeWithScreenRatio(56)
+			button.icon.width: Utils.getSizeWithScreenRatio(24)
+			button.icon.height: Utils.getSizeWithScreenRatio(24)
+			button.icon.source: AppIcons.videoCamera
+			//: "Appel Video"
+			label: qsTr("contact_video_call_action")
+			button.onClicked: {
+				if (mainItem.specificAddress === "")
+					mainWindow.startCallWithContact(mainItem.contact, true, mainItem);
+				else
+					UtilsCpp.createCall(mainItem.specificAddress, {
+											'localVideoEnabled': true
+										});
+			}
+		}
 	}
 	ColumnLayout {
 		id: detailControl
@@ -226,6 +230,6 @@ ColumnLayout {
 		Layout.fillHeight: true
 
 		Layout.alignment: Qt.AlignHCenter
-        Layout.topMargin: Utils.getSizeWithScreenRatio(30)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(30)
 	}
 }

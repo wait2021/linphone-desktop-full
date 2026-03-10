@@ -5,23 +5,23 @@ import Linphone
 import UtilsCpp 1.0
 
 // Snippet
-Window{
+Window {
 	id: mainItem
 	height: 800
 	width: 1000
 	visible: true
-	ColumnLayout{
+	ColumnLayout {
 		anchors.fill: parent
-		RowLayout{
-			FriendGui{
+		RowLayout {
+			FriendGui {
 				id: contact
 			}
-			TextField{
+			TextField {
 				placeholderText: 'Name'
 				initialText: contact.core.givenName
-				onTextChanged: contact.core.givenName = text 
+				onTextChanged: contact.core.givenName = text
 			}
-			TextField{
+			TextField {
 				placeholderText: 'Address'
 				initialText: contact.core.address
 				onTextChanged: contact.core.address = text
@@ -29,61 +29,61 @@ Window{
 			Button {
 				text: 'Create'
 				onClicked: {
-					contact.core.save()
+					contact.core.save();
 				}
 			}
 			Text {
-				text: 'IsSaved:'+contact.core.isSaved
+				text: 'IsSaved:' + contact.core.isSaved
 			}
 		}
-		ListView{
+		ListView {
 			id: friends
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			onCountChanged: console.log("count changed", count)
-			
-			model: MagicSearchProxy{
+
+			model: MagicSearchProxy {
 				id: search
 				filterText: ''
 			}
-			delegate: Rectangle{
+			delegate: Rectangle {
 				height: 50
 				width: friends.width
-				RowLayout{
+				RowLayout {
 					anchors.fill: parent
-					Text{
+					Text {
 						text: modelData.core.presenceStatus
 						color: modelData.core.presenceColor
 					}
 					Button {
 						text: 'X'
 						onClicked: {
-							modelData.core.remove()
+							modelData.core.remove();
 						}
 					}
-					Text{
+					Text {
 						text: modelData.core.address
 					}
-					TextField{
+					TextField {
 						initialText: modelData.core.address
-						onTextChanged: if(modelData.core.address != text){
-								modelData.core.address = text
-								resetText()
-							 }
+						onTextChanged: if (modelData.core.address != text) {
+										   modelData.core.address = text;
+										   resetText();
+									   }
 					}
-					Text{
-						text: 'IsSaved:'+modelData.core.isSaved
+					Text {
+						text: 'IsSaved:' + modelData.core.isSaved
 					}
 					Button {
 						text: 'Revert'
 						onClicked: {
-							modelData.core.undo()
+							modelData.core.undo();
 						}
 					}
 					Button {
 						text: 'Save'
 						onClicked: {
-							modelData.core.save()
+							modelData.core.save();
 						}
 					}
 				}
@@ -93,10 +93,8 @@ Window{
 			text: 'Get'
 			Layout.rightMargin: 20
 			onClicked: {
-				search.filterText = '*'
+				search.filterText = '*';
 			}
 		}
 	}
-	
 }
-

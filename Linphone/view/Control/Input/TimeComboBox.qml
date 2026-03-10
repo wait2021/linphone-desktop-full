@@ -10,33 +10,33 @@ ComboBox {
 	onSelectedDateTimeChanged: {
 		if (minTime != undefined) {
 			if (UtilsCpp.timeOffset(minTime, selectedDateTime) < 0)
-				selectedDateTime = minTime
+				selectedDateTime = minTime;
 		}
 		if (maxTime != undefined) {
 			if (UtilsCpp.timeOffset(maxTime, selectedDateTime) > 0)
-				selectedDateTime = maxTime
+				selectedDateTime = maxTime;
 		}
 	}
 	readonly property string selectedTimeString: Qt.formatDateTime(selectedDateTime, "hh:mm")
-	property int selectedHour: input.hour*1
-	property int selectedMin: input.min*1
+	property int selectedHour: input.hour * 1
+	property int selectedMin: input.min * 1
 	property alias contentText: input
 	property var minTime
 	property var maxTime
-    popup.width: Utils.getSizeWithScreenRatio(73)
+	popup.width: Utils.getSizeWithScreenRatio(73)
 	listView.model: 48
-    listView.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
-    popup.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
+	listView.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
+	popup.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
 	editable: true
 	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
 	onCurrentTextChanged: input.text = currentText
 	popup.onOpened: {
-		input.forceActiveFocus()
+		input.forceActiveFocus();
 	}
 
 	contentItem: TextInput {
 		id: input
-		validator: IntValidator{}
+		validator: IntValidator {}
 		// activeFocusOnPress: false
 		inputMask: "00:00"
 		verticalAlignment: TextInput.AlignVCenter
@@ -46,41 +46,41 @@ ComboBox {
 		color: DefaultStyle.main2_600
 		onActiveFocusChanged: {
 			if (activeFocus) {
-				selectAll()
+				selectAll();
 			} else {
-				listView.currentIndex = -1
-				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
+				listView.currentIndex = -1;
+				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min);
 			}
 		}
 		font {
-            pixelSize: Typography.p2l.pixelSize
-            weight: Typography.p2l.weight
+			pixelSize: Typography.p2l.pixelSize
+			weight: Typography.p2l.weight
 		}
 		text: mainItem.selectedTimeString
-		Keys.onPressed: (event) => {
-			if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-				focus = false
-			}
-		}
+		Keys.onPressed: event => {
+							if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+								focus = false;
+							}
+						}
 		onFocusChanged: if (!focus) {
-			mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
-			console.log("set time", hour, min)
-		}
+							mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min);
+							console.log("set time", hour, min);
+						}
 	}
 	listView.delegate: Text {
 		id: hourDelegate
-		property int hour: modelData /2
-		property int min: modelData%2 === 0 ? 0 : 30
+		property int hour: modelData / 2
+		property int min: modelData % 2 === 0 ? 0 : 30
 		property var currentDateTime: UtilsCpp.createDateTime(new Date(), hour, min)
 		text: Qt.formatDateTime(currentDateTime, "hh:mm")
 		width: mainItem.width
 		visible: mainItem.minTime == undefined || UtilsCpp.timeOffset(mainItem.minTime, currentDateTime) > 0
-        height: visible ? Utils.getSizeWithScreenRatio(25) : 0
+		height: visible ? Utils.getSizeWithScreenRatio(25) : 0
 		verticalAlignment: TextInput.AlignVCenter
 		horizontalAlignment: TextInput.AlignHCenter
 		font {
-            pixelSize: Typography.p1.pixelSize
-            weight: Typography.p1.weight
+			pixelSize: Typography.p1.pixelSize
+			weight: Typography.p1.weight
 		}
 		MouseArea {
 			anchors.fill: parent
@@ -88,9 +88,9 @@ ComboBox {
 			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 			onClicked: {
 				// mainItem.text = parent.text
-				mainItem.listView.currentIndex = index
-				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
-				mainItem.popup.close()
+				mainItem.listView.currentIndex = index;
+				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min);
+				mainItem.popup.close();
 			}
 			Rectangle {
 				visible: parent.containsMouse

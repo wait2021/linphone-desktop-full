@@ -15,9 +15,11 @@ Control.ComboBox {
 	property color keyboardFocusedBorderColor: DefaultStyle.main2_900
 	property real borderWidth: Utils.getSizeWithScreenRatio(1)
 	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
-	property string text: combobox.model.getAt(combobox.currentIndex) ? combobox.model.getAt(combobox.currentIndex).countryCallingCode : ""
-	currentIndex: phoneNumberModel.count > 0 ? Math.max(0, phoneNumberModel.findIndexByCountryCallingCode(defaultCallingCode)) : -1
-	Accessible.name: mainItem.Accessible.name	
+	property string text: combobox.model.getAt(combobox.currentIndex) ? combobox.model.getAt(
+																			combobox.currentIndex).countryCallingCode : ""
+	currentIndex: phoneNumberModel.count > 0 ? Math.max(0, phoneNumberModel.findIndexByCountryCallingCode(
+															defaultCallingCode)) : -1
+	Accessible.name: mainItem.Accessible.name
 	model: PhoneNumberProxy {
 		id: phoneNumberModel
 	}
@@ -25,15 +27,10 @@ Control.ComboBox {
 		anchors.fill: parent
 		radius: Utils.getSizeWithScreenRatio(63)
 		color: mainItem.enableBackgroundColor ? DefaultStyle.grey_100 : "transparent"
-		border.color: mainItem.keyboardFocus 
-			? mainItem.keyboardFocusedBorderColor
-			: mainItem.enableBackgroundColors 
-				? (mainItem.errorMessage.length > 0 
-					? DefaultStyle.danger_500_main 
-					: mainItem.activeFocus || textField.activeFocus
-						? DefaultStyle.main1_500_main
-						: DefaultStyle.grey_200)
-				: "transparent"
+		border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.enableBackgroundColors ? (
+																														   mainItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : mainItem.activeFocus
+																																							  || textField.activeFocus ? DefaultStyle.main1_500_main :
+																																														 DefaultStyle.grey_200) : "transparent"
 		border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
 	}
 	contentItem: RowLayout {
@@ -86,7 +83,7 @@ Control.ComboBox {
 		fillMode: Image.PreserveAspectFit
 		colorizationColor: mainItem.indicatorColor
 	}
-	
+
 	popup: Control.Popup {
 		id: listPopup
 		y: combobox.height - 1
@@ -97,7 +94,7 @@ Control.ComboBox {
 			id: listView
 			clip: true
 			anchors.fill: parent
-			model: PhoneNumberProxy{}
+			model: PhoneNumberProxy {}
 			currentIndex: combobox.highlightedIndex >= 0 ? combobox.highlightedIndex : 0
 			keyNavigationEnabled: true
 			keyNavigationWraps: true
@@ -118,7 +115,7 @@ Control.ComboBox {
 					anchors.fill: parent
 					anchors.leftMargin: Utils.getSizeWithScreenRatio(20)
 					spacing: Utils.getSizeWithScreenRatio(5)
-					
+
 					Text {
 						id: delegateImg
 						visible: text.length > 0
@@ -171,16 +168,16 @@ Control.ComboBox {
 						visible: parent.containsMouse
 					}
 					onClicked: {
-						combobox.currentIndex = index
-						listPopup.close()
+						combobox.currentIndex = index;
+						listPopup.close();
 					}
 				}
 			}
-			Control.ScrollIndicator.vertical: Control.ScrollIndicator { }
+			Control.ScrollIndicator.vertical: Control.ScrollIndicator {}
 		}
 
 		onOpened: {
-			listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
+			listView.positionViewAtIndex(listView.currentIndex, ListView.Center);
 		}
 
 		background: Item {

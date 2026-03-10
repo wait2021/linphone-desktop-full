@@ -2,10 +2,10 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 RowLayout {
-	id:mainItem
+	id: mainItem
 	property string titleText
 	property string subTitleText
 	property string propertyName
@@ -13,13 +13,13 @@ RowLayout {
 	property var propertyOwnerGui
 	property bool enabled: true
 	property alias checked: switchButton.checked
-    spacing : Utils.getSizeWithScreenRatio(20)
+	spacing: Utils.getSizeWithScreenRatio(20)
 
-	signal toggled()
+	signal toggled
 
 	ColumnLayout {
-        Layout.minimumHeight: Utils.getSizeWithScreenRatio(32)
-        spacing: Utils.getSizeWithScreenRatio(4)
+		Layout.minimumHeight: Utils.getSizeWithScreenRatio(32)
+		spacing: Utils.getSizeWithScreenRatio(4)
 		Text {
 			text: titleText
 			font: Typography.p2l
@@ -39,12 +39,12 @@ RowLayout {
 	Switch {
 		id: switchButton
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-		checked: propertyOwnerGui ? propertyOwnerGui.core[mainItem.propertyName]
-						: propertyOwner ? propertyOwner[mainItem.propertyName] : false
+		checked: propertyOwnerGui ? propertyOwnerGui.core[mainItem.propertyName] : propertyOwner
+									? propertyOwner[mainItem.propertyName] : false
 		enabled: mainItem.enabled
 		onToggled: {
-			binding.when = true
-			mainItem.toggled()
+			binding.when = true;
+			mainItem.toggled();
 		}
 		implicitHeight: Utils.getSizeWithScreenRatio(30)
 		Accessible.name: "%1 %2".arg(mainItem.titleText).arg(mainItem.subTitleText)

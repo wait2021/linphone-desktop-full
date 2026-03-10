@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Control.Page {
 	id: mainItem
@@ -19,36 +19,36 @@ Control.Page {
 	property string headerTitleText
 	property string headerSubtitleText
 	property string headerValidateButtonText
-	signal returnRequested()
-	signal validateRequested()
+	signal returnRequested
+	signal validateRequested
 
-    topPadding: Utils.getSizeWithScreenRatio(20)
-    bottomPadding: Utils.getSizeWithScreenRatio(20)
-    leftPadding: Utils.getSizeWithScreenRatio(17)
-    rightPadding: Utils.getSizeWithScreenRatio(5)
+	topPadding: Utils.getSizeWithScreenRatio(20)
+	bottomPadding: Utils.getSizeWithScreenRatio(20)
+	leftPadding: Utils.getSizeWithScreenRatio(17)
+	rightPadding: Utils.getSizeWithScreenRatio(5)
 
 	background: Rectangle {
 		width: mainItem.width
 		height: mainItem.height
 		color: DefaultStyle.grey_100
-        radius: Utils.getSizeWithScreenRatio(15)
+		radius: Utils.getSizeWithScreenRatio(15)
 	}
-	
+
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
-        height: Utils.getSizeWithScreenRatio(67)
-        leftPadding: Utils.getSizeWithScreenRatio(10)
-        rightPadding: Utils.getSizeWithScreenRatio(10)
+		height: Utils.getSizeWithScreenRatio(67)
+		leftPadding: Utils.getSizeWithScreenRatio(10)
+		rightPadding: Utils.getSizeWithScreenRatio(10)
 		background: Rectangle {
 			id: headerBackground
 			width: pageHeader.width
 			height: pageHeader.height
 			color: DefaultStyle.grey_0
-            radius: Utils.getSizeWithScreenRatio(15)
+			radius: Utils.getSizeWithScreenRatio(15)
 			Rectangle {
-				y: pageHeader.height/2
-				height: pageHeader.height/2
+				y: pageHeader.height / 2
+				height: pageHeader.height / 2
 				width: pageHeader.width
 			}
 		}
@@ -56,7 +56,7 @@ Control.Page {
 			id: headerStack
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-                spacing: Utils.getSizeWithScreenRatio(10)
+				spacing: Utils.getSizeWithScreenRatio(10)
 				Text {
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
@@ -67,8 +67,8 @@ Control.Page {
 					verticalAlignment: Text.AlignVCenter
 					color: DefaultStyle.main1_500_main
 					font {
-                        pixelSize: Typography.h4.pixelSize
-                        weight: Typography.h4.weight
+						pixelSize: Typography.h4.pixelSize
+						weight: Typography.h4.weight
 					}
 				}
 				RowLayout {
@@ -82,17 +82,17 @@ Control.Page {
 					onClicked: mainItem.visible = false
 					//: Close %1 panel
 					Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
-					KeyNavigation.tab : firstContentFocusableItem ?? nextItemInFocusChain()
+					KeyNavigation.tab: firstContentFocusableItem ?? nextItemInFocusChain()
 				}
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-                spacing: Utils.getSizeWithScreenRatio(10)
+				spacing: Utils.getSizeWithScreenRatio(10)
 				Button {
 					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.leftArrow
-                    icon.width: Utils.getSizeWithScreenRatio(24)
-                    icon.height: Utils.getSizeWithScreenRatio(24)
+					icon.width: Utils.getSizeWithScreenRatio(24)
+					icon.height: Utils.getSizeWithScreenRatio(24)
 					onClicked: mainItem.returnRequested()
 				}
 				ColumnLayout {
@@ -103,19 +103,19 @@ Control.Page {
 						text: mainItem.headerTitleText
 						color: DefaultStyle.main1_500_main
 						font {
-                            pixelSize: Typography.h4.pixelSize
-                            weight: Typography.h4.weight
+							pixelSize: Typography.h4.pixelSize
+							weight: Typography.h4.weight
 						}
 					}
 					Text {
-					Layout.alignment: Qt.AlignVCenter
-					verticalAlignment: Text.AlignVCenter
+						Layout.alignment: Qt.AlignVCenter
+						verticalAlignment: Text.AlignVCenter
 
 						text: mainItem.headerSubtitleText
 						color: DefaultStyle.main2_500_main
 						font {
-                            pixelSize: Utils.getSizeWithScreenRatio(12)
-                            weight: Utils.getSizeWithScreenRatio(300)
+							pixelSize: Utils.getSizeWithScreenRatio(12)
+							weight: Utils.getSizeWithScreenRatio(300)
 						}
 					}
 				}
@@ -142,7 +142,7 @@ Control.Page {
 			anchors.bottom: scrollview.bottom
 			visible: contentControl.height > scrollview.height
 		}
-	    Control.ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+		Control.ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 		Control.Control {
 			id: contentControl
 			rightPadding: scrollbar.width + Utils.getSizeWithScreenRatio(10)

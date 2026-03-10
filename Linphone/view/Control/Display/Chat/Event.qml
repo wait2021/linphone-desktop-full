@@ -45,4 +45,3 @@ RowLayout {
 		color: DefaultStyle.main2_200
 	}
 }
-

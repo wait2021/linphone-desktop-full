@@ -13,10 +13,10 @@ ColumnLayout {
 	required property int itemsCount
 	property int currentIndex: carouselStackLayout.currentIndex
 	property var currentItem: carouselButton.itemAt(currentIndex)
-    spacing: Utils.getSizeWithScreenRatio(61)
+	spacing: Utils.getSizeWithScreenRatio(61)
 
 	function goToSlide(index) {
-		carouselStackLayout.goToSlideAtIndex(index)
+		carouselStackLayout.goToSlideAtIndex(index);
 	}
 
 	StackLayout {
@@ -26,15 +26,18 @@ ColumnLayout {
 		currentIndex: 0
 
 		function goToSlideAtIndex(index) {
-			carouselStackLayout.previousIndex = carouselStackLayout.currentIndex
-			carouselStackLayout.currentIndex = index
+			carouselStackLayout.previousIndex = carouselStackLayout.currentIndex;
+			carouselStackLayout.currentIndex = index;
 		}
 
 		onCurrentIndexChanged: {
-			var currentItem = children[currentIndex]
-			var crossFaderAnim = crossFader.createObject(parent, {fadeInTarget: currentItem, mirrored: (previousIndex > currentIndex)})
-			crossFaderAnim.restart()
-			mainItem.currentIndex = currentIndex
+			var currentItem = children[currentIndex];
+			var crossFaderAnim = crossFader.createObject(parent, {
+															 fadeInTarget: currentItem,
+															 mirrored: (previousIndex > currentIndex)
+														 });
+			crossFaderAnim.restart();
+			mainItem.currentIndex = currentIndex;
 		}
 
 		Component {
@@ -56,7 +59,7 @@ ColumnLayout {
 
 				XAnimator {
 					target: fadeInTarget
-					from: (mirrored ? -1 : 1) * fadeInTarget.width/3.
+					from: (mirrored ? -1 : 1) * fadeInTarget.width / 3.
 					to: 0
 					duration: 300
 					easing.type: Easing.OutCubic
@@ -68,40 +71,46 @@ ColumnLayout {
 	Item {
 		Rectangle {
 			id: currentIndicator
-            width: Utils.getSizeWithScreenRatio(13)
-            height: Utils.getSizeWithScreenRatio(8)
-            radius: Utils.getSizeWithScreenRatio(30)
+			width: Utils.getSizeWithScreenRatio(13)
+			height: Utils.getSizeWithScreenRatio(8)
+			radius: Utils.getSizeWithScreenRatio(30)
 			color: DefaultStyle.main1_500_main
 			z: 1
-			x: mainItem.currentIndex >= 0 && mainItem.currentItem ? mainItem.currentItem.x - width/2 + mainItem.currentItem.width/2 : 0
-			Behavior on x { NumberAnimation {duration: 100}}
+			x: mainItem.currentIndex >= 0 && mainItem.currentItem ? mainItem.currentItem.x - width / 2
+																	+ mainItem.currentItem.width / 2 : 0
+			Behavior on x {
+				NumberAnimation {
+					duration: 100
+				}
+			}
 		}
 		RowLayout {
 			id: carouselButtonsLayout
-            spacing: Utils.getSizeWithScreenRatio(7.5)
-            anchors.leftMargin: Utils.getSizeWithScreenRatio(2.5)
+			spacing: Utils.getSizeWithScreenRatio(7.5)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(2.5)
 			Repeater {
 				id: carouselButton
 				model: mainItem.itemsCount
 				delegate: Button {
-                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(8)
-                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(8)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(8)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(8)
 					topPadding: 0
 					bottomPadding: 0
 					leftPadding: 0
 					rightPadding: 0
 					background: Rectangle {
 						color: DefaultStyle.main2_200
-                        radius: Utils.getSizeWithScreenRatio(30)
+						radius: Utils.getSizeWithScreenRatio(30)
 						anchors.fill: parent
 					}
 					onClicked: {
-						mainItem.goToSlide(modelData)
+						mainItem.goToSlide(modelData);
 					}
 				}
 			}
-			Item{Layout.fillWidth: true}
+			Item {
+				Layout.fillWidth: true
+			}
 		}
 	}
 }
- 

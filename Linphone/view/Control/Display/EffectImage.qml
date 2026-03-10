@@ -52,24 +52,24 @@ Item {
 		source: effect
 		maskSource: effect
 		colorizationColor: effectEnabled && mainItem.colorizationColor ? mainItem.colorizationColor : 'black'
-		colorization: effectEnabled ? 1.0: 0.0
+		colorization: effectEnabled ? 1.0 : 0.0
 	}
 	/* Alernative to shadow for no blackcolors
 	MultiEffect {
-		visible: mainItem.shadowEnabled
-		source: image
-		width: image.width
-		height: image.height
-		x: image.x
-		y: image.y + 6
-		z: -1
-		blurEnabled: true
-		blurMax: 12
-		blur: 1.0
-		contrast: -1.0
-		brightness: 1.0
-		colorizationColor: DefaultStyle.grey_400
-		colorization: 1.0
+	visible: mainItem.shadowEnabled
+	source: image
+	width: image.width
+	height: image.height
+	x: image.x
+	y: image.y + 6
+	z: -1
+	blurEnabled: true
+	blurMax: 12
+	blur: 1.0
+	contrast: -1.0
+	brightness: 1.0
+	colorizationColor: DefaultStyle.grey_400
+	colorization: 1.0
 	}*/
 	MultiEffect {
 		id: shadow

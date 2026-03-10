@@ -4,10 +4,9 @@ import QtQuick.Layouts
 
 import Linphone
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
-
 
 // ---------------------------------------------------------------------
 // Separated file to show a single image bigger in chat message
@@ -33,18 +32,20 @@ Image {
 		// Changing cursor in MouseArea seems not to work with the Loader
 		// Use override cursor for this case
 		onContainsMouseChanged: {
-			if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
-			else UtilsCpp.restoreGlobalCursor()
+			if (containsMouse)
+				UtilsCpp.setGlobalCursor(Qt.PointingHandCursor);
+			else
+				UtilsCpp.restoreGlobalCursor();
 		}
-		onPressed: (mouse) => {
-			mouse.accepted = true
-			// if(SettingsModel.isVfsEncrypted){
-			//     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
-			//                                 contentGui: mainItem.contentGui,
-			//                             }, function (status) {
-			//                             })
-			// }else
-			mainItem.contentGui.core.lOpenFile()
-		}
+		onPressed: mouse => {
+					   mouse.accepted = true;
+					   // if(SettingsModel.isVfsEncrypted){
+					   //     window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
+					   //                                 contentGui: mainItem.contentGui,
+					   //                             }, function (status) {
+					   //                             })
+					   // }else
+					   mainItem.contentGui.core.lOpenFile();
+				   }
 	}
 }

@@ -4,16 +4,16 @@ import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.Popup {
 	id: mainItem
 	closePolicy: Control.Popup.CloseOnEscape
-    leftPadding: Utils.getSizeWithScreenRatio(72)
-    rightPadding: Utils.getSizeWithScreenRatio(72)
-    topPadding: Utils.getSizeWithScreenRatio(41)
-    bottomPadding: Utils.getSizeWithScreenRatio(18)
+	leftPadding: Utils.getSizeWithScreenRatio(72)
+	rightPadding: Utils.getSizeWithScreenRatio(72)
+	topPadding: Utils.getSizeWithScreenRatio(41)
+	bottomPadding: Utils.getSizeWithScreenRatio(18)
 	property bool closeButtonVisible: true
 	property bool roundedBottom: false
 	property bool lastRowVisible: true
@@ -21,11 +21,11 @@ Control.Popup {
 	onOpened: numPad.forceActiveFocus()
 	signal buttonPressed(string text)
 	signal keyPadKeyPressed(KeyEvent event)
-	onKeyPadKeyPressed: (event) => {
-		numPad.handleKeyPadEvent(event)
-	}
-	signal launchCall()
-	signal wipe()
+	onKeyPadKeyPressed: event => {
+							numPad.handleKeyPadEvent(event);
+						}
+	signal launchCall
+	signal wipe
 
 	background: Item {
 		anchors.fill: parent
@@ -34,7 +34,7 @@ Control.Popup {
 			width: parent.width
 			height: parent.height
 			color: DefaultStyle.grey_100
-            radius: Utils.getSizeWithScreenRatio(20)
+			radius: Utils.getSizeWithScreenRatio(20)
 		}
 		MultiEffect {
 			id: effect
@@ -62,24 +62,24 @@ Control.Popup {
 			visible: mainItem.closeButtonVisible
 			anchors.top: parent.top
 			anchors.right: parent.right
-            anchors.topMargin: Utils.getSizeWithScreenRatio(10)
-            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+			anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
 			icon.source: AppIcons.closeX
-            icon.width: Utils.getSizeWithScreenRatio(24)
-            icon.height: Utils.getSizeWithScreenRatio(24)
+			icon.width: Utils.getSizeWithScreenRatio(24)
+			icon.height: Utils.getSizeWithScreenRatio(24)
 			style: ButtonStyle.noBackground
 			onClicked: mainItem.close()
 			//: Close numeric pad
 			Accessible.name: qsTr("close_numeric_pad_accessible_name")
 		}
 	}
-	contentItem: NumericPad{
+	contentItem: NumericPad {
 		id: numPad
 		lastRowVisible: mainItem.lastRowVisible
 		currentCall: mainItem.currentCall
-		onButtonPressed: (text) => {
-			mainItem.buttonPressed(text)
-		}
+		onButtonPressed: text => {
+							 mainItem.buttonPressed(text);
+						 }
 		onLaunchCall: mainItem.launchCall()
 		onWipe: mainItem.wipe()
 	}

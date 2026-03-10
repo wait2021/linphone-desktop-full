@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
@@ -10,26 +9,26 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-            //: Annuaires LDAP
-            title: qsTr("settings_contacts_ldap_title"),
-            //: "Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la barre de recherche."
-            subTitle: qsTr("settings_contacts_ldap_subtitle"),
+			//: Annuaires LDAP
+			title: qsTr("settings_contacts_ldap_title"),
+			//: "Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la barre de recherche."
+			subTitle: qsTr("settings_contacts_ldap_subtitle"),
 			contentComponent: ldapParametersComponent,
 			hideTopMargin: true
 		},
 		{
-            title: qsTr("settings_contacts_carddav_title"),
-            subTitle: qsTr("settings_contacts_carddav_subtitle"),
+			title: qsTr("settings_contacts_carddav_title"),
+			subTitle: qsTr("settings_contacts_carddav_subtitle"),
 			contentComponent: cardDavParametersComponent,
 			hideTopMargin: true
 		}
 	]
 
 	function layoutUrl(name) {
-		return layoutsPath+"/"+name+".qml"
+		return layoutsPath + "/" + name + ".qml";
 	}
 	function createGuiObject(name) {
-		return Qt.createQmlObject('import Linphone; '+name+'Gui{}', mainItem)
+		return Qt.createQmlObject('import Linphone; ' + name + 'Gui{}', mainItem);
 	}
 
 	// Ldap parameters
@@ -38,10 +37,10 @@ AbstractSettingsLayout {
 	Component {
 		id: ldapParametersComponent
 		ContactsSettingsProviderLayout {
-            //: "Ajouter un annuaire LDAP"
-            addText: qsTr("settings_contacts_add_ldap_server_title")
-            //: "Modifier un annuaire LDAP"
-            editText: qsTr("settings_contacts_edit_ldap_server_title")
+			//: "Ajouter un annuaire LDAP"
+			addText: qsTr("settings_contacts_add_ldap_server_title")
+			//: "Modifier un annuaire LDAP"
+			editText: qsTr("settings_contacts_edit_ldap_server_title")
 			//: "Editer le serveur LDAP %1"
 			accessibleEditButtonText: qsTr("edit_ldap_server_accessible_name")
 			//: "Utiliser le serveur LDAP %1"
@@ -56,8 +55,12 @@ AbstractSettingsLayout {
 
 			Connections {
 				target: mainItem
-				function onSave() { save()}
-				function onUndo() { undo()}
+				function onSave() {
+					save();
+				}
+				function onUndo() {
+					undo();
+				}
 			}
 		}
 	}
@@ -69,18 +72,18 @@ AbstractSettingsLayout {
 		id: cardDavParametersComponent
 		ContactsSettingsProviderLayout {
 			id: carddavProvider
-            //: "Ajouter un carnet d'adresse CardDAV"
-            addText: qsTr("settings_contacts_add_carddav_server_title")
-            //: "Modifier un carnet d'adresse CardDAV"
-            editText: qsTr("settings_contacts_edit_carddav_server_title")
+			//: "Ajouter un carnet d'adresse CardDAV"
+			addText: qsTr("settings_contacts_add_carddav_server_title")
+			//: "Modifier un carnet d'adresse CardDAV"
+			editText: qsTr("settings_contacts_edit_carddav_server_title")
 			//: "Editer le carnet d'adresses CardDAV %1"
 			accessibleEditButtonText: qsTr("edit_cardav_server_accessible_name")
 			//: "Utiliser le d'adresses CardDAV %1"
 			accessibleUseButtonText: qsTr("use_cardav_server_accessible_name")
 			proxyModel: CarddavProxy {
-				onModelReset:  {
-					carddavProvider.showAddButton = carddavProvider.proxyModel.count == 0
-					carddavProvider.newItemGui = createGuiObject('Carddav')
+				onModelReset: {
+					carddavProvider.showAddButton = carddavProvider.proxyModel.count == 0;
+					carddavProvider.newItemGui = createGuiObject('Carddav');
 				}
 			}
 			newItemGui: createGuiObject('Carddav')
@@ -91,8 +94,12 @@ AbstractSettingsLayout {
 
 			Connections {
 				target: mainItem
-				function onSave() { save()}
-				function onUndo() { undo()}
+				function onSave() {
+					save();
+				}
+				function onUndo() {
+					undo();
+				}
 			}
 		}
 	}

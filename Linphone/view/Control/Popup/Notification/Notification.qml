@@ -7,29 +7,28 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 DesktopPopup {
 	id: mainItem
-	
-	
+
 	property var notificationData: ({
-										timelineModel : null
+										timelineModel: null
 									})
-    property real overriddenHeight: Utils.getSizeWithScreenRatio(120)
-    property real overriddenWidth: Utils.getSizeWithScreenRatio(300)
+	property real overriddenHeight: Utils.getSizeWithScreenRatio(120)
+	property real overriddenWidth: Utils.getSizeWithScreenRatio(300)
 	property double radius: 0
 	property color backgroundColor: DefaultStyle.grey_0
 	property double backgroundOpacity: 1
-	
-	signal deleteNotification (var notification)
+
+	signal deleteNotification(var notification)
 	width: mainItem.overriddenWidth
 	height: mainItem.overriddenHeight
-	
+
 	// Use as an intermediate between signal/slot without propagate the notification var : last signal parameter will be the last notification instance
-	function deleteNotificationSlot(){
-		deleteNotification(mainItem)
+	function deleteNotificationSlot() {
+		deleteNotification(mainItem);
 	}
-	
-	function _close (cb) {
+
+	function _close(cb) {
 		if (cb) {
-			cb()
+			cb();
 		}
 		deleteNotificationSlot();
 	}
@@ -40,11 +39,11 @@ DesktopPopup {
 		radius: mainItem.radius
 		opacity: mainItem.backgroundOpacity
 	}
-	
-	Loader{
+
+	Loader {
 		id: backgroundLoader
 		asynchronous: true
-		sourceComponent: Item{
+		sourceComponent: Item {
 			width: mainItem.overriddenWidth
 			height: mainItem.overriddenHeight
 			Rectangle {
@@ -56,7 +55,7 @@ DesktopPopup {
 				opacity: mainItem.backgroundOpacity
 				// border {
 				// 	color: DefaultStyle.grey_400
-                // 	width: Utils.getSizeWithScreenRatio(1)
+				// 	width: Utils.getSizeWithScreenRatio(1)
 				// }
 			}
 			MultiEffect {

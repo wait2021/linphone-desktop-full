@@ -7,7 +7,7 @@ Window {
 	width: 960
 	height: 600
 	visible: true
-    title: ("Test")
+	title: ("Test")
 	ColumnLayout {
 		RowLayout {
 			ColumnLayout {
@@ -16,9 +16,18 @@ Window {
 				}
 				ComboBox {
 					model: [
-						{text: "item 1", img: AppIcons.info},
-						{text: "item 2", img: AppIcons.info},
-						{text: "item 3", img: AppIcons.info}
+						{
+							text: "item 1",
+							img: AppIcons.info
+						},
+						{
+							text: "item 2",
+							img: AppIcons.info
+						},
+						{
+							text: "item 3",
+							img: AppIcons.info
+						}
 					]
 				}
 			}
@@ -28,9 +37,15 @@ Window {
 				}
 				ComboBox {
 					model: [
-						{text: "item 1"},
-						{text: "item 2"},
-						{text: "item 3"}
+						{
+							text: "item 1"
+						},
+						{
+							text: "item 2"
+						},
+						{
+							text: "item 3"
+						}
 					]
 				}
 			}
@@ -80,7 +95,7 @@ Window {
 					Text {
 						text: "item 3"
 					}
-				}, 
+				},
 				Component {
 					Text {
 						text: "item 4"
@@ -115,7 +130,7 @@ Window {
 			}
 			TextField {
 				label: "number text input"
-				validator: IntValidator{}
+				validator: IntValidator {}
 			}
 		}
 
@@ -126,16 +141,15 @@ Window {
 			RowLayout {
 				Repeater {
 					model: 4
-					DigitInput {
-					}
+					DigitInput {}
 				}
 			}
 		}
 		TabBar {
 			spacing: 10
 			contentWidth: 400
-            model: [("A"), ("Lot"), ("Of"), ("Tab"), ("Buttons (which one has a very long label)"), ("For"), ("The"), ("Tab"), ("Bar"), ("To"), ("Not"), ("Have"), ("Enough"), ("Space"), ("To"), ("Display"), ("Them"), ("All")]
+			model: [("A"), ("Lot"), ("Of"), ("Tab"), ("Buttons (which one has a very long label)"), ("For"), ("The"), ("Tab"), ("Bar"),
+				("To"), ("Not"), ("Have"), ("Enough"), ("Space"), ("To"), ("Display"), ("Them"), ("All")]
 		}
-		
 	}
 }

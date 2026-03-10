@@ -10,6 +10,6 @@ import SettingsCpp
 CreationFormLayout {
 	id: mainItem
 
-    //: Nouveau groupe
-    startGroupButtonText: qsTr("chat_start_group_chat_title")
+	//: Nouveau groupe
+	startGroupButtonText: qsTr("chat_start_group_chat_title")
 }

@@ -7,33 +7,32 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 TextEdit {
 	id: mainItem
-	
+
 	property string placeholderText
-    property real placeholderPixelSize: Typography.p1.pixelSize
-    property real placeholderWeight: Typography.p1.weight
+	property real placeholderPixelSize: Typography.p1.pixelSize
+	property real placeholderWeight: Typography.p1.weight
 	property color placeholderTextColor: color
 	property alias background: background.data
 	property bool hoverEnabled: true
 	property bool hovered: mouseArea.hoverEnabled && mouseArea.containsMouse
-    topPadding: Utils.getSizeWithScreenRatio(5)
-    bottomPadding: Utils.getSizeWithScreenRatio(5)
+	topPadding: Utils.getSizeWithScreenRatio(5)
+	bottomPadding: Utils.getSizeWithScreenRatio(5)
 	activeFocusOnTab: true
-	KeyNavigation.priority: KeyNavigation.BeforeItem	
+	KeyNavigation.priority: KeyNavigation.BeforeItem
 
 	property bool displayAsRichText: false
 	property var encodeTextObj: UtilsCpp.encodeTextToQmlRichFormat(text)
 	property string richFormatText: encodeTextObj && encodeTextObj.value || ""
 	property color textAreaColor
 
-	
 	Component.onCompleted: {
-		mainItem.textAreaColor = mainItem.color // backup original color
+		mainItem.textAreaColor = mainItem.color; // backup original color
 		if (displayAsRichText)
-			mainItem.color = 'transparent'
+			mainItem.color = 'transparent';
 	}
 
 	onTextChanged: {
-		encodeTextObj = UtilsCpp.encodeTextToQmlRichFormat(text)
+		encodeTextObj = UtilsCpp.encodeTextToQmlRichFormat(text);
 	}
 
 	MouseArea {
@@ -62,7 +61,7 @@ TextEdit {
 			weight: mainItem.placeholderWeight
 		}
 	}
- 	Text {
+	Text {
 		id: formattedText
 		visible: mainItem.displayAsRichText && mainItem.richFormatText !== ""
 		text: mainItem.richFormatText
@@ -75,13 +74,13 @@ TextEdit {
 		anchors.fill: parent
 		focus: false
 		onHoveredLinkChanged: {
-			mainItem.hovered = mainItem.displayAsRichText && hoveredLink !== ""
+			mainItem.hovered = mainItem.displayAsRichText && hoveredLink !== "";
 		}
 		onLinkActivated: {
 			if (link.startsWith('sip'))
-				UtilsCpp.createCall(link)
+				UtilsCpp.createCall(link);
 			else
-				Qt.openUrlExternally(link)
+				Qt.openUrlExternally(link);
 		}
-    }
+	}
 }

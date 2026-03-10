@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
@@ -6,7 +5,7 @@ import QtQuick.Dialogs
 import Linphone
 import SettingsCpp 1.0
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 AbstractSettingsLayout {
@@ -19,10 +18,10 @@ AbstractSettingsLayout {
 			contentComponent: genericParametersComponent
 		},
 		{
-            //: "Périphériques"
-            title: qsTr("settings_call_devices_title"),
-            //: "Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture."
-            subTitle: qsTr("settings_call_devices_subtitle"),
+			//: "Périphériques"
+			title: qsTr("settings_call_devices_title"),
+			//: "Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture."
+			subTitle: qsTr("settings_call_devices_subtitle"),
 			contentComponent: multiMediaParametersComponent,
 			customWidth: 540,
 			customRightMargin: 36
@@ -30,7 +29,7 @@ AbstractSettingsLayout {
 	]
 
 	onSave: {
-		SettingsCpp.save()
+		SettingsCpp.save();
 	}
 	onUndo: SettingsCpp.undo()
 
@@ -45,40 +44,40 @@ AbstractSettingsLayout {
 	// Generic call parameters
 	//////////////////////////
 
-    Component {
-        id: genericParametersComponent
-        ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(20)
-            SwitchSetting {
-                //: "Annulateur d'écho"
-                titleText: qsTr("settings_calls_echo_canceller_title")
-                //: "Évite que de l'écho soit entendu par votre correspondant"
-                subTitleText: qsTr("settings_calls_echo_canceller_subtitle")
-                propertyName: "echoCancellationEnabled"
-                propertyOwner: SettingsCpp
-            }
-            SwitchSetting {
-                Layout.fillWidth: true
-                //: "Activer l’enregistrement automatique des appels"
-                titleText: qsTr("settings_calls_auto_record_title")
-                propertyName: "automaticallyRecordCallsEnabled"
-                propertyOwner: SettingsCpp
-                visible: !SettingsCpp.disableCallRecordings
-            }
-            SwitchSetting {
-                //: Tonalités
-                titleText: qsTr("settings_call_enable_tones_title")
-                //: Activer les tonalités
-                subTitleText: qsTr("settings_call_enable_tones_subtitle")
-                propertyName: "callToneIndicationsEnabled"
-                propertyOwner: SettingsCpp
-            }
-            SwitchSetting {
-                //: "Autoriser la vidéo"
-                titleText: qsTr("settings_calls_enable_video_title")
-                propertyName: "videoEnabled"
-                propertyOwner: SettingsCpp
-            }
+	Component {
+		id: genericParametersComponent
+		ColumnLayout {
+			spacing: Utils.getSizeWithScreenRatio(20)
+			SwitchSetting {
+				//: "Annulateur d'écho"
+				titleText: qsTr("settings_calls_echo_canceller_title")
+				//: "Évite que de l'écho soit entendu par votre correspondant"
+				subTitleText: qsTr("settings_calls_echo_canceller_subtitle")
+				propertyName: "echoCancellationEnabled"
+				propertyOwner: SettingsCpp
+			}
+			SwitchSetting {
+				Layout.fillWidth: true
+				//: "Activer l’enregistrement automatique des appels"
+				titleText: qsTr("settings_calls_auto_record_title")
+				propertyName: "automaticallyRecordCallsEnabled"
+				propertyOwner: SettingsCpp
+				visible: !SettingsCpp.disableCallRecordings
+			}
+			SwitchSetting {
+				//: Tonalités
+				titleText: qsTr("settings_call_enable_tones_title")
+				//: Activer les tonalités
+				subTitleText: qsTr("settings_call_enable_tones_subtitle")
+				propertyName: "callToneIndicationsEnabled"
+				propertyOwner: SettingsCpp
+			}
+			SwitchSetting {
+				//: "Autoriser la vidéo"
+				titleText: qsTr("settings_calls_enable_video_title")
+				propertyName: "videoEnabled"
+				propertyOwner: SettingsCpp
+			}
 			DecoratedTextField {
 				visible: !SettingsCpp.disableCommandLine
 				Layout.fillWidth: true
@@ -119,15 +118,17 @@ AbstractSettingsLayout {
 						}
 					}
 				}
-				Item{Layout.fillWidth: true}
+				Item {
+					Layout.fillWidth: true
+				}
 				RoundButton {
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.arrowSquareOut
 					onClicked: {
-						fileDialog.open()
+						fileDialog.open();
 					}
 					//: Choose ringtone file
-					Accessible.name:qsTr("choose_ringtone_file_accessible_name")
+					Accessible.name: qsTr("choose_ringtone_file_accessible_name")
 				}
 			}
 		}
@@ -141,7 +142,7 @@ AbstractSettingsLayout {
 		MultimediaSettings {
 			ringerDevicesVisible: true
 			backgroundVisible: false
-            spacing: Utils.getSizeWithScreenRatio(20)
+			spacing: Utils.getSizeWithScreenRatio(20)
 		}
 	}
 }

@@ -3,7 +3,7 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Popup {
@@ -11,69 +11,69 @@ Popup {
 	modal: true
 	anchors.centerIn: parent
 	closePolicy: Control.Popup.NoAutoClose
-    leftPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
-    rightPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
-    topPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 37)
-    bottomPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 37)
+	leftPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
+	rightPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
+	topPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 37)
+	bottomPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 37)
 	underlineColor: DefaultStyle.main1_500_main
-    radius: title.length === 0 ? Utils.getSizeWithScreenRatio(16) : 0
+	radius: title.length === 0 ? Utils.getSizeWithScreenRatio(16) : 0
 	property string title
 	property var titleColor: DefaultStyle.main1_500_main
 	property string text
 	property string details
-    //: "Confirmer"
-    property string firstButtonText: firstButtonAccept ? qsTr("dialog_confirm")
-                                                         //: "Annuler"
-                                                       : qsTr("dialog_cancel")
-    property string secondButtonText: secondButtonAccept ? qsTr("dialog_confirm")
-                                                         : qsTr("dialog_cancel")
-  	property alias content: contentLayout.data
-  	property alias buttons: buttonsLayout.data
+	//: "Confirmer"
+	property string firstButtonText: firstButtonAccept ? qsTr("dialog_confirm") :
+														 //: "Annuler"
+														 qsTr("dialog_cancel")
+	property string secondButtonText: secondButtonAccept ? qsTr("dialog_confirm") : qsTr("dialog_cancel")
+	property alias content: contentLayout.data
+	property alias buttons: buttonsLayout.data
 	property alias firstButton: firstButtonId
 	property alias secondButton: secondButtonId
 	property bool firstButtonAccept: true
 	property bool secondButtonAccept: false
 
-	signal accepted()
-	signal rejected()
+	signal accepted
+	signal rejected
 
 	contentItem: FocusScope {
 		implicitWidth: child.implicitWidth
 		implicitHeight: child.implicitHeight
 		onVisibleChanged: {
-			if(visible) forceActiveFocus()
+			if (visible)
+				forceActiveFocus();
 		}
-		Keys.onPressed: (event) => {
-			if(visible && event.key == Qt.Key_Escape){
-				mainItem.close()
-				event.accepted = true
-			}
-		}
+		Keys.onPressed: event => {
+							if (visible && event.key == Qt.Key_Escape) {
+								mainItem.close();
+								event.accepted = true;
+							}
+						}
 		ColumnLayout {
 			id: child
 			anchors.fill: parent
-            spacing: Utils.getSizeWithScreenRatio(15)
-			
-			Text{
+			spacing: Utils.getSizeWithScreenRatio(15)
+
+			Text {
 				id: titleText
 				Layout.fillWidth: true
 				visible: text.length != 0
 				text: mainItem.title
 				color: mainItem.titleColor
 				font {
-                    pixelSize: Typography.h3.pixelSize
-                    weight: Typography.h3.weight
+					pixelSize: Typography.h3.pixelSize
+					weight: Typography.h3.weight
 				}
 				wrapMode: Text.Wrap
 				horizontalAlignment: Text.AlignLeft
 			}
-			Rectangle{
+			Rectangle {
 				Layout.fillWidth: true
 				Layout.preferredHeight: 1
 				color: DefaultStyle.main2_400
 				visible: titleText.visible
 			}
-	
+
 			Text {
 				id: defaultText
 				visible: text.length != 0
@@ -81,53 +81,53 @@ Popup {
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.text
 				font {
-                    pixelSize: Typography.p1.pixelSize
-                    weight: Typography.p1.weight
+					pixelSize: Typography.p1.pixelSize
+					weight: Typography.p1.weight
 				}
 				wrapMode: Text.Wrap
-				horizontalAlignment: titleText.visible ?  Text.AlignLeft : Text.AlignHCenter
+				horizontalAlignment: titleText.visible ? Text.AlignLeft : Text.AlignHCenter
 			}
 			Text {
 				id: detailsText
 				visible: text.length != 0
 				Layout.fillWidth: true
-                //Layout.preferredWidth: Utils.getSizeWithScreenRatio(278)
+				//Layout.preferredWidth: Utils.getSizeWithScreenRatio(278)
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.details
 				font {
-                    pixelSize: Typography.p1.pixelSize
-                    weight: Typography.p1.weight
+					pixelSize: Typography.p1.pixelSize
+					weight: Typography.p1.weight
 					italic: true
 				}
 				wrapMode: Text.Wrap
 				horizontalAlignment: Text.AlignHCenter
 			}
-	
+
 			ColumnLayout {
 				id: contentLayout
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillHeight: false
 			}
-			
+
 			RowLayout {
 				id: buttonsLayout
-				Layout.alignment: Qt.AlignBottom | ( titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
-                spacing: Utils.getSizeWithScreenRatio(titleText.visible ? 20 : 10)
-	
+				Layout.alignment: Qt.AlignBottom | (titleText.visible ? Qt.AlignRight : Qt.AlignHCenter)
+				spacing: Utils.getSizeWithScreenRatio(titleText.visible ? 20 : 10)
+
 				// Default buttons only visible if no other children
 				// have been set
 				MediumButton {
-					id:firstButtonId
+					id: firstButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.firstButtonText
 					style: mainItem.firstButtonAccept ? ButtonStyle.main : ButtonStyle.secondary
 					focus: !mainItem.firstButtonAccept
 					onClicked: {
-						if(mainItem.firstButtonAccept)
-							mainItem.accepted()
+						if (mainItem.firstButtonAccept)
+							mainItem.accepted();
 						else
-							mainItem.rejected()
-						mainItem.close()
+							mainItem.rejected();
+						mainItem.close();
 					}
 					KeyNavigation.left: secondButtonId
 					KeyNavigation.right: secondButtonId
@@ -139,11 +139,11 @@ Popup {
 					style: mainItem.firstButtonAccept ? ButtonStyle.secondary : ButtonStyle.main
 					focus: !mainItem.secondButtonAccept
 					onClicked: {
-						if(mainItem.secondButtonAccept)
-							mainItem.accepted()
+						if (mainItem.secondButtonAccept)
+							mainItem.accepted();
 						else
-							mainItem.rejected()
-						mainItem.close()
+							mainItem.rejected();
+						mainItem.close();
 					}
 					KeyNavigation.left: firstButtonId
 					KeyNavigation.right: firstButtonId

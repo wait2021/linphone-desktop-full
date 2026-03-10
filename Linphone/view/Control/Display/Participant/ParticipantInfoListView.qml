@@ -8,7 +8,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 ListView {
 	id: mainItem
 	clip: true
-    spacing: Utils.getSizeWithScreenRatio(5)
+	spacing: Utils.getSizeWithScreenRatio(5)
 
 	property bool hoverEnabled: true
 	property bool displayNameCapitalization: true
@@ -48,7 +48,9 @@ ListView {
 				maximumLineCount: 1
 				Layout.fillWidth: true
 			}
-			Item{Layout.fillWidth: true}
+			Item {
+				Layout.fillWidth: true
+			}
 		}
 		MouseArea {
 			id: mousearea

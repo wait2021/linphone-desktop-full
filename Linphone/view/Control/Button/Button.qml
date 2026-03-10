@@ -5,39 +5,33 @@ import QtQuick.Layouts
 import QtQml
 import Linphone
 import CustomControls 1.0
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Control.Button {
 	id: mainItem
 	property var style
-    property bool asynchronous: false
+	property bool asynchronous: false
 	hoverEnabled: enabled
 	activeFocusOnTab: true
-	property color disabledFilterColor: color.hslLightness > 0.5
-		? DefaultStyle.grey_0
-		: DefaultStyle.grey_400
+	property color disabledFilterColor: color.hslLightness > 0.5 ? DefaultStyle.grey_0 : DefaultStyle.grey_400
 	property bool hasNavigationFocus: enabled && (activeFocus || hovered)
 	property bool keyboardFocus: FocusHelper.keyboardFocus
 	// Background properties
 	property color color: style?.color?.normal || DefaultStyle.main1_500_main
 	property color hoveredColor: style?.color?.hovered || Qt.darker(color, 1.05)
-    property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
-    property color checkedColor: style?.color?.checked || style?.color?.pressed || Qt.darker(color, 1.1)
+	property color pressedColor: style?.color?.pressed || Qt.darker(color, 1.1)
+	property color checkedColor: style?.color?.checked || style?.color?.pressed || Qt.darker(color, 1.1)
 	property bool shadowEnabled: false
 	property int capitalization
-	property color backgroundColor: mainItem.checkable && mainItem.checked
-                    ? mainItem.checkedColor || mainItem.pressedColor
-                    : mainItem.pressed
-                        ? mainItem.pressedColor
-                        : mainItem.hovered
-                            ? mainItem.hoveredColor
-                            : mainItem.color
+	property color backgroundColor: mainItem.checkable && mainItem.checked ? mainItem.checkedColor
+																			 || mainItem.pressedColor : mainItem.pressed ? mainItem.pressedColor : mainItem.hovered
+																														   ? mainItem.hoveredColor : mainItem.color
 	// Text properties
 	property bool underline: false
-    property real textSize: Utils.getSizeWithScreenRatio(18)
-    property real textWeight: Typography.b1.weight
-    property color textColor: style?.text?.normal || DefaultStyle.grey_0
+	property real textSize: Utils.getSizeWithScreenRatio(18)
+	property real textWeight: Typography.b1.weight
+	property color textColor: style?.text?.normal || DefaultStyle.grey_0
 	property color hoveredTextColor: style?.text?.hovered || Qt.darker(textColor, 1.05)
 	property color pressedTextColor: style?.text?.pressed || Qt.darker(textColor, 1.1)
 	property var textFormat: Text.AutoText
@@ -51,21 +45,19 @@ Control.Button {
 	property real borderWidth: Utils.getSizeWithScreenRatio(1)
 	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
 	// Image properties
-	property var contentImageColor: style?.image? style.image.normal : DefaultStyle.main2_600
-	property var hoveredImageColor: style && style.image && style.image.hovered ? style.image.hovered : Qt.darker(contentImageColor, 1.05)
-	property var checkedImageColor: style && style.image && style.image.checked ? style.image.checked : Qt.darker(contentImageColor, 1.1)
-	property var pressedImageColor: style && style.image && style.image.pressed ? style.image.pressed : Qt.darker(contentImageColor, 1.1)
+	property var contentImageColor: style?.image ? style.image.normal : DefaultStyle.main2_600
+	property var hoveredImageColor: style && style.image && style.image.hovered ? style.image.hovered : Qt.darker(
+																					  contentImageColor, 1.05)
+	property var checkedImageColor: style && style.image && style.image.checked ? style.image.checked : Qt.darker(
+																					  contentImageColor, 1.1)
+	property var pressedImageColor: style && style.image && style.image.pressed ? style.image.pressed : Qt.darker(
+																					  contentImageColor, 1.1)
 	icon.source: style?.iconSource || ""
-	property color colorizationColor:  checkable && checked 
-		? checkedImageColor
-		: pressed 
-			? pressedImageColor
-			: hovered 
-				? hoveredImageColor 
-				: contentImageColor
+	property color colorizationColor: checkable && checked ? checkedImageColor : pressed ? pressedImageColor : hovered
+																						   ? hoveredImageColor : contentImageColor
 	// Size properties
 	spacing: Utils.getSizeWithScreenRatio(5)
-    property real radius: Math.ceil(height / 2)
+	property real radius: Math.ceil(height / 2)
 
 	MouseArea {
 		id: mouseArea
@@ -75,27 +67,27 @@ Control.Button {
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 		acceptedButtons: Qt.NoButton
 	}
-	
-	background: Loader{
+
+	background: Loader {
 		asynchronous: mainItem.asynchronous
 		anchors.fill: parent
-		
+
 		sourceComponent: Item {
 			width: mainItem.width
 			height: mainItem.height
 			Rectangle {
 				id: buttonBackground
 				anchors.fill: parent
-                color: mainItem.backgroundColor
+				color: mainItem.backgroundColor
 				radius: mainItem.radius
 				border.color: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderColor : mainItem.borderColor
-				border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth 
+				border.width: mainItem.keyboardFocus ? mainItem.keyboardFocusedBorderWidth : mainItem.borderWidth
 			}
 			MultiEffect {
 				enabled: mainItem.shadowEnabled
 				anchors.fill: buttonBackground
 				source: buttonBackground
-				visible:  mainItem.shadowEnabled
+				visible: mainItem.shadowEnabled
 				// Crash : https://bugreports.qt.io/browse/QTBUG-124730
 				shadowEnabled: true
 				shadowColor: DefaultStyle.grey_1000
@@ -116,7 +108,7 @@ Control.Button {
 		width: mainItem.width
 		height: mainItem.height
 	}
-	
+
 	component ButtonText: Text {
 		id: buttonText
 		horizontalAlignment: mainItem.textHAlignment
@@ -126,18 +118,16 @@ Control.Button {
 		text: mainItem.text
 		textFormat: mainItem.textFormat
 		maximumLineCount: 1
-        color: mainItem.checkable && mainItem.checked || mainItem.pressed
-			? mainItem.pressedTextColor
-			: mainItem.hovered
-				? mainItem.hoveredTextColor
-				: mainItem.textColor
+		color: mainItem.checkable && mainItem.checked || mainItem.pressed ? mainItem.pressedTextColor : mainItem.hovered
+																			? mainItem.hoveredTextColor : mainItem.textColor
 		font {
 			pixelSize: mainItem.textSize
 			weight: mainItem.textWeight
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
 			underline: mainItem.underline
-			bold: (mainItem.style === ButtonStyle.noBackground || mainItem.style === ButtonStyle.noBackgroundRed) && (mainItem.hovered || mainItem.pressed)
+			bold: (mainItem.style === ButtonStyle.noBackground || mainItem.style === ButtonStyle.noBackgroundRed) && (
+					  mainItem.hovered || mainItem.pressed)
 		}
 		ToolTip {
 			parent: mainItem
@@ -151,46 +141,51 @@ Control.Button {
 			font.bold: true
 		}
 	}
-	
+
 	component ButtonImage: EffectImage {
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
-        colorizationColor: mainItem.colorizationColor
+		colorizationColor: mainItem.colorizationColor
 	}
-	
-	contentItem: Control.StackView{
+
+	contentItem: Control.StackView {
 		id: stacklayout
-		function updateComponent(){
-			var item
-			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
-					? imageTextComponent
-					: mainItem.text.length != 0
-					  ? textComponent
-					  : mainItem.icon.source.toString().length != 0
-						? imageComponent
-						: emptyComponent
-			if( stacklayout.depth == 0)
-				item = stacklayout.push(component, Control.StackView.Immediate)
-			else if( component != stacklayout.get(0))
-				item = stacklayout.replace(component, Control.StackView.Immediate)
-			if(item){// Workaround for Qt bug : set from the item and not from the contentItem which seems to be lost
-				implicitHeight = Qt.binding(function() { return item.implicitHeight})
-				implicitWidth = Qt.binding(function() { return item.implicitWidth})
+		function updateComponent() {
+			var item;
+			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0 ? imageTextComponent :
+																									   mainItem.text.length != 0 ? textComponent : mainItem.icon.source.toString().length != 0
+																																   ? imageComponent : emptyComponent;
+			if (stacklayout.depth == 0)
+				item = stacklayout.push(component, Control.StackView.Immediate);
+			else if (component != stacklayout.get(0))
+				item = stacklayout.replace(component, Control.StackView.Immediate);
+			if (item) {
+				// Workaround for Qt bug : set from the item and not from the contentItem which seems to be lost
+				implicitHeight = Qt.binding(function () {
+					return item.implicitHeight;
+				});
+				implicitWidth = Qt.binding(function () {
+					return item.implicitWidth;
+				});
 			}
 		}
-		
+
 		Component.onCompleted: {
-			updateComponent()
+			updateComponent();
 		}
-		
-		Connections{
+
+		Connections {
 			target: mainItem
-			function onTextChanged(){stacklayout.updateComponent()}
-			function onIconChanged(){stacklayout.updateComponent()}
+			function onTextChanged() {
+				stacklayout.updateComponent();
+			}
+			function onIconChanged() {
+				stacklayout.updateComponent();
+			}
 		}
-		
-		Component{
+
+		Component {
 			id: imageTextComponent
 			// Workaround for centering the content when its
 			// width is smaller than the button width
@@ -201,25 +196,26 @@ Control.Button {
 					id: content
 					spacing: mainItem.spacing
 					anchors.centerIn: parent
-					ButtonImage{
+					ButtonImage {
 						Layout.preferredWidth: mainItem.icon.width
 						Layout.preferredHeight: mainItem.icon.height
 					}
-					ButtonText {
-					}
+					ButtonText {}
 				}
 			}
 		}
-		Component{
+		Component {
 			id: textComponent
 			ButtonText {
 				width: stacklayout.width
 				height: stacklayout.height
 				// Hack for StackView binding loop
-				onImplicitHeightChanged: {implicitHeight}
+				onImplicitHeightChanged: {
+					implicitHeight;
+				}
 			}
 		}
-		Component{
+		Component {
 			id: imageComponent
 			Item {
 				width: stacklayout.width
@@ -237,7 +233,7 @@ Control.Button {
 				}
 			}
 		}
-		Component{
+		Component {
 			id: emptyComponent
 			Item {
 				width: stacklayout.width
@@ -247,29 +243,29 @@ Control.Button {
 	}
 	/*
 	contentItem: StackLayout {
-		id: stacklayout
-		currentIndex: mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
-			? 0
-			: mainItem.text.length != 0
-				? 1
-				: mainItem.icon.source.toString().length != 0
-					? 2
-					: 3
-					
-		width: mainItem.width
-		RowLayout {
-			spacing: mainItem.spacing
-			ButtonImage{
-				Layout.preferredWidth: mainItem.icon.width
-				Layout.preferredHeight: mainItem.icon.height
-			}
-			ButtonText{}
-		}
-		ButtonText {}
-		ButtonImage{}
-		Item {
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-		}
+	id: stacklayout
+	currentIndex: mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
+	? 0
+	: mainItem.text.length != 0
+	? 1
+	: mainItem.icon.source.toString().length != 0
+	? 2
+	: 3
+
+	width: mainItem.width
+	RowLayout {
+	spacing: mainItem.spacing
+	ButtonImage{
+	Layout.preferredWidth: mainItem.icon.width
+	Layout.preferredHeight: mainItem.icon.height
+	}
+	ButtonText{}
+	}
+	ButtonText {}
+	ButtonImage{}
+	Item {
+	Layout.fillWidth: true
+	Layout.fillHeight: true
+	}
 	}*/
 }

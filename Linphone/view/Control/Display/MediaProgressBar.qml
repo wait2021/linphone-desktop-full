@@ -7,14 +7,14 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 
 ProgressBar {
 	id: mainItem
-	
+
 	property bool stopAtEnd: true
 	property bool resetAtEnd: true
 	property int progressDuration	// Max duration
@@ -24,22 +24,22 @@ ProgressBar {
 	property bool recording: false
 	padding: 0
 	clip: true
-	
-	function start(){
-		mainItem.value = 0
-		animationTest.start()
+
+	function start() {
+		mainItem.value = 0;
+		animationTest.start();
 	}
-	function resume(){
+	function resume() {
 		if (mainItem.value >= 100)
-			mainItem.value = 0
-		animationTest.start()
+			mainItem.value = 0;
+		animationTest.start();
 	}
-	function stop(){
-		animationTest.stop()
+	function stop() {
+		animationTest.stop();
 	}
-	signal playStopButtonToggled()
-	signal endReached()
-	signal refreshPositionRequested()
+	signal playStopButtonToggled
+	signal endReached
+	signal refreshPositionRequested
 	signal seekRequested(int ms)
 	Timer {
 		id: animationTest
@@ -49,21 +49,21 @@ ProgressBar {
 	}
 	to: 101
 	value: progressPosition * to / progressDuration
-	onValueChanged:{
-		if(value > 100) {
-			if( mainItem.stopAtEnd)
-				stop()
-			if(mainItem.resetAtEnd) {
-				mainItem.value = 0
-				progressPosition = 0
-			} else if(mainItem.blockValueAtEnd){
-				mainItem.value = 100// Stay at 100
-				progressPosition = progressDuration
+	onValueChanged: {
+		if (value > 100) {
+			if (mainItem.stopAtEnd)
+				stop();
+			if (mainItem.resetAtEnd) {
+				mainItem.value = 0;
+				progressPosition = 0;
+			} else if (mainItem.blockValueAtEnd) {
+				mainItem.value = 100;// Stay at 100
+				progressPosition = progressDuration;
 			}
-			mainItem.endReached()
+			mainItem.endReached();
 		}
 	}
-	
+
 	background: Item {
 		anchors.fill: parent
 		Rectangle {
@@ -71,8 +71,14 @@ ProgressBar {
 			anchors.fill: parent
 			gradient: Gradient {
 				orientation: Gradient.Horizontal
-				GradientStop { position: 0.0; color: "#FF9E79" }
-				GradientStop { position: 1.0; color: "#FE5E00" }
+				GradientStop {
+					position: 0.0
+					color: "#FF9E79"
+				}
+				GradientStop {
+					position: 1.0
+					color: "#FE5E00"
+				}
 			}
 			radius: Utils.getSizeWithScreenRatio(70)
 		}
@@ -83,8 +89,8 @@ ProgressBar {
 			radius: backgroundArea.radius
 		}
 		Item {
-			anchors.fill: parent
 			id: progressRectangle
+			anchors.fill: parent
 			visible: false
 			Rectangle {
 				color: DefaultStyle.grey_0
@@ -96,12 +102,10 @@ ProgressBar {
 		ShaderEffect {
 			id: opacityEffect
 			anchors.fill: progressRectangle
-			property var source: ShaderEffectSource
-			{
+			property var source: ShaderEffectSource {
 				sourceItem: progressRectangle
 			}
-			property var maskSource: ShaderEffectSource
-			{
+			property var maskSource: ShaderEffectSource {
 				sourceItem: mask
 			}
 			fragmentShader: 'qrc:/data/shaders/opacityMask.frag.qsb'
@@ -109,13 +113,12 @@ ProgressBar {
 		MouseArea {
 			id: progression
 			anchors.fill: parent
-			onClicked: (mouse) => {
-				mainItem.seekRequested(mouse.x * mainItem.progressDuration/width)
-			}
+			onClicked: mouse => {
+						   mainItem.seekRequested(mouse.x * mainItem.progressDuration / width);
+					   }
 		}
 	}
-	
-	
+
 	contentItem: Item {
 		id: contentRect
 
@@ -126,13 +129,9 @@ ProgressBar {
 			anchors.verticalCenter: parent.verticalCenter
 			icon.width: Utils.getSizeWithScreenRatio(14)
 			icon.height: Utils.getSizeWithScreenRatio(14)
-			icon.source: animationTest.running
-				? mainItem.recording
-					? AppIcons.stopFill
-					: AppIcons.pauseFill
-				: AppIcons.playFill
+			icon.source: animationTest.running ? mainItem.recording ? AppIcons.stopFill : AppIcons.pauseFill : AppIcons.playFill
 			onClicked: {
-				mainItem.playStopButtonToggled()
+				mainItem.playStopButtonToggled();
 			}
 			style: ButtonStyle.player
 		}
@@ -160,7 +159,8 @@ ProgressBar {
 				}
 				Text {
 					id: durationText
-					text: mainItem.progressPosition > 0 ? UtilsCpp.formatElapsedTime(mainItem.progressPosition / 1000 ) : UtilsCpp.formatElapsedTime(mainItem.progressDuration/1000)
+					text: mainItem.progressPosition > 0 ? UtilsCpp.formatElapsedTime(mainItem.progressPosition / 1000) : UtilsCpp.formatElapsedTime(
+															  mainItem.progressDuration / 1000)
 					font {
 						pixelSize: Typography.p1.pixelSize
 						weight: Typography.p1.weight

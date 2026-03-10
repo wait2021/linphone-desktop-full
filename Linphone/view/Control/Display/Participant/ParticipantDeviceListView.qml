@@ -11,8 +11,8 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
-    rightMargin: Utils.getSizeWithScreenRatio(5)
-    spacing: Utils.getSizeWithScreenRatio(5)
+	rightMargin: Utils.getSizeWithScreenRatio(5)
+	spacing: Utils.getSizeWithScreenRatio(5)
 
 	property string searchBarText
 
@@ -32,28 +32,28 @@ ListView {
 	}
 
 	delegate: Item {
-        height: Utils.getSizeWithScreenRatio(56)
+		height: Utils.getSizeWithScreenRatio(56)
 		width: mainItem.width
-		
+
 		RowLayout {
 			id: participantDelegate
 			anchors.left: parent.left
-            anchors.leftMargin: Utils.getSizeWithScreenRatio(10)
+			anchors.leftMargin: Utils.getSizeWithScreenRatio(10)
 			anchors.right: parent.right
-            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
 			anchors.verticalCenter: parent.verticalCenter
-            spacing: Utils.getSizeWithScreenRatio(10)
+			spacing: Utils.getSizeWithScreenRatio(10)
 			z: 1
 			Avatar {
-                Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
-                Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
+				Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+				Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
 				_address: modelData.core.address
 				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				shadowEnabled: false
 			}
 			Text {
 				text: modelData.core.displayName
-                font.pixelSize: Utils.getSizeWithScreenRatio(14)
+				font.pixelSize: Utils.getSizeWithScreenRatio(14)
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 				maximumLineCount: 1
 				Layout.fillWidth: true

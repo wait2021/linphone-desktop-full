@@ -2,28 +2,30 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
+
 // Snippet
 
-ListView{
+ListView {
 	id: mainItem
-	model: PhoneNumberProxy{}
-	delegate: Rectangle{
+	model: PhoneNumberProxy {}
+	delegate: Rectangle {
 		height: 20
 		width: mainItem.width
-		RowLayout{
+		RowLayout {
 			anchors.fill: parent
-			Text{
+			Text {
 				text: $modelData.flag
 				font.family: DefaultStyle.emojiFont
 			}
-			Text{
+			Text {
 				text: $modelData.country
 			}
 		}
-		MouseArea{
+		MouseArea {
 			anchors.fill: parent
-			onClicked: console.debug("[ProtoPhoneNumber] Phone number Select: " +$modelData.flag + " / " +$modelData.nationalNumberLength + " / "+$modelData.countryCallingCode + " / " +$modelData.isoCountryCode + " / " +$modelData.internationalCallPrefix + " / " +$modelData.country  )
+			onClicked: console.debug("[ProtoPhoneNumber] Phone number Select: " + $modelData.flag + " / "
+									 + $modelData.nationalNumberLength + " / " + $modelData.countryCallingCode + " / " + $modelData.isoCountryCode
+									 + " / " + $modelData.internationalCallPrefix + " / " + $modelData.country)
 		}
 	}
 }
-

@@ -9,27 +9,28 @@ Text {
 	color: DefaultStyle.danger_500_main
 	property bool isVisible: text.length > 0
 	function clear() {
-		autoHideErrorMessage.stop()
-		text = ""
+		autoHideErrorMessage.stop();
+		text = "";
 	}
 	function setText(text) {
 		if (text.length === 0) {
-			clear()
+			clear();
 		} else {
-			mainItem.text = text
+			mainItem.text = text;
 		}
 	}
 	font {
-        pixelSize: Typography.b3.pixelSize
-        weight: Typography.b3.weight
+		pixelSize: Typography.b3.pixelSize
+		weight: Typography.b3.weight
 	}
 	Timer {
 		id: autoHideErrorMessage
 		interval: 5000
 		onTriggered: {
-			mainItem.clear()
+			mainItem.clear();
 		}
 	}
 
-	onTextChanged: if (mainItem.text.length > 0) autoHideErrorMessage.restart()
+	onTextChanged: if (mainItem.text.length > 0)
+					   autoHideErrorMessage.restart()
 }

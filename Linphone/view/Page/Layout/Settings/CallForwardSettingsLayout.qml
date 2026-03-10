@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
@@ -10,9 +9,9 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 AbstractSettingsLayout {
 	id: mainItem
 	width: parent?.width
-	
+
 	property bool enableCallForward: SettingsCpp.callForwardToAddress.length > 0
-	
+
 	contentModel: [
 		{
 			title: "",
@@ -20,36 +19,36 @@ AbstractSettingsLayout {
 			contentComponent: parametersComponent
 		}
 	]
-	
+
 	onSave: {
 		if (mainItem.enableCallForward && SettingsCpp.callForwardToAddress.length == 0) {
-			UtilsCpp.getMainWindow().showInformationPopup("", qsTr("settings_call_forward_address_cannot_be_empty"), false)
-			return
+			UtilsCpp.getMainWindow().showInformationPopup("", qsTr("settings_call_forward_address_cannot_be_empty"), false);
+			return;
 		}
-		SettingsCpp.save()
+		SettingsCpp.save();
 	}
 	onUndo: SettingsCpp.undo()
 
 	// Generic forward parameters
 	/////////////////////////////
 
-    Component {
-        id: parametersComponent
-        ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(20)
-            SwitchSetting {
-                //: "Forward calls"
-                titleText: qsTr("settings_call_forward_activate_title")
-                //: "Enable call forwarding to voicemail or sip address"
-                subTitleText: qsTr("settings_call_forward_activate_subtitle")
-                propertyName: "enableCallForward"
-                propertyOwner: mainItem
-                onToggled: function () {
-                	SettingsCpp.isSaved = false
+	Component {
+		id: parametersComponent
+		ColumnLayout {
+			spacing: Utils.getSizeWithScreenRatio(20)
+			SwitchSetting {
+				//: "Forward calls"
+				titleText: qsTr("settings_call_forward_activate_title")
+				//: "Enable call forwarding to voicemail or sip address"
+				subTitleText: qsTr("settings_call_forward_activate_subtitle")
+				propertyName: "enableCallForward"
+				propertyOwner: mainItem
+				onToggled: function () {
+					SettingsCpp.isSaved = false;
 					if (!mainItem.enableCallForward)
-						SettingsCpp.callForwardToAddress = ""
+						SettingsCpp.callForwardToAddress = "";
 				}
-            }
+			}
 			Text {
 				visible: mainItem.enableCallForward
 				//: Forward to destination
@@ -65,14 +64,18 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
 				Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 				model: [
-						{text: qsTr("settings_call_forward_to_voicemail")},
-						{text: qsTr("settings_call_forward_to_sipaddress")}
-					]
+					{
+						text: qsTr("settings_call_forward_to_voicemail")
+					},
+					{
+						text: qsTr("settings_call_forward_to_sipaddress")
+					}
+				]
 				property bool isInitialized: false
 				Component.onCompleted: {
 					if (mainItem.enableCallForward) {
-						forwardDestination.currentIndex =
-							(SettingsCpp.callForwardToAddress === "voicemail" || SettingsCpp.callForwardToAddress.length === 0) ? 0 : 1;
+						forwardDestination.currentIndex = (SettingsCpp.callForwardToAddress === "voicemail"
+														   || SettingsCpp.callForwardToAddress.length === 0) ? 0 : 1;
 					} else {
 						forwardDestination.currentIndex = 0;
 					}
@@ -90,11 +93,10 @@ AbstractSettingsLayout {
 				}
 				onVisibleChanged: {
 					if (visible) {
-						currentIndex = 0
-							SettingsCpp.callForwardToAddress = "voicemail";
+						currentIndex = 0;
+						SettingsCpp.callForwardToAddress = "voicemail";
 					}
 				}
-
 			}
 			DecoratedTextField {
 				id: sipInputField

@@ -7,18 +7,17 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
-
 	id: mainItem
-    property var title: String
-    property var participants
-    property ChatGui chatGui
-    signal manageParticipantsRequested()
-    
-    property bool isGroupEditable: chatGui && chatGui.core.meAdmin && !chatGui.core.isReadOnly
+	property var title: String
+	property var participants
+	property ChatGui chatGui
+	signal manageParticipantsRequested
+
+	property bool isGroupEditable: chatGui && chatGui.core.meAdmin && !chatGui.core.isReadOnly
 
 	RowLayout {
 		Text {
@@ -27,7 +26,9 @@ ColumnLayout {
 			text: title
 			Layout.topMargin: Utils.getSizeWithScreenRatio(5)
 		}
-		Item{Layout.fillWidth: true}
+		Item {
+			Layout.fillWidth: true
+		}
 		BigButton {
 			id: expandButton
 			style: ButtonStyle.noBackground
@@ -41,7 +42,7 @@ ColumnLayout {
 		visible: expandButton.checked
 		Layout.fillWidth: true
 		Layout.topMargin: Utils.getSizeWithScreenRatio(9)
-		height: Math.min(contentColumn.implicitHeight,Utils.getSizeWithScreenRatio(90))
+		height: Math.min(contentColumn.implicitHeight, Utils.getSizeWithScreenRatio(90))
 		bottomPadding: Utils.getSizeWithScreenRatio(15)
 
 		background: Rectangle {
@@ -52,7 +53,7 @@ ColumnLayout {
 		contentItem: ColumnLayout {
 			id: contentColumn
 			spacing: Utils.getSizeWithScreenRatio(16)
-			
+
 			Item {
 				Layout.topMargin: Utils.getSizeWithScreenRatio(7)
 			}
@@ -82,7 +83,7 @@ ColumnLayout {
 							Layout.alignment: Qt.AlignVCenter
 
 							Text {
-								text:  participantGui.core.displayName
+								text: participantGui.core.displayName
 								font: Typography.p1
 								color: DefaultStyle.main2_700
 							}
@@ -95,11 +96,11 @@ ColumnLayout {
 							}
 						}
 					}
-					
+
 					Item {
 						Layout.fillWidth: true
 					}
-					
+
 					PopupButton {
 						id: detailOptions
 						popup.x: width
@@ -107,10 +108,9 @@ ColumnLayout {
 							implicitHeight: detailsButtons.implicitHeight
 							implicitWidth: detailsButtons.implicitWidth
 							Keys.onPressed: event => {
-												if (event.key == Qt.Key_Left
-													|| event.key == Qt.Key_Escape) {
-													detailOptions.popup.close()
-													event.accepted = true
+												if (event.key == Qt.Key_Left || event.key == Qt.Key_Escape) {
+													detailOptions.popup.close();
+													event.accepted = true;
 												}
 											}
 							ColumnLayout {
@@ -120,31 +120,30 @@ ColumnLayout {
 									Layout.fillWidth: true
 									//: "Show contact"
 									text: contact && contact.core && contact.core.isAppFriend ? qsTr("menu_see_existing_contact") :
-																//: "Add to contacts"
-																qsTr("menu_add_address_to_contacts")
-									icon.source: (contact && contact.core && contact.core.isAppFriend)
-										? AppIcons.adressBook
-										: AppIcons.plusCircle
+																								//: "Add to contacts"
+																								qsTr("menu_add_address_to_contacts")
+									icon.source: (contact && contact.core && contact.core.isAppFriend) ? AppIcons.adressBook : AppIcons.plusCircle
 									icon.width: Utils.getSizeWithScreenRatio(32)
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
-										detailOptions.close()
+										detailOptions.close();
 										if (contact && contact.core.isAppFriend)
-											UtilsCpp.getMainWindow().displayContactPage(participantGui.core.sipAddress)
+											UtilsCpp.getMainWindow().displayContactPage(participantGui.core.sipAddress);
 										else
-											UtilsCpp.getMainWindow().displayCreateContactPage("",participantGui.core.sipAddress)
+											UtilsCpp.getMainWindow().displayCreateContactPage("", participantGui.core.sipAddress);
 									}
 								}
 								IconLabelButton {
 									visible: mainItem.isGroupEditable
 									Layout.fillWidth: true
-									text: participantGui.core.isAdmin ? qsTr("group_infos_remove_admin_rights") : qsTr("group_infos_give_admin_rights")
+									text: participantGui.core.isAdmin ? qsTr("group_infos_remove_admin_rights") : qsTr(
+																			"group_infos_give_admin_rights")
 									icon.source: AppIcons.profile
 									icon.width: Utils.getSizeWithScreenRatio(32)
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
-										detailOptions.close()
-										mainItem.chatGui.core.lToggleParticipantAdminStatus(participantGui.core.sipAddress)
+										detailOptions.close();
+										mainItem.chatGui.core.lToggleParticipantAdminStatus(participantGui.core.sipAddress);
 									}
 								}
 								IconLabelButton {
@@ -154,8 +153,8 @@ ColumnLayout {
 									icon.width: Utils.getSizeWithScreenRatio(32)
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
-										detailOptions.close()
-										UtilsCpp.copyToClipboard(participantGui.core.sipAddress)
+										detailOptions.close();
+										UtilsCpp.copyToClipboard(participantGui.core.sipAddress);
 									}
 								}
 								Rectangle {
@@ -175,24 +174,21 @@ ColumnLayout {
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									style: ButtonStyle.hoveredBackgroundRed
 									onClicked: {
-										detailOptions.close()
-										UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("group_infos_remove_participants_toast_title"),
-										qsTr("group_infos_remove_participants_toast_message"),
-										"",
-										function(confirmed) {
-											if (confirmed) {
-												mainItem.chatGui.core.lRemoveParticipant(participantGui.core.sipAddress)
-											}
-										})
+										detailOptions.close();
+										UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("group_infos_remove_participants_toast_title"), qsTr(
+																								 "group_infos_remove_participants_toast_message"), "", function (confirmed) {
+																									 if (confirmed) {
+																										 mainItem.chatGui.core.lRemoveParticipant(participantGui.core.sipAddress);
+																									 }
+																								 });
 									}
 								}
 							}
 						}
 					}
-					
 				}
 			}
-			
+
 			MediumButton {
 				id: manageParticipants
 				visible: mainItem.isGroupEditable

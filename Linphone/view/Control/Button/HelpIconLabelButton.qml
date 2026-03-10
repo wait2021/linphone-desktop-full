@@ -3,14 +3,14 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import Linphone
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 MouseArea {
 	id: mainItem
 	property string iconSource
 	property string title
 	property string subTitle
-    property real iconSize: Utils.getSizeWithScreenRatio(32)
+	property real iconSize: Utils.getSizeWithScreenRatio(32)
 	property bool shadowEnabled: containsMouse || activeFocus
 	property bool arrowImageVisible: false
 	property alias image: image
@@ -19,16 +19,16 @@ MouseArea {
 	height: content.implicitHeight
 	cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 	activeFocusOnTab: true
-	Keys.onPressed: (event) => {
-		if(event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return){
-			mainItem.clicked(undefined)
-			event.accepted = true
-		}
-	}
+	Keys.onPressed: event => {
+						if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+							mainItem.clicked(undefined);
+							event.accepted = true;
+						}
+					}
 	RowLayout {
 		id: content
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.fill:parent
+		anchors.fill: parent
 		EffectImage {
 			id: image
 			Layout.preferredWidth: mainItem.iconSize
@@ -42,7 +42,7 @@ MouseArea {
 			width: implicitWidth
 			Layout.preferredWidth: width
 			height: implicitHeight
-            Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
+			Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 			Text {
 				Layout.fillWidth: true
 				maximumLineCount: 1
@@ -63,7 +63,9 @@ MouseArea {
 				font: Typography.p1
 			}
 		}
-		Item{Layout.fillWidth: true}
+		Item {
+			Layout.fillWidth: true
+		}
 		EffectImage {
 			id: arrowImage
 			visible: mainItem.arrowImageVisible
@@ -75,7 +77,7 @@ MouseArea {
 		enabled: mainItem.shadowEnabled
 		anchors.fill: content
 		source: content
-		visible:  mainItem.shadowEnabled
+		visible: mainItem.shadowEnabled
 		// Crash : https://bugreports.qt.io/browse/QTBUG-124730
 		shadowEnabled: true //mainItem.shadowEnabled
 		shadowColor: DefaultStyle.grey_1000

@@ -1,4 +1,3 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Dialogs
@@ -12,17 +11,17 @@ AbstractSettingsLayout {
 	width: parent?.width
 	contentModel: [
 		{
-            //: Attached files
-            title: qsTr("settings_chat_attached_files_title"),
-            subTitle: "",
-			contentComponent: attachedFilesParamComp,
+			//: Attached files
+			title: qsTr("settings_chat_attached_files_title"),
+			subTitle: "",
+			contentComponent: attachedFilesParamComp
 			// hideTopMargin: true
 		},
 		{
-            //: Notifications
-            title: qsTr("settings_chat_notifications_title"),
-            subTitle: "",
-			contentComponent: displayNotifParamComp,
+			//: Notifications
+			title: qsTr("settings_chat_notifications_title"),
+			subTitle: "",
+			contentComponent: displayNotifParamComp
 			// hideTopMargin: true
 		}
 	]
@@ -35,14 +34,14 @@ AbstractSettingsLayout {
 		currentFolder: SettingsCpp.downloadFolder
 		options: FolderDialog.DontResolveSymlinks
 		onAccepted: {
-			SettingsCpp.downloadFolder = Utils.getSystemPathFromUri(selectedFolder)
+			SettingsCpp.downloadFolder = Utils.getSystemPathFromUri(selectedFolder);
 		}
 	}
 
 	Component {
 		id: attachedFilesParamComp
 		ColumnLayout {
-            spacing: Utils.getSizeWithScreenRatio(20)
+			spacing: Utils.getSizeWithScreenRatio(20)
 			SwitchSetting {
 				//: "Automatic download"
 				titleText: qsTr("settings_chat_attached_files_auto_download_title")
@@ -58,19 +57,20 @@ AbstractSettingsLayout {
 				propertyName: "downloadFolder"
 				propertyOwner: SettingsCpp
 				customButtonIcon: AppIcons.arrowSquareOut
-				customCallback: function() {folderDialog.open()}
+				customCallback: function () {
+					folderDialog.open();
+				}
 				toValidate: true
 				//: Browse folders
 				customButtonAccessibleName: qsTr("settings_chat_download_folder_browse_button")
 				Connections {
-                    target: SettingsCpp
-                    function onDownloadFolderChanged() {
-                        if (downloadFolderTextField.text != downloadFolderTextField.propertyOwner[downloadFolderTextField.propertyName]) 
-                            downloadFolderTextField.text = downloadFolderTextField.propertyOwner[downloadFolderTextField.propertyName]
-                    }
-                }
+					target: SettingsCpp
+					function onDownloadFolderChanged() {
+						if (downloadFolderTextField.text != downloadFolderTextField.propertyOwner[downloadFolderTextField.propertyName])
+							downloadFolderTextField.text = downloadFolderTextField.propertyOwner[downloadFolderTextField.propertyName];
+					}
+				}
 			}
-
 		}
 	}
 	Component {

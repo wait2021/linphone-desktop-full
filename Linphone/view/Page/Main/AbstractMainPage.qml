@@ -8,7 +8,7 @@ import QtQuick.Controls.Basic as Control
 
 import Linphone
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
@@ -23,25 +23,25 @@ FocusScope {
 	property alias rightPanel: rightPanel
 	property int rightPanelStackTopMargin: 0
 	property int rightPanelStackBottomMargin: 0
-	signal noItemButtonPressed()
+	signal noItemButtonPressed
 
 	Control.SplitView {
 		id: splitView
 		anchors.fill: parent
-    	anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+		anchors.topMargin: Utils.getSizeWithScreenRatio(10)
 
 		handle: Rectangle {
-    		implicitWidth: Utils.getSizeWithScreenRatio(6)
+			implicitWidth: Utils.getSizeWithScreenRatio(6)
 			color: Control.SplitHandle.hovered ? DefaultStyle.main2_200 : DefaultStyle.grey_200
 		}
 		ColumnLayout {
 			id: leftPanel
-			spacing:0
+			spacing: 0
 			// Control.SplitView.fillWidth:false
 			Control.SplitView.fillHeight: true
 			Control.SplitView.preferredWidth: Utils.getSizeWithScreenRatio(404)
-    		Control.SplitView.minimumWidth: Utils.getSizeWithScreenRatio(200)
-    		Control.SplitView.maximumWidth: Utils.getSizeWithScreenRatio(500)
+			Control.SplitView.minimumWidth: Utils.getSizeWithScreenRatio(200)
+			Control.SplitView.maximumWidth: Utils.getSizeWithScreenRatio(500)
 		}
 		Rectangle {
 			id: rightPanel
@@ -55,30 +55,30 @@ FocusScope {
 				anchors.fill: parent
 				ColumnLayout {
 					id: defaultItem
-					
+
 					RowLayout {
 						Layout.alignment: Qt.AlignHCenter
 						Item {
 							Layout.fillWidth: true
 						}
 						ColumnLayout {
-                            spacing: Utils.getSizeWithScreenRatio(30)
+							spacing: Utils.getSizeWithScreenRatio(30)
 							Item {
 								Layout.fillHeight: true
 							}
 							Image {
 								Layout.alignment: Qt.AlignHCenter
 								source: AppIcons.noItemImage
-                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(359)
-                                Layout.preferredHeight: Utils.getSizeWithScreenRatio(314)
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(359)
+								Layout.preferredHeight: Utils.getSizeWithScreenRatio(314)
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: mainItem.emptyListText
 								Layout.alignment: Qt.AlignHCenter
 								font {
-                                    pixelSize: Typography.h3.pixelSize
-                                    weight: Typography.h3.weight
+									pixelSize: Typography.h3.pixelSize
+									weight: Typography.h3.weight
 								}
 							}
 							BigButton {
@@ -86,7 +86,7 @@ FocusScope {
 								icon.source: mainItem.newItemIconSource
 								style: ButtonStyle.main
 								text: mainItem.noItemButtonText
-                                spacing: Utils.getSizeWithScreenRatio(8)
+								spacing: Utils.getSizeWithScreenRatio(8)
 								onPressed: mainItem.noItemButtonPressed()
 							}
 							Item {
@@ -97,7 +97,6 @@ FocusScope {
 							Layout.fillWidth: true
 						}
 					}
-					
 				}
 				Control.StackView {
 					id: rightPanelStackView

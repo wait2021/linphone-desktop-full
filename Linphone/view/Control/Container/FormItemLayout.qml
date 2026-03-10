@@ -5,7 +5,7 @@ import Linphone
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
-FocusScope{
+FocusScope {
 	id: mainItem
 	property alias contentItem: contentItem.data
 	property string label: ""
@@ -21,33 +21,32 @@ FocusScope{
 	implicitHeight: layout.implicitHeight
 
 	function clearErrorText() {
-		errorText.clear()
+		errorText.clear();
 	}
 
 	onErrorMessageChanged: if (errorMessage.length > 0) {
-		var item = mainItem
-		do {
-			var parentItem = item.parent 
-			if (parentItem.contentItem) {
-                var itemPosInParent = mainItem.mapToItem(parentItem.contentItem, mainItem.x, mainItem.y)
-                if (parentItem.contentY > itemPosInParent.y) {
-                    parentItem.contentY = itemPosInParent.y;
-                }
-                else if (parentItem.contentY+parentItem.height < itemPosInParent.y+mainItem.height) {
-                    parentItem.contentY = itemPosInParent.y + mainItem.height - height;
-                }
-			}
-			item = parentItem
-		} while(item.parent != undefined && parentItem.contentItem === undefined)
-	}
+							   var item = mainItem;
+							   do {
+								   var parentItem = item.parent;
+								   if (parentItem.contentItem) {
+									   var itemPosInParent = mainItem.mapToItem(parentItem.contentItem, mainItem.x, mainItem.y);
+									   if (parentItem.contentY > itemPosInParent.y) {
+										   parentItem.contentY = itemPosInParent.y;
+									   } else if (parentItem.contentY + parentItem.height < itemPosInParent.y + mainItem.height) {
+										   parentItem.contentY = itemPosInParent.y + mainItem.height - height;
+									   }
+								   }
+								   item = parentItem;
+							   } while (item.parent != undefined && parentItem.contentItem === undefined)
+						   }
 
 	ColumnLayout {
 		id: layout
-        spacing: Utils.getSizeWithScreenRatio(5)
+		spacing: Utils.getSizeWithScreenRatio(5)
 		anchors.left: parent.left
 		anchors.right: parent.right
 		RowLayout {
-        	spacing: Utils.getSizeWithScreenRatio(8)
+			spacing: Utils.getSizeWithScreenRatio(8)
 			Text {
 				visible: label.length > 0
 				verticalAlignment: Text.AlignVCenter
@@ -57,13 +56,15 @@ FocusScope{
 				wrapMode: Text.Wrap
 				maximumLineCount: 1
 				textFormat: Text.RichText
-		
+
 				font {
 					pixelSize: Typography.p2.pixelSize
 					weight: Typography.p2.weight
 				}
 			}
-			Item{Layout.fillWidth: true}
+			Item {
+				Layout.fillWidth: true
+			}
 			PopupButton {
 				visible: mainItem.tooltip !== ""
 				Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
@@ -78,11 +79,11 @@ FocusScope{
 			Text {
 				visible: mainItem.labelIndication !== undefined
 				font.pixelSize: Utils.getSizeWithScreenRatio(12)
-                font.weight: Utils.getSizeWithScreenRatio(300)
-                text: mainItem.labelIndication
+				font.weight: Utils.getSizeWithScreenRatio(300)
+				text: mainItem.labelIndication
 			}
 		}
-	
+
 		Item {
 			Layout.preferredHeight: childrenRect.height
 			Layout.fillWidth: true
@@ -99,6 +100,5 @@ FocusScope{
 				color: DefaultStyle.danger_500_main
 			}
 		}
-	
 	}
 }

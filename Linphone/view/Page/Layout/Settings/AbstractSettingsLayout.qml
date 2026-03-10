@@ -1,10 +1,9 @@
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Rectangle {
 	id: mainItem
@@ -16,30 +15,30 @@ Rectangle {
 	property var model
 	color: DefaultStyle.grey_0
 	property var container
-    // property real contentHeight: contentListView.contentHeight
-    property real minimumWidthForSwitchintToRowLayout: Utils.getSizeWithScreenRatio(981)
+	// property real contentHeight: contentListView.contentHeight
+	property real minimumWidthForSwitchintToRowLayout: Utils.getSizeWithScreenRatio(981)
 	property var useVerticalLayout
 	property bool saveButtonVisible: true
-	signal save()
-	signal undo()
+	signal save
+	signal undo
 	function setResponsivityFlags() {
-        var newValue = width < minimumWidthForSwitchintToRowLayout
+		var newValue = width < minimumWidthForSwitchintToRowLayout;
 		if (useVerticalLayout != newValue) {
-			useVerticalLayout = newValue
+			useVerticalLayout = newValue;
 		}
 	}
 	onWidthChanged: {
-		setResponsivityFlags()
-    }
+		setResponsivityFlags();
+	}
 	Component.onCompleted: {
-			setResponsivityFlags()
+		setResponsivityFlags();
 	}
 	Control.Control {
 		id: header
 		anchors.left: parent.left
 		anchors.right: parent.right
-        leftPadding: Utils.getSizeWithScreenRatio(45)
-        rightPadding: Utils.getSizeWithScreenRatio(45)
+		leftPadding: Utils.getSizeWithScreenRatio(45)
+		rightPadding: Utils.getSizeWithScreenRatio(45)
 		z: 1
 		background: Rectangle {
 			anchors.fill: parent
@@ -48,20 +47,20 @@ Rectangle {
 		contentItem: ColumnLayout {
 			RowLayout {
 				Layout.fillWidth: true
-                Layout.topMargin: Utils.getSizeWithScreenRatio(20)
-                spacing: Utils.getSizeWithScreenRatio(5)
-                Layout.bottomMargin: Utils.getSizeWithScreenRatio(10)
+				Layout.topMargin: Utils.getSizeWithScreenRatio(20)
+				spacing: Utils.getSizeWithScreenRatio(5)
+				Layout.bottomMargin: Utils.getSizeWithScreenRatio(10)
 				Button {
 					id: backButton
-                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
-                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
+					Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
+					Layout.preferredWidth: Utils.getSizeWithScreenRatio(30)
 					icon.source: AppIcons.leftArrow
 					focus: true
 					visible: mainItem.container.depth > 1
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(41)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(41)
 					style: ButtonStyle.noBackground
 					onClicked: {
-						mainItem.container.pop()
+						mainItem.container.pop();
 					}
 					//: Return
 					Accessible.name: qsTr("return_accessible_name")
@@ -77,25 +76,25 @@ Rectangle {
 				Loader {
 					Layout.alignment: Qt.AlignRight
 					sourceComponent: mainItem.topbarOptionalComponent
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(34)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(34)
 				}
 				MediumButton {
 					id: saveButton
 					style: ButtonStyle.main
-                    //: "Enregistrer"
-                    text: qsTr("save")
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(6)
+					//: "Enregistrer"
+					text: qsTr("save")
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(6)
 					visible: mainItem.saveButtonVisible
 					//: Save %1 settings
 					Accessible.name: qsTr("save_settings_accessible_name").arg(mainItem.titleText)
 					onClicked: {
-						mainItem.save()
+						mainItem.save();
 					}
 				}
 			}
 			Rectangle {
 				Layout.fillWidth: true
-                height: Utils.getSizeWithScreenRatio(1)
+				height: Utils.getSizeWithScreenRatio(1)
 				color: DefaultStyle.main2_500_main
 			}
 		}
@@ -106,7 +105,7 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.bottom: parent.bottom
 		anchors.top: header.bottom
-        anchors.topMargin: Utils.getSizeWithScreenRatio(16)
+		anchors.topMargin: Utils.getSizeWithScreenRatio(16)
 		contentHeight: contentListView.contentHeight
 		Control.ScrollBar.vertical: ScrollBar {
 			active: contentListView.contentHeight > scrollView.height
@@ -116,7 +115,7 @@ Rectangle {
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
-            anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
+			anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
 		}
 		Control.ScrollBar.horizontal: ScrollBar {
 			active: false
@@ -131,8 +130,9 @@ Rectangle {
 			height: contentHeight
 			spacing: Utils.getSizeWithScreenRatio(10)
 			delegate: ColumnLayout {
-				visible: modelData.visible != undefined ? modelData.visible: true
-				Component.onCompleted: if (!visible) height = 0
+				visible: modelData.visible != undefined ? modelData.visible : true
+				Component.onCompleted: if (!visible)
+										   height = 0
 				spacing: Utils.getSizeWithScreenRatio(16)
 				width: contentListView.width
 				Rectangle {
@@ -186,22 +186,22 @@ Rectangle {
 							sourceComponent: modelData.contentComponent
 						}
 						Item {
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customRightMargin > 0 ? modelData.customRightMargin : 17)
+							Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customRightMargin > 0
+																				? modelData.customRightMargin : 17)
 						}
 					}
 				}
 			}
 		}
-		
+
 		Connections {
 			target: FocusNavigator
 
 			function onFocusChanged(item, keyboardFocus) {
-				if(Utils.isDescendant(item,scrollView) && keyboardFocus){
-					Utils.ensureVisibleY(item, scrollView)
+				if (Utils.isDescendant(item, scrollView) && keyboardFocus) {
+					Utils.ensureVisibleY(item, scrollView);
 				}
 			}
 		}
 	}
 }
-

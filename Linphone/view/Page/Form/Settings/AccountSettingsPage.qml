@@ -9,36 +9,46 @@ import SettingsCpp
 AbstractSettingsMenu {
 	id: mainItem
 	layoutsPath: "qrc:/qt/qml/Linphone/view/Page/Layout/Settings"
-    //: "Mon compte"
-    titleText: qsTr("drawer_menu_manage_account")
+	//: "Mon compte"
+	titleText: qsTr("drawer_menu_manage_account")
 	property AccountGui account
-	signal accountRemoved()
+	signal accountRemoved
 	families: [
-        //: "Général"
-        {title: qsTr("settings_general_title"), layout: "AccountSettingsGeneralLayout", model: account},
-        //: "Paramètres de compte"
-        {title: qsTr("settings_account_title"), layout: "AccountSettingsParametersLayout", model: account}
+		//: "Général"
+		{
+			title: qsTr("settings_general_title"),
+			layout: "AccountSettingsGeneralLayout",
+			model: account
+		},
+		//: "Paramètres de compte"
+		{
+			title: qsTr("settings_account_title"),
+			layout: "AccountSettingsParametersLayout",
+			model: account
+		}
 	]
 	Connections {
 		target: account ? account.core : null
-		function onRemoved() { accountRemoved() }
+		function onRemoved() {
+			accountRemoved();
+		}
 	}
 	onGoBackRequested: if (!account.core.isSaved) {
-                           //: "Modifications non enregistrées"
-        UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("contact_editor_popup_abort_confirmation_title"),
-                                                             //: "Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?"
-            qsTr("contact_editor_popup_abort_confirmation_message"),
-			"",
-			function (confirmed) {
-				if (confirmed) {
-					account.core.save()
-				} else {
-					account.core.undo()
-				}
-				mainItem.goBack()
-                //: "Ne pas enregistrer"
-                //: "Enregistrer"
-            }, qsTr("contact_editor_dialog_abort_confirmation_do_not_save"), qsTr("contact_editor_dialog_abort_confirmation_save")
-		)
-	} else {mainItem.goBack()}
+						   //: "Modifications non enregistrées"
+						   UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("contact_editor_popup_abort_confirmation_title"),
+																				//: "Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?"
+																				qsTr("contact_editor_popup_abort_confirmation_message"), "", function (confirmed) {
+																					if (confirmed) {
+																						account.core.save();
+																					} else {
+																						account.core.undo();
+																					}
+																					mainItem.goBack();
+																					//: "Ne pas enregistrer"
+																					//: "Enregistrer"
+																				}, qsTr("contact_editor_dialog_abort_confirmation_do_not_save"), qsTr(
+																					"contact_editor_dialog_abort_confirmation_save"));
+					   } else {
+						   mainItem.goBack();
+					   }
 }

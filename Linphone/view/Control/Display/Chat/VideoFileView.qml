@@ -5,7 +5,7 @@ import QtQuick.Layouts
 
 import Linphone
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // =============================================================================
 Rectangle {
@@ -60,13 +60,15 @@ Rectangle {
 		// Changing cursor in MouseArea seems not to work with the Loader
 		// Use override cursor for this case
 		onContainsMouseChanged: {
-			if (containsMouse) UtilsCpp.setGlobalCursor(Qt.PointingHandCursor)
-			else UtilsCpp.restoreGlobalCursor()
+			if (containsMouse)
+				UtilsCpp.setGlobalCursor(Qt.PointingHandCursor);
+			else
+				UtilsCpp.restoreGlobalCursor();
 		}
-		onPressed: (mouse) => {
-			mouse.accepted = true
-			mainItem.contentGui.core.lOpenFile()
-		}
+		onPressed: mouse => {
+					   mouse.accepted = true;
+					   mainItem.contentGui.core.lOpenFile();
+				   }
 	}
 	EffectImage {
 		anchors.centerIn: parent

@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 // TODO : spacing
@@ -12,70 +12,75 @@ AbstractMainPage {
 	id: mainItem
 	property ConferenceInfoGui selectedConference
 	property int meetingListCount: 0
-	signal returnRequested()
+	signal returnRequested
 	signal addParticipantsValidated(list<string> selectedParticipants)
-    //: "Créer une réunion"
-    noItemButtonText: qsTr("meetings_add")
-    //: "Aucune réunion"
-    emptyListText: qsTr("meetings_list_empty")
+	//: "Créer une réunion"
+	noItemButtonText: qsTr("meetings_add")
+	//: "Aucune réunion"
+	emptyListText: qsTr("meetings_list_empty")
 	newItemIconSource: AppIcons.plusCircle
-	rightPanelColor: selectedConference ? DefaultStyle.grey_0 : DefaultStyle.grey_100 
-	showDefaultItem: leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "listLayout" && meetingListCount === 0
+	rightPanelColor: selectedConference ? DefaultStyle.grey_0 : DefaultStyle.grey_100
+	showDefaultItem: leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "listLayout"
+					 && meetingListCount === 0
 
-	rightPanelStackView.width:  Utils.getSizeWithScreenRatio(393)
+	rightPanelStackView.width: Utils.getSizeWithScreenRatio(393)
 	rightPanelStackTopMargin: Utils.getSizeWithScreenRatio(45)
 	rightPanelStackBottomMargin: Utils.getSizeWithScreenRatio(30)
 
-    /**
-     * Focus on the first pertinent element in the page (LINQT-2202)
-     * @override
-     */
-    function forceActiveFocus(reason = undefined){
-		leftPanelStackView.currentItem?.newConfButton?.forceActiveFocus(reason)
-    }
-
+	/**
+	* Focus on the first pertinent element in the page (LINQT-2202)
+	* @override
+	*/
+	function forceActiveFocus(reason = undefined) {
+		leftPanelStackView.currentItem?.newConfButton?.forceActiveFocus(reason);
+	}
 
 	function createPreFilledMeeting(subject, addresses) {
 		mainItem.selectedConference = Qt.createQmlObject('import Linphone
 										ConferenceInfoGui{
-										}', mainItem)
-		mainItem.selectedConference.core.resetParticipants(addresses)
-		mainItem.selectedConference.core.subject = subject
-		var item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference})
-		item.forceActiveFocus()
+										}', mainItem);
+		mainItem.selectedConference.core.resetParticipants(addresses);
+		mainItem.selectedConference.core.subject = subject;
+		var item = leftPanelStackView.push(createConf, {
+											   "conferenceInfoGui": mainItem.selectedConference
+										   });
+		item.forceActiveFocus();
 	}
 
-
 	function editConference(confInfoGui = null) {
-		var isCreation = !confInfoGui
-		var item
+		var isCreation = !confInfoGui;
+		var item;
 		if (isCreation) {
 			confInfoGui = Qt.createQmlObject('import Linphone
 											ConferenceInfoGui{
-											}', mainItem)
-			mainItem.selectedConference = confInfoGui
-			item = leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference})
-			item.forceActiveFocus()
+											}', mainItem);
+			mainItem.selectedConference = confInfoGui;
+			item = leftPanelStackView.push(createConf, {
+											   "conferenceInfoGui": mainItem.selectedConference
+										   });
+			item.forceActiveFocus();
 		} else {
-			mainItem.selectedConference = confInfoGui
-			item = rightPanelStackView.push(editConf, {"conferenceInfoGui": mainItem.selectedConference})
-			item.forceActiveFocus()
+			mainItem.selectedConference = confInfoGui;
+			item = rightPanelStackView.push(editConf, {
+												"conferenceInfoGui": mainItem.selectedConference
+											});
+			item.forceActiveFocus();
 		}
 	}
-	
-	
+
 	onVisibleChanged: if (!visible) {
-		leftPanelStackView.clear()
-		leftPanelStackView.push(leftPanelStackView.initialItem)
-	}
+						  leftPanelStackView.clear();
+						  leftPanelStackView.push(leftPanelStackView.initialItem);
+					  }
 
 	onSelectedConferenceChanged: {
 		// While a conference is being created or edited, we need to stay on the edition page
-		rightPanelStackView.clear()
-		if ((rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "editConf")
-				|| (leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "createConf")) return
+		rightPanelStackView.clear();
+		if ((rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "editConf") || (
+					leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "createConf"))
+			return;
 		if (selectedConference && selectedConference.core && selectedConference.core.haveModel) {
-			rightPanelStackView.push(meetingDetail, Control.StackView.Immediate)
+			rightPanelStackView.push(meetingDetail, Control.StackView.Immediate);
 		}
 	}
 
@@ -85,49 +90,49 @@ AbstractMainPage {
 		id: cancelAndDeleteConfDialog
 		property ConferenceInfoGui confInfoToDelete
 		property bool cancel: false
-		signal cancelRequested()
-        // width: Utils.getSizeWithScreenRatio(278)
-        //: "Souhaitez-vous annuler et supprimer cette réunion ?"
-        text: cancel ? qsTr("meeting_schedule_cancel_dialog_message")
-                       //: Souhaitez-vous supprimer cette réunion ?
-                     : qsTr("meeting_schedule_delete_dialog_message")
+		signal cancelRequested
+		// width: Utils.getSizeWithScreenRatio(278)
+		//: "Souhaitez-vous annuler et supprimer cette réunion ?"
+		text: cancel ? qsTr("meeting_schedule_cancel_dialog_message") :
+					   //: Souhaitez-vous supprimer cette réunion ?
+					   qsTr("meeting_schedule_delete_dialog_message")
 
 		onCancelRequested: {
-			confInfoToDelete.core.lCancelConferenceInfo()
+			confInfoToDelete.core.lCancelConferenceInfo();
 		}
 		onAccepted: {
-			confInfoToDelete.core.lDeleteConferenceInfo()
+			confInfoToDelete.core.lDeleteConferenceInfo();
 		}
 		buttons: [
 			BigButton {
 				visible: cancelAndDeleteConfDialog.cancel
 				style: ButtonStyle.main
-                //: "Annuler et supprimer"
-                text: qsTr("meeting_schedule_cancel_and_delete_action")
+				//: "Annuler et supprimer"
+				text: qsTr("meeting_schedule_cancel_and_delete_action")
 				onClicked: {
-					cancelAndDeleteConfDialog.cancelRequested()
-					cancelAndDeleteConfDialog.accepted()
-					cancelAndDeleteConfDialog.close()
+					cancelAndDeleteConfDialog.cancelRequested();
+					cancelAndDeleteConfDialog.accepted();
+					cancelAndDeleteConfDialog.close();
 				}
 			},
 			BigButton {
-                //: "Supprimer seulement"
-                text: cancelAndDeleteConfDialog.cancel ? qsTr("meeting_schedule_delete_only_action")
-                                                        //: "Supprimer"
-                                                       : qsTr("meeting_schedule_delete_action")
+				//: "Supprimer seulement"
+				text: cancelAndDeleteConfDialog.cancel ? qsTr("meeting_schedule_delete_only_action") :
+														 //: "Supprimer"
+														 qsTr("meeting_schedule_delete_action")
 				style: ButtonStyle.main
 				onClicked: {
-					cancelAndDeleteConfDialog.accepted()
-					cancelAndDeleteConfDialog.close()
+					cancelAndDeleteConfDialog.accepted();
+					cancelAndDeleteConfDialog.close();
 				}
 			},
 			BigButton {
-                //: Retour
-                text: qsTr("back_action")
+				//: Retour
+				text: qsTr("back_action")
 				style: ButtonStyle.secondary
 				onClicked: {
-					cancelAndDeleteConfDialog.rejected()
-					cancelAndDeleteConfDialog.close()
+					cancelAndDeleteConfDialog.rejected();
+					cancelAndDeleteConfDialog.close();
 				}
 			}
 		]
@@ -144,14 +149,14 @@ AbstractMainPage {
 
 	Component {
 		id: listLayout
-		FocusScope{
+		FocusScope {
 			property string objectName: "listLayout"
 			property alias newConfButton: newConfButton
 			Control.StackView.onDeactivated: {
-				mainItem.selectedConference = null
+				mainItem.selectedConference = null;
 			}
 			Control.StackView.onActivated: {
-				mainItem.selectedConference = conferenceList.selectedConference
+				mainItem.selectedConference = conferenceList.selectedConference;
 			}
 			enabled: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName !== "editConf"
 
@@ -185,7 +190,7 @@ AbstractMainPage {
 						icon.height: Utils.getSizeWithScreenRatio(28)
 						KeyNavigation.down: scrollToCurrentDateButton
 						onClicked: {
-							mainItem.editConference()
+							mainItem.editConference();
 						}
 					}
 				}
@@ -225,9 +230,9 @@ AbstractMainPage {
 					Layout.fillHeight: true
 					Layout.alignment: Qt.AlignHCenter
 					//: "Aucun résultat…"
-					text: searchBar.text.length !== 0 ? qsTr("list_filter_no_result_found")
+					text: searchBar.text.length !== 0 ? qsTr("list_filter_no_result_found") :
 														//: "Aucune réunion"
-													  : qsTr("meetings_empty_list")
+														qsTr("meetings_empty_list")
 					font {
 						pixelSize: Typography.h4.pixelSize
 						weight: Typography.h4.weight
@@ -245,7 +250,7 @@ AbstractMainPage {
 					searchBarText: searchBar.text
 
 					onCountChanged: {
-						mainItem.meetingListCount = count
+						mainItem.meetingListCount = count;
 					}
 					Binding {
 						target: mainItem
@@ -254,23 +259,23 @@ AbstractMainPage {
 						value: false
 					}
 					onSelectedConferenceChanged: {
-						mainItem.selectedConference = selectedConference
+						mainItem.selectedConference = selectedConference;
 					}
 					onMeetingDeletionRequested: (confInfo, canCancel) => {
-						cancelAndDeleteConfDialog.confInfoToDelete = confInfo
-						cancelAndDeleteConfDialog.cancel = canCancel
-						cancelAndDeleteConfDialog.open()
-					}
+													cancelAndDeleteConfDialog.confInfoToDelete = confInfo;
+													cancelAndDeleteConfDialog.cancel = canCancel;
+													cancelAndDeleteConfDialog.open();
+												}
 
-					Keys.onPressed: (event) => {
-						if(event.key == Qt.Key_Escape){
-							searchBar.forceActiveFocus()
-							event.accepted = true
-						}else if(event.key == Qt.Key_Right){
-							rightPanelStackView.currentItem.forceActiveFocus()
-							event.accepted = true
-						}
-					}
+					Keys.onPressed: event => {
+										if (event.key == Qt.Key_Escape) {
+											searchBar.forceActiveFocus();
+											event.accepted = true;
+										} else if (event.key == Qt.Key_Right) {
+											rightPanelStackView.currentItem.forceActiveFocus();
+											event.accepted = true;
+										}
+									}
 				}
 			}
 		}
@@ -278,7 +283,7 @@ AbstractMainPage {
 
 	Component {
 		id: createConf
-		FocusScope{
+		FocusScope {
 			id: createConfLayout
 			objectName: "createConf"
 			property ConferenceInfoGui conferenceInfoGui
@@ -298,8 +303,8 @@ AbstractMainPage {
 						KeyNavigation.right: createButton
 						KeyNavigation.down: meetingSetup
 						onClicked: {
-							meetingSetup.conferenceInfoGui.core.undo()
-							leftPanelStackView.pop()
+							meetingSetup.conferenceInfoGui.core.undo();
+							leftPanelStackView.pop();
 						}
 					}
 					Text {
@@ -312,7 +317,9 @@ AbstractMainPage {
 						}
 						Layout.fillWidth: true
 					}
-					Item {Layout.fillWidth: true}
+					Item {
+						Layout.fillWidth: true
+					}
 					SmallButton {
 						id: createButton
 						text: qsTr("create")
@@ -321,20 +328,21 @@ AbstractMainPage {
 						KeyNavigation.down: meetingSetup
 
 						onClicked: {
-							if (meetingSetup.conferenceInfoGui.core.subject.length === 0 || meetingSetup.conferenceInfoGui.core.participantCount === 0) {
+							if (meetingSetup.conferenceInfoGui.core.subject.length === 0
+									|| meetingSetup.conferenceInfoGui.core.participantCount === 0) {
 								UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
 															  //: Veuillez saisir un titre et sélectionner au moins un participant
-															  qsTr("meeting_schedule_mandatory_field_not_filled_toast"), false)
+															  qsTr("meeting_schedule_mandatory_field_not_filled_toast"), false);
 							} else if (meetingSetup.conferenceInfoGui.core.duration <= 0) {
 								UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
 															  //: "La fin de la conférence doit être plus récente que son début"
-															  qsTr("meeting_schedule_duration_error_toast"), false)
+															  qsTr("meeting_schedule_duration_error_toast"), false);
 							} else {
-								meetingSetup.conferenceInfoGui.core.save()
+								meetingSetup.conferenceInfoGui.core.save();
 								//: "Création de la réunion en cours …"
 								mainWindow.showLoadingPopup(qsTr("meeting_schedule_creation_in_progress"), true, function () {
-									meetingSetup.conferenceInfoGui.core.lCancelCreation()
-								})
+									meetingSetup.conferenceInfoGui.core.lCancelCreation();
+								});
 							}
 						}
 					}
@@ -361,44 +369,49 @@ AbstractMainPage {
 						Connections {
 							target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
 							function onConferenceSchedulerStateChanged() {
-								var mainWin = UtilsCpp.getMainWindow()
+								var mainWin = UtilsCpp.getMainWindow();
 								if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
-									leftPanelStackView.pop()
+									leftPanelStackView.pop();
 									//: "Nouvelle réunion"
 									UtilsCpp.showInformationPopup(qsTr("meeting_schedule_title"),
-																//: "Réunion planifiée avec succès"
-																qsTr("meeting_info_created_toast"), true)
-									mainWindow.closeLoadingPopup()
-								}
-								else if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
-									|| meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
+																  //: "Réunion planifiée avec succès"
+																  qsTr("meeting_info_created_toast"), true);
+									mainWindow.closeLoadingPopup();
+								} else if (meetingSetup.conferenceInfoGui.core.schedulerState
+										   == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+										   || meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
 									mainWin.showLoadingPopup(qsTr("meeting_schedule_creation_in_progress"), true, function () {
-										leftPanelStackView.pop()
-									})
+										leftPanelStackView.pop();
+									});
 								} else {
 									if (meetingSetup.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
 										UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-																	//: "Échec de création de la réunion !"
-																	qsTr("meeting_failed_to_schedule_toast"), false)
+																	  //: "Échec de création de la réunion !"
+																	  qsTr("meeting_failed_to_schedule_toast"), false);
 									}
-									mainWin.closeLoadingPopup()
+									mainWin.closeLoadingPopup();
 								}
-								createConfLayout.enabled = meetingSetup.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+								createConfLayout.enabled = meetingSetup.conferenceInfoGui.core.schedulerState
+										!= LinphoneEnums.ConferenceSchedulerState.AllocationPending;
 							}
 							function onSaveFailed() {
-								var mainWin = UtilsCpp.getMainWindow()
-								mainWin.closeLoadingPopup()
+								var mainWin = UtilsCpp.getMainWindow();
+								mainWin.closeLoadingPopup();
 							}
 						}
 						onAddParticipantsRequested: {
-							leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView,  "overridenWidth": leftPanelStackView.width})
+							leftPanelStackView.push(addParticipants, {
+														"conferenceInfoGui": conferenceInfoGui,
+														"container": leftPanelStackView,
+														"overridenWidth": leftPanelStackView.width
+													});
 						}
 						Connections {
 							target: mainItem
-							onAddParticipantsValidated: (selectedParticipants) => {
-								meetingSetup.conferenceInfoGui.core.resetParticipants(selectedParticipants)
-								leftPanelStackView.pop()
-							}
+							onAddParticipantsValidated: selectedParticipants => {
+															meetingSetup.conferenceInfoGui.core.resetParticipants(selectedParticipants);
+															leftPanelStackView.pop();
+														}
 						}
 					}
 				}
@@ -408,7 +421,7 @@ AbstractMainPage {
 
 	Component {
 		id: editConf
-		FocusScope{
+		FocusScope {
 			id: editFocusScope
 			objectName: "editConf"
 			property ConferenceInfoGui conferenceInfoGui
@@ -438,13 +451,13 @@ AbstractMainPage {
 							KeyNavigation.down: conferenceEdit
 							KeyNavigation.up: conferenceEdit
 							onClicked: {
-								conferenceEdit.conferenceInfoGui.core.undo()
-								rightPanelStackView.pop()
+								conferenceEdit.conferenceInfoGui.core.undo();
+								rightPanelStackView.pop();
 							}
 						}
 						RowLayout {
 							spacing: Utils.getSizeWithScreenRatio(8)
-							EffectImage{
+							EffectImage {
 								imageSource: AppIcons.videoconference
 								colorizationColor: DefaultStyle.main2_600
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
@@ -463,10 +476,11 @@ AbstractMainPage {
 								KeyNavigation.right: saveButton
 								KeyNavigation.down: conferenceEdit
 								KeyNavigation.up: conferenceEdit
-								onActiveFocusChanged: if(activeFocus==true) selectAll()
+								onActiveFocusChanged: if (activeFocus == true)
+														  selectAll()
 								onTextEdited: mainItem.selectedConference.core.subject = text
 								Component.onCompleted: {
-									text = mainItem.selectedConference.core.subject
+									text = mainItem.selectedConference.core.subject;
 								}
 							}
 							SmallButton {
@@ -479,14 +493,15 @@ AbstractMainPage {
 								KeyNavigation.down: conferenceEdit
 								KeyNavigation.up: conferenceEdit
 								onClicked: {
-									if (mainItem.selectedConference.core.subject.length === 0 || mainItem.selectedConference.core.participantCount === 0) {
-										UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-																	  qsTr("meeting_schedule_mandatory_field_not_filled_toast"), false)
+									if (mainItem.selectedConference.core.subject.length === 0 || mainItem.selectedConference.core.participantCount
+											=== 0) {
+										UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr(
+																		  "meeting_schedule_mandatory_field_not_filled_toast"), false);
 									} else if (mainItem.selectedConference.core.duration <= 0) {
-										UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
-																	  qsTr("meeting_schedule_duration_error_toast"), false)
+										UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr(
+																		  "meeting_schedule_duration_error_toast"), false);
 									} else {
-										mainItem.selectedConference.core.save()
+										mainItem.selectedConference.core.save();
 									}
 								}
 							}
@@ -501,13 +516,17 @@ AbstractMainPage {
 					conferenceInfoGui: editFocusScope.conferenceInfoGui
 
 					onAddParticipantsRequested: {
-						rightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": rightPanelStackView, "overridenWidth": Utils.getSizeWithScreenRatio(393)})
+						rightPanelStackView.push(addParticipants, {
+													 "conferenceInfoGui": conferenceInfoGui,
+													 "container": rightPanelStackView,
+													 "overridenWidth": Utils.getSizeWithScreenRatio(393)
+												 });
 					}
 					Connections {
 						target: mainItem
 						function onAddParticipantsValidated(selectedParticipants) {
-							conferenceEdit.conferenceInfoGui.core.resetParticipants(selectedParticipants)
-							rightPanelStackView.pop()
+							conferenceEdit.conferenceInfoGui.core.resetParticipants(selectedParticipants);
+							rightPanelStackView.pop();
 						}
 					}
 					Connections {
@@ -515,29 +534,32 @@ AbstractMainPage {
 						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
 						ignoreUnknownSignals: true
 						function onSaveFailed() {
-							UtilsCpp.getMainWindow().closeLoadingPopup()
+							UtilsCpp.getMainWindow().closeLoadingPopup();
 						}
 						function onSchedulerStateChanged() {
-							editFocusScope.enabled = conferenceEdit.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+							editFocusScope.enabled = conferenceEdit.conferenceInfoGui.core.schedulerState
+									!= LinphoneEnums.ConferenceSchedulerState.AllocationPending;
 							if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
-								UtilsCpp.getMainWindow().closeLoadingPopup()
-								rightPanelStackView.pop()
+								UtilsCpp.getMainWindow().closeLoadingPopup();
+								rightPanelStackView.pop();
 								//: "Enregistré"
 								UtilsCpp.showInformationPopup(qsTr("saved"),
 															  //: "Réunion mise à jour"
-															  qsTr("meeting_info_updated_toast"), true)
-							}
-							else if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
-								|| conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
-									//: "Modification de la réunion en cours…"
-									UtilsCpp.getMainWindow().showLoadingPopup(qsTr("meeting_schedule_edit_in_progress"), true, function(){
-										conferenceEdit.conferenceInfoGui.core.undo()
-									})
-							} else if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
+															  qsTr("meeting_info_updated_toast"), true);
+							} else if (conferenceEdit.conferenceInfoGui.core.schedulerState
+									   == LinphoneEnums.ConferenceSchedulerState.AllocationPending
+									   || conferenceEdit.conferenceInfoGui.core.schedulerState
+									   == LinphoneEnums.ConferenceSchedulerState.Updating) {
+								//: "Modification de la réunion en cours…"
+								UtilsCpp.getMainWindow().showLoadingPopup(qsTr("meeting_schedule_edit_in_progress"), true, function () {
+									conferenceEdit.conferenceInfoGui.core.undo();
+								});
+							} else if (conferenceEdit.conferenceInfoGui.core.schedulerState
+									   == LinphoneEnums.ConferenceSchedulerState.Error) {
 								UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
 															  //: "Échec de la modification de la réunion !"
-															  qsTr("meeting_failed_to_edit_toast"), false)
-								UtilsCpp.getMainWindow().closeLoadingPopup()
+															  qsTr("meeting_failed_to_edit_toast"), false);
+								UtilsCpp.getMainWindow().closeLoadingPopup();
 							}
 						}
 					}
@@ -548,7 +570,7 @@ AbstractMainPage {
 
 	Component {
 		id: addParticipants
-		FocusScope{
+		FocusScope {
 			id: addParticipantInItem
 			property int overridenWidth
 			property Control.StackView container
@@ -602,13 +624,14 @@ AbstractMainPage {
 							KeyNavigation.left: addParticipantsBackButton
 							KeyNavigation.down: addParticipantsForm
 							onClicked: {
-								mainItem.addParticipantsValidated(addParticipantsForm.selectedParticipants)
+								mainItem.addParticipantsValidated(addParticipantsForm.selectedParticipants);
 							}
 						}
 					}
 					Text {
 						//: "%n participant(s) sélectionné(s)"
-						text: qsTr("group_call_participant_selected", '', addParticipantsForm.selectedParticipantsCount).arg(addParticipantsForm.selectedParticipantsCount)
+						text: qsTr("group_call_participant_selected", '', addParticipantsForm.selectedParticipantsCount).arg(
+								  addParticipantsForm.selectedParticipantsCount)
 						color: DefaultStyle.main2_500_main
 						Layout.leftMargin: addParticipantsBackButton.width + addParticipantsButtons.spacing
 						maximumLineCount: 1
@@ -632,7 +655,7 @@ AbstractMainPage {
 
 	Component {
 		id: meetingDetail
-		FocusScope{
+		FocusScope {
 			width: Utils.getSizeWithScreenRatio(393)
 			anchors.horizontalCenter: parent?.horizontalCenter
 			ColumnLayout {
@@ -646,7 +669,7 @@ AbstractMainPage {
 				uniformCellSizes: true
 				// direction: FlexboxLayout.Column
 				// alignContent: FlexboxLayout.AlignSpaceBetween
-				ColumnLayout{
+				ColumnLayout {
 					Layout.alignment: Qt.AlignTop
 					spacing: Utils.getSizeWithScreenRatio(16)
 					Section {
@@ -662,7 +685,8 @@ AbstractMainPage {
 							}
 							Text {
 								Layout.fillWidth: true
-								text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
+								text: mainItem.selectedConference && mainItem.selectedConference.core
+									  ? mainItem.selectedConference.core.subject : ""
 								maximumLineCount: 1
 								font {
 									pixelSize: Utils.getSizeWithScreenRatio(20)
@@ -698,17 +722,18 @@ AbstractMainPage {
 								popup.contentItem: IconLabelButton {
 									style: ButtonStyle.hoveredBackgroundRed
 									property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
-									property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+									property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference?.core?.state
+															 !== LinphoneEnums.ConferenceInfoState.Cancelled
 									icon.source: AppIcons.trashCan
 									//: "Supprimer la réunion"
 									text: qsTr("meeting_info_delete")
 
 									onClicked: {
 										if (mainItem.selectedConference) {
-											cancelAndDeleteConfDialog.confInfoToDelete = mainItem.selectedConference
-											cancelAndDeleteConfDialog.cancel = canCancel
-											cancelAndDeleteConfDialog.open()
-											deletePopup.close()
+											cancelAndDeleteConfDialog.confInfoToDelete = mainItem.selectedConference;
+											cancelAndDeleteConfDialog.cancel = canCancel;
+											cancelAndDeleteConfDialog.open();
+											deletePopup.close();
 										}
 									}
 								}
@@ -737,19 +762,19 @@ AbstractMainPage {
 									textWeight: Typography.p1.weight
 									underline: true
 									style: ButtonStyle.noBackground
-									Keys.onPressed: (event)=> {
-										if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-											clicked(undefined)
-											event.accepted = true;
-										}
-									}
+									Keys.onPressed: event => {
+														if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+															clicked(undefined);
+															event.accepted = true;
+														}
+													}
 									KeyNavigation.left: shareNetworkButton
 									KeyNavigation.right: shareNetworkButton
 									KeyNavigation.up: deletePopup
 									KeyNavigation.down: joinButton
 									onClicked: {
 										// TODO : voir si c'est en audio only quand on clique sur le lien
-										UtilsCpp.createCall(mainItem.selectedConference.core.uri)
+										UtilsCpp.createCall(mainItem.selectedConference.core.uri);
 									}
 								}
 								RoundButton {
@@ -761,10 +786,11 @@ AbstractMainPage {
 									KeyNavigation.up: deletePopup
 									KeyNavigation.down: joinButton
 									onClicked: {
-										var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
-										if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
-																	//: "Adresse de la réunion copiée"
-																	qsTr("meeting_address_copied_to_clipboard_toast"))
+										var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri);
+										if (success)
+											UtilsCpp.showInformationPopup(qsTr("saved"),
+																		  //: "Adresse de la réunion copiée"
+																		  qsTr("meeting_address_copied_to_clipboard_toast"));
 									}
 								}
 							}
@@ -777,12 +803,10 @@ AbstractMainPage {
 									colorizationColor: DefaultStyle.main2_600
 								}
 								Text {
-									text: mainItem.selectedConference && mainItem.selectedConference.core
-											? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTime)
-											+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTime)
-											+ " - "
-											+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
-											: ''
+									text: mainItem.selectedConference && mainItem.selectedConference.core ? UtilsCpp.toDateString(
+																												mainItem.selectedConference.core.dateTime) + " | " + UtilsCpp.toDateHourString(
+																												mainItem.selectedConference.core.dateTime) + " - " + UtilsCpp.toDateHourString(
+																												mainItem.selectedConference.core.endDateTime) : ''
 									font {
 										pixelSize: Utils.getSizeWithScreenRatio(14)
 										capitalization: Font.Capitalize
@@ -800,7 +824,10 @@ AbstractMainPage {
 								Text {
 									Layout.fillWidth: true
 									//: "Fuseau horaire"
-									text: "%1: %2".arg(qsTr("meeting_schedule_timezone_title")).arg(mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
+									text: "%1: %2".arg(qsTr("meeting_schedule_timezone_title")).arg(mainItem.selectedConference
+																									&& mainItem.selectedConference.core ? (
+																																			  mainItem.selectedConference.core.timeZoneModel.displayName + ", "
+																																			  + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 									font {
 										pixelSize: Utils.getSizeWithScreenRatio(14)
 										capitalization: Font.Capitalize
@@ -821,7 +848,8 @@ AbstractMainPage {
 								colorizationColor: DefaultStyle.main2_600
 							}
 							Text {
-								text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.description : ""
+								text: mainItem.selectedConference && mainItem.selectedConference.core
+									  ? mainItem.selectedConference.core.description : ""
 								Layout.fillWidth: true
 								font {
 									pixelSize: Utils.getSizeWithScreenRatio(14)
@@ -836,7 +864,7 @@ AbstractMainPage {
 								KeyNavigation.up: shareNetworkButton
 								KeyNavigation.down: joinButton
 								onClicked: {
-									mainItem.selectedConference.core.exportConferenceToICS()
+									mainItem.selectedConference.core.exportConferenceToICS();
 								}
 							}
 						}
@@ -854,11 +882,13 @@ AbstractMainPage {
 							Avatar {
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
-								_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
+								_address: mainItem.selectedConference && mainItem.selectedConference.core
+										  ? mainItem.selectedConference.core.organizerAddress : ""
 								secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 							}
 							Text {
-								text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
+								text: mainItem.selectedConference && mainItem.selectedConference.core
+									  ? mainItem.selectedConference.core.organizerName : ""
 								font {
 									pixelSize: Utils.getSizeWithScreenRatio(14)
 									capitalization: Font.Capitalize
@@ -871,8 +901,7 @@ AbstractMainPage {
 						Layout.fillWidth: true
 						Layout.fillHeight: true
 						Layout.maximumHeight: participantList.contentHeight + Utils.getSizeWithScreenRatio(1) + spacing
-						content: 
-						RowLayout {
+						content: RowLayout {
 							width: Utils.getSizeWithScreenRatio(393)
 							spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
@@ -889,7 +918,8 @@ AbstractMainPage {
 								Layout.fillWidth: true
 								Layout.fillHeight: true
 								height: contentHeight
-								model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
+								model: mainItem.selectedConference && mainItem.selectedConference.core
+									   ? mainItem.selectedConference.core.participants : []
 								clip: true
 								Control.ScrollBar.vertical: ScrollBar {
 									id: participantScrollBar
@@ -921,7 +951,8 @@ AbstractMainPage {
 									Text {
 										//: "Organisateur"
 										text: qsTr("meeting_info_organizer_label")
-										visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress === modelData.address
+										visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress
+												 === modelData.address
 										color: DefaultStyle.main2_400
 										font {
 											pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -934,7 +965,8 @@ AbstractMainPage {
 					}
 					BigButton {
 						id: joinButton
-						visible: mainItem.selectedConference && mainItem.selectedConference.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+						visible: mainItem.selectedConference && mainItem.selectedConference.core?.state
+								 !== LinphoneEnums.ConferenceInfoState.Cancelled
 						Layout.fillWidth: true
 						//: "Rejoindre la réunion"
 						text: qsTr("meeting_info_join_title")
@@ -944,15 +976,14 @@ AbstractMainPage {
 						KeyNavigation.left: leftPanelStackView.currentItem
 						KeyNavigation.right: leftPanelStackView.currentItem
 						onClicked: {
-							console.log(mainItem.selectedConference.core.uri)
-							var callsWindow = UtilsCpp.getOrCreateCallsWindow()
-							callsWindow.setupConference(mainItem.selectedConference)
-							UtilsCpp.smartShowWindow(callsWindow)
+							console.log(mainItem.selectedConference.core.uri);
+							var callsWindow = UtilsCpp.getOrCreateCallsWindow();
+							callsWindow.setupConference(mainItem.selectedConference);
+							UtilsCpp.smartShowWindow(callsWindow);
 						}
 					}
 				}
 			}
 		}
 	}
-
 }

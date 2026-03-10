@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Linphone
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Column {
@@ -42,15 +42,15 @@ Column {
 				text: mainItem.accountGui.core.presenceNote
 				onTextChanged: {
 					if (statusMessage.text.length > accountGui.core.maxPresenceNoteSize) {
-						statusMessage.text = previoustext
-						statusMessage.cursorPosition = statusMessage.text.length
+						statusMessage.text = previoustext;
+						statusMessage.cursorPosition = statusMessage.text.length;
 					} else {
-						previoustext = statusMessage.text
+						previoustext = statusMessage.text;
 					}
 				}
 			}
 			Item {
-				   Layout.fillHeight: true
+				Layout.fillHeight: true
 			}
 			Text {
 				Layout.fillWidth: true
@@ -71,8 +71,8 @@ Column {
 			text: qsTr("contact_presence_button_save_custom_status")
 			enabled: statusMessage.text.length > 0
 			onClicked: {
-				mainItem.accountGui.core.presenceNote = statusMessage.text
-				mainItem.isSet()
+				mainItem.accountGui.core.presenceNote = statusMessage.text;
+				mainItem.isSet();
 			}
 		}
 	}

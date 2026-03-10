@@ -4,16 +4,14 @@ import QtQuick.Controls.Basic as Control
 import QtQuick.Effects
 import Linphone
 import CustomControls 1.0
-import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
-  
+import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
+
 Control.TabBar {
 	id: mainItem
 	property var model
-	readonly property int originX: count > 0 
-							? itemAt(0).x 
-							: 0
-    property real pixelSize: Typography.h3.pixelSize
-    property real textWeight: Typography.h3.weight
+	readonly property int originX: count > 0 ? itemAt(0).x : 0
+	property real pixelSize: Typography.h3.pixelSize
+	property real textWeight: Typography.h3.weight
 	property int capitalization: Font.Capitalize
 	wheelEnabled: true
 	background: Item {
@@ -22,7 +20,7 @@ Control.TabBar {
 
 		Rectangle {
 			id: barBG
-            height: Utils.getSizeWithScreenRatio(4)
+			height: Utils.getSizeWithScreenRatio(4)
 			color: DefaultStyle.grey_200
 			anchors.bottom: parent.bottom
 			width: parent.width
@@ -34,7 +32,7 @@ Control.TabBar {
 		// 	anchors.bottom: parent.bottom
 		// 	// anchors.left: mainItem.currentItem.left
 		// 	// anchors.right: mainItem.currentItem.right
-		// 	x: mainItem.currentItem 
+		// 	x: mainItem.currentItem
 		// 		? mainItem.currentItem.x - mainItem.originX
 		// 		: 0
 		// 	width: mainItem.currentItem ? mainItem.currentItem.width : 0
@@ -61,9 +59,9 @@ Control.TabBar {
 				delay: 1000
 				text: modelData
 			}
-			MouseArea{
+			MouseArea {
 				anchors.fill: parent
-				cursorShape: tabButton.hovered ? Qt.PointingHandCursor: Qt.ArrowCursor
+				cursorShape: tabButton.hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
 				acceptedButtons: Qt.NoButton
 			}
 
@@ -72,7 +70,7 @@ Control.TabBar {
 				Rectangle {
 					id: tabBackground
 					visible: mainItem.currentIndex === index || tabButton.hovered
-                    height: Utils.getSizeWithScreenRatio(5)
+					height: Utils.getSizeWithScreenRatio(5)
 					color: mainItem.currentIndex === index ? DefaultStyle.main1_500_main : DefaultStyle.main2_400
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
@@ -89,7 +87,7 @@ Control.TabBar {
 					shadowBlur: 0.1
 					shadowOpacity: tabButton.shadowEnabled ? 0.5 : 0.0
 				}
-				Rectangle{
+				Rectangle {
 					id: borderBackground
 					visible: tabButton.keyboardFocus
 					height: tabButton.height
@@ -113,7 +111,7 @@ Control.TabBar {
 				elide: Text.ElideRight
 				maximumLineCount: 1
 				text: modelData
-                bottomPadding: Utils.getSizeWithScreenRatio(5)
+				bottomPadding: Utils.getSizeWithScreenRatio(5)
 			}
 		}
 	}

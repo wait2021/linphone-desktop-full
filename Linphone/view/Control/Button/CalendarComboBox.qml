@@ -16,24 +16,24 @@ ComboBox {
 		id: contentText
 		text: calendar.selectedDate ? UtilsCpp.formatDate(calendar.selectedDate, false, true, "ddd d, MMMM") : ""
 		anchors.fill: parent
-        anchors.leftMargin: Utils.getSizeWithScreenRatio(15)
+		anchors.leftMargin: Utils.getSizeWithScreenRatio(15)
 		anchors.verticalCenter: parent.verticalCenter
 		verticalAlignment: Text.AlignVCenter
 		font {
-            pixelSize: Utils.getSizeWithScreenRatio(14)
-            weight: Font.Bold
+			pixelSize: Utils.getSizeWithScreenRatio(14)
+			weight: Font.Bold
 		}
 	}
 	popup: Control.Popup {
 		id: popupItem
 		y: mainItem.height
-        width: Utils.getSizeWithScreenRatio(321)
-        height: Utils.getSizeWithScreenRatio(270)
+		width: Utils.getSizeWithScreenRatio(321)
+		height: Utils.getSizeWithScreenRatio(270)
 		closePolicy: Popup.NoAutoClose
-        topPadding: Utils.getSizeWithScreenRatio(25)
-        bottomPadding: Utils.getSizeWithScreenRatio(24)
-        leftPadding: Utils.getSizeWithScreenRatio(21)
-        rightPadding: Utils.getSizeWithScreenRatio(19)
+		topPadding: Utils.getSizeWithScreenRatio(25)
+		bottomPadding: Utils.getSizeWithScreenRatio(24)
+		leftPadding: Utils.getSizeWithScreenRatio(21)
+		rightPadding: Utils.getSizeWithScreenRatio(19)
 		onOpened: calendar.forceActiveFocus()
 		background: Item {
 			anchors.fill: parent
@@ -41,9 +41,9 @@ ComboBox {
 				id: calendarBg
 				anchors.fill: parent
 				color: DefaultStyle.grey_0
-                radius: Utils.getSizeWithScreenRatio(16)
+				radius: Utils.getSizeWithScreenRatio(16)
 				border.color: DefaultStyle.main1_500_main
-				border.width: calendar.activeFocus? 1 : 0
+				border.width: calendar.activeFocus ? 1 : 0
 			}
 			MultiEffect {
 				anchors.fill: calendarBg

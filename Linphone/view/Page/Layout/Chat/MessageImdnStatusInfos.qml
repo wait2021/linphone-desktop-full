@@ -13,7 +13,8 @@ MessageInfosLayout {
 	tabbarModel: chatMessageGui ? chatMessageGui.core.imdnStatusListAsString : []
 	listModel: ImdnStatusProxy {
 		imdnStatusList: chatMessageGui ? chatMessageGui.core.imdnStatusList : []
-		filter: chatMessageGui && chatMessageGui.core.imdnStatusAsSingletons[mainItem.tabbar.currentIndex]?.state || LinphoneEnums.ChatMessageState.StateIdle
+		filter: chatMessageGui && chatMessageGui.core.imdnStatusAsSingletons[mainItem.tabbar.currentIndex]?.state
+				|| LinphoneEnums.ChatMessageState.StateIdle
 	}
 
 	listView.delegate: Item {
@@ -23,9 +24,8 @@ MessageInfosLayout {
 		property var contactObj: modelData ? UtilsCpp.findFriendByAddress(modelData.address) : null
 		property FriendGui contact: contactObj && contactObj.value || null
 		property var nameObj: modelData ? UtilsCpp.getDisplayName(modelData.address) : null
-		property string updateTime: UtilsCpp.isCurrentDay(modelData.lastUpdatedTime)
-			? UtilsCpp.toTimeString(modelData.lastUpdatedTime, "hh:mm")
-			: UtilsCpp.formatDate(modelData.lastUpdatedTime, true)
+		property string updateTime: UtilsCpp.isCurrentDay(modelData.lastUpdatedTime) ? UtilsCpp.toTimeString(
+																						   modelData.lastUpdatedTime, "hh:mm") : UtilsCpp.formatDate(modelData.lastUpdatedTime, true)
 		RowLayout {
 			id: delegateIn
 			anchors.fill: parent
@@ -58,7 +58,9 @@ MessageInfosLayout {
 					}
 				}
 			}
-			Item{Layout.fillWidth: true}
+			Item {
+				Layout.fillWidth: true
+			}
 			Text {
 				text: listDelegate.updateTime
 				font {

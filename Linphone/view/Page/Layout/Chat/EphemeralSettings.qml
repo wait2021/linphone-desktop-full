@@ -7,37 +7,52 @@ import QtQuick.Layouts
 import Linphone
 import UtilsCpp
 import SettingsCpp
-import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
+import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ColumnLayout {
-
 	id: mainItem
 	property ChatGui chatGui
 	property int selectedLifetime: chatGui.core.ephemeralLifetime
 	spacing: Utils.getSizeWithScreenRatio(5)
-	signal done()
+	signal done
 
 	property var model: [
-		{title: qsTr("one_minute"), lifetime: 60},
-		{title: qsTr("one_hour"), lifetime: 3600},
-		{title: qsTr("one_day"), lifetime: 86400},
-		{title: qsTr("one_week"), lifetime: 7*86400},
-		{title: qsTr("disabled"), lifetime: 0}
+		{
+			title: qsTr("one_minute"),
+			lifetime: 60
+		},
+		{
+			title: qsTr("one_hour"),
+			lifetime: 3600
+		},
+		{
+			title: qsTr("one_day"),
+			lifetime: 86400
+		},
+		{
+			title: qsTr("one_week"),
+			lifetime: 7 * 86400
+		},
+		{
+			title: qsTr("disabled"),
+			lifetime: 0
+		}
 	]
-	
+
 	Component.onCompleted: {
-		var isLifetimeInRange = model.some(function(item) {
+		var isLifetimeInRange = model.some(function (item) {
 			return item.lifetime === selectedLifetime;
 		});
-		 if (!isLifetimeInRange) { // Display life time set elsewhere, not in settable range.
+		if (!isLifetimeInRange) {
+			// Display life time set elsewhere, not in settable range.
 			model = model.concat({
-				title: qsTr("custom")+UtilsCpp.getEphemeralFormatedTime(selectedLifetime),
-				lifetime: selectedLifetime,
-				disabled: true
-			});
+									 title: qsTr("custom") + UtilsCpp.getEphemeralFormatedTime(selectedLifetime),
+									 lifetime: selectedLifetime,
+									 disabled: true
+								 });
 		}
-    }
+	}
 
 	RowLayout {
 		id: manageParticipantsButtons
@@ -49,8 +64,8 @@ ColumnLayout {
 			icon.source: AppIcons.leftArrow
 			onClicked: {
 				if (chatGui.core.ephemeralLifetime != selectedLifetime)
-					chatGui.core.ephemeralLifetime = selectedLifetime
-				mainItem.done()
+					chatGui.core.ephemeralLifetime = selectedLifetime;
+				mainItem.done();
 			}
 		}
 
@@ -116,7 +131,6 @@ ColumnLayout {
 							wrapMode: Text.NoWrap
 							elide: Text.ElideRight
 						}
-
 					}
 					Rectangle {
 						//visible: index < (model.count - 1)

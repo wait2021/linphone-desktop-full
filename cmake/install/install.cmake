@@ -211,7 +211,7 @@ if(${ENABLE_APP_PACKAGING})
 ##############################################
 #	APPLE
 ##############################################
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-mac")
+		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-mac-${CMAKE_SYSTEM_PROCESSOR}")
 		set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_SOURCE_DIR}/cmake/install/macos/background_dmg.jpg")
 		configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/linphone_dmg.scpt.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/linphone_dmg.scpt" @ONLY)
 		set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_BINARY_DIR}/cmake/install/macos/linphone_dmg.scpt")

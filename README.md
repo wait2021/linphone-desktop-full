@@ -39,6 +39,13 @@ If you wan't to build with Crash handler, you need to install the following tool
 - curl dev (for C development headers) (ex: `sudo apt install libcurl4-openssl-dev`)
 - httplib2 v0.22.0 (use `pip install httplib2==0.22.0` or `pip3 install httplib2==0.22.0`)
 
+### From Linphone 6.2 using native notifications, you will need KNotifications (https://api.kde.org/knotifications-index.html) :
+- KNotifications needs :
+  - extra-cmake-modules
+  - KConfig from KDE
+  - Canberra
+  - if you activate BUILD_PYTHON_BIDINGS : Shiboken (can be deactivate for this project)
+
 ### Set your environment
 
 1. Make sure you have all your build dependencies installed

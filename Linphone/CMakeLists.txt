@@ -30,6 +30,12 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
+find_package(ECM REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+include(KDEInstallDirs)
+find_package(KF6Config REQUIRED)
+find_package(KF6 REQUIRED COMPONENTS Notifications)
+
 if(NOT WIN32)
 	find_package(X11)
 endif()
@@ -239,4 +245,16 @@ if (WIN32)
 			install(FILES "$<TARGET_PDB_FILE:${T}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
 		endforeach ()
 	endif()
+endif()
+
+if(UNIX AND NOT APPLE)
+    # Linux : /usr/share/knotifications6/ ET ~/.local/share/knotifications6/
+    install(FILES linphone.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
+    install(FILES linphone.notifyrc DESTINATION "$ENV{HOME}/.local/share/knotifications6/")
+elseif(WIN32)
+    # Windows : AppData/Local + AppData/Roaming
+    install(FILES linphone.notifyrc DESTINATION "data/knotifications6/" TYPE BIN)
+elseif(APPLE)
+    # macOS : ~/Library/Application Support/linphone/knotifications6/
+    install(FILES linphone.notifyrc DESTINATION "linphone/knotifications6/" TYPE BIN)
 endif()

@@ -1,0 +1,12 @@
+[Global]
+Title=Linphone
+Name=Linphone
+Comment=An encrypted communication app, French and open source
+DesktopEntry=linphone
+
+[Event/call]
+Name=New call
+Title=New call
+Comment=Someone is calling you
+Action=Popup
+Urgency=Normal

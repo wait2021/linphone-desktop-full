@@ -21,8 +21,10 @@
 #include "tool/LinphoneEnums.hpp"
 
 #include "App.hpp"
-
+#include <KNotification>
 #include <QCoreApplication>
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <QDirIterator>
 #include <QFileSelector>
 #include <QFontDatabase>
@@ -278,6 +280,34 @@ void App::setAutoStart(bool enabled) {
 }
 
 #endif // ifdef Q_OS_LINUX
+
+void App::sendNotification(const QString &title, const QString &message) {
+	QDBusConnection bus = QDBusConnection::sessionBus();
+	if (!bus.isConnected()) {
+		lDebug() << "DBus sessionBus non connecté";
+		return;
+	}
+	lDebug() << "dbus conected";
+
+	QDBusInterface iface("org.freedesktop.Notifications", "/org/freedesktop/Notifications",
+	                     "org.freedesktop.Notifications", bus);
+
+	if (!iface.isValid()) {
+		lDebug() << "Interface DBus invalide";
+		return;
+	}
+
+	QList<QVariant> args;
+	args << QStringLiteral("linphone") << quint32(0) << QString() << title << message << QStringList() << QVariantMap()
+	     << int(5000);
+
+	QDBusMessage reply = iface.callWithArgumentList(QDBus::AutoDetect, QStringLiteral("Notify"), args);
+	if (reply.type() == QDBusMessage::ErrorMessage) {
+		lDebug() << "Erreur Notify:" << reply.errorMessage();
+	} else {
+		lDebug() << "Notification envoyée";
+	}
+}
 
 // -----------------------------------------------------------------------------
 //		End Autostart
@@ -559,7 +589,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	                                         });
 	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
 		qDebug() << "App: force oidc timeout";
-		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance() -> forceOidcTimeout(); });
+		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance()->forceOidcTimeout(); });
 	});
 	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStarted, [this]() {
 		qDebug() << "App: oidc timer started";
@@ -862,8 +892,16 @@ void App::initCore() {
 					        }
 					        if (mSettings->autoCheckForUpdateOnStart()) checkForUpdate();
 					        setIsRestarting(false);
+					        lDebug() << "test notif";
+					        auto *n = new KNotification("call");
+					        n->setTitle("Test");
+					        n->setText("Bonjour");
+					        n->sendEvent();
 					        window->show();
 					        window->requestActivate();
+
+					        lDebug() << "test notif dbus";
+					        sendNotification("Notif dbus", "Message dbus");
 
 					        //---------------------------------------------------------------------------------------------
 					        lDebug() << log().arg("Creating KeyboardShortcuts");

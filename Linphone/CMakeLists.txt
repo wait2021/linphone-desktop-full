@@ -26,8 +26,12 @@ set(QT_PACKAGES Quick Qml Widgets Svg Test NetworkAuth Concurrent)# Search Core 
 if (UNIX AND NOT APPLE)
 	list(APPEND QT_PACKAGES DBus)
 endif()
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
+# foreach(package ${Qt_PACKAGES})
+# 	find_package(Qt6 REQUIRED COMPONENTS ${package})
+# endforeach()
+
+find_package(Qt6 REQUIRED COMPONENTS Core DBus Svg Test NetworkAuth Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 find_package(ECM REQUIRED NO_MODULE)
@@ -230,11 +234,12 @@ foreach(T ${APP_TARGETS})
 endforeach()
 
 target_link_libraries(${TARGET_NAME} PRIVATE Qt6::Core)
+target_link_libraries(${TARGET_NAME} PRIVATE Qt6::DBus)
 foreach(T ${QT_PACKAGES})
 	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::${T})
 endforeach()
 
-
+target_link_libraries(${TARGET_NAME} PRIVATE KF6::Notifications)
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
@@ -248,13 +253,13 @@ if (WIN32)
 endif()
 
 if(UNIX AND NOT APPLE)
-    # Linux : /usr/share/knotifications6/ ET ~/.local/share/knotifications6/
-    install(FILES linphone.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
-    install(FILES linphone.notifyrc DESTINATION "$ENV{HOME}/.local/share/knotifications6/")
+	# Linux : /usr/share/knotifications6/ ET ~/.local/share/knotifications6/
+	install(FILES linphone.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
+	install(FILES linphone.notifyrc DESTINATION "$ENV{HOME}/.local/share/knotifications6/")
 elseif(WIN32)
-    # Windows : AppData/Local + AppData/Roaming
-    install(FILES linphone.notifyrc DESTINATION "data/knotifications6/" TYPE BIN)
+	# Windows : AppData/Local + AppData/Roaming
+	install(FILES linphone.notifyrc DESTINATION "data/knotifications6/" TYPE BIN)
 elseif(APPLE)
-    # macOS : ~/Library/Application Support/linphone/knotifications6/
-    install(FILES linphone.notifyrc DESTINATION "linphone/knotifications6/" TYPE BIN)
+	# macOS : ~/Library/Application Support/linphone/knotifications6/
+	install(FILES linphone.notifyrc DESTINATION "linphone/knotifications6/")
 endif()

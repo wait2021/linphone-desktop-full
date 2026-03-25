@@ -68,6 +68,8 @@ public:
 	static Thread *getLinphoneThread();
 	Notifier *getNotifier() const;
 
+	void sendNotification(const QString &title, const QString &message);
+
 	EventCountNotifier *getEventCountNotifier();
 	int getEventCount() const;
 

@@ -334,6 +334,9 @@ void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 		});
 	});
 
+	mChatModelConnection->makeConnectToCore(&ChatCore::lEnableEphemeral, [this](bool enable) {
+		mChatModelConnection->invokeToModel([this, enable]() { mChatModel->enableEphemeral(enable); });
+	});
 	mChatModelConnection->makeConnectToModel(&ChatModel::ephemeralEnableChanged, [this](bool enable) {
 		mChatModelConnection->invokeToCore([this, enable]() {
 			if (mEphemeralEnabled != enable) {

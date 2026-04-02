@@ -11,10 +11,15 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ApplicationWindow {
     id: mainWindow
-    x: 0
-    y: 0
-    width: Math.min(Utils.getSizeWithScreenRatio(1512), Screen.desktopAvailableWidth)
-    height: Math.min(Utils.getSizeWithScreenRatio(982), Screen.desktopAvailableHeight)
+    objectName: "AbstractWindow"
+    // +10 to avoid being stuck on borders
+    x: UtilsCpp.getLastPositionWindow(mainWindow, 10, -10).x
+    y: UtilsCpp.getLastPositionWindow(mainWindow, 10, -10).y
+    minimumWidth: Math.min(Utils.getSizeWithScreenRatio(DefaultStyle.defaultWidth), Screen.desktopAvailableWidth)
+    minimumHeight: Math.min(Utils.getSizeWithScreenRatio(DefaultStyle.defaultHeight), Screen.desktopAvailableHeight)
+    width: minimumWidth
+    height: minimumHeight
+
 
     onActiveChanged: {
         if (active) UtilsCpp.setLastActiveWindow(this)
@@ -22,6 +27,8 @@ ApplicationWindow {
     onVisibleChanged: {
         AppCpp.handleAppActivity()
     }
+	onXChanged: UtilsCpp.saveLastPositionWindow(mainWindow, x, y)
+	onYChanged: UtilsCpp.saveLastPositionWindow(mainWindow, x, y)
     Component.onDestruction: if (UtilsCpp.getLastActiveWindow() === this) UtilsCpp.setLastActiveWindow(null)
 
     property bool isFullscreen: visibility == Window.FullScreen

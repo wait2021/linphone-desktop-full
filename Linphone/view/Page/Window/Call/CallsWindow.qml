@@ -12,9 +12,8 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 AbstractWindow {
     id: mainWindow
+    objectName: "CallsWindow"
     flags: Qt.Window
-    minimumWidth: Utils.getSizeWithScreenRatio(1020)
-    minimumHeight: Utils.getSizeWithScreenRatio(700)
 
     // modality: Qt.WindowModal
     property CallGui call

@@ -101,7 +101,7 @@ AbstractMainPage {
         id: listStackView
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: Utils.getSizeWithScreenRatio(45)
+        Layout.leftMargin: Utils.getSizeWithScreenRatio(0)
         clip: true
         initialItem: chatListItem
         focus: true
@@ -121,11 +121,12 @@ AbstractMainPage {
                 RowLayout {
                     // direction: FlexboxLayout.Row
                     // alignItems: FlexboxLayout.AlignCenter
-                    spacing: Utils.getSizeWithScreenRatio(16)
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    spacing: Utils.getSizeWithScreenRatio(0)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(0)
                     Layout.fillHeight: false
                     Text {
                         Layout.fillWidth: true
+                        Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
                         //: "Conversations"
                         text: qsTr("chat_list_title")
                         maximumLineCount: 1
@@ -193,7 +194,7 @@ AbstractMainPage {
                     Layout.fillHeight: true
                     ColumnLayout {
                         anchors.fill: parent
-                        anchors.rightMargin: Utils.getSizeWithScreenRatio(39)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
                         Text {
                             visible: chatListView.count === 0 && chatListView.loading === false
                             Layout.alignment: Qt.AlignHCenter
@@ -212,7 +213,7 @@ AbstractMainPage {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             chatProxy.model: AppCpp.chats
-                            Layout.topMargin: Utils.getSizeWithScreenRatio(39)
+                            Layout.topMargin: Utils.getSizeWithScreenRatio(0)
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar
 
@@ -243,7 +244,7 @@ AbstractMainPage {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
-                        anchors.rightMargin: Utils.getSizeWithScreenRatio(8)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(1)
                         policy: Control.ScrollBar.AsNeeded
                     }
                 }

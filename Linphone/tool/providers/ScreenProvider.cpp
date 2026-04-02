@@ -35,6 +35,7 @@ ScreenProvider::ScreenProvider()
 
 QImage ScreenProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize) {
 	if (!requestedSize.isNull()) {
+		QSize dipRequestedSize = requestedSize * QGuiApplication::primaryScreen()->devicePixelRatio();
 		int index = id.toInt();
 		auto screens = QGuiApplication::screens();
 		if (index >= 0 && index < screens.size()) {
@@ -45,14 +46,14 @@ QImage ScreenProvider::requestImage(const QString &id, QSize *size, const QSize 
 #else
 			auto image = screen->grabWindow(0, 0, 0, geometry.width(), geometry.height());
 #endif
-			if (requestedSize.isValid() && requestedSize.height() > 0 && requestedSize.width() > 0 && !image.isNull()) {
-				image = image.scaled(requestedSize, Qt::KeepAspectRatio,
+			if (dipRequestedSize.isValid() && dipRequestedSize.height() > 0 && dipRequestedSize.width() > 0 && !image.isNull()) {
+				image = image.scaled(dipRequestedSize, Qt::KeepAspectRatio,
 				                     Qt::FastTransformation); // Qt::SmoothTransformation);
 			}
 			*size = image.size();
 			qDebug() << "Screen(" << index << ") = " << screen->geometry() << " VG:" << screen->virtualGeometry()
 			         << " / " << screen->size() << " VS:" << screen->virtualSize()
-			         << " DeviceRatio: " << screen->devicePixelRatio() << ", " << *size << " / " << requestedSize;
+			         << " DeviceRatio: " << screen->devicePixelRatio() << ", " << *size << " / " << dipRequestedSize;
 			return image.toImage();
 		}
 	}

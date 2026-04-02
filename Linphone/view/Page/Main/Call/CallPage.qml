@@ -102,7 +102,7 @@ AbstractMainPage {
         Control.StackView {
             id: listStackView
             anchors.fill: parent
-            anchors.leftMargin: Utils.getSizeWithScreenRatio(45)
+            anchors.leftMargin: Utils.getSizeWithScreenRatio(0)
             clip: true
             initialItem: historyListItem
             focus: true
@@ -139,12 +139,13 @@ AbstractMainPage {
                 RowLayout {
                     id: titleCallLayout
                     // direction: FlexboxLayout.Row
-                    spacing: Utils.getSizeWithScreenRatio(16)
+                    spacing: Utils.getSizeWithScreenRatio(0)
                     // alignItems: FlexboxLayout.AlignCenter
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(0)
                     Layout.fillHeight: false
                     Text {
                         Layout.fillWidth: true
+						Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
                         //: "Appels"
                         text: qsTr("call_history_call_list_title")
 						maximumLineCount: 1
@@ -206,7 +207,7 @@ AbstractMainPage {
                     id: searchBar
                     Layout.fillWidth: true
                     Layout.topMargin: Utils.getSizeWithScreenRatio(18)
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
                     //: "Rechercher un appel"
                     placeholderText: qsTr("call_search_in_history")
                     visible: historyListView.count !== 0 || text.length !== 0
@@ -229,8 +230,8 @@ AbstractMainPage {
 					visible: SettingsCpp.callForwardToAddress.length > 0
 					Layout.fillWidth: true
 					Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
-					Layout.topMargin: Utils.getSizeWithScreenRatio(18)
-					Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+					Layout.topMargin: Utils.getSizeWithScreenRatio(0)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
 					color: "transparent"
 					radius: Utils.getSizeWithScreenRatio(25)
 					border.color: DefaultStyle.warning_500_main
@@ -267,7 +268,7 @@ AbstractMainPage {
                     Control.Control {
                         id: listLayout
                         anchors.fill: parent
-                        anchors.rightMargin: Utils.getSizeWithScreenRatio(39)
+                        anchors.rightMargin: Utils.getSizeWithScreenRatio(16)
                         padding: 0
                         background: Item {}
                         contentItem: ColumnLayout {
@@ -288,7 +289,7 @@ AbstractMainPage {
                                 id: historyListView
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                Layout.topMargin: Utils.getSizeWithScreenRatio(38)
+                                Layout.topMargin: Utils.getSizeWithScreenRatio(0)
                                 searchBar: searchBar
                                 Control.ScrollBar.vertical: scrollbar
 

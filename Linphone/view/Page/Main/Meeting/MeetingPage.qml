@@ -23,8 +23,8 @@ AbstractMainPage {
 	showDefaultItem: leftPanelStackView.currentItem && leftPanelStackView.currentItem.objectName === "listLayout" && meetingListCount === 0
 
 	rightPanelStackView.width:  Utils.getSizeWithScreenRatio(393)
-	rightPanelStackTopMargin: Utils.getSizeWithScreenRatio(45)
-	rightPanelStackBottomMargin: Utils.getSizeWithScreenRatio(30)
+	rightPanelStackTopMargin: Utils.getSizeWithScreenRatio(0)
+	rightPanelStackBottomMargin: Utils.getSizeWithScreenRatio(0)
 
 	function createPreFilledMeeting(subject, addresses) {
 		mainItem.selectedConference = Qt.createQmlObject('import Linphone
@@ -128,7 +128,7 @@ AbstractMainPage {
 		id: leftPanelStackView
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		Layout.leftMargin: Utils.getSizeWithScreenRatio(45)
+		Layout.leftMargin: Utils.getSizeWithScreenRatio(0)
 		initialItem: listLayout
 		clip: true
 	}
@@ -152,12 +152,13 @@ AbstractMainPage {
 				RowLayout {
 					// direction: FlexboxLayout.Row
 					// alignItems: FlexboxLayout.AlignCenter
-					spacing: Utils.getSizeWithScreenRatio(16)
-					Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+					spacing: Utils.getSizeWithScreenRatio(0)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(0)
 					Layout.alignment: Qt.AlignTop
 					Layout.fillHeight: false
 					Text {
 						Layout.fillWidth: true
+						Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 						//: Réunions
 						text: qsTr("meetings_list_title")
 						color: DefaultStyle.main2_700
@@ -182,8 +183,8 @@ AbstractMainPage {
 				RowLayout {
 					visible: conferenceList.count !== 0 || searchBar.text.length !== 0
 					spacing: Utils.getSizeWithScreenRatio(11)
-					Layout.topMargin: Utils.getSizeWithScreenRatio(18)
-					Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
+					Layout.topMargin: Utils.getSizeWithScreenRatio(0)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(0)
 					KeyNavigation.up: newConfButton
 					KeyNavigation.down: searchBar
 					Button {
@@ -226,7 +227,8 @@ AbstractMainPage {
 				MeetingListView {
 					id: conferenceList
 					// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
-					Layout.topMargin: Utils.getSizeWithScreenRatio(38 - 24)
+					Layout.topMargin: Utils.getSizeWithScreenRatio(0)
+					Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					focusPolicy: Qt.ClickFocus
@@ -273,11 +275,11 @@ AbstractMainPage {
 			objectName: "createConf"
 			property ConferenceInfoGui conferenceInfoGui
 			ColumnLayout {
-				spacing: Utils.getSizeWithScreenRatio(33)
+				spacing: Utils.getSizeWithScreenRatio(0)
 				anchors.fill: parent
 				RowLayout {
 					spacing: Utils.getSizeWithScreenRatio(5)
-					Layout.rightMargin: Utils.getSizeWithScreenRatio(35)
+					Layout.rightMargin: Utils.getSizeWithScreenRatio(0)
 					Button {
 						id: backButton
 						style: ButtonStyle.noBackground
@@ -347,7 +349,7 @@ AbstractMainPage {
 						isCreation: true
 						anchors.left: parent.left
 						anchors.right: parent.right
-						anchors.rightMargin: Utils.getSizeWithScreenRatio(35)
+						anchors.leftMargin: Utils.getSizeWithScreenRatio(16)
 						Connections {
 							target: meetingSetup.conferenceInfoGui ? meetingSetup.conferenceInfoGui.core : null
 							function onConferenceSchedulerStateChanged() {
@@ -415,7 +417,7 @@ AbstractMainPage {
 					Layout.alignment: Qt.AlignHCenter
 					Layout.fillWidth: true
 					content: RowLayout {
-						spacing: Utils.getSizeWithScreenRatio(16)
+						spacing: Utils.getSizeWithScreenRatio(0)
 						// Layout.preferredWidth: rightPanelStackView.width
 						Button {
 							id: backButton
@@ -631,7 +633,7 @@ AbstractMainPage {
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.bottomMargin: Utils.getSizeWithScreenRatio(30)
+				anchors.bottomMargin: Utils.getSizeWithScreenRatio(0)
 				width: Utils.getSizeWithScreenRatio(393)
 				uniformCellSizes: true
 				// direction: FlexboxLayout.Column

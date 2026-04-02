@@ -27,6 +27,7 @@
 #include <QImageReader>
 #include <QPainter>
 #include <QSvgRenderer>
+#include <QScreen>
 
 DEFINE_ABSTRACT_OBJECT(ThumbnailAsyncImageResponse)
 
@@ -72,6 +73,7 @@ QImage ThumbnailAsyncImageResponse::createThumbnail(const QString &path, QImage 
 	QImage thumbnail;
 	if (!originalImage.isNull()) {
 		int rotation = 0;
+		int dp = QGuiApplication::primaryScreen()->devicePixelRatio();
 		QExifImageHeader exifImageHeader;
 		if (exifImageHeader.loadFromJpeg(path))
 			rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
@@ -82,7 +84,7 @@ QImage ThumbnailAsyncImageResponse::createThumbnail(const QString &path, QImage 
 		if (reader.format() == "svg") {
 			QSvgRenderer svgRenderer(path);
 			if (svgRenderer.isValid()) {
-				thumbnail = QImage(Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
+				thumbnail = QImage(Constants::ThumbnailImageFileWidth * dp, Constants::ThumbnailImageFileHeight * dp,
 				                   originalImage.format());
 				thumbnail.fill(QColor(Qt::transparent));
 				QPainter painter(&thumbnail);
@@ -97,11 +99,11 @@ QImage ThumbnailAsyncImageResponse::createThumbnail(const QString &path, QImage 
 			QPainter painter(&image);
 			painter.drawImage(0, 0, originalImage);
 			//--------------------
-			thumbnail = image.scaled(Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
+			thumbnail = image.scaled(Constants::ThumbnailImageFileWidth*dp, Constants::ThumbnailImageFileHeight*dp,
 			                         aspectRatio, Qt::SmoothTransformation);
 			if (aspectRatio == Qt::KeepAspectRatioByExpanding) // Cut
 				thumbnail =
-				    thumbnail.copy(0, 0, Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight);
+				    thumbnail.copy(0, 0, Constants::ThumbnailImageFileWidth*dp, Constants::ThumbnailImageFileHeight*dp);
 		}
 
 		if (rotation != 0) {

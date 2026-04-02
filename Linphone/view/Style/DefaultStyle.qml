@@ -51,11 +51,13 @@ QtObject {
     property var vue_meter_light_green: "#6FF88D"
     property var vue_meter_dark_green: "#00D916"
 
-    property real defaultHeight: 1007.0
-    property real defaultWidth: 1512.0
-    property real maxDp: 0.98
-    property real dp: Math.min((Screen.width/Screen.height)/(defaultWidth/defaultHeight), maxDp)
-
+    property real defaultHeight: 700
+    property real defaultWidth: 1020
+    // Qt transform automatically QML sizes into DIP (device-independent pixels). No need to add a factor.
+    // https://doc.qt.io/qt-6.10/highdpi.html
+    property real dp: 1
+    // Qt doesn't manage assets resolutions like QImage or QPixmap. Use it if not managed by Providers classes.
+    property real imageDp: Screen.devicePixelRatio
     onDpChanged: {
         console.log("Screen ratio changed", dp)
         AppCpp.setScreenRatio(dp)

@@ -9,6 +9,7 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 
 AbstractWindow {
 	id: mainWindow
+	objectName: "MainWindow"
     // height: Utils.getSizeWithScreenRatio(982)
     title: applicationName
 	// TODO : handle this bool when security mode is implemented
@@ -21,8 +22,6 @@ AbstractWindow {
     }
 
 	color: DefaultStyle.grey_0
-    minimumWidth: Utils.getSizeWithScreenRatio(1020)
-    minimumHeight: Utils.getSizeWithScreenRatio(700)
 
 	signal callCreated()
 	property var accountProxy

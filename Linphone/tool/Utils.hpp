@@ -80,6 +80,8 @@ public:
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static QQuickWindow *getLastActiveWindow();
 	Q_INVOKABLE static void setLastActiveWindow(QQuickWindow *data);
+	Q_INVOKABLE static void saveLastPositionWindow(QQuickWindow *data, const int& x, const int &y);
+	Q_INVOKABLE static QPoint getLastPositionWindow(QQuickWindow *data, const int& defaultX, const int &defaultY);
 	Q_INVOKABLE static void showInformationPopup(const QString &title,
 	                                             const QString &description,
 	                                             bool isSuccess = true,

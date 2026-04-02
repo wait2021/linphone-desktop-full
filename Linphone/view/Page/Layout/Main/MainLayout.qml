@@ -121,7 +121,7 @@ Item {
         RowLayout {
             anchors.fill: parent
             spacing: 0
-            anchors.topMargin: Utils.getSizeWithScreenRatio(25)
+            anchors.topMargin: Utils.getSizeWithScreenRatio(0)
 
             VerticalTabBar {
                 id: tabbar
@@ -210,8 +210,8 @@ Item {
                 RowLayout {
                     id: topRow
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(50)
-                    Layout.leftMargin: Utils.getSizeWithScreenRatio(45)
-                    Layout.rightMargin: Utils.getSizeWithScreenRatio(41)
+                    Layout.leftMargin: Utils.getSizeWithScreenRatio(0)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(0)
                     spacing: Utils.getSizeWithScreenRatio(25)
                     SearchBar {
                         id: magicSearchBar
@@ -728,7 +728,7 @@ Item {
                     pushExit: noTransition
                     popEnter: noTransition
                     popExit: noTransition
-                    Layout.topMargin: Utils.getSizeWithScreenRatio(24)
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(0)
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     initialItem: mainStackLayoutComponent

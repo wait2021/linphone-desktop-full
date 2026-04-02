@@ -24,6 +24,7 @@
 #include "ExternalImageProvider.hpp"
 
 #include <QImageReader>
+#include <QScreen>
 
 // =============================================================================
 
@@ -35,7 +36,7 @@ ExternalImageProvider::ExternalImageProvider()
 
 QImage ExternalImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize) {
 	QImage image(Utils::getImage(QUrl::fromPercentEncoding(id.toUtf8())));
-	double requestedFactor = 1.0;
+	double requestedFactor = QGuiApplication::primaryScreen()->devicePixelRatio();
 	double factor = image.width() / (double)image.height();
 	if (requestedSize.isValid()) requestedFactor = requestedSize.width() / (double)requestedSize.height();
 	if (factor < 0.2) { // too height

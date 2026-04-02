@@ -28,7 +28,7 @@ FocusScope {
 	Control.SplitView {
 		id: splitView
 		anchors.fill: parent
-    	anchors.topMargin: Utils.getSizeWithScreenRatio(10)
+		anchors.topMargin: Utils.getSizeWithScreenRatio(0)
 
 		handle: Rectangle {
     		implicitWidth: Utils.getSizeWithScreenRatio(6)

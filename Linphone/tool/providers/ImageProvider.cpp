@@ -91,7 +91,7 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 		} else {
 			renderer.setAspectRatioMode(Qt::KeepAspectRatio);
 			QSize askedSize = !requestedSize.isEmpty()
-			                      ? requestedSize
+			                      ? requestedSize * QGuiApplication::primaryScreen()->devicePixelRatio()
 			                      : renderer.defaultSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
 			// 3. Create image.
 			image = QImage(askedSize, QImage::Format_ARGB32_Premultiplied);

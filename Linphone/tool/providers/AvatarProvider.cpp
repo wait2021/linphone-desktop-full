@@ -21,6 +21,7 @@
 #include "core/path/Paths.hpp"
 
 #include "AvatarProvider.hpp"
+#include <QScreen>
 
 // =============================================================================
 
@@ -33,6 +34,6 @@ AvatarProvider::AvatarProvider()
 
 QImage AvatarProvider::requestImage(const QString &id, QSize *size, const QSize &) {
 	QImage image(mAvatarsPath + id);
-	*size = image.size();
+	*size = image.size() * QGuiApplication::primaryScreen()->devicePixelRatio();
 	return image;
 }

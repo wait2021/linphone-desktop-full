@@ -253,6 +253,29 @@ void Utils::setLastActiveWindow(QQuickWindow *data) {
 	App::getInstance()->setLastActiveWindow(data);
 }
 
+void Utils::saveLastPositionWindow(QQuickWindow *data, const int& x, const int &y) {
+	QSettings settings(QSettings::UserScope);
+	settings.beginGroup("Windows");
+	settings.beginGroup(data->objectName());
+	settings.setValue("position", QPoint(x,y));
+	settings.endGroup();
+	settings.endGroup();
+}
+
+QPoint Utils::getLastPositionWindow(QQuickWindow *data, const int& defaultX, const int &defaultY) {
+	QPoint position;
+	QSettings settings(QSettings::UserScope);
+	settings.beginGroup("Windows");
+	settings.beginGroup(data->objectName());
+	if( settings.childKeys().contains("position") ) {
+		position = settings.value("position").toPoint();
+	}else
+		position = QPoint(defaultX, defaultY);
+	settings.endGroup();
+	settings.endGroup();
+	return position;
+}
+
 void Utils::showInformationPopup(const QString &title,
                                  const QString &description,
                                  bool isSuccess,

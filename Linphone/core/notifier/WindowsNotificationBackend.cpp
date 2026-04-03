@@ -1,18 +1,14 @@
-#include "tool/Utils.hpp"
-
-// #include "NotificationActivator.hpp"
 #include "WindowsNotificationBackend.hpp"
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
 #include "core/chat/ChatGui.hpp"
 #include "core/event-filter/LockEventFilter.hpp"
+#include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
 
-#ifdef Q_OS_WIN
 #include "DesktopNotificationManagerCompat.hpp"
 #include <windows.foundation.h>
 #include <windows.ui.notifications.h>
-#endif
 
 #include <QDebug>
 
@@ -50,6 +46,7 @@ void NotificationBackend::sendMessageNotification(QVariantMap data) {
 	auto remoteAddress = data["remoteAddress"].toString().toStdWString();
 	auto chatRoomName = data["chatRoomName"].toString().toStdWString();
 	auto chatRoomAddress = data["chatRoomAddress"].toString().toStdWString();
+	auto appIcon = Utils::getIconAsPng(Utils::getAppIcon("logo").toString()).toStdWString();
 	auto avatarUri = data["avatarUri"].toString().toStdWString();
 	bool isGroup = data["isGroupChat"].toBool();
 	ChatGui *chat = data["chat"].value<ChatGui *>();
@@ -57,6 +54,9 @@ void NotificationBackend::sendMessageNotification(QVariantMap data) {
 	std::wstring xml = L"<toast>"
 	                   L"    <visual>"
 	                   L"        <binding template=\"ToastGeneric\">"
+	                   L"            <image src=\"file:///" +
+	                   appIcon +
+	                   L"\" placement=\"appLogoOverride\"/>"
 	                   L"            <text><![CDATA[" +
 	                   chatRoomName +
 	                   L"]]></text>"
@@ -86,7 +86,7 @@ void NotificationBackend::sendMessageNotification(QVariantMap data) {
 	IToastNotification *toast = nullptr;
 	hr = DesktopNotificationManagerCompat::CreateToastNotification(doc, &toast);
 	if (FAILED(hr) || !toast) {
-		qWarning() << "CreateToastNotification failed:" << Qt::hex << hr;
+		lWarning() << "CreateToastNotification failed:" << Qt::hex << hr;
 		doc->Release();
 		notifier->Release();
 		Utils::showInformationPopup(tr("info_popup_error_title"), tr("info_popup_error_creating_notification"), false);
@@ -107,7 +107,7 @@ void NotificationBackend::sendMessageNotification(QVariantMap data) {
 
 	hr = notifier->Show(toast);
 	if (FAILED(hr)) {
-		qWarning() << "Toast Show failed:" << Qt::hex << hr;
+		lWarning() << "Toast Show failed:" << Qt::hex << hr;
 	}
 
 	toast->Release();
@@ -125,22 +125,30 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	}
 
 	auto displayName = data["displayName"].toString().toStdWString();
+	auto remoteAddress = data["remoteAddress"].toString().toStdWString();
 	CallGui *call = data["call"].value<CallGui *>();
 	int timeout = 2;
 	// AbstractNotificationBackend::Notifications[(int)NotificationType::ReceivedCall].getTimeout();
 
 	// Incoming call
 	auto callDescription = tr("incoming_call").toStdWString();
+
 	QList<ToastButton> actions;
-	actions.append(ToastButton(tr("accept_button"), "accept"));
-	actions.append(ToastButton(tr("decline_button"), "decline"));
+	QString declineIcon = Utils::getIconAsPng(Utils::getAppIcon("endCall").toString());
+	QString acceptIcon = Utils::getIconAsPng(Utils::getAppIcon("phone").toString());
+	auto appIcon = Utils::getIconAsPng(Utils::getAppIcon("logo").toString()).toStdWString();
+	actions.append(ToastButton(tr("accept_button"), "accept", acceptIcon));
+	actions.append(ToastButton(tr("decline_button"), "decline", declineIcon));
 	std::wstring wActions;
 	if (!actions.isEmpty()) {
 		wActions += L"<actions>";
 		for (const auto &action : actions) {
 			std::wstring wLabel = action.label.toStdWString();
 			std::wstring wArg = action.argument.toStdWString();
-			wActions += L"<action content=\"" + wLabel + L"\" arguments=\"" + wArg + L"\"/>";
+			std::wstring wIcon = action.icon.toStdWString();
+			qDebug() << "toast icon action" << wIcon;
+			wActions +=
+			    L"<action content=\"" + wLabel + L"\" arguments=\"" + wArg + L"\" imageUri=\"" + wIcon + L"\"/>";
 		}
 		wActions += L"</actions>";
 	}
@@ -148,8 +156,14 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	std::wstring xml = L"<toast scenario=\"reminder\">"
 	                   L"    <visual>"
 	                   L"        <binding template=\"ToastGeneric\">"
+	                   L"            <image src=\"file:///" +
+	                   appIcon +
+	                   L"\" placement=\"appLogoOverride\"/>"
 	                   L"            <text hint-style=\"header\">" +
 	                   displayName +
+	                   L"</text>"
+	                   L"            <text hint-style=\"base\">" +
+	                   remoteAddress +
 	                   L"</text>"
 	                   L"            <text hint-style=\"body\">" +
 	                   callDescription +
@@ -171,7 +185,7 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	IToastNotification *toast = nullptr;
 	hr = DesktopNotificationManagerCompat::CreateToastNotification(doc, &toast);
 	if (FAILED(hr) || !toast) {
-		qWarning() << "CreateToastNotification failed:" << Qt::hex << hr;
+		lWarning() << "CreateToastNotification failed:" << Qt::hex << hr;
 		doc->Release();
 		notifier->Release();
 		Utils::showInformationPopup(tr("info_popup_error_title"), tr("info_popup_error_creating_notification"), false);
@@ -180,16 +194,17 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 
 	ComPtr<IToastNotification2> toast2;
 	hr = toast->QueryInterface(IID_PPV_ARGS(&toast2));
-	if (FAILED(hr)) qWarning() << "QueryInterface failed";
+	if (FAILED(hr)) lWarning() << "QueryInterface failed";
 	auto callId = call->mCore->getCallId();
 	qDebug() << "put tag to toast" << callId;
 	hr = toast2->put_Tag(HStringReference(reinterpret_cast<const wchar_t *>(callId.utf16())).Get());
 	toast2->put_Group(HStringReference(L"linphone").Get());
-	if (FAILED(hr)) qWarning() << "puting tag on toast failed";
+	if (FAILED(hr)) lWarning() << "puting tag on toast failed";
 
 	connect(call->mCore.get(), &CallCore::stateChanged, this, [this, call, notifier, toast] {
-		if (call->mCore->getState() == LinphoneEnums::CallState::End) {
-			qDebug() << "Call ended, remove toast";
+		if (call->mCore->getState() == LinphoneEnums::CallState::End ||
+		    call->mCore->getState() == LinphoneEnums::CallState::Error) {
+			qDebug() << "Call ended or error, remove toast";
 			auto callId = call->mCore->getCallId();
 			call->deleteLater();
 
@@ -198,7 +213,7 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 
 			auto hr = history->RemoveGroupedTag(reinterpret_cast<const wchar_t *>(callId.utf16()), L"linphone");
 			if (FAILED(hr)) {
-				qWarning() << "removing toast failed";
+				lWarning() << "removing toast failed";
 			}
 		}
 	});
@@ -245,7 +260,7 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 
 	hr = notifier->Show(toast);
 	if (FAILED(hr)) {
-		qWarning() << "Toast Show failed:" << Qt::hex << hr;
+		lWarning() << "Toast Show failed:" << Qt::hex << hr;
 	}
 
 	toast->Release();

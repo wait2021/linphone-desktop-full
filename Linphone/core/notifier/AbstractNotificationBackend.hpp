@@ -4,14 +4,16 @@
 #include "tool/AbstractObject.hpp"
 #include <QHash>
 #include <QObject>
+#include <QSize>
 #include <QString>
-
 struct ToastButton {
 	QString label;
 	QString argument;
-	ToastButton(QString title, QString arg) {
-		label = title;
-		argument = arg;
+	QString icon;
+	ToastButton(QString label, QString arg, QString icon = QString()) {
+		this->label = label;
+		this->argument = arg;
+		this->icon = icon;
 	}
 };
 

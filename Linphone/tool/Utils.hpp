@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QSize>
 #include <QString>
 
 #include "Constants.hpp"
@@ -253,6 +254,7 @@ public:
 
 	// Presence
 
+	static QString getIconAsPng(const QString &imagePath, const QSize &size = QSize(64, 64));
 	static QColor getDefaultStyleColor(const QString &colorName);
 	static QUrl getAppIcon(const QString &iconName);
 	static QUrl getRegistrationStateIcon(LinphoneEnums::RegistrationState state);

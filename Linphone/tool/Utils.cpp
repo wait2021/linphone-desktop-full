@@ -46,15 +46,19 @@
 #include <QClipboard>
 #include <QCryptographicHash>
 #include <QDesktopServices>
+#include <QFileInfo>
 #include <QHostAddress>
 #include <QImageReader>
 #include <QMimeDatabase>
+#include <QPainter>
 #include <QProcess>
 #include <QQmlComponent>
 #include <QQmlProperty>
 #include <QQuickWindow>
 #include <QRandomGenerator>
 #include <QRegularExpression>
+#include <QStandardPaths>
+#include <QSvgRenderer>
 
 #ifdef Q_OS_WIN
 #ifndef NOMINMAX
@@ -1811,7 +1815,31 @@ QUrl Utils::getAppIcon(const QString &iconName) {
 		QQmlComponent component(App::getInstance()->mEngine, QUrl("qrc:/qt/qml/Linphone/view/Style/AppIcons.qml"));
 		appIconsSingleton = component.create();
 	}
+
 	return QQmlProperty::read(appIconsSingleton, iconName).value<QUrl>();
+}
+
+QString Utils::getIconAsPng(const QString &imagePath, const QSize &size) {
+	// Convertit "image://internal/phone-disconnect.svg" en ":/data/image/phone-disconnect.svg"
+	QString resourcePath = imagePath;
+	if (imagePath.startsWith("image://internal/"))
+		resourcePath = ":/data/image/" + imagePath.mid(QString("image://internal/").length());
+
+	QSvgRenderer renderer(resourcePath);
+	if (!renderer.isValid()) return QString();
+
+	QImage image(size, QImage::Format_ARGB32_Premultiplied);
+	image.fill(Qt::transparent);
+	QPainter painter(&image);
+	renderer.render(&painter);
+	painter.end();
+
+	QString outPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/linphone_" +
+	                  QFileInfo(resourcePath).baseName() + ".png";
+
+	if (!QFile::exists(outPath)) image.save(outPath, "PNG");
+
+	return outPath;
 }
 
 QColor Utils::getPresenceColor(LinphoneEnums::Presence presence) {

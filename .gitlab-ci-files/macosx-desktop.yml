@@ -92,8 +92,7 @@ macosx-ninja-novideo:
 #################################################
 # Package - Nightly
 #################################################
-# WAIT for QT6 for arm64
-macosx-ninja-package:
+macosx-ninja-package-arm64:
   stage: package
   tags: [ "macos-min-xcode15" ]
   needs: []
@@ -104,7 +103,7 @@ macosx-ninja-package:
     - if: $PACKAGE_MACOSX
     - if: $DEPLOY_MACOSX
   variables:
-    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_APP_PACKAGING=ON -DENABLE_GPL_THIRD_PARTIES=OFF -DENABLE_G729=ON -DBUGSPLAT_CLIENT_ID=$BUGSPLAT_CLIENT_ID -DBUGSPLAT_CLIENT_SECRET=$BUGSPLAT_CLIENT_SECRET -DBUGSPLAT_DATABASE=$BUGSPLAT_DATABASE
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_APP_PACKAGING=ON -DLINPHONEAPP_MACOS_ARCHS=arm64 -DENABLE_GPL_THIRD_PARTIES=OFF -DENABLE_G729=ON -DBUGSPLAT_CLIENT_ID=$BUGSPLAT_CLIENT_ID -DBUGSPLAT_CLIENT_SECRET=$BUGSPLAT_CLIENT_SECRET -DBUGSPLAT_DATABASE=$BUGSPLAT_DATABASE
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOSX_PLATFORM/$APP_FOLDER
   extends: macosx-ninja
   script:
@@ -117,11 +116,56 @@ macosx-ninja-package:
     when: always
     expire_in: 1 week
 
-macosx-codesigning:
+macosx-ninja-package-x86:
+  stage: package
+  tags: [ "macos-min-xcode15" ]
+  needs: []
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
+    - if: $NIGHTLY_MASTER
+    - if: $PACKAGE_MACOSX
+    - if: $DEPLOY_MACOSX
+  variables:
+    CMAKE_OPTIONS: -DPython3_ROOT_DIR=/opt/bc/pip-packages/ -DENABLE_APP_PACKAGING=ON -DLINPHONEAPP_MACOS_ARCHS=x86_64 -DENABLE_GPL_THIRD_PARTIES=OFF -DENABLE_G729=ON -DBUGSPLAT_CLIENT_ID=$BUGSPLAT_CLIENT_ID -DBUGSPLAT_CLIENT_SECRET=$BUGSPLAT_CLIENT_SECRET -DBUGSPLAT_DATABASE=$BUGSPLAT_DATABASE
+    RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOSX_PLATFORM/$APP_FOLDER
+  extends: macosx-ninja
+  script:
+    - if [[ $MAKE_RELEASE_FILE_URL == "" ]]; then export RELEASE_FILE=""; fi
+    - *build_all_script
+  artifacts:
+    when: always
+    paths:
+      - build/OUTPUT/*
+    when: always
+    expire_in: 1 week
+
+macosx-codesigning-arm64:
   stage: signing
   tags: [ "macos-min-xcode15" ]
   needs:
-    - macosx-ninja-package
+    - macosx-ninja-package-arm64
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $PACKAGE_MACOSX
+    - if: $DEPLOY_MACOSX
+  script:
+    - cd build
+    - codesign --timestamp --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/macos/Packages/Linphone*.dmg
+    - ./../cmake/install/macos/app_notarization.sh
+  artifacts:
+    when: always
+    paths:
+      - build/OUTPUT/*
+    when: always
+    expire_in: 1 week
+
+macosx-codesigning-x86:
+  stage: signing
+  tags: [ "macos-min-xcode15" ]
+  needs:
+    - macosx-ninja-package-x86
   rules:
     - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
@@ -142,11 +186,11 @@ macosx-codesigning:
 # Deploy - Nightly
 #################################################
 
-macosx-deploy:
+macosx-deploy-arm64:
  stage: deploy
  tags: [ "macos-min-xcode15" ]
  needs:
-   - macosx-codesigning
+   - macosx-codesigning-arm64
  only:
     variables:
       - $NIGHTLY_MASTER
@@ -159,6 +203,22 @@ macosx-deploy:
        rsync -rlv build/OUTPUT/macos/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
      fi
 
+macosx-deploy-x86:
+ stage: deploy
+ tags: [ "macos-min-xcode15" ]
+ needs:
+   - macosx-codesigning-x86
+ only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_MACOSX
+ script:
+   - rsync -rlv --ignore-existing build/OUTPUT/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+   - |-
+     if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+       rsync -rlv build/OUTPUT/macos/Packages/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+       rsync -rlv build/OUTPUT/macos/Packages/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+     fi
 
 macosx-makefile-plugins-deploy:
  stage: deploy

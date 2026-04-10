@@ -1,4 +1,4 @@
-name: Clone to Your Repo (100% FIXED)
+name: Final Fixed Version
 on:
   workflow_dispatch:
 
@@ -11,14 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Clone source to root
+      - name: Clone & Copy
         run: |
-          GREEN="\033[32m"
-          NC="\033[0m"
-          echo -e "${GREEN}当前工作目录：$(pwd)${NC}"
+          # 1. 克隆到临时文件夹
+          git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git tmp
+          cd tmp
 
-          git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git .
-
+          # 2. 子模块日志（你要的格式）
           git submodule init
           git config -f .gitmodules --get-regexp '^submodule\..*\.url$' | while read -r key url; do
             name=$(echo "$key" | sed -E 's/^submodule\.(.*)\.url$/\1/')
@@ -37,14 +36,15 @@ jobs:
             echo "-------------------------------------"
           done
 
-          find . -name ".git" -o -name ".gitmodules" | grep -v "^./.git" | xargs rm -rf
+          # 3. 复制所有文件到上级（你的仓库根目录）
+          cd ..
+          cp -r tmp/* .
+          rm -rf tmp
 
       - name: Push to YOUR repo
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add .
-          git commit -m "Full source"
+          git commit -m "init"
           git push --force https://github.com/wait2021/linphone-desktop-full.git main
-
-          echo "✅ 推送成功！"

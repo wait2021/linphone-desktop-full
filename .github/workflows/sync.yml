@@ -1,4 +1,4 @@
-name: Sync full linphone-desktop to GitHub
+name: Full Clone All Branches & Tags
 on:
   workflow_dispatch:
 
@@ -9,46 +9,48 @@ jobs:
       contents: write
 
     steps:
-      - name: Show current path
+      - name: Show current directory
         run: |
           echo "====================================="
           echo "当前工作目录：$(pwd)"
           echo "====================================="
 
-      - name: Clone full repo (all versions, all branches)
+      - name: Clone FULL repository (all versions, all branches, all tags)
         run: |
-          echo "开始克隆 linphone-desktop 全部代码..."
-          git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git source
+          echo "开始完整克隆主项目..."
+          git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git tmp
           echo "====================================="
-          echo "克隆完成，文件在 source/ 目录"
+          echo "克隆完成，文件在 tmp/ 目录"
           echo "====================================="
 
-      - name: Move everything to root
+      - name: Move all files to root
         run: |
-          echo "把源码移动到仓库根目录..."
+          echo "把所有源码移动到仓库根目录..."
           shopt -s dotglob
-          mv source/* .
-          rm -rf source
-          echo "当前目录结构："
-          ls -la
+          mv tmp/* .
+          rm -rf tmp
+          echo "====================================="
+          echo "移动完成！当前目录：$(pwd)"
           echo "====================================="
 
-      - name: Init all submodules (full source)
+      - name: Pull and init all submodules
         run: |
-          echo "开始拉取所有子模块依赖源码..."
+          echo "开始拉取所有子模块源码..."
           git submodule update --init --recursive --progress
           echo "====================================="
-          echo "✅ 所有子模块拉取完成"
+          echo "✅ 所有子模块拉取完成！"
           echo "====================================="
 
-      - name: Push to your GitHub
+      - name: Push all source to GitHub
         run: |
           git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
+          git config user.email "actions@github.com"
           git add .
-          git commit -m "Full linphone-desktop + all submodules & all versions"
+          
+          # 重点修复：没有可提交内容时，不报错！
+          git commit -m "Full source code + all submodules" || true
+          
           git push --force
           echo "====================================="
           echo "✅ 全部同步完成！"
-          echo "仓库：https://github.com/${{ github.repository }}"
           echo "====================================="

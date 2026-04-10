@@ -1,4 +1,4 @@
-name: Mirror Full Repo to GitHub
+name: Clone Modules with Detailed Log
 on:
   workflow_dispatch:
 
@@ -7,20 +7,69 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    steps:
-      - name: Show directory
-        run: |
-          echo "当前目录：$(pwd)"
-          
-      - name: Full mirror clone (all versions, all submodules)
-        run: |
-          echo "===== 开始完整镜像克隆 ====="
-          git clone --mirror https://gitlab.linphone.org/BC/public/linphone-desktop.git repo
-          echo "===== 克隆完成 ====="
 
-      - name: Push to your GitHub
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone main project & submodules
         run: |
-          cd repo
-          echo "===== 开始推送全部代码到你的仓库 ====="
-          git push --mirror https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          echo "===== ✅ 全部同步成功！ ====="
+          # 颜色输出，更清晰
+          GREEN="\033[32m"
+          NC="\033[0m"
+
+          echo -e "${GREEN}=====================================${NC}"
+          echo -e "${GREEN} 开始克隆主项目${NC}"
+          echo -e "${GREEN}=====================================${NC}"
+
+          git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git tmp
+          cd tmp
+
+          # 读取所有子模块
+          echo -e "${GREEN}=====================================${NC}"
+          echo -e "${GREEN} 开始逐个克隆子模块${NC}"
+          echo -e "${GREEN}=====================================${NC}"
+
+          git submodule init
+          git config -f .gitmodules --get-regexp '^submodule\..*\.url$' | while read -r key url; do
+            # 提取模块名
+            name=$(echo "$key" | sed -E 's/^submodule\.(.*)\.url$/\1/')
+            path=$(git config -f .gitmodules "submodule.$name.path")
+            
+            start=$(date +"%Y-%m-%d %H:%M:%S")
+            echo "开始克隆子模块[ $start ]：$name  地址：$url"
+
+            # 克隆这个子模块
+            git submodule update --init "$path"
+
+            end=$(date +"%Y-%m-%d %H:%M:%S")
+            filecount=$(find "$path" -type f | wc -l)
+            abspath=$(realpath "$path")
+
+            echo "克隆完成[ $end ][ 文件数：$filecount ]：$name  存储位置：$abspath"
+            echo "-------------------------------------"
+          done
+
+          echo -e "${GREEN}=====================================${NC}"
+          echo -e "${GREEN} 所有子模块克隆完毕！${NC}"
+          echo -e "${GREEN}=====================================${NC}"
+
+          cd ..
+          cp -a tmp/. .
+          rm -rf tmp
+
+      - name: Push to your GitHub repo
+        run: |
+          echo "====================================="
+          echo " 开始推送到你的仓库：wait228/linphone-desktop-full"
+          echo " 仓库地址：https://github.com/wait228/linphone-desktop-full.git"
+          echo "====================================="
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Full source + all submodules"
+          git push --force https://github.com/wait228/linphone-desktop-full.git main
+
+          echo "====================================="
+          echo " ✅ 全部成功！代码已在你的仓库！"
+          echo "====================================="
